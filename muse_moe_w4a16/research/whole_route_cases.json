@@ -1,0 +1,282 @@
+{
+  "job_id": "7e7f05d4f8ed46a2",
+  "source": "okc status and public show",
+  "job_benchmarks": [
+    {
+      "batch": 1,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "sliding",
+      "load": "decode 1",
+      "page": 1,
+      "repeats": 60,
+      "seed": 3245813614828185853,
+      "weight": 46
+    },
+    {
+      "batch": 1,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "full",
+      "load": "decode 1",
+      "page": 1,
+      "repeats": 60,
+      "seed": 3245890048495940668,
+      "weight": 16
+    },
+    {
+      "batch": 16,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "sliding",
+      "load": "decode 16",
+      "page": 1,
+      "seed": 3245966482163695484,
+      "spread": "agentic",
+      "weight": 46
+    },
+    {
+      "batch": 16,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "full",
+      "load": "decode 16",
+      "page": 1,
+      "seed": 3246042915831450301,
+      "spread": "agentic",
+      "weight": 16
+    },
+    {
+      "batch": 32,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "sliding",
+      "load": "decode 32",
+      "page": 1,
+      "seed": 3246119349499205119,
+      "spread": "agentic",
+      "weight": 46
+    },
+    {
+      "batch": 32,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "full",
+      "load": "decode 32",
+      "page": 1,
+      "seed": 3246195783166959938,
+      "spread": "agentic",
+      "weight": 16
+    },
+    {
+      "batch": 1,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "sliding",
+      "load": "verify 1",
+      "page": 1,
+      "q_len": 8,
+      "seed": 3246272216834714758,
+      "weight": 46
+    },
+    {
+      "batch": 1,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "full",
+      "load": "verify 1",
+      "page": 1,
+      "q_len": 8,
+      "seed": 3246348650502469579,
+      "weight": 16
+    },
+    {
+      "batch": 16,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "sliding",
+      "load": "verify 16",
+      "page": 1,
+      "q_len": 8,
+      "seed": 3246425084170224401,
+      "spread": "agentic",
+      "weight": 46
+    },
+    {
+      "batch": 16,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "full",
+      "load": "verify 16",
+      "page": 1,
+      "q_len": 8,
+      "seed": 3246501517837979224,
+      "spread": "agentic",
+      "weight": 16
+    },
+    {
+      "batch": 32,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "sliding",
+      "load": "verify 32",
+      "page": 1,
+      "q_len": 8,
+      "seed": 3246577951505734048,
+      "spread": "agentic",
+      "weight": 46
+    },
+    {
+      "batch": 32,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "full",
+      "load": "verify 32",
+      "page": 1,
+      "q_len": 8,
+      "seed": 3246654385173488873,
+      "spread": "agentic",
+      "weight": 16
+    }
+  ],
+  "public_benchmarks": [
+    {
+      "batch": 1,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "sliding",
+      "load": "decode 1",
+      "page": 1,
+      "repeats": 60,
+      "seed": 801,
+      "weight": 46
+    },
+    {
+      "batch": 1,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "full",
+      "load": "decode 1",
+      "page": 1,
+      "repeats": 60,
+      "seed": 802,
+      "weight": 16
+    },
+    {
+      "batch": 16,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "sliding",
+      "load": "decode 16",
+      "page": 1,
+      "seed": 803,
+      "spread": "agentic",
+      "weight": 46
+    },
+    {
+      "batch": 16,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "full",
+      "load": "decode 16",
+      "page": 1,
+      "seed": 804,
+      "spread": "agentic",
+      "weight": 16
+    },
+    {
+      "batch": 32,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "sliding",
+      "load": "decode 32",
+      "page": 1,
+      "seed": 805,
+      "spread": "agentic",
+      "weight": 46
+    },
+    {
+      "batch": 32,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "full",
+      "load": "decode 32",
+      "page": 1,
+      "seed": 806,
+      "spread": "agentic",
+      "weight": 16
+    },
+    {
+      "batch": 1,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "sliding",
+      "load": "verify 1",
+      "page": 1,
+      "q_len": 8,
+      "seed": 807,
+      "weight": 46
+    },
+    {
+      "batch": 1,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "full",
+      "load": "verify 1",
+      "page": 1,
+      "q_len": 8,
+      "seed": 808,
+      "weight": 16
+    },
+    {
+      "batch": 16,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "sliding",
+      "load": "verify 16",
+      "page": 1,
+      "q_len": 8,
+      "seed": 809,
+      "spread": "agentic",
+      "weight": 46
+    },
+    {
+      "batch": 16,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "full",
+      "load": "verify 16",
+      "page": 1,
+      "q_len": 8,
+      "seed": 810,
+      "spread": "agentic",
+      "weight": 16
+    },
+    {
+      "batch": 32,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "sliding",
+      "load": "verify 32",
+      "page": 1,
+      "q_len": 8,
+      "seed": 811,
+      "spread": "agentic",
+      "weight": 46
+    },
+    {
+      "batch": 32,
+      "ctx": 80000,
+      "dist": "soft",
+      "layer": "full",
+      "load": "verify 32",
+      "page": 1,
+      "q_len": 8,
+      "seed": 812,
+      "spread": "agentic",
+      "weight": 16
+    }
+  ],
+  "router_fields_present": false,
+  "note": "No router_seed/router_load/router_distinct exposed. Default generated router is a surrogate for unavailable hidden fields."
+}

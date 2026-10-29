@@ -1,0 +1,26 @@
+✓ Initialized. View run at 
+https://modal.com/apps/<workspace>/main/ap-8AvmvQympJXy2RITvCm8mc
+✓ Created objects.
+├── ✓ Uploaded 
+│   <repo>/muse_bf16_proj/mo
+│   dal_app.py
+├── ✓ Uploaded 
+│   <repo>/muse_bf16_proj
+├── ✓ Created Function env.
+├── ✓ Created Function correct.
+├── ✓ Created Function bench.
+├── ✓ Created Function micro.
+├── ✓ Created Function session.
+├── ✓ Created Function compile_only.
+└── ✓ Created Function inspect.
+DISTRIBUTED 128 config (64, 32, 8, 128) rel 3.3596078847704e-06 raw_us {'distributed': 14.032, 'cp14': 12.192}
+DISTRIBUTED 128 config (128, 32, 8, 128) rel 3.3579105109101795e-06 raw_us {'distributed': 15.424, 'cp14': 12.208}
+DISTRIBUTED 128 config (128, 32, 16, 64) rel 2.712341516940781e-06 raw_us {'distributed': 14.752, 'cp14': 12.24}
+DISTRIBUTED 256 config (64, 64, 8, 128) rel 3.3562436452819345e-06 raw_us {'distributed': 15.424, 'cp14': 15.152}
+DISTRIBUTED 256 config (128, 32, 8, 128) rel 3.3726214394458473e-06 raw_us {'distributed': 15.84, 'cp14': 14.864}
+DISTRIBUTED 256 config (128, 64, 16, 64) rel 2.703554760951097e-06 raw_us {'distributed': 15.648, 'cp14': 15.024}
+Stopping app - local entrypoint completed.
+✓ App completed. View run at 
+https://modal.com/apps/<workspace>/main/ap-8AvmvQympJXy2RITvCm8mc
+
+[gpu_q] top50 top50_router_sweep: 20s, rc=0; budget used 1763/1800s

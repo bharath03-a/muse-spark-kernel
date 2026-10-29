@@ -1,0 +1,163 @@
+okc run dcf056bc66d54bde on muse_prefill_layer
+submission  <repo>/muse_prefill_layer/candidate_prefill_w13_mixed.py
+status      ok
+passed      true
+speedup     1.411839146497233
+speedup_ci  [1.3906615592997746 1.4330167336946915]
+score_us    274396.62723699614
+tests       5/5 passed
+
+scored shapes (µs; speed of light is the reference's bound)
+case                                                         sglang      yours  speedup        sol  
+batch=1 ctx=80000 dist=soft layer=sliding load=turn 1 page=1 q_len=753    1050.91     842.22   1.248x     256.95  
+batch=1 ctx=80000 dist=soft layer=full load=turn 1 page=1 q_len=753    1449.65    1226.41   1.182x     496.69  
+batch=4 ctx=80000 dist=soft layer=sliding load=turn 4 page=1 q_len=753    3394.00    2261.04   1.501x    1036.28  
+batch=4 ctx=80000 dist=soft layer=full load=turn 4 page=1 q_len=753    4839.63    3705.86   1.306x    1992.42  
+batch=1 ctx=0 dist=soft layer=full load=first turn page=1 q_len=16384   17993.98   10946.09   1.644x    5518.43  
+batch=1 ctx=32768 dist=soft layer=sliding load=first turn page=1 q_len=16384   16941.15   10189.17   1.663x    5663.35  
+batch=1 ctx=32768 dist=soft layer=full load=first turn page=1 q_len=16384   20618.86   13945.32   1.479x    7710.00  
+batch=1 ctx=65536 dist=soft layer=full load=first turn page=1 q_len=16384   24276.62   17419.76   1.394x    9847.68  
+
+profile 0: batch=1 ctx=80000 dist=soft layer=sliding load=turn 1 page=1 q_len=753
+kernel                                                           GPU time  share  calls
+void w4g_k<128, 4>(P, CUtensorMap_st)                            193.0 µs  22.1%      2
+void w4g_k<32, 1>(P, CUtensorMap_st)                             187.3 µs  21.4%      2
+void w4g_k<256, 2>(P, CUtensorMap_st)                            168.6 µs  19.3%      2
+nvjet_sm90_tst_128x192_64x5_2x1_v_bz_coopB_TNN                   151.2 µs  17.3%      3
+nvjet_sm90_tst_112x128_64x7_1x2_h_bz_TNN                          38.8 µs   4.4%      1
+void resb<256, 2>(__nv_bfloat16 const*, float const*, __n...      31.3 µs   3.6%      1
+void cutlass::device_kernel<flash::enable_sm90_or_later<f...      25.0 µs   2.9%      1
+nvjet_sm90_tss_64x96_64x10_2x1_v_bz_splitK_NNT                    14.9 µs   1.7%      1
+void resa<512, 2>(__nv_bfloat16 const*, float const*, flo...      14.3 µs   1.6%      1
+comb(__nv_bfloat16 const*, int const*, int const*, float ...       9.5 µs   1.1%      1
+void cutlass::device_kernel<flash::FlashAttnFwdCombine<cu...       7.3 µs   0.8%      1
+route2(float const*, int, float const*, int const*, int, ...       6.7 µs   0.8%      1
+... 8 more
+total                                                            874.8 µs
+
+profile 1: batch=1 ctx=80000 dist=soft layer=full load=turn 1 page=1 q_len=753
+kernel                                                           GPU time  share  calls
+void cutlass::device_kernel<flash::enable_sm90_or_later<f...     416.9 µs  32.5%      1
+void w4g_k<128, 4>(P, CUtensorMap_st)                            195.7 µs  15.3%      2
+void w4g_k<256, 2>(P, CUtensorMap_st)                            165.8 µs  12.9%      2
+nvjet_sm90_tst_128x192_64x5_2x1_v_bz_coopB_TNN                   151.5 µs  11.8%      3
+void w4g_k<32, 1>(P, CUtensorMap_st)                             138.5 µs  10.8%      2
+nvjet_sm90_tss_64x96_64x10_2x1_v_bz_splitK_NNT                    79.5 µs   6.2%      1
+nvjet_sm90_tst_112x128_64x7_1x2_h_bz_TNN                          39.4 µs   3.1%      1
+void resb<256, 2>(__nv_bfloat16 const*, float const*, __n...      30.3 µs   2.4%      1
+void resa<512, 2>(__nv_bfloat16 const*, float const*, flo...      13.8 µs   1.1%      1
+comb(__nv_bfloat16 const*, int const*, int const*, float ...       9.6 µs   0.7%      1
+void cutlass::device_kernel<flash::FlashAttnFwdCombine<cu...       7.1 µs   0.6%      1
+route2(float const*, int, float const*, int const*, int, ...       6.9 µs   0.5%      1
+... 8 more
+total                                                           1282.2 µs
+GPU busy (kernels overlap: PDL or streams)                      1214.2 µs
+an overlapping kernel's time includes any wait for the one before it, so the rows add up to more
+
+profile 2: batch=4 ctx=80000 dist=soft layer=sliding load=turn 4 page=1 q_len=753
+kernel                                                           GPU time  share  calls
+void w4g_k<256, 2>(P, CUtensorMap_st)                           1010.1 µs  45.1%      2
+nvjet_sm90_tst_128x256_64x4_2x1_v_bz_coopA_TNN                   257.5 µs  11.5%      1
+nvjet_sm90_tst_256x152_64x4_1x2_h_bz_coopA_TNT                   254.6 µs  11.4%      1
+nvjet_sm90_tst_192x144_64x5_1x2_h_bz_coopB_TNT                   152.3 µs   6.8%      1
+void w4g_k<32, 1>(P, CUtensorMap_st)                             115.1 µs   5.1%      2
+void resb<256, 2>(__nv_bfloat16 const*, float const*, __n...     110.3 µs   4.9%      1
+nvjet_sm90_tst_168x128_64x5_1x2_v_bz_TNN                          66.1 µs   3.0%      1
+void cutlass::device_kernel<flash::enable_sm90_or_later<f...      62.3 µs   2.8%      1
+void resa<512, 2>(__nv_bfloat16 const*, float const*, flo...      54.4 µs   2.4%      1
+nvjet_sm90_tss_128x104_64x7_4x2_h_bz_NNT                          41.2 µs   1.8%      1
+swiglu2(__nv_bfloat16 const*, int const*, __nv_bfloat16*)         32.4 µs   1.4%      1
+comb(__nv_bfloat16 const*, int const*, int const*, float ...      26.7 µs   1.2%      1
+... 8 more
+total                                                           2239.8 µs
+
+profile 3: batch=4 ctx=80000 dist=soft layer=full load=turn 4 page=1 q_len=753
+kernel                                                           GPU time  share  calls
+void cutlass::device_kernel<flash::enable_sm90_or_later<f...    1548.9 µs  41.6%      1
+void w4g_k<256, 2>(P, CUtensorMap_st)                            922.6 µs  24.8%      2
+nvjet_sm90_tst_256x152_64x4_1x2_h_bz_coopA_TNT                   255.2 µs   6.9%      1
+nvjet_sm90_tst_128x256_64x4_2x1_v_bz_coopA_TNN                   254.0 µs   6.8%      1
+void w4g_k<32, 1>(P, CUtensorMap_st)                             157.8 µs   4.2%      2
+nvjet_sm90_tst_192x144_64x5_1x2_h_bz_coopB_TNT                   150.9 µs   4.1%      1
+void resb<256, 2>(__nv_bfloat16 const*, float const*, __n...     109.3 µs   2.9%      1
+nvjet_sm90_tst_168x128_64x5_1x2_v_bz_TNN                          65.1 µs   1.7%      1
+void resa<512, 2>(__nv_bfloat16 const*, float const*, flo...      55.4 µs   1.5%      1
+kvg(uint4 const*, uint4 const*, int const*, int const*, i...      44.0 µs   1.2%      1
+nvjet_sm90_tss_128x104_64x7_4x2_h_bz_NNT                          43.0 µs   1.2%      1
+swiglu2(__nv_bfloat16 const*, int const*, __nv_bfloat16*)         32.3 µs   0.9%      1
+... 9 more
+total                                                           3723.7 µs
+
+profile 4: batch=1 ctx=0 dist=soft layer=full load=first turn page=1 q_len=16384
+kernel                                                           GPU time  share  calls
+void w4g_k<256, 2>(P, CUtensorMap_st)                           4396.3 µs  39.4%      2
+nvjet_sm90_tst_320x128_64x3_1x2_h_bz_coopB_TNT                  1509.5 µs  13.5%      1
+nvjet_sm90_tst_176x128_64x5_1x2_h_bz_TNN                        1335.5 µs  12.0%      1
+void cutlass::device_kernel<flash::enable_sm90_or_later<f...     856.7 µs   7.7%      1
+nvjet_sm90_tst_192x192_64x4_2x1_v_bz_coopB_TNN                   779.5 µs   7.0%      1
+void resb<256, 2>(__nv_bfloat16 const*, float const*, __n...     562.8 µs   5.0%      1
+void w4g_k<128, 4>(P, CUtensorMap_st)                            376.2 µs   3.4%      2
+nvjet_sm90_tst_128x160_64x5_2x1_v_bz_NNT                         333.1 µs   3.0%      1
+void resa<512, 2>(__nv_bfloat16 const*, float const*, flo...     277.5 µs   2.5%      1
+nvjet_sm90_tss_256x128_64x4_1x2_h_bz_coopA_NNT                   179.4 µs   1.6%      1
+comb(__nv_bfloat16 const*, int const*, int const*, float ...     146.9 µs   1.3%      1
+gnorm(__nv_bfloat16 const*, int const*, int const*, float...     130.3 µs   1.2%      1
+... 9 more
+total                                                          11157.3 µs
+GPU busy (kernels overlap: PDL or streams)                     10952.0 µs
+an overlapping kernel's time includes any wait for the one before it, so the rows add up to more
+
+profile 5: batch=1 ctx=32768 dist=soft layer=sliding load=first turn page=1 q_len=16384
+kernel                                                           GPU time  share  calls
+void w4g_k<256, 2>(P, CUtensorMap_st)                           4285.0 µs  41.2%      2
+nvjet_sm90_tst_320x128_64x3_1x2_h_bz_coopB_TNT                  1403.0 µs  13.5%      1
+nvjet_sm90_tst_176x128_64x5_1x2_h_bz_TNN                        1339.2 µs  12.9%      1
+nvjet_sm90_tst_192x192_64x4_2x1_v_bz_coopB_TNN                   780.7 µs   7.5%      1
+void resb<256, 2>(__nv_bfloat16 const*, float const*, __n...     569.9 µs   5.5%      1
+nvjet_sm90_tst_128x160_64x5_2x1_v_bz_NNT                         336.0 µs   3.2%      1
+void w4g_k<128, 4>(P, CUtensorMap_st)                            322.4 µs   3.1%      2
+void cutlass::device_kernel<flash::enable_sm90_or_later<f...     290.9 µs   2.8%      1
+nvjet_sm90_tss_256x128_64x4_1x2_h_bz_coopA_NNT                   286.8 µs   2.8%      1
+void resa<512, 2>(__nv_bfloat16 const*, float const*, flo...     272.1 µs   2.6%      1
+comb(__nv_bfloat16 const*, int const*, int const*, float ...     145.0 µs   1.4%      1
+gnorm(__nv_bfloat16 const*, int const*, int const*, float...     124.9 µs   1.2%      1
+... 9 more
+total                                                          10402.5 µs
+GPU busy (kernels overlap: PDL or streams)                     10289.1 µs
+an overlapping kernel's time includes any wait for the one before it, so the rows add up to more
+
+profile 6: batch=1 ctx=32768 dist=soft layer=full load=first turn page=1 q_len=16384
+kernel                                                           GPU time  share  calls
+void w4g_k<256, 2>(P, CUtensorMap_st)                           4680.0 µs  31.3%      2
+void cutlass::device_kernel<flash::enable_sm90_or_later<f...    4304.4 µs  28.8%      1
+nvjet_sm90_tst_320x128_64x3_1x2_h_bz_coopB_TNT                  1515.4 µs  10.1%      1
+nvjet_sm90_tst_176x128_64x5_1x2_h_bz_TNN                        1342.1 µs   9.0%      1
+nvjet_sm90_tst_192x192_64x4_2x1_v_bz_coopB_TNN                   776.8 µs   5.2%      1
+void resb<256, 2>(__nv_bfloat16 const*, float const*, __n...     563.5 µs   3.8%      1
+nvjet_sm90_tst_128x160_64x5_2x1_v_bz_NNT                         337.4 µs   2.3%      1
+void w4g_k<128, 4>(P, CUtensorMap_st)                            321.2 µs   2.2%      2
+void resa<512, 2>(__nv_bfloat16 const*, float const*, flo...     274.9 µs   1.8%      1
+nvjet_sm90_tss_256x128_64x4_1x2_h_bz_coopA_NNT                   180.4 µs   1.2%      1
+void w4g_k<32, 1>(P, CUtensorMap_st)                             158.2 µs   1.1%      2
+comb(__nv_bfloat16 const*, int const*, int const*, float ...     151.7 µs   1.0%      1
+... 9 more
+total                                                          14932.6 µs
+GPU busy (kernels overlap: PDL or streams)                     14722.8 µs
+an overlapping kernel's time includes any wait for the one before it, so the rows add up to more
+
+profile 7: batch=1 ctx=65536 dist=soft layer=full load=first turn page=1 q_len=16384
+kernel                                                           GPU time  share  calls
+void cutlass::device_kernel<flash::enable_sm90_or_later<f...    7725.4 µs  44.4%      1
+void w4g_k<256, 2>(P, CUtensorMap_st)                           3790.6 µs  21.8%      2
+nvjet_sm90_tst_320x128_64x3_1x2_h_bz_coopB_TNT                  1405.6 µs   8.1%      1
+nvjet_sm90_tst_176x128_64x5_1x2_h_bz_TNN                        1334.6 µs   7.7%      1
+nvjet_sm90_tst_192x192_64x4_2x1_v_bz_coopB_TNN                   779.0 µs   4.5%      1
+void resb<256, 2>(__nv_bfloat16 const*, float const*, __n...     561.5 µs   3.2%      1
+nvjet_sm90_tst_128x160_64x5_2x1_v_bz_NNT                         337.9 µs   1.9%      1
+void w4g_k<128, 4>(P, CUtensorMap_st)                            322.4 µs   1.9%      2
+nvjet_sm90_tss_256x128_64x4_1x2_h_bz_coopA_NNT                   288.6 µs   1.7%      1
+void resa<512, 2>(__nv_bfloat16 const*, float const*, flo...     275.4 µs   1.6%      1
+void w4g_k<32, 1>(P, CUtensorMap_st)                             186.9 µs   1.1%      2
+comb(__nv_bfloat16 const*, int const*, int const*, float ...     138.0 µs   0.8%      1
+... 9 more
+total                                                          17387.5 µs

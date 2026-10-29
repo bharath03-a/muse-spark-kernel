@@ -1,0 +1,37 @@
+zip build 39.5s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 137
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 121
+qkv zip variant id 39 disabled: ValueError: accuracy at m=1
+qkv zip m=1 id 110: 14.34 us (base id 121: 14.37)
+qkv zip m=1 id 31: 15.17 us (base id 121: 14.37)
+qkv zip m=1 id 44: 15.23 us (base id 121: 14.37)
+qkv zip m=1 id 25: 15.26 us (base id 121: 14.37)
+qkv zip m=8 id 110: 14.88 us (base id 121: 14.94)
+qkv zip m=8 id 31: 15.55 us (base id 121: 14.94)
+qkv zip m=8 id 44: 15.52 us (base id 121: 14.94)
+qkv zip m=8 id 25: 15.49 us (base id 121: 14.94)
+qkv zip picked m=1 id 121, m=2-8 id 121
+zip prepare 39.8s
+r9 build 37.6s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.18 id3=18.62 -> id3
+r9 prepare 37.6s picks={('qkv_gate', 128): 3}
+r15 lt build 18.6s cublasLt 130101
+r15 qkv_gate m=128 cands=20 (raw us) cp10=18.59 c14=20.00 c15=20.13 c12=19.87 best=a66t92s35k1r0z0c7 -> cp10
+r15 qkv_gate m=256 cands=15 (raw us) cp10=23.17 c9=21.92 c10=23.26 c0=23.20 best=a66t134s35k1r0z0c9 -> lt
+r15 o m=128 cands=8 (raw us) cp10=10.98 c0=11.20 c1=11.39 c2=11.55 best=a66t18s35k1r0z0c5 -> cp10
+r15 o m=256 cands=8 (raw us) cp10=12.77 c0=12.99 c1=13.15 c4=13.60 best=a66t20s35k1r0z0c3 -> cp10
+r15 pooler m=128 cands=15 (raw us) cp10=25.22 c10=24.77 c8=25.02 c9=25.70 best=a66t134s35k1r0z0c7 -> lt
+r15 pooler m=256 cands=12 (raw us) cp10=30.40 c8=30.30 c3=31.94 c10=32.42 best=a66t183s35k1r0z0c9 -> cp10
+r15 unpooler m=128 cands=12 (raw us) cp10=23.81 c4=24.22 c10=24.38 c0=23.71 best=a66t18s35k1r0z0c5 -> cp10
+r15 unpooler m=256 cands=8 (raw us) cp10=27.74 c0=28.06 c1=31.33 c2=30.24 best=a66t20s35k1r0z0c3 -> cp10
+r15 prepare 19.1s total 139.1s picks=qkv_gate256,pooler128
+slice m2: old 9.63 new 8.99
+slice m4: old 11.49 new 9.06
+slice m8: old 9.60 new 9.12
+slice mma path enabled m 2-8
+cp14 whole-layer prepare seconds: 218.6
+v48 prepare 39s before tuning
+strict combo prepare seconds 257.85638210503384

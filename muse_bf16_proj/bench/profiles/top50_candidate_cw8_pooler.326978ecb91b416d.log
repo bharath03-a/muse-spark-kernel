@@ -1,0 +1,66 @@
+zip build 40.4s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 137
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 121
+qkv zip variant id 39 disabled: ValueError: accuracy at m=1
+qkv zip m=1 id 110: 14.21 us (base id 121: 14.27)
+qkv zip m=1 id 31: 15.01 us (base id 121: 14.27)
+qkv zip m=1 id 44: 15.07 us (base id 121: 14.27)
+qkv zip m=1 id 25: 15.10 us (base id 121: 14.27)
+qkv zip m=8 id 110: 14.46 us (base id 121: 14.56)
+qkv zip m=8 id 31: 15.30 us (base id 121: 14.56)
+qkv zip m=8 id 44: 15.30 us (base id 121: 14.56)
+qkv zip m=8 id 25: 15.46 us (base id 121: 14.56)
+qkv zip picked m=1 id 121, m=2-8 id 121
+zip prepare 40.7s
+r9 build 38.3s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.46 id3=18.70 -> id3
+r9 prepare 38.3s picks={('qkv_gate', 128): 3}
+r15 lt build 19.1s cublasLt 130101
+r15 qkv_gate m=128 cands=20 (raw us) cp10=18.69 c14=20.26 c12=20.26 c3=20.80 best=a66t80s35k1r0z0c7 -> cp10
+r15 qkv_gate m=256 cands=15 (raw us) cp10=23.39 c9=22.24 c10=23.65 c0=23.42 best=a66t134s35k1r0z0c9 -> lt
+r15 o m=128 cands=8 (raw us) cp10=11.26 c0=11.49 c1=11.65 c4=11.68 best=a66t18s35k1r0z0c5 -> cp10
+r15 o m=256 cands=8 (raw us) cp10=13.12 c0=13.22 c1=13.41 c2=13.98 best=a66t20s35k1r0z0c3 -> cp10
+r15 pooler m=128 cands=15 (raw us) cp10=25.66 c10=25.12 c8=24.99 c9=25.25 best=a66t124s35k1r0z0c7 -> lt
+r15 pooler m=256 cands=12 (raw us) cp10=30.94 c8=30.56 c3=32.45 c2=33.44 best=a66t183s35k1r0z0c9 -> lt
+r15 unpooler m=128 cands=12 (raw us) cp10=23.30 c0=23.55 c2=23.90 c10=24.38 best=a66t18s35k1r0z0c5 -> cp10
+r15 unpooler m=256 cands=8 (raw us) cp10=27.90 c0=28.16 c2=30.27 c1=33.28 best=a66t20s35k1r0z0c3 -> cp10
+r15 prepare 19.7s total 141.9s picks=qkv_gate256,pooler128,pooler256
+slice m2: old 9.41 new 8.74
+slice m4: old 11.30 new 8.77
+slice m8: old 9.31 new 8.86
+slice mma path enabled m 2-8
+physical confirm o m128: {'current': 11.103999800980091, 'transpose': 10.847999714314938}
+physical o m128: {'current': 11.19999960064888, 'transpose': 10.847999714314938} selected=False
+physical o m256: {'current': 12.83199992030859, 'transpose': 12.799999676644802} selected=False
+physical unpooler m128: {'current': 23.00800010561943, 'transpose': 22.5600004196167} selected=False
+physical unpooler m256: {'current': 28.031999245285988, 'transpose': 27.712000533938408} selected=False
+physical qkv_gate m128: {'current': 18.783999606966972, 'transpose': 20.70399932563305} selected=False
+physical qkv_gate m256: {'current': 21.663999184966087, 'transpose': 23.96799996495247} selected=False
+physical pooler m128: {'current': 24.960000067949295, 'transpose': 26.176000013947487} selected=False
+physical pooler m256: {'current': 30.14400042593479, 'transpose': 33.85600075125694} selected=False
+physical picks: []
+async pack pooler: bits=12.554810 raw=4289/32768
+async compile pooler/W: regs=104 spills=0 shared=49248
+async correctness passed pooler/W
+async compile pooler/WX: regs=128 spills=0 shared=98400
+async correctness passed pooler/WX
+async controls pooler m32: {'W': 96.22400254011154, 'WX': 24.351999163627625} chosen=WX
+async pooler m32 first={'current': 22.304000332951546, 'async': 24.064000695943832} confirm=None selected=False
+async pack unpooler: bits=12.409912 raw=3102/32768
+async compile unpooler/W: regs=104 spills=0 shared=49248
+async correctness passed unpooler/W
+async compile unpooler/WX: regs=128 spills=0 shared=98400
+async correctness passed unpooler/WX
+async controls unpooler m32: {'W': 56.543998420238495, 'WX': 20.22399939596653} chosen=WX
+async unpooler m32 first={'current': 21.376000717282295, 'async': 20.287999883294106} confirm={'current': 21.27999998629093, 'async': 20.191999152302742} selected=True
+async prepare elapsed=180.14s selected={'unpooler': True}
+CW4 pooler compile regs=128 spills=0 shared=98400
+CW4 correctness passed
+CW8 pooler compile regs=128 spills=0 shared=196800
+CW8 correctness passed
+CW pooler m32 controls: {'CW4': 24.09599907696247, 'CW8': 22.304000332951546}
+CW8 pooler m32 first={'current': 22.207999601960182, 'CW8': 22.336000576615334} confirm=None selected=False
+CW8 prepare elapsed=180.75s selected=False

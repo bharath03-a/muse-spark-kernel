@@ -1,0 +1,111 @@
+{
+  "output": "research_harness/results/prefill",
+  "tasks": [
+    {
+      "id": "prefill-strict-ring",
+      "hypothesis": "Strict BF16 down-rounding remains correct across varied per-expert scales and skewed routing",
+      "command": [
+        "<repo>/muse_bf16_proj/.venv/bin/modal",
+        "run",
+        "modal_research_compile.py::probe_prefill_ring"
+      ],
+      "sources": [
+        "modal_research_compile.py",
+        "research_harness/gpu.py",
+        "research_harness/stats.py",
+        "muse_prefill_layer/research_prefill_full_bf16.py",
+        "muse_prefill_layer/research_prefill_w13_fused.py"
+      ],
+      "timeout_seconds": 360,
+      "success_markers": [
+        "PREFILL_Q_CHECK",
+        "PREFILL_Q_US"
+      ],
+      "minimum_marker_counts": {
+        "PREFILL_Q_CHECK": 4,
+        "PREFILL_Q_US": 4
+      }
+    },
+    {
+      "id": "w13-fused-7171",
+      "hypothesis": "Lossless paired W13 row layout fuses BF16 SwiGLU epilogue and removes intermediate global memory traffic",
+      "command": [
+        "<repo>/muse_bf16_proj/.venv/bin/modal",
+        "run",
+        "modal_research_compile.py::probe_w13_fused",
+        "--seed",
+        "7171"
+      ],
+      "sources": [
+        "modal_research_compile.py",
+        "research_harness/gpu.py",
+        "research_harness/stats.py",
+        "muse_prefill_layer/research_prefill_full_bf16.py",
+        "muse_prefill_layer/research_prefill_w13_fused.py"
+      ],
+      "timeout_seconds": 420,
+      "success_markers": [
+        "W13_FUSED_CHECK",
+        "W13_PAIRED_JSON"
+      ],
+      "minimum_marker_counts": {
+        "W13_FUSED_CHECK": 6,
+        "W13_PAIRED_JSON": 6
+      }
+    },
+    {
+      "id": "w13-fused-8209",
+      "hypothesis": "Lossless paired W13 row layout fuses BF16 SwiGLU epilogue and removes intermediate global memory traffic",
+      "command": [
+        "<repo>/muse_bf16_proj/.venv/bin/modal",
+        "run",
+        "modal_research_compile.py::probe_w13_fused",
+        "--seed",
+        "8209"
+      ],
+      "sources": [
+        "modal_research_compile.py",
+        "research_harness/gpu.py",
+        "research_harness/stats.py",
+        "muse_prefill_layer/research_prefill_full_bf16.py",
+        "muse_prefill_layer/research_prefill_w13_fused.py"
+      ],
+      "timeout_seconds": 420,
+      "success_markers": [
+        "W13_FUSED_CHECK",
+        "W13_PAIRED_JSON"
+      ],
+      "minimum_marker_counts": {
+        "W13_FUSED_CHECK": 6,
+        "W13_PAIRED_JSON": 6
+      }
+    },
+    {
+      "id": "w13-fused-9319",
+      "hypothesis": "Lossless paired W13 row layout fuses BF16 SwiGLU epilogue and removes intermediate global memory traffic",
+      "command": [
+        "<repo>/muse_bf16_proj/.venv/bin/modal",
+        "run",
+        "modal_research_compile.py::probe_w13_fused",
+        "--seed",
+        "9319"
+      ],
+      "sources": [
+        "modal_research_compile.py",
+        "research_harness/gpu.py",
+        "research_harness/stats.py",
+        "muse_prefill_layer/research_prefill_full_bf16.py",
+        "muse_prefill_layer/research_prefill_w13_fused.py"
+      ],
+      "timeout_seconds": 420,
+      "success_markers": [
+        "W13_FUSED_CHECK",
+        "W13_PAIRED_JSON"
+      ],
+      "minimum_marker_counts": {
+        "W13_FUSED_CHECK": 6,
+        "W13_PAIRED_JSON": 6
+      }
+    }
+  ]
+}

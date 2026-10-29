@@ -1,0 +1,51 @@
+zip build 39.5s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 137
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 121
+qkv zip variant id 39 disabled: ValueError: accuracy at m=1
+qkv zip m=1 id 110: 14.43 us (base id 121: 14.37)
+qkv zip m=1 id 31: 15.01 us (base id 121: 14.37)
+qkv zip m=1 id 44: 15.07 us (base id 121: 14.37)
+qkv zip m=1 id 25: 15.07 us (base id 121: 14.37)
+qkv zip m=8 id 110: 14.40 us (base id 121: 14.30)
+qkv zip m=8 id 31: 15.39 us (base id 121: 14.30)
+qkv zip m=8 id 44: 15.23 us (base id 121: 14.30)
+qkv zip m=8 id 25: 15.36 us (base id 121: 14.30)
+qkv zip picked m=1 id 121, m=2-8 id 121
+zip prepare 39.8s
+r9 build 38.0s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.40 id3=18.30 -> id3
+r9 prepare 38.0s picks={('qkv_gate', 128): 3}
+r15 lt build 19.0s cublasLt 130101
+r15 qkv_gate m=128 cands=20 (raw us) cp10=18.66 c2=20.35 c14=20.06 c12=20.03 best=a66t92s35k1r0z0c7 -> cp10
+r15 qkv_gate m=256 cands=15 (raw us) cp10=23.17 c9=22.24 c0=23.36 c10=23.14 best=a66t134s35k1r0z0c9 -> lt
+r15 o m=128 cands=8 (raw us) cp10=10.85 c0=11.20 c1=11.42 c2=11.52 best=a66t18s35k1r0z0c5 -> cp10
+r15 o m=256 cands=8 (raw us) cp10=12.80 c0=12.93 c1=13.09 c2=13.86 best=a66t20s35k1r0z0c3 -> cp10
+r15 pooler m=128 cands=15 (raw us) cp10=25.76 c8=24.77 c10=24.90 c9=25.25 best=a66t124s35k1r0z0c7 -> lt
+r15 pooler m=256 cands=12 (raw us) cp10=30.24 c8=30.24 c3=32.16 c10=32.51 best=a66t183s35k1r0z0c9 -> cp10
+r15 unpooler m=128 cands=12 (raw us) cp10=23.33 c0=23.68 c4=24.03 c10=23.90 best=a66t18s35k1r0z0c5 -> cp10
+r15 unpooler m=256 cands=8 (raw us) cp10=27.78 c0=27.90 c1=30.18 c2=30.18 best=a66t20s35k1r0z0c3 -> cp10
+r15 prepare 19.5s total 141.0s picks=qkv_gate256,pooler128
+slice m2: old 9.66 new 9.12
+slice m4: old 11.65 new 9.18
+slice m8: old 9.66 new 9.38
+slice mma path enabled m 2-8
+physical o m128: {'current': 11.008000001311302, 'transpose': 10.912000201642513} selected=False
+physical o m256: {'current': 12.896000407636166, 'transpose': 12.736000120639801} selected=False
+physical confirm unpooler m128: {'current': 23.00800010561943, 'transpose': 22.272000089287758}
+physical unpooler m128: {'current': 23.104000836610794, 'transpose': 22.23999984562397} selected=True
+physical unpooler m256: {'current': 27.871999889612198, 'transpose': 27.68000029027462} selected=False
+physical qkv_gate m128: {'current': 18.52799952030182, 'transpose': 21.056000143289566} selected=False
+physical qkv_gate m256: {'current': 22.175999358296394, 'transpose': 24.159999564290047} selected=False
+physical pooler m128: {'current': 24.12799932062626, 'transpose': 26.847999542951584} selected=False
+physical pooler m256: {'current': 30.33600002527237, 'transpose': 33.440001308918} selected=False
+physical picks: [('unpooler', 128)]
+adaptive pack pooler: bits=12.553711 raw=4280/32768
+adaptive compile pooler: regs=136 spills=0 shared=2048
+adaptive pooler m32 first={'current': 21.888000890612602, 'adaptive': 109.3439981341362} confirm=None selected=False
+adaptive pack unpooler: bits=12.411011 raw=3111/32768
+adaptive compile unpooler: regs=136 spills=0 shared=2048
+adaptive unpooler m32 first={'current': 21.503999829292297, 'adaptive': 58.240000158548355} confirm=None selected=False
+adaptive prepare elapsed=178.48s selected=set()

@@ -1,0 +1,191 @@
+okc run 23df37d2e0fe42ca on muse_bf16_proj
+submission  <repo>/muse_bf16_proj/bench/cand_r9_small_v2.py
+status      ok
+passed      true
+speedup     1.3844041783387238
+speedup_ci  [1.3636381156636428 1.4051702410138045]
+score_us    3489.4433833600024
+tests       9/9 passed
+
+scored shapes (µs; speed of light is the reference's bound)
+case                                                         sglang      yours  speedup        sol  
+layer=qkv_gate load=decode 1 m=1                              14.19      12.04   1.178x       7.87  
+layer=o load=decode 1 m=1                                      7.07       5.59   1.266x       3.50  
+layer=pooler load=decode 1 m=1                                21.28      13.78   1.545x      13.99  
+layer=unpooler load=decode 1 m=1                               6.94       3.63   1.914x       1.75  
+layer=router load=decode 1 m=1                                10.66       4.02   2.651x       1.75  
+layer=qkv_gate load=decode 16 m=16                            14.40      11.68   1.232x       7.93  
+layer=o load=decode 16 m=16                                    7.17       6.25   1.146x       3.56  
+layer=pooler load=decode 16 m=16                              21.57      15.54   1.388x      14.06  
+layer=unpooler load=decode 16 m=16                            18.56      15.22   1.220x      14.06  
+layer=router load=decode 16 m=16                              14.82       5.06   2.929x       1.81  
+layer=qkv_gate load=decode 32 m=32                            14.56      12.08   1.205x       8.00  
+layer=o load=decode 32 m=32                                    6.66       5.90   1.128x       3.62  
+layer=pooler load=decode 32 m=32                              22.06      18.19   1.213x      14.14  
+layer=unpooler load=decode 32 m=32                            18.91      18.18   1.040x      14.14  
+layer=router load=decode 32 m=32                              15.33       5.11   3.002x       1.86  
+layer=qkv_gate load=verify 1 m=8                              14.66      12.55   1.168x       7.90  
+layer=o load=verify 1 m=8                                      6.91       6.02   1.148x       3.53  
+layer=pooler load=verify 1 m=8                                21.47      14.61   1.470x      14.02  
+layer=unpooler load=verify 1 m=8                               6.99       4.82   1.451x       1.76  
+layer=router load=verify 1 m=8                                26.08       4.68   5.572x       1.78  
+layer=qkv_gate load=verify 16 m=128                           16.96      16.25   1.044x       8.42  
+layer=o load=verify 16 m=128                                   7.78       7.50   1.037x       3.99  
+layer=pooler load=verify 16 m=128                             25.33      21.85   1.159x      14.64  
+layer=unpooler load=verify 16 m=128                           19.97      19.77   1.010x      14.64  
+layer=router load=verify 16 m=128                             16.32       6.58   2.480x       2.21  
+layer=qkv_gate load=verify 32 m=256                           19.98      19.65   1.017x       9.77  
+layer=o load=verify 32 m=256                                   9.46       9.10   1.039x       4.48  
+layer=pooler load=verify 32 m=256                             30.77      26.79   1.148x      17.37  
+layer=unpooler load=verify 32 m=256                           24.29      23.86   1.018x      17.37  
+layer=router load=verify 32 m=256                             17.54       9.27   1.893x       2.68  
+
+profile 0: layer=qkv_gate load=decode 1 m=1
+kernel                                                           GPU time  share  calls
+void z9_kernel<1, 1, 4, 1, 4, 4>(CUtensorMap_st, unsigned...      12.0 µs 100.0%      1
+total                                                             12.0 µs
+
+profile 1: layer=o load=decode 1 m=1
+kernel                                                           GPU time  share  calls
+_bf16_gemv                                                         4.7 µs 100.0%      1
+total                                                              4.7 µs
+
+profile 2: layer=pooler load=decode 1 m=1
+kernel                                                           GPU time  share  calls
+void z9_kernel<2, 1, 8, 1, 2, 2>(CUtensorMap_st, unsigned...      13.8 µs 100.0%      1
+total                                                             13.8 µs
+
+profile 3: layer=unpooler load=decode 1 m=1
+kernel                                                           GPU time  share  calls
+_bf16_gemv                                                         2.8 µs 100.0%      1
+total                                                              2.8 µs
+
+profile 4: layer=router load=decode 1 m=1
+kernel                                                           GPU time  share  calls
+void row_gemv<true, 1, 1, 8>(__nv_bfloat16 const*, void c...       2.7 µs 100.0%      1
+total                                                              2.7 µs
+
+profile 5: layer=qkv_gate load=decode 16 m=16
+kernel                                                           GPU time  share  calls
+void tma_wgmma_kernel<16, 128, 4, 1, 4>(CUtensorMap_st, C...       8.5 µs 100.0%      1
+total                                                              8.5 µs
+
+profile 6: layer=o load=decode 16 m=16
+kernel                                                           GPU time  share  calls
+_gluon_gemv                                                        4.0 µs 100.0%      1
+total                                                              4.0 µs
+
+profile 7: layer=pooler load=decode 16 m=16
+kernel                                                           GPU time  share  calls
+void z9_kernel<2, 2, 8, 1, 2, 2>(CUtensorMap_st, unsigned...      14.9 µs 100.0%      1
+total                                                             14.9 µs
+
+profile 8: layer=unpooler load=decode 16 m=16
+kernel                                                           GPU time  share  calls
+void z9_kernel<2, 2, 8, 1, 1, 2>(CUtensorMap_st, unsigned...      14.3 µs 100.0%      1
+total                                                             14.3 µs
+
+profile 9: layer=router load=decode 16 m=16
+kernel                                                           GPU time  share  calls
+void tma_wgmma_router_bn32<16, 128, 8, 8>(CUtensorMap_st,...       4.4 µs 100.0%      1
+total                                                              4.4 µs
+
+profile 10: layer=qkv_gate load=decode 32 m=32
+kernel                                                           GPU time  share  calls
+void tma_wgmma_kernel<32, 128, 4, 1, 4>(CUtensorMap_st, C...       9.0 µs 100.0%      1
+total                                                              9.0 µs
+
+profile 11: layer=o load=decode 32 m=32
+kernel                                                           GPU time  share  calls
+_gluon_gemv                                                        3.9 µs 100.0%      1
+total                                                              3.9 µs
+
+profile 12: layer=pooler load=decode 32 m=32
+kernel                                                           GPU time  share  calls
+_gluon_gemv                                                       18.2 µs 100.0%      1
+total                                                             18.2 µs
+
+profile 13: layer=unpooler load=decode 32 m=32
+kernel                                                           GPU time  share  calls
+_gluon_gemv                                                       18.0 µs 100.0%      1
+total                                                             18.0 µs
+
+profile 14: layer=router load=decode 32 m=32
+kernel                                                           GPU time  share  calls
+void tma_wgmma_router_bn32<32, 128, 8, 8>(CUtensorMap_st,...       4.6 µs 100.0%      1
+total                                                              4.6 µs
+
+profile 15: layer=qkv_gate load=verify 1 m=8
+kernel                                                           GPU time  share  calls
+void z9_kernel<1, 1, 4, 1, 4, 4>(CUtensorMap_st, unsigned...      11.9 µs 100.0%      1
+total                                                             11.9 µs
+
+profile 16: layer=o load=verify 1 m=8
+kernel                                                           GPU time  share  calls
+_gluon_gemv                                                        3.5 µs 100.0%      1
+total                                                              3.5 µs
+
+profile 17: layer=pooler load=verify 1 m=8
+kernel                                                           GPU time  share  calls
+void z9_kernel<2, 1, 4, 1, 4, 2>(CUtensorMap_st, unsigned...      14.6 µs 100.0%      1
+total                                                             14.6 µs
+
+profile 18: layer=unpooler load=verify 1 m=8
+kernel                                                           GPU time  share  calls
+void tma_wgmma_kernel<8, 128, 8, 1, 4>(CUtensorMap_st, CU...       3.9 µs 100.0%      1
+total                                                              3.9 µs
+
+profile 19: layer=router load=verify 1 m=8
+kernel                                                           GPU time  share  calls
+void tma_wgmma_router_bn32<8, 128, 8, 8>(CUtensorMap_st, ...       4.3 µs 100.0%      1
+total                                                              4.3 µs
+
+profile 20: layer=qkv_gate load=verify 16 m=128
+kernel                                                           GPU time  share  calls
+_big_gemm                                                         15.8 µs 100.0%      1
+total                                                             15.8 µs
+
+profile 21: layer=o load=verify 16 m=128
+kernel                                                           GPU time  share  calls
+nvjet_sm90_tst_128x64_64x8_1x2_h_bz_TNT                            5.7 µs 100.0%      1
+total                                                              5.7 µs
+
+profile 22: layer=pooler load=verify 16 m=128
+kernel                                                           GPU time  share  calls
+void tma_wgmma_kernel<128, 64, 6, 1, 2>(CUtensorMap_st, C...      22.8 µs 100.0%      1
+total                                                             22.8 µs
+
+profile 23: layer=unpooler load=verify 16 m=128
+kernel                                                           GPU time  share  calls
+nvjet_sm90_tst_128x64_64x8_1x2_h_bz_TNT                           20.8 µs 100.0%      1
+total                                                             20.8 µs
+
+profile 24: layer=router load=verify 16 m=128
+kernel                                                           GPU time  share  calls
+void tma_wgmma_router_bn32<128, 128, 4, 8>(CUtensorMap_st...       5.8 µs 100.0%      1
+total                                                              5.8 µs
+
+profile 25: layer=qkv_gate load=verify 32 m=256
+kernel                                                           GPU time  share  calls
+nvjet_sm90_tst_96x64_64x10_2x4_h_bz_TNN                           19.6 µs 100.0%      1
+total                                                             19.6 µs
+
+profile 26: layer=o load=verify 32 m=256
+kernel                                                           GPU time  share  calls
+nvjet_sm90_tst_128x128_64x6_2x1_v_bz_TNT                           8.4 µs 100.0%      1
+total                                                              8.4 µs
+
+profile 27: layer=pooler load=verify 32 m=256
+kernel                                                           GPU time  share  calls
+_big_gemm                                                         28.0 µs 100.0%      1
+total                                                             28.0 µs
+
+profile 28: layer=unpooler load=verify 32 m=256
+kernel                                                           GPU time  share  calls
+nvjet_sm90_tst_128x128_64x6_2x1_v_bz_TNT                          25.5 µs 100.0%      1
+total                                                             25.5 µs
+
+profile 29: layer=router load=verify 32 m=256
+kernel                                                           GPU time  share  calls
+void tma_wgmma_router_bn32<128, 128, 4, 4>(CUtensorMap_st...       8.5 µs 100.0%      1
+total                                                              8.5 µs

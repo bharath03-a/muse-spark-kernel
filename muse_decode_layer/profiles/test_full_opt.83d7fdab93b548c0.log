@@ -1,0 +1,45 @@
+CUDA extension failed to load, falling back to Triton: Error building extension 'muse_proj_cuda_cp4_cfdf821f62': [1/3] ccache c++ -MMD -MF main.o.d -DTORCH_EXTENSION_NAME=muse_proj_cuda_cp4_cfdf821f62 -DTORCH_API_INCLUDE_EXTENSION_H -isystem /opt/sglang/lib/python3.12/site-packages/torch/include -isystem /opt/sglang/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /usr/local/cuda/include -isystem /usr/include/python3.12 -fPIC -std=c++20 -O3 -c /tmp/muse_decode_layer-j5xkp65s/sandbox/cache/torch_extensions/muse_proj_cuda_cp4_cfdf821f62/main.cpp -o main.o 
+[2/3] ccache /usr/local/cuda/bin/nvcc -MD -MF cuda.cuda.o.d -DTORCH_EXTENSION_NAME=muse_proj_cuda_cp4_cfdf821f62 -DTORCH_API_INCLUDE_EXTENSION_H -isystem /opt/sglang/lib/python3.12/site-packages/torch/include -isystem /opt/sglang/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /usr/local/cuda/include -isystem /usr/include/python3.12 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ --expt-relaxed-constexpr --compiler-options '-fPIC' -O3 -gencode=arch=compute_90a,code=sm_90a -std=c++20 -c /tmp/muse_decode_layer-j5xkp65s/sandbox/cache/torch_extensions/muse_proj_cuda_cp4_cfdf821f62/cuda.cu -o cuda.cuda.o 
+FAILED: [code=255] cuda.cuda.o 
+ccache /usr/local/cuda/bin/nvcc -MD -MF cuda.cuda.o.d -DTORCH_EXTENSION_NAME=muse_proj_cuda_cp4_cfdf821f62 -DTORCH_API_INCLUDE_EXTENSION_H -isystem /opt/sglang/lib/python3.12/site-packages/torch/include -isystem /opt/sglang/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /usr/local/cuda/include -isystem /usr/include/python3.12 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ --expt-relaxed-constexpr --compiler-options '-fPIC' -O3 -gencode=arch=compute_90a,code=sm_90a -std=c++20 -c /tmp/muse_decode_layer-j5xkp65s/sandbox/cache/torch_extensions/muse_proj_cuda_cp4_cfdf821f62/cuda.cu -o cuda.cuda.o 
+/tmp/muse_decode_layer-j5xkp65s/sandbox/cache/torch_extensions/muse_proj_cuda_cp4_cfdf821f62/cuda.cu(86): warning #821-D: extern inline function "wgmma_m64n<BT>(float (&)[<expression>][4], uint64_t, uint64_t) [with BT=128]" was referenced but not defined
+                            void wgmma_m64n(float (&d)[BT / 8][4], uint64_t da, uint64_t db);
+                                 ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+ptxas fatal   : Unresolved extern function '_Z10wgmma_m64nILi128EEvRAdvT_Li8E_A4_fmm'
+ninja: build stopped: subcommand failed.
+
+/tmp/muse_decode_layer-j5xkp65s/run/submission.py:1121:19: error: 'ttng.warp_group_dot' op WGMMA result M dimension must be divisible by 64
+            acc = warpgroup_mma(w_bufs.index(s), x_bufs.index(s).permute((1, 0)), acc, is_async=True)
+                  ^
+Traceback (most recent call last):
+  File "/tmp/muse_decode_layer-j5xkp65s/run/worker.py", line 423, in child_main
+    send(_setup_op(msg, module, state, sync, perf))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_decode_layer-j5xkp65s/run/worker.py", line 322, in _setup_op
+    state["prep"] = prepare(weights)
+                    ^^^^^^^^^^^^^^^^
+  File "/tmp/muse_decode_layer-j5xkp65s/run/submission.py", line 1552, in prepare
+    _fast_gemm(x_tok, "qkv_gate", state)
+  File "/tmp/muse_decode_layer-j5xkp65s/run/submission.py", line 1227, in _fast_gemm
+    _gluon_launch(x, out, state, key, gtile)
+  File "/tmp/muse_decode_layer-j5xkp65s/run/submission.py", line 1183, in _gluon_launch
+    _gluon_gemv_kfold[(n // t.block_n,)](wd, xd, out, m, N=n, K=k, STAGES=t.stages, Q=t.q, num_warps=4)
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 374, in <lambda>
+    return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 757, in run
+    kernel = self._do_compile(key, signature, device, constexprs, options, attrs, warmup)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 902, in _do_compile
+    kernel = self.compile(src, target=target, options=options.__dict__)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/_runtime.py", line 40, in make_ir
+    module = ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: error encountered during parsing

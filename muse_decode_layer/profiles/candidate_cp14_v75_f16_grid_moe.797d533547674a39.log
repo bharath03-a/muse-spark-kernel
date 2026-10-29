@@ -1,0 +1,37 @@
+zip build 39.9s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 137
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 121
+qkv zip variant id 39 disabled: ValueError: accuracy at m=1
+qkv zip m=1 id 110: 14.40 us (base id 121: 14.34)
+qkv zip m=1 id 31: 15.14 us (base id 121: 14.34)
+qkv zip m=1 id 44: 15.10 us (base id 121: 14.34)
+qkv zip m=1 id 25: 15.20 us (base id 121: 14.34)
+qkv zip m=8 id 110: 14.56 us (base id 121: 14.53)
+qkv zip m=8 id 31: 15.55 us (base id 121: 14.53)
+qkv zip m=8 id 44: 15.42 us (base id 121: 14.53)
+qkv zip m=8 id 25: 15.55 us (base id 121: 14.53)
+qkv zip picked m=1 id 121, m=2-8 id 121
+zip prepare 40.3s
+r9 build 38.0s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.14 id3=18.43 -> id3
+r9 prepare 38.0s picks={('qkv_gate', 128): 3}
+r15 lt build 18.9s cublasLt 130101
+r15 qkv_gate m=128 cands=20 (raw us) cp10=18.46 c14=20.13 c12=20.03 c2=20.19 best=a66t92s35k1r0z0c7 -> cp10
+r15 qkv_gate m=256 cands=15 (raw us) cp10=23.20 c9=22.02 c10=23.04 c0=23.20 best=a66t134s35k1r0z0c9 -> lt
+r15 o m=128 cands=8 (raw us) cp10=11.01 c0=11.20 c2=11.78 c1=11.36 best=a66t18s35k1r0z0c5 -> cp10
+r15 o m=256 cands=8 (raw us) cp10=12.93 c0=13.06 c4=13.70 c6=13.63 best=a66t20s35k1r0z0c3 -> cp10
+r15 pooler m=128 cands=15 (raw us) cp10=26.30 c10=24.77 c9=25.22 c8=24.83 best=a66t134s35k1r0z0c7 -> lt
+r15 pooler m=256 cands=12 (raw us) cp10=30.66 c8=30.78 c3=32.13 c10=32.58 best=a66t183s35k1r0z0c9 -> cp10
+r15 unpooler m=128 cands=12 (raw us) cp10=23.87 c0=23.97 c2=24.51 c4=24.22 best=a66t18s35k1r0z0c5 -> cp10
+r15 unpooler m=256 cands=8 (raw us) cp10=28.00 c0=28.58 c2=30.30 c1=30.27 best=a66t20s35k1r0z0c3 -> cp10
+r15 prepare 19.4s total 140.6s picks=qkv_gate256,pooler128
+slice m2: old 9.57 new 8.93
+slice m4: old 11.49 new 8.99
+slice m8: old 9.54 new 9.12
+slice mma path enabled m 2-8
+cp14 whole-layer prepare seconds: 224.3
+v48 prepare 0s before tuning
+strict combo prepare seconds 224.52141680708155

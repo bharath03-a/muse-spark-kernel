@@ -1,0 +1,32 @@
+/tmp/muse_decode_layer-n_949zmn/run/submission.py:1151:19: error: 'ttng.warp_group_dot' op WGMMA result M dimension must be divisible by 64
+            acc = warpgroup_mma(w_bufs.index(s), x_bufs.index(s).permute((1, 0)), acc, is_async=True)
+                  ^
+Traceback (most recent call last):
+  File "/tmp/muse_decode_layer-n_949zmn/run/worker.py", line 423, in child_main
+    send(_setup_op(msg, module, state, sync, perf))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_decode_layer-n_949zmn/run/worker.py", line 322, in _setup_op
+    state["prep"] = prepare(weights)
+                    ^^^^^^^^^^^^^^^^
+  File "/tmp/muse_decode_layer-n_949zmn/run/submission.py", line 1590, in prepare
+    _fast_gemm(x_tok, "qkv_gate", state)
+  File "/tmp/muse_decode_layer-n_949zmn/run/submission.py", line 1257, in _fast_gemm
+    _gluon_launch(x, out, state, key, gtile)
+  File "/tmp/muse_decode_layer-n_949zmn/run/submission.py", line 1213, in _gluon_launch
+    _gluon_gemv_kfold[(n // t.block_n,)](wd, xd, out, m, N=n, K=k, STAGES=t.stages, Q=t.q, num_warps=4)
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 374, in <lambda>
+    return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 757, in run
+    kernel = self._do_compile(key, signature, device, constexprs, options, attrs, warmup)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 902, in _do_compile
+    kernel = self.compile(src, target=target, options=options.__dict__)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/_runtime.py", line 40, in make_ir
+    module = ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: error encountered during parsing

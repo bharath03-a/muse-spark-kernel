@@ -1,0 +1,65 @@
+=== XQA SOURCE ===
+fxqa member: fi_init
+fxqa member: fi_trace
+=== B12xRunner DETAILS ===
+B12xW4A16Runner init: (self, config: 'MoEConfig', device: 'torch.device')
+B12xW4A16Runner methods: ['backend_key', 'build', 'check_support', 'forward', 'get_cache_key_extras', 'get_valid_tactics', 'launch_kwargs_for', 'launch_state_for', 'pack_inputs', 'precompile_tactics', 'required_weight_keys', 'supported_activation_classes', 'supported_activation_classes_by_quant', 'supported_output_formats', 'supported_quant_variants', 'supported_routing_modes', 'supports_expert_parallelism', 'supports_fused_shared_experts', 'supports_quant', 'tuning_config_for']
+B12x forward source:
+    def forward(
+        self,
+        inputs: List[torch.Tensor],
+        tactic: Any = -1,
+        do_preparation: bool = False,
+        **kwargs: Any,
+    ) -> torch.Tensor:
+        self._require_built()
+        if tactic != -1:
+            raise ValueError(f"{self.backend_key} supports only tactic -1.")
+        if self._prepared_weights is None:
+            raise RuntimeError("pack_inputs must be called before b12x forward.")
+        if self._inner is None:
+            raise RuntimeError("pack_inputs must initialize the b12x wrapper.")
+        if len(inputs) != 3:
+            raise ValueError("b12x runner expects [hidden, expert_ids, weights].")
+        return self._inner.run(
+            x=inputs[0],
+            w1_weight=self._prepared_weights["w1_weight"],
+            w1_weight_sf=self._prepared_weights["w1_weight_sf"],
+            w1_alpha=self._prepared_weights["w1_alpha"],
+            fc2_input_scale=self._prepared_weights.get("fc2_input_scale"),
+            w2_weight=self._prepared_weights["w2_weight"],
+            w2_weight_sf=self._prepared_weights["w2_weight_sf"],
+            w2_alpha=self._prepared_weights["w2_alpha"],
+            token_selected_experts=inputs[1],
+            token_final_scales=inputs[2],
+        )
+
+Calling XQA: batch=1, q_len=1, window=2048, window_left=2047
+XQA BF16 query SUCCESS! Output shape: torch.Size([1, 16, 64])
+XQA vs FA3 relative diff: 1.2848e-02
+Calling XQA: batch=1, q_len=1, window=2048, window_left=2047
+XQA test EXCEPTION: Invalid page_size: 1, only 16, 32, 64, 128 are supported
+Traceback (most recent call last):
+  File "/tmp/muse_decode_layer-y879wbze/run/submission.py", line 68, in kernel_fn
+    out_xqa_bf16 = xqa_batch_decode_with_kv_cache(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 3949, in xqa_batch_decode_with_kv_cache
+    xqa(
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/xqa.py", line 405, in xqa
+    xqa_module = get_xqa_module(
+                 ^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/xqa.py", line 54, in get_xqa_module
+    return _get_xqa_module_cached(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/xqa.py", line 79, in _get_xqa_module_cached
+    spec = gen_xqa_module(
+           ^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/jit/xqa.py", line 83, in gen_xqa_module
+    raise ValueError(
+ValueError: Invalid page_size: 1, only 16, 32, 64, 128 are supported

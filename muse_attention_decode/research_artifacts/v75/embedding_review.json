@@ -1,0 +1,7 @@
+{
+  "candidate": "muse_decode_layer/candidate_cp14_v75_fp8_grid_moe.py",
+  "attention_function_class_AST_exact_after_prefix_removal": true,
+  "nonattention_functions_unchanged": true,
+  "nonattention_assignments_unchanged": true,
+  "attention_assignments_exact": true
+}

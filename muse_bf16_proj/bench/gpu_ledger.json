@@ -1,0 +1,197 @@
+{
+ "used_s": 1782.614646911621,
+ "jobs": [
+  {
+   "owner": "C",
+   "name": "exp_C_1",
+   "args": "",
+   "s": 88.9,
+   "rc": 0,
+   "t": "03:32:00"
+  },
+  {
+   "owner": "B",
+   "name": "exp_B_sweep",
+   "args": "",
+   "s": 112.0,
+   "rc": 1,
+   "t": "03:33:52"
+  },
+  {
+   "owner": "A",
+   "name": "bw_sweep",
+   "args": "",
+   "s": 154.2,
+   "rc": 1,
+   "t": "03:36:26"
+  },
+  {
+   "owner": "B",
+   "name": "exp_B_sweep",
+   "args": "",
+   "s": 111.7,
+   "rc": 1,
+   "t": "03:38:18"
+  },
+  {
+   "owner": "C",
+   "name": "exp_C_1",
+   "args": "",
+   "s": 72.6,
+   "rc": 0,
+   "t": "03:44:31"
+  },
+  {
+   "owner": "B",
+   "name": "exp_B_sweep",
+   "args": "",
+   "s": 110.0,
+   "rc": 1,
+   "t": "04:11:01"
+  },
+  {
+   "owner": "C",
+   "name": "exp_C_3",
+   "args": "",
+   "s": 55.6,
+   "rc": 0,
+   "t": "04:11:57"
+  },
+  {
+   "owner": "C",
+   "name": "exp_C_3",
+   "args": "",
+   "s": 96.0,
+   "rc": 0,
+   "t": "04:13:42"
+  },
+  {
+   "owner": "B",
+   "name": "exp_B_abl",
+   "args": "",
+   "s": 111.2,
+   "rc": 1,
+   "t": "04:16:22"
+  },
+  {
+   "owner": "B",
+   "name": "exp_B_up",
+   "args": "",
+   "s": 23.6,
+   "rc": 1,
+   "t": "04:19:40"
+  },
+  {
+   "owner": "B",
+   "name": "exp_B_up",
+   "args": "",
+   "s": 123.4,
+   "rc": 1,
+   "t": "04:23:34"
+  },
+  {
+   "owner": "B",
+   "name": "exp_B_il",
+   "args": "",
+   "s": 20.7,
+   "rc": 1,
+   "t": "04:27:06"
+  },
+  {
+   "owner": "B",
+   "name": "exp_B_il",
+   "args": "",
+   "s": 101.0,
+   "rc": 1,
+   "t": "04:28:52"
+  },
+  {
+   "owner": "D",
+   "name": "exp_D",
+   "args": "",
+   "s": 126.7,
+   "rc": 0,
+   "t": "04:54:11"
+  },
+  {
+   "owner": "D",
+   "name": "exp_D",
+   "args": "e3",
+   "s": 25.5,
+   "rc": 0,
+   "t": "04:54:54"
+  },
+  {
+   "owner": "D",
+   "name": "exp_D2",
+   "args": "",
+   "s": 36.4,
+   "rc": 1,
+   "t": "04:56:38"
+  },
+  {
+   "owner": "D",
+   "name": "exp_D3",
+   "args": "",
+   "s": 190.4,
+   "rc": 1,
+   "t": "05:02:15"
+  },
+  {
+   "owner": "top50",
+   "name": "top50_combined",
+   "args": "",
+   "s": 19.8,
+   "rc": 0,
+   "t": "05:44:13"
+  },
+  {
+   "owner": "top50",
+   "name": "top50_combined",
+   "args": "",
+   "s": 73.5,
+   "rc": 0,
+   "t": "05:46:16"
+  },
+  {
+   "owner": "top50",
+   "name": "top50_combined",
+   "args": "",
+   "s": 20.6,
+   "rc": 0,
+   "t": "05:46:58"
+  },
+  {
+   "owner": "top50",
+   "name": "top50_router_stack",
+   "args": "",
+   "s": 49.2,
+   "rc": 0,
+   "t": "05:49:39"
+  },
+  {
+   "owner": "top50",
+   "name": "top50_router_distributed",
+   "args": "",
+   "s": 19.6,
+   "rc": 0,
+   "t": "05:51:59"
+  },
+  {
+   "owner": "top50",
+   "name": "top50_router_sweep",
+   "args": "",
+   "s": 19.8,
+   "rc": 0,
+   "t": "05:52:50"
+  },
+  {
+   "owner": "top50",
+   "name": "top50_router_sweep2",
+   "args": "",
+   "s": 19.9,
+   "rc": 0,
+   "t": "05:53:35"
+  }
+ ]
+}

@@ -1,0 +1,50 @@
+zip build 30.8s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 27
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 31
+zip prepare 31.0s
+z8 pack pooler: escapes=4615
+z8 pack unpooler: escapes=3364
+z8 pack qkv_gate: escapes=2635
+z8 selftest ok: pooler id=2 S=4 max_clusters=30
+z8 selftest ok: pooler id=5 S=3 max_clusters=39
+z8 selftest ok: unpooler id=1 S=2 max_clusters=66
+z8 selftest ok: qkv_gate id=2 S=4 max_clusters=30
+z8 selftest ok: qkv_gate id=5 S=3 max_clusters=39
+z8 selftest ok: qkv_gate id=6 S=5 max_clusters=22
+z8 path enabled: pooler id=5 m=97..128
+z8 path enabled: unpooler id=1 m=97..128
+z8 path enabled: qkv_gate id=6 m=97..128
+z8 bench pooler m=128 (raw us incl. ~4 graph overhead): cp7=25.50 z8id5=37.26 nofix5=30.22 z8id2=54.54 nofix2=44.86
+z8 bench error: AcceleratorError: CUDA error: an illegal memory access was encountered
+Search for `cudaErrorIllegalAddress' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+The CUDA driver logged these messages, which may provide useful details:
+Returning 700 (CUDA_ERROR_ILLEGAL_ADDRESS) from cuEventSynchronize
+
+
+[W1025 11:40:39.485398301 CUDAEvent.h:57] Warning: CUDA warning: an illegal memory access was encountered (function ~CUDAEvent)
+[W1025 11:40:39.485408556 CUDAEvent.h:57] Warning: CUDA warning: an illegal memory access was encountered (function ~CUDAEvent)
+Traceback (most recent call last):
+  File "/tmp/muse_bf16_proj-l3le0qif/run/worker.py", line 423, in child_main
+    send(_setup_op(msg, module, state, sync, perf))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_bf16_proj-l3le0qif/run/worker.py", line 322, in _setup_op
+    state["prep"] = prepare(weights)
+                    ^^^^^^^^^^^^^^^^
+  File "/tmp/muse_bf16_proj-l3le0qif/run/submission.py", line 2674, in prepare
+    torch.cuda.synchronize()
+  File "/opt/sglang/lib/python3.12/site-packages/torch/cuda/__init__.py", line 1281, in synchronize
+    return torch._C._cuda_synchronize()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.AcceleratorError: CUDA error: an illegal memory access was encountered
+Search for `cudaErrorIllegalAddress' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+The CUDA driver logged these messages, which may provide useful details:
+Sticky error detected
+Returning 700 (CUDA_ERROR_ILLEGAL_ADDRESS) from cuCtxSynchronize_v2
+
+

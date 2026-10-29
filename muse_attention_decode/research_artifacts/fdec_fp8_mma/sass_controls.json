@@ -1,0 +1,26 @@
+{
+  "target": "sm_90a",
+  "app": "ap-FbAjFx3xfa0Q25hzP6GCpD",
+  "CPU_only": true,
+  "kernels": {
+    "pv16_f16": {
+      "F2FP_E4M3_to_F16": 0,
+      "HMMA_1688": 0,
+      "HMMA_16816": 1,
+      "QMMA_QGMMA": 0
+    },
+    "pv32": {
+      "F2FP_E4M3_to_F16": 12,
+      "HMMA_1688": 0,
+      "HMMA_16816": 2,
+      "QMMA_QGMMA": 0
+    },
+    "pv16": {
+      "F2FP_E4M3_to_F16": 6,
+      "HMMA_1688": 2,
+      "HMMA_16816": 0,
+      "QMMA_QGMMA": 0
+    }
+  },
+  "conclusion": "FP8 mma.sync k16 and k32 lower to F16 conversions+HMMA; native FP8 premise rejected"
+}

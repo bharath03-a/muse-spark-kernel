@@ -1,0 +1,19 @@
+{
+  "state": "done",
+  "source": "<repo>/muse_bf16_proj/bench/top50_candidate_cw8_pooler.py",
+  "sha256": "dad17a60f386060cce3f66b7a34d36705aba1abc6269441d799ac521503ccf6d",
+  "timestamp_utc": "2026-10-28T22:55:37.348825+00:00",
+  "modal_gpu_jobs": 0,
+  "release_review": "clean_slate_research PASS; CPU-only compile/mapping PASS",
+  "job_id": "326978ecb91b416d",
+  "passed": true,
+  "selected": false,
+  "pooler_raw_us": {
+    "current": 22.207999601960182,
+    "CW8": 22.336000576615334
+  },
+  "controls_raw_us": {
+    "CW4": 24.09599907696247,
+    "CW8": 22.304000332951546
+  }
+}

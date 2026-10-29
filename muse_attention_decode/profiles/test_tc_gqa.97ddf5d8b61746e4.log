@@ -1,0 +1,46 @@
+Traceback (most recent call last):
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 43, in wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 1121, in __getitem__
+    raise ValueError(f"unsupported tensor index: {sl}")
+ValueError: unsupported tensor index: <triton.language.core.slice object at 0xeb9d0316e10>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-uqc5y9xl/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-uqc5y9xl/run/submission.py", line 417, in kernel_fn
+    _tc_gqa_decode_stage1_kernel[grid1](
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 374, in <lambda>
+    return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 757, in run
+    kernel = self._do_compile(key, signature, device, constexprs, options, attrs, warmup)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 902, in _do_compile
+    kernel = self.compile(src, target=target, options=options.__dict__)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 80, in make_ir
+    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 116:24:
+    # Apply v_scale if needed
+    if scaled:
+        acc = acc * v_scale_val
+
+    # Store 8 heads' partial accumulator to global memory
+    pacc_base = b * stride_pacc_b + split_id * stride_pacc_s
+    pm_base = b * stride_pm_b + split_id * stride_pm_s
+    pl_base = b * stride_pl_b + split_id * stride_pl_s
+
+    offs_8 = tl.arange(0, 8)
+    pacc_ptrs = partial_acc_ptr + pacc_base + (q_head_start + offs_8[:, None]) * stride_pacc_h + offs_d[None, :]
+    tl.store(pacc_ptrs, acc[:8, :])
+                        ^
+unsupported tensor index: <triton.language.core.slice object at 0xeb9d0316e10>

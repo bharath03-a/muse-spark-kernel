@@ -1,0 +1,120 @@
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-736rx_86/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-736rx_86/run/submission.py", line 244, in kernel_fn
+    attn_out = wrapper.run(
+               ^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2271, in run
+    _check_cached_qkv_data_type(
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/utils.py", line 368, in _check_cached_qkv_data_type
+    raise ValueError(
+ValueError: The dtype of q torch.float8_e4m3fn does not match the q_data_type torch.float16 specified in plan function.
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-736rx_86/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-736rx_86/run/submission.py", line 244, in kernel_fn
+    attn_out = wrapper.run(
+               ^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2271, in run
+    _check_cached_qkv_data_type(
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/utils.py", line 368, in _check_cached_qkv_data_type
+    raise ValueError(
+ValueError: The dtype of q torch.float8_e4m3fn does not match the q_data_type torch.float16 specified in plan function.
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-736rx_86/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-736rx_86/run/submission.py", line 244, in kernel_fn
+    attn_out = wrapper.run(
+               ^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2271, in run
+    _check_cached_qkv_data_type(
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/utils.py", line 368, in _check_cached_qkv_data_type
+    raise ValueError(
+ValueError: The dtype of q torch.float8_e4m3fn does not match the q_data_type torch.float16 specified in plan function.
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-736rx_86/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-736rx_86/run/submission.py", line 244, in kernel_fn
+    attn_out = wrapper.run(
+               ^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2271, in run
+    _check_cached_qkv_data_type(
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/utils.py", line 368, in _check_cached_qkv_data_type
+    raise ValueError(
+ValueError: The dtype of q torch.float8_e4m3fn does not match the q_data_type torch.float16 specified in plan function.
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-736rx_86/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-736rx_86/run/submission.py", line 244, in kernel_fn
+    attn_out = wrapper.run(
+               ^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2271, in run
+    _check_cached_qkv_data_type(
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/utils.py", line 368, in _check_cached_qkv_data_type
+    raise ValueError(
+ValueError: The dtype of q torch.float8_e4m3fn does not match the q_data_type torch.float16 specified in plan function.
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-736rx_86/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-736rx_86/run/submission.py", line 244, in kernel_fn
+    attn_out = wrapper.run(
+               ^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2271, in run
+    _check_cached_qkv_data_type(
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/utils.py", line 368, in _check_cached_qkv_data_type
+    raise ValueError(
+ValueError: The dtype of q torch.float8_e4m3fn does not match the q_data_type torch.float16 specified in plan function.
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-736rx_86/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-736rx_86/run/submission.py", line 244, in kernel_fn
+    attn_out = wrapper.run(
+               ^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2271, in run
+    _check_cached_qkv_data_type(
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/utils.py", line 368, in _check_cached_qkv_data_type
+    raise ValueError(
+ValueError: The dtype of q torch.float8_e4m3fn does not match the q_data_type torch.float16 specified in plan function.
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-736rx_86/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-736rx_86/run/submission.py", line 244, in kernel_fn
+    attn_out = wrapper.run(
+               ^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2271, in run
+    _check_cached_qkv_data_type(
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/utils.py", line 368, in _check_cached_qkv_data_type
+    raise ValueError(
+ValueError: The dtype of q torch.float8_e4m3fn does not match the q_data_type torch.float16 specified in plan function.

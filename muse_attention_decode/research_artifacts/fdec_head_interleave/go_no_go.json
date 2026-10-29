@@ -1,0 +1,15 @@
+{
+  "app": "ap-2sWkjbSVtdI6jfzSHQbrsR",
+  "cache_only_no_compile_no_GPU": true,
+  "kernel": "fdec<false,true>",
+  "first_softmax_EX2_pc": "0x8e30",
+  "QK_HMMA_before_first_softmax": 16,
+  "QK_head_count": 2,
+  "QK_HMMA_per_head": 8,
+  "QK_pc_range": [
+    "0x8600",
+    "0x8db0"
+  ],
+  "decision": "NO_GO_compiler_already_hoists_both_heads_QK",
+  "new_candidate_written": false
+}

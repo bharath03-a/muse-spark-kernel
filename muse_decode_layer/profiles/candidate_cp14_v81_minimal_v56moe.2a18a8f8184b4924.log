@@ -1,0 +1,37 @@
+zip build 38.6s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 137
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 121
+qkv zip variant id 39 disabled: ValueError: accuracy at m=1
+qkv zip m=1 id 110: 14.40 us (base id 121: 14.37)
+qkv zip m=1 id 31: 15.14 us (base id 121: 14.37)
+qkv zip m=1 id 44: 15.17 us (base id 121: 14.37)
+qkv zip m=1 id 25: 15.39 us (base id 121: 14.37)
+qkv zip m=8 id 110: 14.59 us (base id 121: 14.53)
+qkv zip m=8 id 31: 15.49 us (base id 121: 14.53)
+qkv zip m=8 id 44: 15.46 us (base id 121: 14.53)
+qkv zip m=8 id 25: 15.71 us (base id 121: 14.53)
+qkv zip picked m=1 id 121, m=2-8 id 121
+zip prepare 38.9s
+r9 build 36.7s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.61 id3=18.72 -> id3
+r9 prepare 36.7s picks={('qkv_gate', 128): 3}
+r15 lt build 18.5s cublasLt 130101
+r15 qkv_gate m=128 cands=20 (raw us) cp10=18.85 c12=20.26 c3=20.38 c14=20.00 best=a66t80s35k1r0z0c7 -> cp10
+r15 qkv_gate m=256 cands=15 (raw us) cp10=23.39 c9=22.37 c10=23.10 c0=23.26 best=a66t134s35k1r0z0c9 -> lt
+r15 o m=128 cands=8 (raw us) cp10=10.98 c0=11.30 c1=11.68 c5=11.81 best=a66t18s35k1r0z0c5 -> cp10
+r15 o m=256 cands=8 (raw us) cp10=12.80 c0=13.34 c4=13.76 c1=13.15 best=a66t21s35k1r0z0c5 -> cp10
+r15 pooler m=128 cands=15 (raw us) cp10=25.38 c8=25.22 c10=25.15 c9=25.12 best=a66t143s35k1r0z0c7 -> lt
+r15 pooler m=256 cands=12 (raw us) cp10=30.43 c8=30.34 c3=31.90 c10=32.29 best=a66t183s35k1r0z0c9 -> cp10
+r15 unpooler m=128 cands=12 (raw us) cp10=24.29 c10=24.06 c4=24.16 c2=24.54 best=a66t193s35k1r0z0c7 -> lt
+r15 unpooler m=256 cands=8 (raw us) cp10=27.71 c0=27.97 c2=30.02 c3=30.34 best=a66t20s35k1r0z0c3 -> cp10
+r15 prepare 19.1s total 136.8s picks=qkv_gate256,pooler128,unpooler128
+slice m2: old 9.60 new 8.90
+slice m4: old 11.58 new 9.02
+slice m8: old 9.54 new 9.15
+slice mma path enabled m 2-8
+cp14 whole-layer prepare seconds: 217.9
+v56 prepare 39s before tuning
+strict combo prepare seconds 257.3205227329163

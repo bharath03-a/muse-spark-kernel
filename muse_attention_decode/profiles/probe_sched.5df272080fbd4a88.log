@@ -1,0 +1,37 @@
+Case batch=1, layer=2048, sched=None
+Case batch=3, layer=2048, sched=None
+Case batch=5, layer=2048, sched=None
+Case batch=4, layer=0, sched shape=torch.Size([13]), dtype=torch.int32, sample=[12, 12, 12, 12, 1, 1, 1, 1, 0, 1]
+Case batch=8, layer=0, sched shape=torch.Size([25]), dtype=torch.int32, sample=[1, 2, 1, 2, 1, 2, 1, 1, 1, 1]
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-upp5jo0f/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-upp5jo0f/run/reference.py", line 346, in collect
+    raise ValueError(f"expected a bfloat16 tensor of shape {shape}")
+ValueError: expected a bfloat16 tensor of shape (8, 1, 8192)
+Case batch=2, layer=0, sched=None
+Case batch=4, layer=2048, sched=None
+Case batch=4, layer=0, sched=None
+Case batch=1, layer=0, sched=None
+Case batch=3, layer=2048, sched=None
+Case batch=2, layer=0, sched shape=torch.Size([13]), dtype=torch.int32, sample=[24, 24, 253, 0, 1, 1, 217, 0, 0, 1]
+Case batch=4, layer=0, sched shape=torch.Size([13]), dtype=torch.int32, sample=[12, 21, 18, 10, 1, 1, 1, 1, 1, 3]
+Case batch=4, layer=2048, sched=None
+Case batch=2, layer=0, sched=None
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-upp5jo0f/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-upp5jo0f/run/reference.py", line 346, in collect
+    raise ValueError(f"expected a bfloat16 tensor of shape {shape}")
+ValueError: expected a bfloat16 tensor of shape (2, 8, 8192)
+Case batch=4, layer=0, sched shape=torch.Size([13]), dtype=torch.int32, sample=[46, 6, 4, 5, 1, 1, 1, 1, 1, 0]
+Case batch=2, layer=0, sched=None
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-upp5jo0f/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-upp5jo0f/run/reference.py", line 346, in collect
+    raise ValueError(f"expected a bfloat16 tensor of shape {shape}")
+ValueError: expected a bfloat16 tensor of shape (2, 8, 8192)

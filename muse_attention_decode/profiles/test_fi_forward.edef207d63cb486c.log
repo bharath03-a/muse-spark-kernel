@@ -1,0 +1,199 @@
+wrapper forward error: The dtype of q torch.bfloat16 does not match the q_data_type torch.float16 specified in plan function.
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-yc0t_jes/run/submission.py", line 236, in kernel_fn
+    attn_out = wrapper.forward(
+               ^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2099, in forward
+    return self.run(
+           ^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2271, in run
+    _check_cached_qkv_data_type(
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/utils.py", line 368, in _check_cached_qkv_data_type
+    raise ValueError(
+ValueError: The dtype of q torch.bfloat16 does not match the q_data_type torch.float16 specified in plan function.
+wrapper forward error: The dtype of q torch.bfloat16 does not match the q_data_type torch.float16 specified in plan function.
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-yc0t_jes/run/submission.py", line 236, in kernel_fn
+    attn_out = wrapper.forward(
+               ^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2099, in forward
+    return self.run(
+           ^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2271, in run
+    _check_cached_qkv_data_type(
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/utils.py", line 368, in _check_cached_qkv_data_type
+    raise ValueError(
+ValueError: The dtype of q torch.bfloat16 does not match the q_data_type torch.float16 specified in plan function.
+wrapper forward error: The dtype of q torch.bfloat16 does not match the q_data_type torch.float16 specified in plan function.
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-yc0t_jes/run/submission.py", line 236, in kernel_fn
+    attn_out = wrapper.forward(
+               ^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2099, in forward
+    return self.run(
+           ^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2271, in run
+    _check_cached_qkv_data_type(
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/utils.py", line 368, in _check_cached_qkv_data_type
+    raise ValueError(
+ValueError: The dtype of q torch.bfloat16 does not match the q_data_type torch.float16 specified in plan function.
+wrapper forward error: The dtype of q torch.bfloat16 does not match the q_data_type torch.float16 specified in plan function.
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-yc0t_jes/run/submission.py", line 236, in kernel_fn
+    attn_out = wrapper.forward(
+               ^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2099, in forward
+    return self.run(
+           ^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2271, in run
+    _check_cached_qkv_data_type(
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/utils.py", line 368, in _check_cached_qkv_data_type
+    raise ValueError(
+ValueError: The dtype of q torch.bfloat16 does not match the q_data_type torch.float16 specified in plan function.
+wrapper forward error: The dtype of q torch.bfloat16 does not match the q_data_type torch.float16 specified in plan function.
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-yc0t_jes/run/submission.py", line 236, in kernel_fn
+    attn_out = wrapper.forward(
+               ^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2099, in forward
+    return self.run(
+           ^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2271, in run
+    _check_cached_qkv_data_type(
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/utils.py", line 368, in _check_cached_qkv_data_type
+    raise ValueError(
+ValueError: The dtype of q torch.bfloat16 does not match the q_data_type torch.float16 specified in plan function.
+wrapper forward error: The dtype of q torch.bfloat16 does not match the q_data_type torch.float16 specified in plan function.
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-yc0t_jes/run/submission.py", line 236, in kernel_fn
+    attn_out = wrapper.forward(
+               ^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2099, in forward
+    return self.run(
+           ^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2271, in run
+    _check_cached_qkv_data_type(
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/utils.py", line 368, in _check_cached_qkv_data_type
+    raise ValueError(
+ValueError: The dtype of q torch.bfloat16 does not match the q_data_type torch.float16 specified in plan function.
+wrapper forward error: The dtype of q torch.bfloat16 does not match the q_data_type torch.float16 specified in plan function.
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-yc0t_jes/run/submission.py", line 236, in kernel_fn
+    attn_out = wrapper.forward(
+               ^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2099, in forward
+    return self.run(
+           ^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2271, in run
+    _check_cached_qkv_data_type(
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/utils.py", line 368, in _check_cached_qkv_data_type
+    raise ValueError(
+ValueError: The dtype of q torch.bfloat16 does not match the q_data_type torch.float16 specified in plan function.
+wrapper forward error: The dtype of q torch.bfloat16 does not match the q_data_type torch.float16 specified in plan function.
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-yc0t_jes/run/submission.py", line 236, in kernel_fn
+    attn_out = wrapper.forward(
+               ^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2099, in forward
+    return self.run(
+           ^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2271, in run
+    _check_cached_qkv_data_type(
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/utils.py", line 368, in _check_cached_qkv_data_type
+    raise ValueError(
+ValueError: The dtype of q torch.bfloat16 does not match the q_data_type torch.float16 specified in plan function.
+wrapper forward error: The dtype of q torch.bfloat16 does not match the q_data_type torch.float16 specified in plan function.
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-yc0t_jes/run/submission.py", line 236, in kernel_fn
+    attn_out = wrapper.forward(
+               ^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2099, in forward
+    return self.run(
+           ^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2271, in run
+    _check_cached_qkv_data_type(
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/utils.py", line 368, in _check_cached_qkv_data_type
+    raise ValueError(
+ValueError: The dtype of q torch.bfloat16 does not match the q_data_type torch.float16 specified in plan function.
+wrapper forward error: The dtype of q torch.bfloat16 does not match the q_data_type torch.float16 specified in plan function.
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-yc0t_jes/run/submission.py", line 236, in kernel_fn
+    attn_out = wrapper.forward(
+               ^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2099, in forward
+    return self.run(
+           ^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/decode.py", line 2271, in run
+    _check_cached_qkv_data_type(
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/utils.py", line 368, in _check_cached_qkv_data_type
+    raise ValueError(
+ValueError: The dtype of q torch.bfloat16 does not match the q_data_type torch.float16 specified in plan function.
+wrapper forward error: CUDA error: operation not permitted when stream is capturing
+Search for `cudaErrorStreamCaptureUnsupported' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+The CUDA driver logged these messages, which may provide useful details:
+Returning 900 (CUDA_ERROR_STREAM_CAPTURE_UNSUPPORTED) from cuStreamSynchronize
+
+
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-yc0t_jes/run/submission.py", line 219, in kernel_fn
+    num_pages = (int(seq_lens[b].item()) + page_size - 1) // page_size
+                     ^^^^^^^^^^^^^^^^^^
+torch.AcceleratorError: CUDA error: operation not permitted when stream is capturing
+Search for `cudaErrorStreamCaptureUnsupported' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+The CUDA driver logged these messages, which may provide useful details:
+Returning 900 (CUDA_ERROR_STREAM_CAPTURE_UNSUPPORTED) from cuStreamSynchronize
+
+
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-yc0t_jes/run/worker.py", line 468, in child_main
+    state["graph_out"] = fn(state["data"])
+                         ^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-yc0t_jes/run/submission.py", line 256, in kernel_fn
+    attn_out = torch.empty((tokens, hq, d), dtype=torch.bfloat16, device=device)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: info.status != cudaStreamCaptureStatusInvalidated INTERNAL ASSERT FAILED at "/__w/pytorch/pytorch/c10/cuda/CUDACachingAllocator.cpp":2214, please report a bug to PyTorch. Invalid stream capture status
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-yc0t_jes/run/worker.py", line 467, in child_main
+    with torch.cuda.graph(graph, stream=stream):
+  File "/opt/sglang/lib/python3.12/site-packages/torch/cuda/graphs.py", line 1210, in __exit__
+    self.cuda_graph.capture_end()
+  File "/opt/sglang/lib/python3.12/site-packages/torch/cuda/graphs.py", line 649, in capture_end
+    self.capture_end_pre()
+  File "/opt/sglang/lib/python3.12/site-packages/torch/cuda/graphs.py", line 630, in capture_end_pre
+    super().capture_end_pre()
+torch.AcceleratorError: CUDA error: operation failed due to a previous error during capture
+Search for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+

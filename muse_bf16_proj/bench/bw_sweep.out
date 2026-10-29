@@ -1,0 +1,226 @@
+ best ldg: 15.23us 4406GB/s ldg cps=8 U=16 stride
+      best bulk: 15.60us 4302GB/s bulk cps=2 ch=32768 st=2 warps=1 inter
+      best tma: 16.03us 4186GB/s tma cps=1 box=256x128 st=4 inter
+FIT best-of-all: t = 0.70 us + MB/0 GB/s -> asymptotic 0 GB/s
+SMs=132 empty-graph replay 5.02 us (subtracted)
+ldg cps=1 U=4 stride                                   3.15   5.92   9.76  12.50  16.38  21.44
+ldg cps=1 U=8 stride                                   3.14   5.82   9.46  12.32  16.06  20.96
+ldg cps=1 U=8 contig                                   3.30   6.08   9.95  12.64  16.80  21.63
+ldg cps=1 U=16 stride                                  3.07   5.65   9.34  12.06  15.68  20.48
+ldg cps=1 U=16 contig                                  3.26   5.89   9.78  12.59  16.26  21.10
+ldg cps=2 U=4 stride                                   2.53   4.70   7.30   9.34  12.29  16.32
+ldg cps=2 U=8 stride                                   2.43   4.61   8.54   9.41  12.26  16.19
+ldg cps=2 U=8 contig                                   3.09   4.93   7.65   9.66  12.82  16.58
+ldg cps=2 U=16 stride                                  2.59   4.58   7.23   9.47  12.10  16.21
+ldg cps=2 U=16 contig                                  3.04   4.90   7.57   9.76  12.61  16.51
+ldg cps=4 U=4 stride                                   2.43   4.24   7.07   9.02  11.74  15.33
+ldg cps=4 U=8 stride                                   2.45   4.29   7.14   9.23  11.68  15.33
+ldg cps=4 U=8 contig                                   3.10   4.93   7.23   9.36  12.22  15.90
+ldg cps=4 U=16 stride                                  2.90   4.48   7.04   9.78  11.82  15.36
+ldg cps=4 U=16 contig                                  3.17   4.94   7.90   9.89  12.26  16.02
+ldg cps=8 U=4 stride                                   2.40   4.32   6.82   9.10  11.44  15.22
+ldg cps=8 U=8 stride                                   2.56   4.45   6.82   9.38  11.66  15.22
+ldg cps=8 U=8 contig                                   2.59   4.93   7.46   9.54  12.19  15.90
+ldg cps=8 U=16 stride                                  3.42   4.99   7.33   9.39  11.73  15.10
+ldg cps=8 U=16 contig                                  3.92   5.02   7.78   9.95  12.29  16.38
+bulk cps=1 ch=4096 st=8 warps=1 contig                 7.12  12.16  18.98  24.32  31.62  41.23
+bulk cps=1 ch=4096 st=8 warps=1 inter                  7.14  12.19  18.82  24.14  31.52  41.18
+bulk cps=1 ch=8192 st=8 warps=1 contig                 4.67   7.10  10.64  13.17  16.90  21.95
+bulk cps=1 ch=8192 st=8 warps=1 inter                  4.61   7.17  10.59  13.12  16.93  22.03
+bulk cps=1 ch=16384 st=4 warps=1 contig                3.71   5.57   8.05  10.11  13.17  16.64
+bulk cps=1 ch=16384 st=4 warps=1 inter                 3.62   5.41   8.06  10.08  12.88  16.45
+bulk cps=1 ch=16384 st=8 warps=1 contig                3.78   6.21   8.80  10.91  13.82  17.28
+bulk cps=1 ch=16384 st=8 warps=1 inter                 3.63   7.34   8.78  10.94  13.86  17.22
+bulk cps=1 ch=32768 st=2 warps=1 contig                3.18   5.02   7.49   9.50  12.59  16.10
+bulk cps=1 ch=32768 st=2 warps=1 inter                 3.04   4.77   7.36   9.36  12.16  15.97
+bulk cps=1 ch=32768 st=4 warps=1 contig                3.33   5.38   7.94   9.98  12.80  16.29
+bulk cps=1 ch=32768 st=4 warps=1 inter                 3.17   5.22   7.87   9.95  12.45  16.11
+bulk cps=1 ch=32768 st=6 warps=1 contig                3.33   5.55   8.38  10.40  13.22  16.58
+bulk cps=1 ch=32768 st=6 warps=1 inter                 3.26   5.41   8.29  10.43  13.12  16.54
+bulk cps=1 ch=4096 st=4 warps=4 contig                 3.78   5.63   8.35  10.38  13.22  17.15
+bulk cps=1 ch=4096 st=4 warps=4 inter                  3.65   5.57   8.16  10.22  13.15  16.86
+bulk cps=1 ch=8192 st=4 warps=4 contig                 3.33   5.44   8.13  10.21  12.86  16.62
+bulk cps=1 ch=8192 st=4 warps=4 inter                  3.30   5.38   7.94   9.95  12.61  16.30
+bulk cps=1 ch=8192 st=2 warps=4 contig                 3.17   5.09   7.82   9.73  12.64  16.38
+bulk cps=1 ch=8192 st=2 warps=4 inter                  3.01   4.96   7.41   9.57  12.38  15.95
+bulk cps=1 ch=16384 st=2 warps=4 contig                3.17   4.99   7.58   9.76  12.35  15.95
+bulk cps=1 ch=16384 st=2 warps=4 inter                 3.07   4.86   7.52   9.47  12.11  15.90
+bulk cps=1 ch=4096 st=2 warps=8 contig                 3.30   5.12   8.22   9.90  12.94  16.38
+bulk cps=1 ch=4096 st=2 warps=8 inter                  3.15   5.02   7.60   9.60  12.46  16.22
+bulk cps=1 ch=8192 st=2 warps=8 contig                 3.33   5.10   7.90   9.82  12.62  16.19
+bulk cps=1 ch=8192 st=2 warps=8 inter                  3.20   4.93   7.65   9.74  12.18  15.84
+bulk cps=2 ch=4096 st=8 warps=1 contig                 4.64   7.41  10.78  13.17  17.07  22.03
+bulk cps=2 ch=4096 st=8 warps=1 inter                  4.45   7.01  10.56  13.15  16.96  21.89
+bulk cps=2 ch=8192 st=8 warps=1 contig                 3.58   6.16   8.74  10.85  13.70  17.31
+bulk cps=2 ch=8192 st=8 warps=1 inter                  3.47   6.10   8.83  11.06  13.73  17.58
+bulk cps=2 ch=16384 st=4 warps=1 contig                3.17   5.44   7.81  10.03  12.77  16.30
+bulk cps=2 ch=16384 st=4 warps=1 inter                 2.99   5.25   7.90   9.86  12.58  16.26
+bulk cps=2 ch=32768 st=2 warps=1 contig                3.04   4.90   8.67   9.50  12.22  15.82
+bulk cps=2 ch=32768 st=2 warps=1 inter                 2.93   4.75   8.24   9.38  11.90  15.42
+bulk cps=2 ch=4096 st=4 warps=4 contig                 3.30   5.50   8.18  10.21  12.99  16.69
+bulk cps=2 ch=4096 st=4 warps=4 inter                  3.20   5.33   7.94   9.98  12.75  16.26
+bulk cps=2 ch=8192 st=2 warps=4 contig                 3.10   5.06   7.62   9.70  12.51  16.02
+bulk cps=2 ch=8192 st=2 warps=4 inter                  3.01   4.80   7.30   9.41  12.10  15.70
+bulk cps=2 ch=4096 st=2 warps=8 contig                 3.26   5.10   7.68   9.86  13.14  16.05
+bulk cps=2 ch=4096 st=2 warps=8 inter                  3.10   4.96   7.46   9.52  12.13  15.68
+tma cps=1 box=256x32 st=8 contig                       4.86   8.08  12.42  15.63  20.42  26.53
+tma cps=1 box=256x32 st=8 inter                        4.70   7.90  12.26  15.44  20.11  26.32
+tma cps=1 box=256x64 st=4 contig                       3.49   5.34   7.94  10.08  12.83  16.62
+tma cps=1 box=256x64 st=4 inter                        3.39   5.15   7.63   9.76  12.48  16.06
+tma cps=1 box=256x64 st=8 contig                       3.52   5.79   8.45  10.56  13.42  17.15
+tma cps=1 box=256x64 st=8 inter                        3.46   5.79   8.32  10.46  13.15  16.83
+tma cps=1 box=256x128 st=4 contig                      3.20   5.38   8.03  10.08  12.75  16.48
+tma cps=1 box=256x128 st=4 inter                       3.20   5.18   7.62   9.74  12.38  16.06
+tma cps=1 box=128x128 st=4 contig                      3.62   5.50   8.19  10.37  13.14  17.15
+tma cps=1 box=128x128 st=4 inter                       3.52   5.18   7.74   9.82  12.51  16.13
+tma cps=1 box=128x64 st=8 contig                       5.07   8.18  12.46  15.78  20.58  26.59
+tma cps=1 box=128x64 st=8 inter                        4.90   8.03  12.32  15.71  20.21  26.46
+tma cps=2 box=256x32 st=8 contig                       3.81   5.98   8.70  10.80  13.60  17.28
+tma cps=2 box=256x32 st=8 inter                        3.58   6.18   8.38  10.46  13.18  16.83
+tma cps=2 box=256x64 st=4 contig                       3.26   5.38   7.97   9.92  12.77  16.42
+tma cps=2 box=256x64 st=4 inter                        3.14   6.08   7.78   9.79  12.45  15.97
+tma cps=2 box=128x128 st=4 contig                      3.22   5.41   8.03  10.19  13.07  17.12
+tma cps=2 box=128x128 st=4 inter                       3.23   5.28   7.63   9.76  12.48  16.13
+tma cps=2 box=128x64 st=8 contig                       3.62   7.07   8.69  10.88  13.92  17.71
+tma cps=2 box=128x64 st=8 inter                        3.62   5.86   8.35  10.48  13.38  16.99
+
+BEST per size (us, GB/s, cfg)
+  8MiB    8.4MB: 2.40us 3495GB/s ldg cps=8 U=4 stride | 2.43us 3449GB/s ldg cps=2 U=8 stride | 2.43us 3449GB/s ldg cps=4 U=4 stride
+      best ldg: 2.40us 3495GB/s ldg cps=8 U=4 stride
+      best bulk: 2.93us 2865GB/s bulk cps=2 ch=32768 st=2 warps=1 inter
+      best tma: 3.14us 2675GB/s tma cps=2 box=256x64 st=4 inter
+ 16MiB   16.8MB: 4.24us 3957GB/s ldg cps=4 U=4 stride | 4.29us 3913GB/s ldg cps=4 U=8 stride | 4.32us 3884GB/s ldg cps=8 U=4 stride
+      best ldg: 4.24us 3957GB/s ldg cps=4 U=4 stride
+      best bulk: 4.75us 3531GB/s bulk cps=2 ch=32768 st=2 warps=1 inter
+      best tma: 5.15us 3256GB/s tma cps=1 box=256x64 st=4 inter
+ 27MiB   28.3MB: 6.82us 4154GB/s ldg cps=8 U=4 stride | 6.82us 4154GB/s ldg cps=8 U=8 stride | 7.04us 4022GB/s ldg cps=4 U=16 stride
+      best ldg: 6.82us 4154GB/s ldg cps=8 U=4 stride
+      best bulk: 7.30us 3880GB/s bulk cps=2 ch=8192 st=2 warps=4 inter
+      best tma: 7.62us 3717GB/s tma cps=1 box=256x128 st=4 inter
+ 36MiB   37.7MB: 9.02us 4183GB/s ldg cps=4 U=4 stride | 9.10us 4146GB/s ldg cps=8 U=4 stride | 9.23us 4089GB/s ldg cps=4 U=8 stride
+      best ldg: 9.02us 4183GB/s ldg cps=4 U=4 stride
+      best bulk: 9.36us 4033GB/s bulk cps=1 ch=32768 st=2 warps=1 inter
+      best tma: 9.74us 3874GB/s tma cps=1 box=256x128 st=4 inter
+ 48MiB   50.3MB: 11.44us 4400GB/s ldg cps=8 U=4 stride | 11.66us 4315GB/s ldg cps=8 U=8 stride | 11.68us 4309GB/s ldg cps=4 U=8 stride
+      best ldg: 11.44us 4400GB/s ldg cps=8 U=4 stride
+      best bulk: 11.90us 4228GB/s bulk cps=2 ch=32768 st=2 warps=1 inter
+      best tma: 12.38us 4064GB/s tma cps=1 box=256x128 st=4 inter
+ 64MiB   67.1MB: 15.10us 4443GB/s ldg cps=8 U=16 stride | 15.22us 4410GB/s ldg cps=8 U=4 stride | 15.22us 4410GB/s ldg cps=8 U=8 stride
+      best ldg: 15.10us 4443GB/s ldg cps=8 U=16 stride
+      best bulk: 15.42us 4351GB/s bulk cps=2 ch=32768 st=2 warps=1 inter
+      best tma: 15.97us 4203GB/s tma cps=2 box=256x64 st=4 inter
+FIT best-of-all: t = 0.66 us + MB/0 GB/s -> asymptotic 0 GB/s
+SMs=132 empty-graph replay 5.25 us (subtracted)
+ldg cps=1 U=4 stride                                   3.20   5.94   9.76  12.54  16.42  21.41
+ldg cps=1 U=8 stride                                   3.23   5.81   9.54  12.35  16.18  20.98
+ldg cps=1 U=8 contig                                   3.33   6.18   9.98  12.70  16.78  21.62
+ldg cps=1 U=16 stride                                  3.10   5.79   9.47  12.05  15.65  20.45
+ldg cps=1 U=16 contig                                  3.30   6.64   9.84  12.45  16.30  21.09
+ldg cps=2 U=4 stride                                   2.56   4.61   7.42   9.47  12.40  16.35
+ldg cps=2 U=8 stride                                   2.59   4.64   7.39   9.46  12.35  16.19
+ldg cps=2 U=8 contig                                   3.02   4.99   7.65   9.70  12.78  16.64
+ldg cps=2 U=16 stride                                  2.66   4.61   7.33   9.54  12.26  16.16
+ldg cps=2 U=16 contig                                  3.04   5.18   7.65   9.82  12.72  16.61
+ldg cps=4 U=4 stride                                   2.53   4.35   7.17   9.23  11.73  15.33
+ldg cps=4 U=8 stride                                   2.53   4.32   7.10   9.23  11.71  15.39
+ldg cps=4 U=8 contig                                   3.09   5.06   7.23   9.31  12.26  15.95
+ldg cps=4 U=16 stride                                  3.01   4.58   7.14   9.89  11.94  15.42
+ldg cps=4 U=16 contig                                  3.20   4.96   7.89   9.94  12.35  16.26
+ldg cps=8 U=4 stride                                   2.56   4.38   6.91   9.09  11.60  15.20
+ldg cps=8 U=8 stride                                   2.62   4.48   6.88   9.34  11.68  15.25
+ldg cps=8 U=8 contig                                   2.72   4.96   7.50   9.54  12.29  15.81
+ldg cps=8 U=16 stride                                  3.36   4.93   7.30   9.22  11.52  15.20
+ldg cps=8 U=16 contig                                  3.90   5.06   7.68   9.92  12.22  16.27
+bulk cps=1 ch=4096 st=8 warps=1 contig                 7.07  12.13  18.66  24.03  31.42  40.94
+bulk cps=1 ch=4096 st=8 warps=1 inter                  7.07  11.94  18.56  23.87  31.23  40.86
+bulk cps=1 ch=8192 st=8 warps=1 contig                 4.51   6.98  10.45  13.02  16.77  21.70
+bulk cps=1 ch=8192 st=8 warps=1 inter                  4.42   6.94  10.37  12.98  16.74  21.66
+bulk cps=1 ch=16384 st=4 warps=1 contig                3.65   5.42   8.03  10.06  13.22  16.48
+bulk cps=1 ch=16384 st=4 warps=1 inter                 3.55   5.34   7.97  10.05  12.67  16.27
+bulk cps=1 ch=16384 st=8 warps=1 contig                3.71   7.25   8.77  10.82  13.79  17.09
+bulk cps=1 ch=16384 st=8 warps=1 inter                 3.58   6.02   8.64  10.83  13.71  17.15
+bulk cps=1 ch=32768 st=2 warps=1 contig                2.98   4.82   7.26   9.42  12.29  15.76
+bulk cps=1 ch=32768 st=2 warps=1 inter                 2.91   4.74   7.10   9.23  12.03  15.94
+bulk cps=1 ch=32768 st=4 warps=1 contig                3.14   5.25   7.74   9.86  12.67  16.16
+bulk cps=1 ch=32768 st=4 warps=1 inter                 2.91   5.12   7.74   9.82  12.32  15.97
+bulk cps=1 ch=32768 st=6 warps=1 contig                3.18   5.38   8.13  10.18  13.04  16.42
+bulk cps=1 ch=32768 st=6 warps=1 inter                 3.01   5.23   8.10  10.27  12.90  16.32
+bulk cps=1 ch=4096 st=4 warps=4 contig                 3.58   5.47   8.03  10.19  12.93  16.94
+bulk cps=1 ch=4096 st=4 warps=4 inter                  3.46   5.28   7.84  10.05  12.86  16.54
+bulk cps=1 ch=8192 st=4 warps=4 contig                 3.20   5.41   7.90   9.95  12.58  16.61
+bulk cps=1 ch=8192 st=4 warps=4 inter                  3.17   5.38   7.90   9.89  12.54  16.22
+bulk cps=1 ch=8192 st=2 warps=4 contig                 3.17   5.01   7.66   9.82  12.45  16.37
+bulk cps=1 ch=8192 st=2 warps=4 inter                  3.04   4.96   7.46   9.44  12.26  15.94
+bulk cps=1 ch=16384 st=2 warps=4 contig                3.07   4.99   7.68   9.66  12.22  15.81
+bulk cps=1 ch=16384 st=2 warps=4 inter                 3.01   4.86   7.49   9.50  12.13  15.87
+bulk cps=1 ch=4096 st=2 warps=8 contig                 3.18   5.02   7.84   9.81  12.82  16.29
+bulk cps=1 ch=4096 st=2 warps=8 inter                  3.10   5.02   7.70   9.57  12.38  16.18
+bulk cps=1 ch=8192 st=2 warps=8 contig                 3.30   5.09   7.63   9.76  12.51  16.03
+bulk cps=1 ch=8192 st=2 warps=8 inter                  3.14   4.93   7.65   9.76  12.24  15.92
+bulk cps=2 ch=4096 st=8 warps=1 contig                 4.48   7.10  10.53  13.09  16.93  21.90
+bulk cps=2 ch=4096 st=8 warps=1 inter                  4.35   6.98  10.53  12.99  16.74  21.60
+bulk cps=2 ch=8192 st=8 warps=1 contig                 3.62   6.24   8.83  10.85  13.76  17.34
+bulk cps=2 ch=8192 st=8 warps=1 inter                  3.62   6.85   8.83  11.07  14.11  17.30
+bulk cps=2 ch=16384 st=4 warps=1 contig                3.14   5.39   7.90  10.03  12.86  16.46
+bulk cps=2 ch=16384 st=4 warps=1 inter                 3.10   5.26   7.87   9.87  12.61  16.16
+bulk cps=2 ch=32768 st=2 warps=1 contig                3.10   4.93   7.49   9.44  12.19  15.86
+bulk cps=2 ch=32768 st=2 warps=1 inter                 3.04   4.90   7.39   9.39  11.97  15.50
+bulk cps=2 ch=4096 st=4 warps=4 contig                 3.36   5.57   8.13  10.24  13.02  16.64
+bulk cps=2 ch=4096 st=4 warps=4 inter                  3.25   5.38   7.95   9.98  12.80  16.27
+bulk cps=2 ch=8192 st=2 warps=4 contig                 3.14   5.06   7.71   9.70  12.51  16.08
+bulk cps=2 ch=8192 st=2 warps=4 inter                  3.17   4.99   7.42   9.50  12.16  15.71
+bulk cps=2 ch=4096 st=2 warps=8 contig                 3.26   5.15   7.81   9.86  13.07  16.08
+bulk cps=2 ch=4096 st=2 warps=8 inter                  3.17   5.02   7.49   9.62  12.22  15.81
+tma cps=1 box=256x32 st=8 contig                       4.93   8.06  12.30  15.42  20.19  26.30
+tma cps=1 box=256x32 st=8 inter                        4.64   7.89  12.08  15.30  20.03  25.98
+tma cps=1 box=256x64 st=4 contig                       3.49   5.38   7.97   9.98  12.90  16.67
+tma cps=1 box=256x64 st=4 inter                        3.38   5.22   7.62   9.76  12.51  16.10
+tma cps=1 box=256x64 st=8 contig                       3.63   5.87   8.42  10.66  13.44  17.25
+tma cps=1 box=256x64 st=8 inter                        3.57   5.68   8.22  10.46  13.15  16.70
+tma cps=1 box=256x128 st=4 contig                      3.23   5.26   7.90  10.02  12.69  16.45
+tma cps=1 box=256x128 st=4 inter                       3.15   5.15   7.58   9.73  12.37  15.90
+tma cps=1 box=128x128 st=4 contig                      3.58   5.31   8.03  10.40  12.98  17.02
+tma cps=1 box=128x128 st=4 inter                       3.33   5.18   7.74   9.89  12.38  15.92
+tma cps=1 box=128x64 st=8 contig                       4.83   7.97  12.24  15.42  20.21  26.19
+tma cps=1 box=128x64 st=8 inter                        4.70   7.84  12.00  15.31  19.97  25.98
+tma cps=2 box=256x32 st=8 contig                       3.68   5.82   8.54  10.72  13.47  17.36
+tma cps=2 box=256x32 st=8 inter                        3.50   5.76   8.26  10.38  13.09  16.75
+tma cps=2 box=256x64 st=4 contig                       3.25   5.28   7.90   9.79  12.56  16.24
+tma cps=2 box=256x64 st=4 inter                        2.99   5.01   7.52   9.62  12.22  15.74
+tma cps=2 box=128x128 st=4 contig                      3.04   5.18   7.81   9.98  12.93  16.96
+tma cps=2 box=128x128 st=4 inter                       3.07   5.12   7.55   9.55  12.29  15.90
+tma cps=2 box=128x64 st=8 contig                       3.42   5.97   8.54  10.75  13.60  17.44
+tma cps=2 box=128x64 st=8 inter                        3.36   5.68   8.24  10.34  13.15  16.90
+
+BEST per size (us, GB/s, cfg)
+  8MiB    8.4MB: 2.53us 3318GB/s ldg cps=4 U=4 stride | 2.53us 3318GB/s ldg cps=4 U=8 stride | 2.56us 3277GB/s ldg cps=2 U=4 stride
+      best ldg: 2.53us 3318GB/s ldg cps=4 U=4 stride
+      best bulk: 2.91us 2881GB/s bulk cps=1 ch=32768 st=2 warps=1 inter
+      best tma: 2.99us 2804GB/s tma cps=2 box=256x64 st=4 inter
+ 16MiB   16.8MB: 4.32us 3884GB/s ldg cps=4 U=8 stride | 4.35us 3855GB/s ldg cps=4 U=4 stride | 4.38us 3827GB/s ldg cps=8 U=4 stride
+      best ldg: 4.32us 3884GB/s ldg cps=4 U=8 stride
+      best bulk: 4.74us 3542GB/s bulk cps=1 ch=32768 st=2 warps=1 inter
+      best tma: 5.01us 3350GB/s tma cps=2 box=256x64 st=4 inter
+ 27MiB   28.3MB: 6.88us 4115GB/s ldg cps=8 U=8 stride | 6.91us 4096GB/s ldg cps=8 U=4 stride | 7.10us 3985GB/s bulk cps=1 ch=32768 st=2 warps=1 inter
+      best ldg: 6.88us 4115GB/s ldg cps=8 U=8 stride
+      best bulk: 7.10us 3985GB/s bulk cps=1 ch=32768 st=2 warps=1 inter
+      best tma: 7.52us 3765GB/s tma cps=2 box=256x64 st=4 inter
+ 36MiB   37.7MB: 9.09us 4154GB/s ldg cps=8 U=4 stride | 9.22us 4096GB/s ldg cps=8 U=16 stride | 9.23us 4089GB/s bulk cps=1 ch=32768 st=2 warps=1 inter
+      best ldg: 9.09us 4154GB/s ldg cps=8 U=4 stride
+      best bulk: 9.23us 4089GB/s bulk cps=1 ch=32768 st=2 warps=1 inter
+      best tma: 9.55us 3952GB/s tma cps=2 box=128x128 st=4 inter
+ 48MiB   50.3MB: 11.52us 4369GB/s ldg cps=8 U=16 stride | 11.60us 4339GB/s ldg cps=8 U=4 stride | 11.68us 4309GB/s ldg cps=8 U=8 stride
+      best ldg: 11.52us 4369GB/s ldg cps=8 U=16 stride
+      best bulk: 11.97us 4206GB/s bulk cps=2 ch=32768 st=2 warps=1 inter
+      best tma: 12.22us 4117GB/s tma cps=2 box=256x64 st=4 inter
+ 64MiB   67.1MB: 15.20us 4415GB/s ldg cps=8 U=16 stride | 15.20us 4415GB/s ldg cps=8 U=4 stride | 15.25us 4401GB/s ldg cps=8 U=8 stride
+      best ldg: 15.20us 4415GB/s ldg cps=8 U=16 stride
+      best bulk: 15.50us 4328GB/s bulk cps=2 ch=32768 st=2 warps=1 inter
+      best tma: 15.74us 4263GB/s tma cps=2 box=256x64 st=4 inter
+FIT best-of-all: t = 0.75 us + MB/0 GB/s -> asymptotic 0 GB/s
+Stopping app - uncaught exception raised locally: InternalFailure('Server has lost track of input').
+╭─ Error ──────────────────────────────────────────────────────────────────────╮
+│ Server has lost track of input                                               │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+[gpu_q] A bw_sweep: 154s, rc=1; budget used 355/1800s

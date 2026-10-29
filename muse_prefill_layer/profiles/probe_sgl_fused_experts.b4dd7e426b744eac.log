@@ -1,0 +1,210 @@
+fused_moe_triton source file: /sgl-workspace/sglang-muse-spark/python/sglang/srt/layers/moe/fused_moe_triton/__init__.py
+fused_experts first 40 lines:
+  def fused_experts(
+      hidden_states: torch.Tensor,
+      w1: torch.Tensor,
+      w2: torch.Tensor,
+      topk_output: StandardTopKOutput,
+      moe_runner_config: MoeRunnerConfig,
+      b1: Optional[torch.Tensor] = None,
+      b2: Optional[torch.Tensor] = None,
+      use_fp8_w8a8: bool = False,
+      use_int8_w8a8: bool = False,
+      use_int8_w8a16: bool = False,
+      use_int4_w4a16: bool = False,
+      per_channel_quant: bool = False,
+      w1_scale: Optional[torch.Tensor] = None,
+      w2_scale: Optional[torch.Tensor] = None,
+      w1_zp: Optional[torch.Tensor] = None,
+      w2_zp: Optional[torch.Tensor] = None,
+      a1_scale: Optional[torch.Tensor] = None,
+      a2_scale: Optional[torch.Tensor] = None,
+      block_shape: Optional[List[int]] = None,
+      a1_q: Optional[torch.Tensor] = None,
+      fuse_swiglu_interleaved: bool = False,
+  ):
+      topk_weights, topk_ids, _ = topk_output
+      filter_expert = (
+          moe_runner_config.num_experts is None
+          or moe_runner_config.num_experts != moe_runner_config.num_local_experts
+      )
+      if moe_runner_config.inplace:
+          assert not moe_runner_config.no_combine, "no combine + inplace makes no sense"
+          inplace_fused_experts(
+              hidden_states,
+              w1,
+              w2,
+              topk_weights,
+              topk_ids,
+              b1,
+              b2,
+              moe_runner_config.activation,
+              moe_runner_config.is_gated,
+fused_moe_triton source file: /sgl-workspace/sglang-muse-spark/python/sglang/srt/layers/moe/fused_moe_triton/__init__.py
+fused_experts first 40 lines:
+  def fused_experts(
+      hidden_states: torch.Tensor,
+      w1: torch.Tensor,
+      w2: torch.Tensor,
+      topk_output: StandardTopKOutput,
+      moe_runner_config: MoeRunnerConfig,
+      b1: Optional[torch.Tensor] = None,
+      b2: Optional[torch.Tensor] = None,
+      use_fp8_w8a8: bool = False,
+      use_int8_w8a8: bool = False,
+      use_int8_w8a16: bool = False,
+      use_int4_w4a16: bool = False,
+      per_channel_quant: bool = False,
+      w1_scale: Optional[torch.Tensor] = None,
+      w2_scale: Optional[torch.Tensor] = None,
+      w1_zp: Optional[torch.Tensor] = None,
+      w2_zp: Optional[torch.Tensor] = None,
+      a1_scale: Optional[torch.Tensor] = None,
+      a2_scale: Optional[torch.Tensor] = None,
+      block_shape: Optional[List[int]] = None,
+      a1_q: Optional[torch.Tensor] = None,
+      fuse_swiglu_interleaved: bool = False,
+  ):
+      topk_weights, topk_ids, _ = topk_output
+      filter_expert = (
+          moe_runner_config.num_experts is None
+          or moe_runner_config.num_experts != moe_runner_config.num_local_experts
+      )
+      if moe_runner_config.inplace:
+          assert not moe_runner_config.no_combine, "no combine + inplace makes no sense"
+          inplace_fused_experts(
+              hidden_states,
+              w1,
+              w2,
+              topk_weights,
+              topk_ids,
+              b1,
+              b2,
+              moe_runner_config.activation,
+              moe_runner_config.is_gated,
+fused_moe_triton source file: /sgl-workspace/sglang-muse-spark/python/sglang/srt/layers/moe/fused_moe_triton/__init__.py
+fused_experts first 40 lines:
+  def fused_experts(
+      hidden_states: torch.Tensor,
+      w1: torch.Tensor,
+      w2: torch.Tensor,
+      topk_output: StandardTopKOutput,
+      moe_runner_config: MoeRunnerConfig,
+      b1: Optional[torch.Tensor] = None,
+      b2: Optional[torch.Tensor] = None,
+      use_fp8_w8a8: bool = False,
+      use_int8_w8a8: bool = False,
+      use_int8_w8a16: bool = False,
+      use_int4_w4a16: bool = False,
+      per_channel_quant: bool = False,
+      w1_scale: Optional[torch.Tensor] = None,
+      w2_scale: Optional[torch.Tensor] = None,
+      w1_zp: Optional[torch.Tensor] = None,
+      w2_zp: Optional[torch.Tensor] = None,
+      a1_scale: Optional[torch.Tensor] = None,
+      a2_scale: Optional[torch.Tensor] = None,
+      block_shape: Optional[List[int]] = None,
+      a1_q: Optional[torch.Tensor] = None,
+      fuse_swiglu_interleaved: bool = False,
+  ):
+      topk_weights, topk_ids, _ = topk_output
+      filter_expert = (
+          moe_runner_config.num_experts is None
+          or moe_runner_config.num_experts != moe_runner_config.num_local_experts
+      )
+      if moe_runner_config.inplace:
+          assert not moe_runner_config.no_combine, "no combine + inplace makes no sense"
+          inplace_fused_experts(
+              hidden_states,
+              w1,
+              w2,
+              topk_weights,
+              topk_ids,
+              b1,
+              b2,
+              moe_runner_config.activation,
+              moe_runner_config.is_gated,
+fused_moe_triton source file: /sgl-workspace/sglang-muse-spark/python/sglang/srt/layers/moe/fused_moe_triton/__init__.py
+fused_experts first 40 lines:
+  def fused_experts(
+      hidden_states: torch.Tensor,
+      w1: torch.Tensor,
+      w2: torch.Tensor,
+      topk_output: StandardTopKOutput,
+      moe_runner_config: MoeRunnerConfig,
+      b1: Optional[torch.Tensor] = None,
+      b2: Optional[torch.Tensor] = None,
+      use_fp8_w8a8: bool = False,
+      use_int8_w8a8: bool = False,
+      use_int8_w8a16: bool = False,
+      use_int4_w4a16: bool = False,
+      per_channel_quant: bool = False,
+      w1_scale: Optional[torch.Tensor] = None,
+      w2_scale: Optional[torch.Tensor] = None,
+      w1_zp: Optional[torch.Tensor] = None,
+      w2_zp: Optional[torch.Tensor] = None,
+      a1_scale: Optional[torch.Tensor] = None,
+      a2_scale: Optional[torch.Tensor] = None,
+      block_shape: Optional[List[int]] = None,
+      a1_q: Optional[torch.Tensor] = None,
+      fuse_swiglu_interleaved: bool = False,
+  ):
+      topk_weights, topk_ids, _ = topk_output
+      filter_expert = (
+          moe_runner_config.num_experts is None
+          or moe_runner_config.num_experts != moe_runner_config.num_local_experts
+      )
+      if moe_runner_config.inplace:
+          assert not moe_runner_config.no_combine, "no combine + inplace makes no sense"
+          inplace_fused_experts(
+              hidden_states,
+              w1,
+              w2,
+              topk_weights,
+              topk_ids,
+              b1,
+              b2,
+              moe_runner_config.activation,
+              moe_runner_config.is_gated,
+fused_moe_triton source file: /sgl-workspace/sglang-muse-spark/python/sglang/srt/layers/moe/fused_moe_triton/__init__.py
+fused_experts first 40 lines:
+  def fused_experts(
+      hidden_states: torch.Tensor,
+      w1: torch.Tensor,
+      w2: torch.Tensor,
+      topk_output: StandardTopKOutput,
+      moe_runner_config: MoeRunnerConfig,
+      b1: Optional[torch.Tensor] = None,
+      b2: Optional[torch.Tensor] = None,
+      use_fp8_w8a8: bool = False,
+      use_int8_w8a8: bool = False,
+      use_int8_w8a16: bool = False,
+      use_int4_w4a16: bool = False,
+      per_channel_quant: bool = False,
+      w1_scale: Optional[torch.Tensor] = None,
+      w2_scale: Optional[torch.Tensor] = None,
+      w1_zp: Optional[torch.Tensor] = None,
+      w2_zp: Optional[torch.Tensor] = None,
+      a1_scale: Optional[torch.Tensor] = None,
+      a2_scale: Optional[torch.Tensor] = None,
+      block_shape: Optional[List[int]] = None,
+      a1_q: Optional[torch.Tensor] = None,
+      fuse_swiglu_interleaved: bool = False,
+  ):
+      topk_weights, topk_ids, _ = topk_output
+      filter_expert = (
+          moe_runner_config.num_experts is None
+          or moe_runner_config.num_experts != moe_runner_config.num_local_experts
+      )
+      if moe_runner_config.inplace:
+          assert not moe_runner_config.no_combine, "no combine + inplace makes no sense"
+          inplace_fused_experts(
+              hidden_states,
+              w1,
+              w2,
+              topk_weights,
+              topk_ids,
+              b1,
+              b2,
+              moe_runner_config.activation,
+              moe_runner_config.is_gated,

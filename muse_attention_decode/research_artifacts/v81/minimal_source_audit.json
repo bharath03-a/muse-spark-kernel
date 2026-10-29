@@ -1,0 +1,46 @@
+{
+  "upstream_revision": "e6b48c833d8c4c1ebbca16b80d784b9e3d5bb86b",
+  "base_revision": "47103fd9c1212868018eb615a4c6467e366e9ce0",
+  "CUDA_identical_to_cached_v75": true,
+  "only_changed_global": "VCFG",
+  "changed_flags": {
+    "(16, True)": [
+      [
+        -2,
+        128,
+        16,
+        1073741824,
+        2129988,
+        1
+      ],
+      [
+        -2,
+        128,
+        16,
+        1073741824,
+        539000900,
+        1
+      ]
+    ],
+    "(32, True)": [
+      [
+        -2,
+        256,
+        8,
+        1073741824,
+        2129988,
+        1
+      ],
+      [
+        -2,
+        256,
+        8,
+        1073741824,
+        539000900,
+        1
+      ]
+    ]
+  },
+  "new_flags_instantiated_in_v75_CUDA": true,
+  "PCV_PTR_not_enabled": true
+}

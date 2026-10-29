@@ -1,0 +1,37 @@
+zip build 38.5s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 137
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 121
+qkv zip variant id 39 disabled: ValueError: accuracy at m=1
+qkv zip m=1 id 110: 14.56 us (base id 121: 14.50)
+qkv zip m=1 id 31: 15.30 us (base id 121: 14.50)
+qkv zip m=1 id 44: 15.30 us (base id 121: 14.50)
+qkv zip m=1 id 25: 15.30 us (base id 121: 14.50)
+qkv zip m=8 id 110: 14.56 us (base id 121: 14.62)
+qkv zip m=8 id 31: 15.52 us (base id 121: 14.62)
+qkv zip m=8 id 44: 15.52 us (base id 121: 14.62)
+qkv zip m=8 id 25: 15.52 us (base id 121: 14.62)
+qkv zip picked m=1 id 121, m=2-8 id 121
+zip prepare 38.8s
+r9 build 36.7s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.78 id3=18.88 -> id3
+r9 prepare 36.7s picks={('qkv_gate', 128): 3}
+r15 lt build 18.4s cublasLt 130101
+r15 qkv_gate m=128 cands=20 (raw us) cp10=18.62 c12=20.35 c14=20.16 c2=20.29 best=a66t80s35k1r0z0c7 -> cp10
+r15 qkv_gate m=256 cands=15 (raw us) cp10=23.07 c9=22.11 c0=23.17 c10=23.58 best=a66t134s35k1r0z0c9 -> lt
+r15 o m=128 cands=8 (raw us) cp10=11.26 c0=11.46 c1=11.58 c2=11.71 best=a66t18s35k1r0z0c5 -> cp10
+r15 o m=256 cands=8 (raw us) cp10=13.38 c1=13.38 c0=13.09 c2=13.98 best=a66t20s35k1r0z0c3 -> lt
+r15 pooler m=128 cands=15 (raw us) cp10=26.18 c10=24.93 c8=25.09 c9=25.98 best=a66t134s35k1r0z0c7 -> lt
+r15 pooler m=256 cands=12 (raw us) cp10=30.43 c8=30.56 c3=32.13 c10=32.51 best=a66t183s35k1r0z0c9 -> cp10
+r15 unpooler m=128 cands=12 (raw us) cp10=23.52 c0=23.74 c2=24.35 c10=24.19 best=a66t18s35k1r0z0c5 -> cp10
+r15 unpooler m=256 cands=8 (raw us) cp10=28.10 c0=28.19 c1=30.62 c3=30.59 best=a66t20s35k1r0z0c3 -> cp10
+r15 prepare 18.9s total 136.2s picks=qkv_gate256,o256,pooler128
+slice m2: old 9.70 new 9.06
+slice m4: old 11.58 new 9.12
+slice m8: old 9.63 new 9.28
+slice mma path enabled m 2-8
+cp14 whole-layer prepare seconds: 219.6
+v56 prepare 39s before tuning
+strict combo prepare seconds 258.8840462040389

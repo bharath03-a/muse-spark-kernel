@@ -1,0 +1,15 @@
+=== Testing CUTLASS MoE: bs=4, topk_ids=torch.Size([4, 8]) ===
+Error with use_fused_finalize=False: Check failed: quant_scales.value().size() == 8 (6 vs. 8) : Expecting 8 quant scales for INT4 quantization
+Error with use_fused_finalize=True: Check failed: quant_scales.value().size() == 8 (6 vs. 8) : Expecting 8 quant scales for INT4 quantization
+=== Testing CUTLASS MoE: bs=33, topk_ids=torch.Size([33, 8]) ===
+Error with use_fused_finalize=False: Check failed: quant_scales.value().size() == 8 (6 vs. 8) : Expecting 8 quant scales for INT4 quantization
+Error with use_fused_finalize=True: Check failed: quant_scales.value().size() == 8 (6 vs. 8) : Expecting 8 quant scales for INT4 quantization
+=== Testing CUTLASS MoE: bs=257, topk_ids=torch.Size([257, 8]) ===
+Error with use_fused_finalize=False: Check failed: quant_scales.value().size() == 8 (6 vs. 8) : Expecting 8 quant scales for INT4 quantization
+Error with use_fused_finalize=True: Check failed: quant_scales.value().size() == 8 (6 vs. 8) : Expecting 8 quant scales for INT4 quantization
+=== Testing CUTLASS MoE: bs=128, topk_ids=torch.Size([128, 8]) ===
+Error with use_fused_finalize=False: Check failed: quant_scales.value().size() == 8 (6 vs. 8) : Expecting 8 quant scales for INT4 quantization
+Error with use_fused_finalize=True: Check failed: quant_scales.value().size() == 8 (6 vs. 8) : Expecting 8 quant scales for INT4 quantization
+=== Testing CUTLASS MoE: bs=1, topk_ids=torch.Size([1, 8]) ===
+Error with use_fused_finalize=False: Check failed: quant_scales.value().size() == 8 (6 vs. 8) : Expecting 8 quant scales for INT4 quantization
+Error with use_fused_finalize=True: Check failed: quant_scales.value().size() == 8 (6 vs. 8) : Expecting 8 quant scales for INT4 quantization

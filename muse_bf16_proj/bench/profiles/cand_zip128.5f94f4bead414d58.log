@@ -1,0 +1,19 @@
+zip path enabled: pooler ((1, 8, 25), (9, 16, 27))
+zip path enabled: unpooler ((9, 16, 28),)
+zip path enabled: qkv_gate ((1, 8, 31),)
+z8 pack pooler: escapes=4699
+z8 pack unpooler: escapes=3266
+z8 pack qkv_gate: escapes=2574
+z8 pack o: escapes=964
+z8 selftest ok: pooler id=2 S=4 max_clusters=30
+z8 selftest ok: unpooler id=1 S=2 max_clusters=66
+z8 selftest ok: qkv_gate id=3 S=6 max_clusters=17
+z8 selftest ok: qkv_gate id=4 S=7 max_clusters=15
+z8 selftest ok: o id=1 S=2 max_clusters=66
+z8 path enabled: pooler id=2 m=97..128
+z8 path enabled: unpooler id=1 m=97..128
+z8 path enabled: qkv_gate id=3 m=97..128
+z8 bench o m=128 (raw us incl. ~4 graph overhead): cp7=11.36 z8id1=21.09
+z8 bench pooler m=128 (raw us incl. ~4 graph overhead): cp7=25.50 z8id2=80.50
+z8 bench qkv_gate m=128 (raw us incl. ~4 graph overhead): cp7=20.42 z8id3=62.83 z8id4=60.32
+z8 bench unpooler m=128 (raw us incl. ~4 graph overhead): cp7=24.46 z8id1=36.91

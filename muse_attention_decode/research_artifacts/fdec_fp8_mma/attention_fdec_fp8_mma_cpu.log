@@ -1,0 +1,142 @@
+✓ Initialized. View run at 
+https://modal.com/apps/<workspace>/main/ap-sRBRWD18a2QmeQTSumYWbE
+✓ Created objects.
+├── ✓ Uploaded 
+│   <repo>/muse_attention_de
+│   code/modal_bf16pv_compile.py
+├── ✓ Uploaded 
+│   <repo>/muse_attention_de
+│   code/candidate_openkernels_v75.py
+├── ✓ Uploaded 
+│   <repo>/muse_attention_de
+│   code/candidate_openkernels_fdeccontrol.py
+├── ✓ Uploaded 
+│   <repo>/muse_attention_de
+│   code/candidate_openkernels_fdecfast.py
+├── ✓ Uploaded 
+│   <repo>/muse_attention_de
+│   code/candidate_openkernels_pvcontrol.py
+├── ✓ Uploaded 
+│   <repo>/muse_attention_de
+│   code/candidate_openkernels_bf16pv.py
+├── ✓ Created Function inspect_fa3_binary.
+├── ✓ Created Function resources.
+├── ✓ Created Function inspect_fa3_baseline.
+├── ✓ Created Function compile.
+└── ✓ Created Function inspect_fp8_mma.
+FP8_M16K16_COMPILE 0  ptxas info    : 0 bytes gmem
+ptxas info    : Compiling entry function 'pv16' for 'sm_90a'
+ptxas info    : Function properties for pv16
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 20 registers, used 0 barriers
+ptxas info    : Compile time = 3.750 ms
+
+FP8_M16K16_SASS 
+        code for sm_90a
+        .target sm_90a
+
+                Function : pv16
+        .headerflags    @"EF_CUDA_ACCELERATORS EF_CUDA_SM90 EF_CUDA_VIRTUAL_SM(EF_CUDA_SM90)"
+        /*0000*/                   LDC R1, c[0x0][0x28] ;                  /* 0x00000a00ff017b82 */
+                                                                           /* 0x000fe20000000800 */
+        /*0010*/                   S2R R17, SR_TID.X ;                     /* 0x0000000000117919 */
+                                                                           /* 0x000e2e0000002100 */
+        /*0020*/                   LDC.64 R8, c[0x0][0x218] ;              /* 0x00008600ff087b82 */
+                                                                           /* 0x000e620000000a00 */
+        /*0030*/                   ULDC.64 UR4, c[0x0][0x208] ;            /* 0x0000820000047ab9 */
+                                                                           /* 0x000fce0000000a00 */
+        /*0040*/                   LDC.64 R2, c[0x0][0x210] ;              /* 0x00008400ff027b82 */
+                                                                           /* 0x000eb00000000a00 */
+        /*0050*/                   LDC.64 R10, c[0x0][0x220] ;             /* 0x00008800ff0a7b82 */
+                                                                           /* 0x000ee20000000a00 */
+        /*0060*/                   SHF.L.U32 R5, R17.reuse, 0x1, RZ ;      /* 0x0000000111057819 */
+                                                                           /* 0x041fe200000006ff */
+        /*0070*/                   IMAD.WIDE.U32 R8, R17, 0x4, R8 ;        /* 0x0000000411087825 */
+                                                                           /* 0x002fc800078e0008 */
+        /*0080*/                   IMAD.WIDE.U32 R2, R5, 0x4, R2 ;         /* 0x0000000405027825 */
+                                                                           /* 0x004fe400078e0002 */
+        /*0090*/                   LDG.E R8, desc[UR4][R8.64] ;            /* 0x0000000408087981 */
+                                                                           /* 0x0000a8000c1e1900 */
+        /*00a0*/                   LDG.E R0, desc[UR4][R2.64] ;            /* 0x0000000402007981 */
+                                                                           /* 0x000f28000c1e1900 */
+        /*00b0*/                   LDG.E R12, desc[UR4][R2.64+0x4] ;       /* 0x00000404020c7981 */
+                                                                           /* 0x000762000c1e1900 */
+        /*00c0*/                   SHF.L.U32 R9, R17, 0x2, RZ ;            /* 0x0000000211097819 */
+                                                                           /* 0x001fca00000006ff */
+        /*00d0*/                   IMAD.WIDE.U32 R2, R9, 0x4, R10 ;        /* 0x0000000409027825 */
+                                                                           /* 0x008fe200078e000a */
+        /*00e0*/                   F2FP.F16.E4M3.UNPACK_B R6, R8.reuse ;   /* 0x00000008ff06723e */
+                                                                           /* 0x084fe400020006ff */
+        /*00f0*/                   F2FP.F16.E4M3.UNPACK_B R13, R8.H1 ;     /* 0x00000008ff0d723e */
+                                                                           /* 0x000fe400030006ff */
+        /*0100*/                   F2FP.F16.E4M3.UNPACK_B R4, R0.reuse ;   /* 0x00000000ff04723e */
+                                                                           /* 0x090fe400020006ff */
+        /*0110*/                   F2FP.F16.E4M3.UNPACK_B R14, R0.H1 ;     /* 0x00000000ff0e723e */
+                                                                           /* 0x000fe400030006ff */
+        /*0120*/                   F2FP.F16.E4M3.UNPACK_B R5, R12.reuse ;  /* 0x0000000cff05723e */
+                                                                           /* 0x0a0fe400020006ff */
+        /*0130*/                   F2FP.F16.E4M3.UNPACK_B R15, R12.H1 ;    /* 0x0000000cff0f723e */
+                                                                           /* 0x000fca00030006ff */
+        /*0140*/                   HMMA.1688.F32 R4, R4, R6, RZ ;          /* 0x000000060404723c */
+                                                                           /* 0x000fde00000010ff */
+        /*0150*/                   NOP ;                                   /* 0x0000000000007918 */
+                                                                           /* 0x000fc20000000000 */
+        /*0160*/                   HMMA.1688.F32 R4, R14, R13, R4 ;        /* 0x0000000d0e04723c */
+                                                                           /* 0x000fde0000001004 */
+        /*0170*/                   NOP ;                                   /* 0x0000000000007918 */
+                                                                           /* 0x000fc20000000000 */
+        /*0180*/                   FADD R9, RZ, R4 ;                       /* 0x00000004ff097221 */
+                                                                           /* 0x000fe20000000000 */
+        /*0190*/                   FADD R5, RZ, R5 ;                       /* 0x00000005ff057221 */
+                                                                           /* 0x000fe20000000000 */
+        /*01a0*/                   FADD R11, RZ, R6 ;                      /* 0x00000006ff0b7221 */
+                                                                           /* 0x000fe20000000000 */
+        /*01b0*/                   FADD R7, RZ, R7 ;                       /* 0x00000007ff077221 */
+                                                                           /* 0x000fe40000000000 */
+        /*01c0*/                   STG.E desc[UR4][R2.64], R9 ;            /* 0x0000000902007986 */
+                                                                           /* 0x000fe8000c101904 */
+        /*01d0*/                   STG.E desc[UR4][R2.64+0x4], R5 ;        /* 0x0000040502007986 */
+                                                                           /* 0x000fe8000c101904 */
+        /*01e0*/                   STG.E desc[UR4][R2.64+0x8], R11 ;       /* 0x0000080b02007986 */
+                                                                           /* 0x000fe8000c101904 */
+        /*01f0*/                   STG.E desc[UR4][R2.64+0xc], R7 ;        /* 0x00000c0702007986 */
+                                                                           /* 0x000fe2000c101904 */
+        /*0200*/                   EXIT ;                                  /* 0x000000000000794d */
+                                                                           /* 0x000fea0003800000 */
+        /*0210*/                   BRA 0x210;                              /* 0xfffffffc00fc7947 */
+                                                                           /* 0x000fc0000383ffff */
+        /*0220*/                   NOP;                                    /* 0x0000000000007918 */
+                                                                           /* 0x000fc00000000000 */
+        /*0230*/                   NOP;                                    /* 0x0000000000007918 */
+                                                                           /* 0x000fc00000000000 */
+        /*0240*/                   NOP;                                    /* 0x0000000000007918 */
+                                                                           /* 0x000fc00000000000 */
+        /*0250*/                   NOP;                                    /* 0x0000000000007918 */
+                                                                           /* 0x000fc00000000000 */
+        /*0260*/                   NOP;                                    /* 0x0000000000007918 */
+                                                                           /* 0x000fc00000000000 */
+        /*0270*/                   NOP;                                    /* 0x0000000000007918 */
+                                                                           /* 0x000fc00000000000 */
+        /*0280*/                   NOP;                                    /* 0x0000000000007918 */
+                                                                           /* 0x000fc00000000000 */
+        /*0290*/                   NOP;                                    /* 0x0000000000007918 */
+                                                                           /* 0x000fc00000000000 */
+        /*02a0*/                   NOP;                                    /* 0x0000000000007918 */
+                                                                           /* 0x000fc00000000000 */
+        /*02b0*/                   NOP;                                    /* 0x0000000000007918 */
+                                                                           /* 0x000fc00000000000 */
+        /*02c0*/                   NOP;                                    /* 0x0000000000007918 */
+                                                                           /* 0x000fc00000000000 */
+        /*02d0*/                   NOP;                                    /* 0x0000000000007918 */
+                                                                           /* 0x000fc00000000000 */
+        /*02e0*/                   NOP;                                    /* 0x0000000000007918 */
+                                                                           /* 0x000fc00000000000 */
+        /*02f0*/                   NOP;                                    /* 0x0000000000007918 */
+                                                                           /* 0x000fc00000000000 */
+                ..........
+
+
+
+Stopping app - local entrypoint completed.
+✓ App completed. View run at 
+https://modal.com/apps/<workspace>/main/ap-sRBRWD18a2QmeQTSumYWbE

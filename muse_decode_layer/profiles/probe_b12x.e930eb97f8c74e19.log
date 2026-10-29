@@ -1,0 +1,332 @@
+ames}."
+            )
+        if self.supported_activation_classes_by_quant:
+            # Strict lookup: a runner that declares per-quant capabilities must
+            # declare them for every MMA pair it accepts. Falling back to the
+            # permissive class default would silently admit every activation on
+            # a newly added pair.
+            try:
+                supported_activations = self.supported_activation_classes_by_quant[pair]
+            except KeyError:
+                raise NotImplementedError(
+                    f"{type(self).__name__} declares per-quantization activation "
+                    f"support but has no entry for weight={quant.weight.name}, "
+                    f"activation={quant.activation.name}; "
+                    "add one to supported_activation_classes_by_quant."
+                ) from None
+        else:
+            supported_activations = self.supported_activation_classes
+        if not supported_activations:
+            raise NotImplementedError(
+                f"{type(self).__name__} declares no supported activation classes."
+            )
+        if not isinstance(self.config.activation, supported_activations):
+            names = ", ".join(cls.__name__ for cls in supported_activations)
+            raise NotImplementedError(
+                f"{type(self).__name__} does not support "
+                f"{type(self.config.activation).__name__} for weight="
+                f"{quant.weight.name}, activation={quant.activation.name}; "
+                f"supported activations are {names}."
+            )
+        self._assert_shared_experts_supported()
+        self._assert_expert_parallelism_supported()
+        self._check_activation_parameters()
+
+    def _check_activation_parameters(self) -> None:
+        """Reject typed scalar values a backend would otherwise silently drop."""
+
+    def _assert_shared_experts_supported(self) -> None:
+        """Reject S > 0 for backends that have not opted in."""
+        s = self.config.experts.num_fused_shared_experts
+        if s > 0 and not self.supports_fused_shared_experts:
+            raise NotImplementedError(
+                f"{type(self).__name__} does not support fused shared experts "
+                f"(num_fused_shared_experts={s})."
+            )
+
+    def _assert_expert_parallelism_supported(self) -> None:
+        """Reject EP shards for backends that cannot compute a local expert subset."""
+        if self.supports_expert_parallelism:
+            return
+        experts = self.config.experts
+        local_num_experts = experts.local_num_experts or self.config.routing.num_experts
+        if experts.local_expert_offset != 0 or (
+            local_num_experts != self.config.routing.num_experts
+        ):
+            raise NotImplementedError(
+                f"{type(self).__name__} does not support expert parallelism "
+                f"(local_expert_offset={experts.local_expert_offset}, "
+                f"local_num_experts={local_num_experts} of "
+                f"{self.config.routing.num_experts})."
+            )
+
+    def build(self) -> None:
+        if getattr(self, "_built", False):
+            return
+        if not getattr(self, "_support_checked", False):
+            raise RuntimeError(
+                f"{type(self).__name__}.check_support() must succeed before build()."
+            )
+        self._build()
+        self._built = True
+
+    def _build(self) -> None:
+        """Prepare shape-independent resources for a supported runner."""
+
+    def _require_built(self) -> None:
+        if not getattr(self, "_built", False):
+            raise RuntimeError(
+                f"{type(self).__name__}.build() must be called before execution."
+            )
+
+    # Anything the profiled tensor shapes cannot reveal has to be listed here.
+    # One stable tuple feeds both __hash__ (in-memory) and the persisted key,
+    # which excludes runner_hash. Shapes already in the profile are omitted.
+
+    def _cache_key_extras(self) -> tuple:
+        """Return stable tactic inputs absent from profiled tensor shapes."""
+        routing = self.config.routing
+        experts = self.config.experts
+        local_num_experts = (
+            experts.local_num_experts
+            if experts.local_num_experts is not None
+            else routing.num_experts
+        )
+        return (
+            self.backend_key,
+            # The persistent key uses str(), so prefer stable scalar values.
+            self.config.quant.weight.name,
+            self.config.quant.activation.name,
+            self.config.quant.output.name,
+            int(routing.top_k),
+            int(routing.num_experts),
+            int(local_num_experts),
+            int(experts.local_expert_offset),
+            int(experts.intermediate_size),
+            # S changes tactic enumeration but not profiled tensor shapes.
+            int(experts.num_fused_shared_experts),
+            int(self.config.activation.type),
+            repr(self.config.activation),
+            bool(self.config.finalize.do_finalize),
+            # Routing shape affects expert-token distribution and tactic ranking.
+            int(routing.method),
+            routing.n_group,
+            routing.topk_group,
+            # Declared quant flags are keyed before runners begin consuming them.
+            self.config.quant.per_token_scale,
+            self.config.quant.swizzled_scale_factors,
+        )
+
+    def __hash__(self) -> int:
+        return hash(self._cache_key_extras())
+
+    def get_cache_key_extras(self, inputs: List[torch.Tensor]) -> tuple:
+        # Configuration-only, so synthesized profiling inputs use the same key.
+        return self._cache_key_extras()
+
+=== XQA SOURCE ===
+@flashinfer_api(trace=xqa_batch_decode_trace)
+def xqa_batch_decode_with_kv_cache(
+    query: torch.Tensor,
+    kv_cache: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]],
+    workspace_buffer: torch.Tensor,
+    block_tables: torch.Tensor,
+    seq_lens: torch.Tensor,
+    max_seq_len: int,
+    bmm1_scale: Union[float, torch.Tensor] = 1.0,
+    bmm2_scale: Union[float, torch.Tensor] = 1.0,
+    window_left: int = -1,
+    out: Optional[torch.Tensor] = None,
+    sinks: Optional[torch.Tensor] = None,
+    kv_layout: str = "NHD",
+    enable_pdl: bool = None,
+    q_len_per_req: Optional[int] = 1,
+    o_scale: Optional[float] = 1.0,
+    mask: Optional[torch.Tensor] = None,
+    kv_cache_sf: Union[
+        torch.Tensor, Optional[Tuple[torch.Tensor, torch.Tensor]]
+    ] = None,
+    q_cu_seq_lens: Optional[torch.Tensor] = None,
+) -> torch.Tensor:
+    """
+    Parameters
+    ----------
+    query : torch.Tensor
+        query tensor with shape [num_tokens, num_heads, head_dim], num_tokens = batch_size * q_len_per_request,
+        or sum of per-request draft lengths when :attr:`q_cu_seq_lens` is given (ragged Q)
+
+    kv_cache : Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]
+        If kv_cache is a single tensor, it should be a tensor with shape [num_pages, 1 or 2, page_size, num_kv_heads, head_dim] if :attr:`kv_layout` is ``NHD``,
+        or [num_pages, 1 or 2, num_kv_heads, page_size, head_dim] if :attr:`kv_layout` is ``HND``.
+        If kv_cache is a tuple of two tensors, it should be a tuple of two tensors with shape [num_pages, page_size, num_kv_heads, head_dim] if :attr:`kv_layout` is ``NHD``,
+        or [num_pages, num_kv_heads, page_size, head_dim] if :attr:`kv_layout` is ``HND``.
+
+    workspace_buffer : torch.Tensor. Must be initialized to 0 for its first use.
+        workspace
+
+    block_tables : torch.Tensor
+        page_table of kv cache, [batch_size, num_pages]
+
+    seq_lens : torch.Tensor
+        A uint32 1D tensor indicating the kv sequence length of each prompt. shape: ``[batch_size]``
+
+    max_seq_len : int
+        max sequence length for kv_cache
+
+    bmm1_scale : Union[float, torch.Tensor]
+        fused scale for bmm1 input.
+
+    bmm2_scale : Union[float, torch.Tensor]
+        fused scale for bmm2 input.
+
+    window_left : int = -1
+        The left (inclusive) window size for the attention window, when set to ``-1``, the window
+        size will be set to the full length of the sequence. Defaults to ``-1``.
+        On SM90 with fp8 KV cache, speculative decode with a non-negative window
+        runs on the generic kernel instead of the Hopper fp8 kernel (see
+        :func:`flashinfer.xqa.xqa`).
+
+    out :  Optional[torch.Tensor] = None
+        output tensor, if not provided, will be allocated with ``query.dtype``.
+
+    sinks : Optional[torch.Tensor] = None
+        additional value per head in the denominator of the softmax.
+
+    kv_layout : str
+        The layout of the kv cache. Can be either ``NHD`` or ``HND``. Defaults to ``NHD``.
+
+    enable_pdl : bool
+        Whether to enable Programmatic Dependent Launch (PDL). See https://docs.nvidia.com/cuda/cuda-c-programming-guide/#programmatic-dependent-launch-and-synchronization
+        Only supported for >= sm90, and currently only for FA2, CUDA core, and trtllm-gen decode.
+
+    q_len_per_req : Optional[int] = 1
+        Number of query tokens per request (i.e. speculative-decoding / MTP depth).
+        ``query`` is expected to have ``batch_size * q_len_per_req`` rows along its
+        leading dimension.  Defaults to ``1``.
+
+    o_scale : Optional[float] = 1.0
+        output scale factor for fp8 output.
+
+    mask : Optional[torch.Tensor] = None
+        draft-block attention mask for xqa speculative decoding.
+
+    kv_cache_sf : Optional[torch.Tensor] = None
+        KV cache scaling factors. Must provide when NVFP4 KV cache is used.
+
+    q_cu_seq_lens : Optional[torch.Tensor] = None
+        cumulative draft lengths [batch_size + 1] (int32, on device) enabling
+        ragged Q: requests may have different draft lengths. When given,
+        query/out stay packed as [total_q_tokens, num_heads, head_dim],
+        q_len_per_req must be the maximum draft length, and mask rows are
+        packed by the same cumulative offsets. On SM90 with fp8 KV cache,
+        speculative decode runs on the generic kernel instead of the Hopper
+        fp8 kernel (see :func:`flashinfer.xqa.xqa`).
+
+    Returns
+    -------
+    out : torch.Tensor
+        output torch.Tensor.
+    """
+    enable_pdl = device_support_pdl(query.device) if enable_pdl is None else enable_pdl
+
+    if isinstance(kv_cache, tuple):
+        k_cache, v_cache = kv_cache
+    else:
+        if kv_cache.shape[1] == 1:
+            k_cache, v_cache = kv_cache, kv_cache
+        else:
+            assert kv_cache.shape[1] == 2, (
+                "When kv_cache is a single tensor, the second dimension must be 1 or 2"
+            )
+            # NOTE(Zihao): unbind transforms [num_pages, 2, ...] to ([num_pages, ...], [num_pages, ...])
+            # it doesn't change underlying storage
+            k_cache, v_cache = kv_cache.unbind(dim=1)
+
+    k_cache_sf = None
+    v_cache_sf = None
+    if kv_cache_sf is not None:
+        if isinstance(kv_cache_sf, tuple):
+            k_cache_sf, v_cache_sf = kv_cache_sf
+        else:
+            assert kv_cache_sf.shape[1] == 2, (
+                "When kv_cache is a single tensor, the second dimension must be 1 or 2"
+            )
+            # NOTE(Zihao): unbind transforms [num_pages, 2, ...] to ([num_pages, ...], [num_pages, ...])
+            # it doesn't change underlying storage
+            k_cache_sf, v_cache_sf = kv_cache_sf.unbind(dim=1)
+
+    sm_count = get_device_sm_count(query.device)
+
+    # Extract shape parameters based on layout
+    if kv_layout == "NHD":
+        # NHD: [num_pages, page_size, num_kv_heads, head_dim] for ordinary KV cache
+        # or [num_pages, page_size, num_kv_heads, head_dim// 2] for NVFP4 KV cache with packed head dim
+        page_size = k_cache.shape[1]
+        num_kv_heads = k_cache.shape[2]
+    else:  # HND
+        # HND: [num_pages, num_kv_heads, page_size, head_dim] for ordinary KV cache
+        # or [num_pages, num_kv_heads, page_size, head_dim// 2] for NVFP4 KV cache with packed head dim
+        num_kv_heads = k_cache.shape[1]
+        page_size = k_cache.shape[2]
+
+    # query shape: [num_tokens, num_heads, head_dim]
+    head_dim = query.shape[-1]
+
+    workspace_u8 = workspace_buffer.view(torch.uint8)
+    semaphore = workspace_u8[: 8 * 1024 * 1024]  # reserve 8MB for semaphore
+    scratch = workspace_u8[8 * 1024 * 1024 :]
+    kv_scale_value = bmm2_scale * o_scale
+    q_scale_value = bmm1_scale / kv_scale_value * (head_dim**0.5)
+
+    if q_cu_seq_lens is not None:
+        # Ragged Q: query stays packed as [total_q_tokens, num_heads, head_dim]
+        # and q_len_per_req is the max draft length across the batch.
+        assert q_len_per_req > 1, (
+            "q_cu_seq_lens requires q_len_per_req to be the max draft length (> 1)"
+        )
+        query_new = query
+        out_shape_ref = query
+    else:
+        if q_len_per_req > 1:
+            batch_size = query.shape[0] // q_len_per_req
+            query = query.view(
+                batch_size, q_len_per_req, query.shape[1], query.shape[2]
+            )
+        query_new = query.unsqueeze(1)
+        out_shape_ref = query
+    seq_lens_new = seq_lens.unsqueeze(1)
+    sinks_new = sinks.reshape(num_kv_heads, -1) if sinks is not None else None
+
+    # Ensure 4D output for xqa (packed 3D stays as-is for ragged Q)
+    if out is None:
+        out = torch.empty_like(out_shape_ref)
+    out_new = out if q_cu_seq_lens is not None else out.unsqueeze(1)
+
+    xqa(
+        query_new,
+        k_cache,
+        v_cache,
+        block_tables,
+        seq_lens_new,
+        out_new,
+        scratch,
+        semaphore,
+        num_kv_heads,
+        page_size,
+        k_sf_cache=k_cache_sf,
+        v_sf_cache=v_cache_sf,
+        sinks=sinks_new,
+        q_scale=q_scale_value,
+        kv_scale=kv_scale_value,
+        sliding_win_size=window_left + 1 if window_left >= 0 else 0,
+        kv_layout=kv_layout,
+        sm_count=sm_count,
+        enable_pdl=enable_pdl,
+        rcp_out_scale=1.0 / o_scale,
+        q_seq_len=q_len_per_req,
+        q_cu_seq_lens=q_cu_seq_lens,
+        mask=mask,
+    )
+
+    return out
+

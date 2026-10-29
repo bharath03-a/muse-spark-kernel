@@ -1,0 +1,43 @@
+zip build 31.7s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 27
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 31
+qkv zip m=1 id 37: 20.35 us (base id 31: 15.23)
+qkv zip m=1 id 38: 26.59 us (base id 31: 15.23)
+qkv zip m=1 id 25: 15.26 us (base id 31: 15.23)
+qkv zip m=1 id 39: 15.10 us (base id 31: 15.23)
+qkv zip m=1 id 40: 20.13 us (base id 31: 15.23)
+qkv zip m=1 id 44: 15.10 us (base id 31: 15.23)
+qkv zip m=8 id 37: 21.70 us (base id 31: 15.62)
+qkv zip m=8 id 38: 27.78 us (base id 31: 15.62)
+qkv zip m=8 id 25: 15.58 us (base id 31: 15.62)
+qkv zip m=8 id 39: 16.29 us (base id 31: 15.62)
+qkv zip m=8 id 40: 21.47 us (base id 31: 15.62)
+qkv zip m=8 id 44: 15.36 us (base id 31: 15.62)
+qkv zip picked m=1 id 31, m=2-8 id 44
+zip prepare 32.0s
+r9 build 30.4s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.67 id3=18.46 -> id3
+r9 prepare 30.5s picks={('qkv_gate', 128): 3}
+r15 lt build 15.5s cublasLt 130101
+r15 qkv_gate m=128 cands=20 (raw us) cp10=18.56 c12=20.13 c2=20.45 c3=20.29 best=a66t92s35k1r0z0c7 -> cp10
+r15 qkv_gate m=256 cands=15 (raw us) cp10=23.23 c9=22.59 c0=23.36 c10=24.10 best=a66t134s35k1r0z0c9 -> lt
+r15 o m=128 cands=8 (raw us) cp10=11.07 c0=11.20 c2=11.62 c1=11.39 best=a66t18s35k1r0z0c5 -> cp10
+r15 o m=256 cands=8 (raw us) cp10=12.90 c0=13.02 c1=13.25 c4=13.79 best=a66t20s35k1r0z0c3 -> cp10
+r15 pooler m=128 cands=15 (raw us) cp10=25.70 c8=24.83 c10=24.99 c9=25.31 best=a66t124s35k1r0z0c7 -> lt
+r15 pooler m=256 cands=12 (raw us) cp10=30.30 c8=30.30 c10=32.58 c3=31.90 best=a66t183s35k1r0z0c9 -> cp10
+r15 unpooler m=128 cands=12 (raw us) cp10=23.23 c10=24.26 c0=23.33 c2=24.45 best=a66t18s35k1r0z0c5 -> cp10
+r15 unpooler m=256 cands=8 (raw us) cp10=27.74 c0=27.97 c1=29.98 c2=30.24 best=a66t20s35k1r0z0c3 -> cp10
+r15 prepare 16.0s total 121.6s picks=qkv_gate256,pooler128
+r17 builds: co128x128=ok:49s co128x256=ok:53s pp64x128=ok:49s pp64x256=ok:49s wait 0.0s    
+r17 qkv_gate m=128 scr_best=28.16 n_cfg=18 (raw us) cp11=18.46 pp64x128(1, 1, 2, 2)=28.16 pp64x128(1, 1, 1, 1)=28.19 pp64x128(1, 1, 4, 2)=28.35 -> cp11
+r17 qkv_gate m=256 scr_best=30.18 n_cfg=34 (raw us) cp11=22.75 co128x128(3, 2, 1, 2)=29.86 co128x128(3, 2, 1, 1)=30.40 pp64x128(1, 1, 4, 1)=33.18 -> cp11
+r17 o m=128 scr_best=12.00 n_cfg=10 (raw us) cp11=11.17 pp64x128(1, 1, 2, 2)=12.19 pp64x128(1, 1, 4, 1)=12.03 pp64x128(1, 1, 1, 2)=12.06 -> cp11
+r17 o m=256 scr_best=14.34 n_cfg=20 (raw us) cp11=12.93 pp64x256(1, 1, 1, 2)=14.46 pp64x256(1, 1, 1, 1)=14.43 pp64x256(1, 1, 2, 1)=14.40 -> cp11
+r17 pooler m=128 scr_best=32.42 n_cfg=18 (raw us) cp11=24.70 co128x128(3, 2, 1, 2)=32.51 co128x128(3, 2, 1, 1)=32.61 co128x128(4, 2, 1, 2)=34.05 -> cp11
+r17 pooler m=256 scr_best=37.47 n_cfg=32 (raw us) cp11=30.27 co128x128(2, 2, 1, 1)=37.76 co128x128(2, 2, 1, 2)=39.68 pp64x128(1, 1, 1, 1)=39.90 -> cp11
+r17 unpooler m=128 scr_best=25.09 n_cfg=14 (raw us) cp11=23.17 pp64x128(1, 1, 1, 1)=25.22 pp64x128(1, 1, 1, 2)=25.02 pp64x128(1, 1, 4, 1)=24.96 -> cp11
+r17 unpooler m=256 scr_best=33.06 n_cfg=24 (raw us) cp11=27.90 pp64x256(1, 1, 2, 1)=33.12 pp64x256(1, 1, 2, 2)=33.15 pp64x256(1, 1, 1, 1)=33.18 -> cp11
+r17 prepare 0.4s total 122.0s picks=

@@ -1,0 +1,72 @@
+=== prepare_cutlass_w4a16_weights lines 40-140 ===
+40:     def quantize(weight: torch.Tensor, rows: int, cols: int):
+41:         weight = weight.to(device).contiguous().view(num_local_experts * rows, cols)
+42:         packed, scales = _quantize_mxfp4_linear(weight)
+43:         packed = packed.view(num_local_experts, rows, cols // 2)
+44:         scales = scales.view(num_local_experts, rows, cols // 32)
+45:         return (
+46:             interleave_moe_weights_for_sm90_mixed_gemm(packed, "fp4"),
+47:             interleave_moe_scales_for_sm90_mixed_gemm(scales),
+48:         )
+49: 
+50:     w1, w1_scale = quantize(w1_bf16, gemm1_rows, hidden_size)
+51:     w2, w2_scale = quantize(w2_bf16, hidden_size, intermediate_size)
+52:     return {
+53:         "fc1_expert_weights": w1,
+54:         "fc1_expert_scales": w1_scale,
+55:         "fc2_expert_weights": w2,
+56:         "fc2_expert_scales": w2_scale,
+57:     }
+58: 
+
+=== interleave_moe_scales_for_sm90_mixed_gemm ===
+0: @flashinfer_api(trace=sm90_mixed_gemm_scale_interleave_trace)
+1: def interleave_moe_scales_for_sm90_mixed_gemm(
+2:     scales: torch.Tensor,
+3:     group_size: int = 32,
+4: ) -> torch.Tensor:
+5:     """Fold weight scales for the SM90 mixed-input MoE GEMM.
+6: 
+7:     Parameters
+8:     ----------
+9:     scales : torch.Tensor
+10:         ``[num_experts, rows, K // group_size]`` tensor of scalar weight scales.
+11:         MXFP4 uses uint8 E8M0 scales with ``group_size=32``; W4A8 uses bf16
+12:         bit-pattern scales with ``group_size=128``.
+13:     group_size : int
+14:         Weight quantization group size.
+15: 
+16:     Returns
+17:     -------
+18:     torch.Tensor
+19:         Contiguous tensor with shape
+20:         ``[num_experts, rows // 64, K // 128, folded_m, physical_cols]``.
+21:         ``physical_cols`` is the number of scale elements in 16B and
+22:         ``folded_m`` is derived so each 64x128 logical scale block is stored as
+23:         a 16B-contiguous folded block.
+24:     """
+25:     if scales.dim() != 3:
+26:         raise ValueError(
+27:             f"scales must be 3D (num_experts, rows, K/group_size); got {tuple(scales.shape)}"
+28:         )
+29: 
+30:     if group_size <= 0 or 128 % group_size != 0:
+31:         raise ValueError(f"group_size={group_size} must be positive and divide 128")
+32:     scale_groups_per_k128 = 128 // group_size
+33:     element_bits = scales.element_size() * 8
+34:     physical_cols = 128 // element_bits
+35:     if physical_cols < 1 or 128 % element_bits != 0:
+36:         raise ValueError(
+37:             f"scale dtype {scales.dtype} has unsupported element size {element_bits} bits"
+38:         )
+39:     if physical_cols % scale_groups_per_k128 != 0:
+40:         raise ValueError(
+41:             f"scale dtype {scales.dtype} and group_size={group_size} do not form "
+42:             "an integer folded M slice"
+43:         )
+44:     m_slices_per_m64 = physical_cols // scale_groups_per_k128
+45:     if 64 % m_slices_per_m64 != 0:
+46:         raise ValueError(
+47:             f"folded M slices {m_slices_per_m64} must divide the logical M64 block"
+48:         )
+49:     folded_m = 64 // m_slices_per_m64

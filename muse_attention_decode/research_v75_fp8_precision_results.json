@@ -1,0 +1,1549 @@
+{
+  "modal_app": "ap-ApdExlLDgwo1XSrD7Oxhel",
+  "source_revision": "47103fd9c1212868018eb615a4c6467e366e9ce0",
+  "reference_checks": [
+    {
+      "seed": 1471,
+      "batch": 1,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 7.150e-02 (worst row 8.346e-02) [bound 0.150: 2.5 x the reference's 0.072 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 1,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 7.150e-02 (worst row 8.346e-02) [bound 0.150: 2.5 x the reference's 0.072 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 1,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 7.239e-02 (worst row 8.580e-02) [bound 0.150: 2.5 x the reference's 0.072 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 1,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 3.446e-02 (worst row 4.212e-02) [bound 0.101: 2.5 x the reference's 0.034 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 1,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 3.446e-02 (worst row 4.212e-02) [bound 0.101: 2.5 x the reference's 0.034 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 1,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 3.448e-02 (worst row 4.146e-02) [bound 0.101: 2.5 x the reference's 0.034 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 1,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 8.377e-02 (worst row 9.191e-02) [bound 0.150: 2.5 x the reference's 0.084 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 1,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 8.377e-02 (worst row 9.191e-02) [bound 0.150: 2.5 x the reference's 0.084 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 1,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 8.420e-02 (worst row 9.309e-02) [bound 0.150: 2.5 x the reference's 0.084 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 16,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 7.357e-02 (worst row 9.920e-02) [bound 0.150: 2.5 x the reference's 0.074 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 16,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 7.357e-02 (worst row 9.920e-02) [bound 0.150: 2.5 x the reference's 0.074 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 16,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 7.504e-02 (worst row 1.011e-01) [bound 0.150: 2.5 x the reference's 0.074 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 16,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 2.971e-02 (worst row 5.653e-02) [bound 0.089: 2.5 x the reference's 0.030 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 16,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 2.971e-02 (worst row 5.653e-02) [bound 0.089: 2.5 x the reference's 0.030 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 16,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 3.262e-02 (worst row 6.440e-02) [bound 0.089: 2.5 x the reference's 0.030 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 16,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 8.712e-02 (worst row 1.244e-01) [bound 0.150: 2.5 x the reference's 0.087 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 16,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 8.712e-02 (worst row 1.244e-01) [bound 0.150: 2.5 x the reference's 0.087 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 16,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 8.816e-02 (worst row 1.260e-01) [bound 0.150: 2.5 x the reference's 0.087 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 32,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 7.403e-02 (worst row 1.138e-01) [bound 0.150: 2.5 x the reference's 0.074 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 32,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 7.403e-02 (worst row 1.138e-01) [bound 0.150: 2.5 x the reference's 0.074 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 32,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 7.591e-02 (worst row 1.171e-01) [bound 0.150: 2.5 x the reference's 0.074 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 32,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 3.012e-02 (worst row 7.495e-02) [bound 0.090: 2.5 x the reference's 0.030 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 32,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 3.012e-02 (worst row 7.495e-02) [bound 0.090: 2.5 x the reference's 0.030 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 32,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 3.593e-02 (worst row 8.292e-02) [bound 0.090: 2.5 x the reference's 0.030 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 32,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 9.047e-02 (worst row 1.385e-01) [bound 0.150: 2.5 x the reference's 0.090 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 32,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 9.047e-02 (worst row 1.385e-01) [bound 0.150: 2.5 x the reference's 0.090 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 1471,
+      "batch": 32,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 9.135e-02 (worst row 1.446e-01) [bound 0.150: 2.5 x the reference's 0.090 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 1,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 7.053e-02 (worst row 8.425e-02) [bound 0.150: 2.5 x the reference's 0.070 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 1,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 7.053e-02 (worst row 8.425e-02) [bound 0.150: 2.5 x the reference's 0.070 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 1,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 7.148e-02 (worst row 8.530e-02) [bound 0.150: 2.5 x the reference's 0.070 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 1,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 2.227e-02 (worst row 3.192e-02) [bound 0.071: 2.5 x the reference's 0.022 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 1,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 2.227e-02 (worst row 3.192e-02) [bound 0.071: 2.5 x the reference's 0.022 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 1,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 2.258e-02 (worst row 3.207e-02) [bound 0.071: 2.5 x the reference's 0.022 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 1,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 9.341e-02 (worst row 1.286e-01) [bound 0.150: 2.5 x the reference's 0.094 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 1,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 9.341e-02 (worst row 1.286e-01) [bound 0.150: 2.5 x the reference's 0.094 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 1,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 9.409e-02 (worst row 1.318e-01) [bound 0.150: 2.5 x the reference's 0.094 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 16,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 7.202e-02 (worst row 9.449e-02) [bound 0.150: 2.5 x the reference's 0.072 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 16,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 7.202e-02 (worst row 9.449e-02) [bound 0.150: 2.5 x the reference's 0.072 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 16,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 7.367e-02 (worst row 9.780e-02) [bound 0.150: 2.5 x the reference's 0.072 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 16,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 2.835e-02 (worst row 6.722e-02) [bound 0.086: 2.5 x the reference's 0.028 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 16,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 2.835e-02 (worst row 6.722e-02) [bound 0.086: 2.5 x the reference's 0.028 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 16,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 3.133e-02 (worst row 7.355e-02) [bound 0.086: 2.5 x the reference's 0.028 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 16,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 8.773e-02 (worst row 1.309e-01) [bound 0.150: 2.5 x the reference's 0.088 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 16,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 8.773e-02 (worst row 1.309e-01) [bound 0.150: 2.5 x the reference's 0.088 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 16,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 8.834e-02 (worst row 1.315e-01) [bound 0.150: 2.5 x the reference's 0.088 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 32,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 7.260e-02 (worst row 1.137e-01) [bound 0.150: 2.5 x the reference's 0.073 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 32,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 7.260e-02 (worst row 1.137e-01) [bound 0.150: 2.5 x the reference's 0.073 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 32,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 7.459e-02 (worst row 1.165e-01) [bound 0.150: 2.5 x the reference's 0.073 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 32,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 2.739e-02 (worst row 5.853e-02) [bound 0.083: 2.5 x the reference's 0.027 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 32,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 2.739e-02 (worst row 5.853e-02) [bound 0.083: 2.5 x the reference's 0.027 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 32,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 3.261e-02 (worst row 6.572e-02) [bound 0.083: 2.5 x the reference's 0.027 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 32,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 8.788e-02 (worst row 1.321e-01) [bound 0.150: 2.5 x the reference's 0.088 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 32,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 8.788e-02 (worst row 1.321e-01) [bound 0.150: 2.5 x the reference's 0.088 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 8293,
+      "batch": 32,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 8.887e-02 (worst row 1.345e-01) [bound 0.150: 2.5 x the reference's 0.088 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 1,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 7.907e-02 (worst row 9.288e-02) [bound 0.150: 2.5 x the reference's 0.079 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 1,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 7.907e-02 (worst row 9.288e-02) [bound 0.150: 2.5 x the reference's 0.079 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 1,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 7.977e-02 (worst row 9.443e-02) [bound 0.150: 2.5 x the reference's 0.079 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 1,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 2.604e-02 (worst row 3.649e-02) [bound 0.080: 2.5 x the reference's 0.026 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 1,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 2.604e-02 (worst row 3.649e-02) [bound 0.080: 2.5 x the reference's 0.026 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 1,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 2.605e-02 (worst row 3.656e-02) [bound 0.080: 2.5 x the reference's 0.026 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 1,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 7.987e-02 (worst row 1.152e-01) [bound 0.150: 2.5 x the reference's 0.080 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 1,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 7.987e-02 (worst row 1.152e-01) [bound 0.150: 2.5 x the reference's 0.080 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 1,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 7.987e-02 (worst row 1.152e-01) [bound 0.150: 2.5 x the reference's 0.080 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 16,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 7.288e-02 (worst row 1.116e-01) [bound 0.150: 2.5 x the reference's 0.073 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 16,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 7.288e-02 (worst row 1.116e-01) [bound 0.150: 2.5 x the reference's 0.073 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 16,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 7.447e-02 (worst row 1.106e-01) [bound 0.150: 2.5 x the reference's 0.073 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 16,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 2.912e-02 (worst row 5.007e-02) [bound 0.088: 2.5 x the reference's 0.029 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 16,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 2.912e-02 (worst row 5.007e-02) [bound 0.088: 2.5 x the reference's 0.029 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 16,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 3.168e-02 (worst row 6.339e-02) [bound 0.088: 2.5 x the reference's 0.029 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 16,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 9.228e-02 (worst row 1.405e-01) [bound 0.150: 2.5 x the reference's 0.092 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 16,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 9.228e-02 (worst row 1.405e-01) [bound 0.150: 2.5 x the reference's 0.092 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 16,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 9.311e-02 (worst row 1.427e-01) [bound 0.150: 2.5 x the reference's 0.092 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 32,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 7.313e-02 (worst row 1.026e-01) [bound 0.150: 2.5 x the reference's 0.073 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 32,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 7.313e-02 (worst row 1.026e-01) [bound 0.150: 2.5 x the reference's 0.073 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 32,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "spread": "fixed",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 7.528e-02 (worst row 1.061e-01) [bound 0.150: 2.5 x the reference's 0.073 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 32,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 2.915e-02 (worst row 6.586e-02) [bound 0.088: 2.5 x the reference's 0.029 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 32,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 2.915e-02 (worst row 6.586e-02) [bound 0.088: 2.5 x the reference's 0.029 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 32,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "spread": "agentic",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 3.425e-02 (worst row 7.914e-02) [bound 0.088: 2.5 x the reference's 0.029 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 32,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "current",
+      "passed": true,
+      "message": "relative L2 error 8.894e-02 (worst row 1.328e-01) [bound 0.150: 2.5 x the reference's 0.089 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 32,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "conservative",
+      "passed": true,
+      "message": "relative L2 error 8.894e-02 (worst row 1.328e-01) [bound 0.150: 2.5 x the reference's 0.089 with FP8 E4M3 queries + 0.015]"
+    },
+    {
+      "seed": 19391,
+      "batch": 32,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "spread": "mixed",
+      "variant": "research",
+      "passed": true,
+      "message": "relative L2 error 8.973e-02 (worst row 1.384e-01) [bound 0.150: 2.5 x the reference's 0.089 with FP8 E4M3 queries + 0.015]"
+    }
+  ],
+  "dtype_comparisons": [
+    {
+      "seed": 1471,
+      "batch": 1,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "fp8_vs_f16_l2": 0.010110067203640938,
+      "worst_head_l2": 0.030509373173117638,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 1471,
+      "batch": 1,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "fp8_vs_f16_l2": 0.004131168592721224,
+      "worst_head_l2": 0.011531067080795765,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 1471,
+      "batch": 1,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "fp8_vs_f16_l2": 0.005337821319699287,
+      "worst_head_l2": 0.022489400580525398,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 1471,
+      "batch": 16,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "fp8_vs_f16_l2": 0.015343881212174892,
+      "worst_head_l2": 0.04321538656949997,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 1471,
+      "batch": 16,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "fp8_vs_f16_l2": 0.013499177992343903,
+      "worst_head_l2": 0.12526963651180267,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 1471,
+      "batch": 16,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "fp8_vs_f16_l2": 0.011417104862630367,
+      "worst_head_l2": 0.05210183933377266,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 1471,
+      "batch": 32,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "fp8_vs_f16_l2": 0.01662214659154415,
+      "worst_head_l2": 0.058539144694805145,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 1471,
+      "batch": 32,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "fp8_vs_f16_l2": 0.019808083772659302,
+      "worst_head_l2": 0.1495828926563263,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 1471,
+      "batch": 32,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "fp8_vs_f16_l2": 0.013375791721045971,
+      "worst_head_l2": 0.04783971235156059,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 8293,
+      "batch": 1,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "fp8_vs_f16_l2": 0.010608927346765995,
+      "worst_head_l2": 0.02559051848948002,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 8293,
+      "batch": 1,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "fp8_vs_f16_l2": 0.003983793780207634,
+      "worst_head_l2": 0.02109166979789734,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 8293,
+      "batch": 1,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "fp8_vs_f16_l2": 0.005519680678844452,
+      "worst_head_l2": 0.022657250985503197,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 8293,
+      "batch": 16,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "fp8_vs_f16_l2": 0.015547612681984901,
+      "worst_head_l2": 0.04217808321118355,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 8293,
+      "batch": 16,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "fp8_vs_f16_l2": 0.012629976496100426,
+      "worst_head_l2": 0.10854695737361908,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 8293,
+      "batch": 16,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "fp8_vs_f16_l2": 0.012134500779211521,
+      "worst_head_l2": 0.0451207160949707,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 8293,
+      "batch": 32,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "fp8_vs_f16_l2": 0.016922971233725548,
+      "worst_head_l2": 0.05730585381388664,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 8293,
+      "batch": 32,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "fp8_vs_f16_l2": 0.018714455887675285,
+      "worst_head_l2": 0.20341059565544128,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 8293,
+      "batch": 32,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "fp8_vs_f16_l2": 0.013093102723360062,
+      "worst_head_l2": 0.04521173983812332,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 19391,
+      "batch": 1,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "fp8_vs_f16_l2": 0.012297622859477997,
+      "worst_head_l2": 0.03513713926076889,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 19391,
+      "batch": 1,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "fp8_vs_f16_l2": 0.0036137462593615055,
+      "worst_head_l2": 0.012670261785387993,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 19391,
+      "batch": 1,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "fp8_vs_f16_l2": 0.0013552872696891427,
+      "worst_head_l2": 0.003709512995555997,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 19391,
+      "batch": 16,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "fp8_vs_f16_l2": 0.015555293299257755,
+      "worst_head_l2": 0.050441253930330276,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 19391,
+      "batch": 16,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "fp8_vs_f16_l2": 0.0131436288356781,
+      "worst_head_l2": 0.12345874309539795,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 19391,
+      "batch": 16,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "fp8_vs_f16_l2": 0.01256025955080986,
+      "worst_head_l2": 0.04590953141450882,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 19391,
+      "batch": 32,
+      "dist": "soft",
+      "kv_scale": 1.0,
+      "fp8_vs_f16_l2": 0.017172303050756454,
+      "worst_head_l2": 0.050422877073287964,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 19391,
+      "batch": 32,
+      "dist": "coherent",
+      "kv_scale": 1.0,
+      "fp8_vs_f16_l2": 0.019025694578886032,
+      "worst_head_l2": 0.17298610508441925,
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "seed": 19391,
+      "batch": 32,
+      "dist": "edges",
+      "kv_scale": 0.015625,
+      "fp8_vs_f16_l2": 0.013502269983291626,
+      "worst_head_l2": 0.05979298800230026,
+      "dtype": "torch.bfloat16"
+    }
+  ],
+  "native_dispatch": [
+    {
+      "variant": "current",
+      "flags": 262212,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 2359364,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 539230276,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 262212,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 2359364,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 539230276,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 262212,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 2359364,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 539230276,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 537002308,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 537002308,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 537002308,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 537002308,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 537002308,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 537002308,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 262212,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 2359364,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 539230276,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 262212,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 2359364,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 539230276,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 262212,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 2359364,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 539230276,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 537002308,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 537002308,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 537002308,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 537002308,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 537002308,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 537002308,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 262212,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 2359364,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 539230276,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 262212,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 2359364,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 539230276,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 262212,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 2359364,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 539230276,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 537002308,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 537002308,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 537002308,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 537002308,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 537002308,
+      "var": -2,
+      "fp8_pv": true
+    },
+    {
+      "variant": "current",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "conservative",
+      "flags": 131396,
+      "var": -2,
+      "fp8_pv": false
+    },
+    {
+      "variant": "research",
+      "flags": 537002308,
+      "var": -2,
+      "fp8_pv": true
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+=== cutlass_fused_moe source lines 60-140 ===
+    fc1_expert_weights : torch.Tensor
+        GEMM1 weights for each expert.
+
+    fc2_expert_weights : torch.Tensor
+        GEMM2 weights for each expert.
+
+    output_dtype : torch.dtype
+        Desired output data type.
+
+    quant_scales : List[torch.Tensor]
+        Quantization scales for the operation.
+
+        NVFP4:
+            - gemm1 activation global scale
+            - gemm1 weights block scales
+            - gemm1 dequant scale
+            - gemm2 activation global scale
+            - gemm2 weights block scales
+            - gemm2 dequant scale
+
+        FP8:
+            - gemm1 dequant scale
+            - gemm2 activation quant scale
+            - gemm2 dequant scale
+            - gemm1 input dequant scale
+
+        Humming FP8 x MXFP4 (``use_wfp4afp8_humming=True``):
+            - gemm1 folded weight block scales
+            - gemm1 per-local-expert residual scale, including the fixed ``2^6`` compensation
+            - reserved scalar or per-local-expert gemm2 activation scale
+            - gemm2 folded weight block scales
+            - gemm2 per-local-expert residual scale, including the fixed ``2^6`` compensation
+
+    fc1_expert_biases : Optional[torch.Tensor]
+        GEMM1 biases for each expert.
+
+    fc2_expert_biases : Optional[torch.Tensor]
+        GEMM1 biases for each expert.
+
+    input_sf : Optional[torch.Tensor]
+        Input scaling factor for quantization.
+
+    swiglu_alpha : Optional[torch.Tensor]
+        Swiglu alpha for swiglu activation.
+
+    swiglu_beta : Optional[torch.Tensor]
+        Swiglu beta for swiglu activation.
+
+    swiglu_limit : Optional[torch.Tensor]
+        Swiglu limit for swiglu activation.
+
+    situ_beta : Optional[torch.Tensor]
+        Per-expert ``beta`` tanh scale for the ``Situ`` activation (float32,
+        ``[num_experts_on_rank]``). ``None`` uses ``DEFAULT_SITU_BETA``.
+
+    situ_linear_beta : Optional[torch.Tensor]
+        Per-expert ``linear_beta`` tanh scale for the ``Situ`` activation (float32,
+        ``[num_experts_on_rank]``). ``None`` uses ``DEFAULT_SITU_LINEAR_BETA``.
+
+    tp_size : int = 1
+        Tensor parallelism size. Defaults to 1.
+
+    tp_rank : int = 0
+        Tensor parallelism rank. Defaults to 0.
+
+    ep_size : int = 1
+        Expert parallelism size. Defaults to 1.
+
+    ep_rank : int = 0
+        Expert parallelism rank. Defaults to 0.
+
+    cluster_size : int = 1
+        Cluster size. Defaults to 1.
+
+    cluster_rank : int = 0
+        Cluster rank. Defaults to 0.
+
+    output : Optional[torch.Tensor] = None
+        The output tensor, if not provided, will be allocated internally.
+
+

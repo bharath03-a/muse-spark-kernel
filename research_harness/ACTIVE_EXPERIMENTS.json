@@ -1,0 +1,26 @@
+{
+  "utc": "2026-10-29T02:50:21.283367+00:00",
+  "modal_gpu_budget_seconds": 1800,
+  "modal_gpu_used_seconds_user_reported": 1782.6,
+  "modal_gpu_new_launches_allowed": false,
+  "authoritative_modal_active_apps": [],
+  "authoritative_okc_active_jobs": [],
+  "priority": "Prepare and peer-review a compact diagnostic for removable MoE routing/setup and overlap; no launch allocated",
+  "failed_attention_sweep": "36749dbf05214f06",
+  "failed_reason": "Host research generator torch.gather indexes seq up to85999 into page table capacity80008, before fdec launch",
+  "untested_drafts": [
+    "muse_decode_layer/candidate_cp14_v81_v56_launch_fusions.py: GPU pointer fix not rerun; no officialcheck",
+    "muse_moe_w4a16/research_moe_v56_round_store.py: CPUcomplete, noGPUproof"
+  ],
+  "rules": "No scored submissions before canonical correctness and meaningful measured gain. BF16 folder excluded.",
+  "withdrawn_job": "5ab92e7e91d64475",
+  "restored_default_job": "5648767e139d441b",
+  "completed_attention_probe": {
+    "job": "0653d51aad4c4281",
+    "passed": true,
+    "diagnostic_never_score": true,
+    "visible_results": "five B32 rows only; log tail16000chars; prefetch0.565x, balanced0.992x",
+    "missing_data": "Earlier11 rows truncated; do not inferB16performance"
+  },
+  "attention_source_audit": "No-go: compiler already interleaves heads; FP8 warp MMA emulates FP16; budget preserved"
+}

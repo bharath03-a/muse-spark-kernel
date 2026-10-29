@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/tmp/muse_decode_layer-w0699jth/run/worker.py", line 423, in child_main
+    send(_setup_op(msg, module, state, sync, perf))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_decode_layer-w0699jth/run/worker.py", line 318, in _setup_op
+    prepare = importlib.import_module(module).prepare
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'submission' has no attribute 'prepare'

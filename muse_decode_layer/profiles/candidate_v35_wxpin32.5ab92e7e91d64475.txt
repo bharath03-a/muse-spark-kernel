@@ -1,0 +1,213 @@
+okc run 5ab92e7e91d64475 on muse_decode_layer
+submission  <repo>/muse_decode_layer/candidate_v35_wxpin32.py
+status      ok
+passed      true
+speedup     1.8119316747422578
+speedup_ci  [1.7847526996211238 1.8391106498633916]
+score_us    12484.08000992514
+tests       13/13 passed
+
+scored shapes (µs; speed of light is the reference's bound)
+case                                                         sglang      yours  speedup        sol  
+batch=1 ctx=80000 dist=soft layer=sliding load=decode 1 page=1     171.92      83.27   2.065x      40.02  
+batch=1 ctx=80000 dist=soft layer=full load=decode 1 page=1     182.26      91.70   1.987x      44.18  
+batch=16 ctx=80000 dist=soft layer=sliding load=decode 16 page=1 spread=agentic     256.30     150.16   1.707x      76.72  
+batch=16 ctx=80000 dist=soft layer=full load=decode 16 page=1 spread=agentic     428.72     248.57   1.725x     137.46  
+batch=32 ctx=80000 dist=soft layer=sliding load=decode 32 page=1 spread=agentic     264.82     190.31   1.392x      84.51  
+batch=32 ctx=80000 dist=soft layer=full load=decode 32 page=1 spread=agentic     609.87     376.41   1.620x     208.10  
+batch=1 ctx=80000 dist=soft layer=sliding load=verify 1 page=1 q_len=8     269.04     134.02   2.008x      62.29  
+batch=1 ctx=80000 dist=soft layer=full load=verify 1 page=1 q_len=8     277.15     137.55   2.015x      66.44  
+batch=16 ctx=80000 dist=soft layer=sliding load=verify 16 page=1 q_len=8 spread=agentic     531.25     297.69   1.785x     126.61  
+batch=16 ctx=80000 dist=soft layer=full load=verify 16 page=1 q_len=8 spread=agentic     701.70     403.58   1.739x     188.68  
+batch=32 ctx=80000 dist=soft layer=sliding load=verify 32 page=1 q_len=8 spread=agentic     715.30     369.14   1.938x     143.81  
+batch=32 ctx=80000 dist=soft layer=full load=verify 32 page=1 q_len=8 spread=agentic    1086.59     580.65   1.871x     267.18  
+
+profile 0: batch=1 ctx=80000 dist=soft layer=sliding load=decode 1 page=1
+kernel                                                           GPU time  share  calls
+moe_k(P)                                                          33.7 µs  34.2%      1
+void gv<1, 1, 1, 2, 16, 8, 1, 1, 0, 3>(G)                         14.1 µs  14.3%      1
+void gv<1, 1, 2, 1, 8, 16, 1, 1, 0, 1>(G)                          9.5 µs   9.6%      1
+resid(__nv_bfloat16 const*, int, float const*, float cons...       9.1 µs   9.3%      2
+route(float const*, float const*, int const*, int, int*, ...       6.7 µs   6.8%      1
+void s1k<1>(S1P)                                                   6.5 µs   6.6%      1
+void gv<1, 1, 2, 1, 8, 2, 1, 1, 0, 3>(G)                           6.1 µs   6.2%      1
+rmsg(__nv_bfloat16 const*, float const*, __nv_bfloat16*)           5.0 µs   5.0%      1
+void gv<1, 1, 2, 1, 16, 4, 1, 1, 0, 1>(G)                          4.2 µs   4.2%      1
+void rr<1, 2>(float4 const*, __nv_bfloat16 const*, float*...       3.7 µs   3.7%      1
+total                                                             98.5 µs
+GPU busy (kernels overlap: PDL or streams)                        96.3 µs
+an overlapping kernel's time includes any wait for the one before it, so the rows add up to more
+
+profile 1: batch=1 ctx=80000 dist=soft layer=full load=decode 1 page=1
+kernel                                                           GPU time  share  calls
+moe_k(P)                                                          33.1 µs  30.1%      1
+void fdec<false, true>(F)                                         17.6 µs  15.9%      1
+void gv<1, 1, 1, 2, 16, 8, 1, 1, 0, 3>(G)                         14.4 µs  13.1%      1
+void gv<1, 1, 2, 1, 8, 16, 1, 1, 0, 1>(G)                          9.6 µs   8.7%      1
+resid(__nv_bfloat16 const*, int, float const*, float cons...       9.3 µs   8.5%      2
+route(float const*, float const*, int const*, int, int*, ...       7.1 µs   6.4%      1
+void gv<1, 1, 2, 1, 8, 2, 1, 1, 0, 3>(G)                           6.2 µs   5.7%      1
+rmsg(__nv_bfloat16 const*, float const*, __nv_bfloat16*)           5.2 µs   4.7%      1
+void gv<1, 1, 2, 1, 16, 4, 1, 1, 0, 1>(G)                          4.0 µs   3.6%      1
+void rr<1, 2>(float4 const*, __nv_bfloat16 const*, float*...       3.7 µs   3.4%      1
+total                                                            110.2 µs
+GPU busy (kernels overlap: PDL or streams)                       107.7 µs
+an overlapping kernel's time includes any wait for the one before it, so the rows add up to more
+
+profile 2: batch=16 ctx=80000 dist=soft layer=sliding load=decode 16 page=1 spread=agentic
+kernel                                                           GPU time  share  calls
+moe_k(P)                                                          87.7 µs  52.2%      1
+void gv<1, 2, 2, 1, 4, 16, 1, 1, 2, 1>(G)                         14.5 µs   8.6%      1
+void gv<1, 2, 2, 2, 8, 16, 1, 1, 0, 1>(G)                         14.3 µs   8.5%      1
+void gv<1, 2, 1, 1, 4, 16, 2, 1, 2, 13>(G)                        11.1 µs   6.6%      1
+void attnd<2, 2097216>(A, WF)                                     10.5 µs   6.2%      1
+resid(__nv_bfloat16 const*, int, float const*, float cons...       9.6 µs   5.7%      2
+route(float const*, float const*, int const*, int, int*, ...       6.8 µs   4.1%      1
+void gv<1, 2, 2, 1, 8, 2, 1, 1, 0, 1>(G)                           6.1 µs   3.6%      1
+void gv<2, 2, 2, 1, 8, 2, 8, 1, 0, 4>(G)                           4.4 µs   2.6%      1
+rmsg(__nv_bfloat16 const*, float const*, __nv_bfloat16*)           2.9 µs   1.8%      1
+total                                                            168.0 µs
+
+profile 3: batch=16 ctx=80000 dist=soft layer=full load=decode 16 page=1 spread=agentic
+kernel                                                           GPU time  share  calls
+void fdec<false, true>(F)                                        111.5 µs  44.8%      1
+moe_k(P)                                                          66.4 µs  26.7%      1
+void gv<1, 2, 2, 1, 4, 16, 1, 1, 2, 1>(G)                         15.7 µs   6.3%      1
+void gv<1, 2, 2, 2, 8, 16, 1, 1, 0, 1>(G)                         14.2 µs   5.7%      1
+void gv<1, 2, 1, 1, 4, 16, 2, 1, 2, 13>(G)                        11.1 µs   4.4%      1
+resid(__nv_bfloat16 const*, int, float const*, float cons...      10.1 µs   4.1%      2
+route(float const*, float const*, int const*, int, int*, ...       6.8 µs   2.7%      1
+void gv<1, 2, 2, 1, 8, 2, 1, 1, 0, 1>(G)                           5.7 µs   2.3%      1
+void gv<2, 2, 2, 1, 8, 2, 8, 1, 0, 4>(G)                           4.4 µs   1.8%      1
+rmsg(__nv_bfloat16 const*, float const*, __nv_bfloat16*)           3.1 µs   1.2%      1
+total                                                            248.9 µs
+
+profile 4: batch=32 ctx=80000 dist=soft layer=sliding load=decode 32 page=1 spread=agentic
+kernel                                                           GPU time  share  calls
+moe_x(P)                                                         131.1 µs  56.7%      1
+void gv<1, 4, 2, 1, 4, 16, 1, 1, 2, 0>(G)                         17.6 µs   7.6%      1
+void gv<1, 4, 2, 1, 8, 16, 1, 1, 2, 1>(G)                         16.9 µs   7.3%      1
+void gv<1, 4, 1, 1, 4, 16, 2, 1, 2, 13>(G)                        13.0 µs   5.6%      1
+void attnd<2, 64>(A, WF)                                          13.0 µs   5.6%      1
+resid(__nv_bfloat16 const*, int, float const*, float cons...       9.9 µs   4.3%      2
+nvjet_sm90_tst_64x32_64x16_2x1_v_bz_TNT                            7.3 µs   3.2%      1
+route(float const*, float const*, int const*, int, int*, ...       6.7 µs   2.9%      1
+xgather(__nv_bfloat16 const*, int const*, int, int, unsig...       6.5 µs   2.8%      1
+void gv<2, 4, 2, 1, 4, 2, 16, 1, 0, 0>(G)                          6.0 µs   2.6%      1
+rmsg(__nv_bfloat16 const*, float const*, __nv_bfloat16*)           3.0 µs   1.3%      1
+total                                                            231.1 µs
+
+profile 5: batch=32 ctx=80000 dist=soft layer=full load=decode 32 page=1 spread=agentic
+kernel                                                           GPU time  share  calls
+void fdec<false, true>(F)                                        204.4 µs  52.2%      1
+moe_x(P)                                                         102.3 µs  26.1%      1
+void gv<1, 4, 2, 1, 4, 16, 1, 1, 2, 0>(G)                         17.7 µs   4.5%      1
+void gv<1, 4, 2, 1, 8, 16, 1, 1, 2, 1>(G)                         16.7 µs   4.3%      1
+void gv<1, 4, 1, 1, 4, 16, 2, 1, 2, 13>(G)                        12.9 µs   3.3%      1
+resid(__nv_bfloat16 const*, int, float const*, float cons...       9.4 µs   2.4%      2
+nvjet_sm90_tst_64x32_64x16_2x1_v_bz_TNT                            6.7 µs   1.7%      1
+route(float const*, float const*, int const*, int, int*, ...       6.6 µs   1.7%      1
+xgather(__nv_bfloat16 const*, int const*, int, int, unsig...       6.1 µs   1.6%      1
+void gv<2, 4, 2, 1, 4, 2, 16, 1, 0, 0>(G)                          5.8 µs   1.5%      1
+rmsg(__nv_bfloat16 const*, float const*, __nv_bfloat16*)           3.2 µs   0.8%      1
+total                                                            391.7 µs
+
+profile 6: batch=1 ctx=80000 dist=soft layer=sliding load=verify 1 page=1 q_len=8
+kernel                                                           GPU time  share  calls
+moe_k(P)                                                          58.1 µs  45.2%      1
+void gv<1, 1, 1, 2, 16, 8, 1, 1, 0, 3>(G)                         14.1 µs  10.9%      1
+resid(__nv_bfloat16 const*, int, float const*, float cons...      10.0 µs   7.8%      2
+void gv<1, 1, 2, 1, 8, 16, 1, 1, 0, 1>(G)                          9.4 µs   7.3%      1
+void s1k<8>(S1P)                                                   9.2 µs   7.1%      1
+rmsg(__nv_bfloat16 const*, float const*, __nv_bfloat16*)           6.6 µs   5.1%      1
+route(float const*, float const*, int const*, int, int*, ...       6.4 µs   5.0%      1
+void gv<1, 1, 2, 1, 8, 2, 1, 1, 0, 3>(G)                           5.9 µs   4.6%      1
+void gv<2, 1, 2, 1, 8, 2, 8, 1, 0, 4>(G)                           4.8 µs   3.7%      1
+void gv<1, 1, 2, 1, 16, 4, 1, 1, 0, 1>(G)                          4.1 µs   3.2%      1
+total                                                            128.6 µs
+GPU busy (kernels overlap: PDL or streams)                       125.3 µs
+an overlapping kernel's time includes any wait for the one before it, so the rows add up to more
+
+profile 7: batch=1 ctx=80000 dist=soft layer=full load=verify 1 page=1 q_len=8
+kernel                                                           GPU time  share  calls
+moe_k(P)                                                          80.3 µs  49.4%      1
+void attnp<2, 539230276>(A, WF)                                   19.6 µs  12.0%      1
+void gv<1, 1, 1, 2, 16, 8, 1, 1, 0, 3>(G)                         14.8 µs   9.1%      1
+resid(__nv_bfloat16 const*, int, float const*, float cons...      10.0 µs   6.1%      2
+void gv<1, 1, 2, 1, 8, 16, 1, 1, 0, 1>(G)                          9.2 µs   5.7%      1
+route(float const*, float const*, int const*, int, int*, ...       6.8 µs   4.2%      1
+rmsg(__nv_bfloat16 const*, float const*, __nv_bfloat16*)           6.8 µs   4.2%      1
+void gv<1, 1, 2, 1, 8, 2, 1, 1, 0, 3>(G)                           6.3 µs   3.9%      1
+void gv<2, 1, 2, 1, 8, 2, 8, 1, 0, 4>(G)                           4.8 µs   3.0%      1
+void gv<1, 1, 2, 1, 16, 4, 1, 1, 0, 1>(G)                          4.0 µs   2.5%      1
+total                                                            162.5 µs
+GPU busy (kernels overlap: PDL or streams)                       158.9 µs
+an overlapping kernel's time includes any wait for the one before it, so the rows add up to more
+
+profile 8: batch=16 ctx=80000 dist=soft layer=sliding load=verify 16 page=1 q_len=8 spread=agentic
+kernel                                                           GPU time  share  calls
+moe_x(P)                                                         172.7 µs  58.3%      1
+nvjet_sm90_tst_64x64_64x13_1x2_h_bz_NNN                           23.6 µs   7.9%      1
+nvjet_sm90_tst_128x64_64x8_1x2_v_bz_coopB_NNN                     19.0 µs   6.4%      1
+nvjet_sm90_tst_48x64_64x15_1x2_v_bz_TNN                           16.7 µs   5.6%      1
+void attnp<2, 539000900>(A, WF)                                   15.7 µs   5.3%      1
+resid(__nv_bfloat16 const*, int, float const*, float cons...      13.2 µs   4.4%      2
+xgather(__nv_bfloat16 const*, int const*, int, int, unsig...       7.3 µs   2.5%      1
+nvjet_sm90_tst_128x64_64x8_1x1_v_bz_coopB_TNN                      7.2 µs   2.4%      1
+nvjet_sm90_tss_64x32_64x16_1x2_v_bz_splitK_NNT                     6.8 µs   2.3%      1
+route(float const*, float const*, int const*, int, int*, ...       6.2 µs   2.1%      1
+rmsg(__nv_bfloat16 const*, float const*, __nv_bfloat16*)           4.4 µs   1.5%      1
+void at::native::elementwise_kernel<128, 2, at::native::g...       1.8 µs   0.6%      1
+... 1 more
+total                                                            296.4 µs
+
+profile 9: batch=16 ctx=80000 dist=soft layer=full load=verify 16 page=1 q_len=8 spread=agentic
+kernel                                                           GPU time  share  calls
+moe_x(P)                                                         194.8 µs  46.3%      1
+void attnp<2, 537002308>(A, WF)                                  120.0 µs  28.5%      1
+nvjet_sm90_tst_64x64_64x13_1x2_h_bz_NNN                           21.9 µs   5.2%      1
+nvjet_sm90_tst_128x64_64x8_1x2_v_bz_coopB_NNN                     18.9 µs   4.5%      1
+nvjet_sm90_tst_48x64_64x15_1x2_v_bz_TNN                           17.5 µs   4.2%      1
+resid(__nv_bfloat16 const*, int, float const*, float cons...      12.5 µs   3.0%      2
+nvjet_sm90_tst_128x64_64x8_1x1_v_bz_coopB_TNN                      7.3 µs   1.7%      1
+nvjet_sm90_tss_64x32_64x16_1x2_v_bz_splitK_NNT                     7.2 µs   1.7%      1
+xgather(__nv_bfloat16 const*, int const*, int, int, unsig...       6.9 µs   1.6%      1
+route(float const*, float const*, int const*, int, int*, ...       5.8 µs   1.4%      1
+rmsg(__nv_bfloat16 const*, float const*, __nv_bfloat16*)           4.5 µs   1.1%      1
+void at::native::elementwise_kernel<128, 2, at::native::g...       1.9 µs   0.4%      1
+... 1 more
+total                                                            420.8 µs
+
+profile 10: batch=32 ctx=80000 dist=soft layer=sliding load=verify 32 page=1 q_len=8 spread=agentic
+kernel                                                           GPU time  share  calls
+moe_x(P)                                                         225.3 µs  59.0%      1
+nvjet_sm90_tst_64x128_64x8_1x2_v_bz_NNT                           28.4 µs   7.4%      1
+nvjet_sm90_tst_128x128_64x6_2x1_v_bz_TNT                          24.5 µs   6.4%      1
+resid(__nv_bfloat16 const*, int, float const*, float cons...      21.6 µs   5.7%      2
+nvjet_sm90_tst_72x64_64x12_1x1_v_bz_TNN                           20.1 µs   5.3%      1
+void attnp<2, 539000900>(A, WF)                                   19.0 µs   5.0%      1
+nvjet_sm90_tst_64x128_64x8_1x1_v_bz_NNN                            9.4 µs   2.5%      1
+xgather(__nv_bfloat16 const*, int const*, int, int, unsig...       8.8 µs   2.3%      1
+rmsg(__nv_bfloat16 const*, float const*, __nv_bfloat16*)           7.6 µs   2.0%      1
+nvjet_sm90_tss_64x64_64x13_1x1_v_bz_splitK_NNN                     7.2 µs   1.9%      1
+route(float const*, float const*, int const*, int, int*, ...       5.9 µs   1.5%      1
+void cublasLt::splitKreduce_kernel<32, 16, int, float, fl...       2.1 µs   0.5%      1
+... 1 more
+total                                                            381.7 µs
+
+profile 11: batch=32 ctx=80000 dist=soft layer=full load=verify 32 page=1 q_len=8 spread=agentic
+kernel                                                           GPU time  share  calls
+moe_x(P)                                                         235.0 µs  39.1%      1
+void attnp<2, 537002308>(A, WF)                                  227.7 µs  37.9%      1
+nvjet_sm90_tst_64x128_64x8_1x2_v_bz_NNT                           28.9 µs   4.8%      1
+nvjet_sm90_tst_128x128_64x6_2x1_v_bz_TNT                          24.5 µs   4.1%      1
+resid(__nv_bfloat16 const*, int, float const*, float cons...      21.8 µs   3.6%      2
+nvjet_sm90_tst_72x64_64x12_1x1_v_bz_TNN                           20.0 µs   3.3%      1
+nvjet_sm90_tst_64x128_64x8_1x1_v_bz_NNN                            9.5 µs   1.6%      1
+xgather(__nv_bfloat16 const*, int const*, int, int, unsig...       9.0 µs   1.5%      1
+rmsg(__nv_bfloat16 const*, float const*, __nv_bfloat16*)           7.5 µs   1.2%      1
+nvjet_sm90_tss_64x64_64x13_1x1_v_bz_splitK_NNN                     6.9 µs   1.2%      1
+route(float const*, float const*, int const*, int, int*, ...       6.0 µs   1.0%      1
+void cublasLt::splitKreduce_kernel<32, 16, int, float, fl...       2.0 µs   0.3%      1
+... 1 more
+total                                                            600.8 µs

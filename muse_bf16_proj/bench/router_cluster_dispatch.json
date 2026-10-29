@@ -1,0 +1,9 @@
+{
+  "state": "pending",
+  "source": "bench/top50_candidate_router_cluster_bt64.py",
+  "sha256": "e98d58899ed2f04cf0dce36aff7fff610e3c9b9a301477f68e3fcbb933192494",
+  "utc": "2026-10-29T03:14:09.344203+00:00",
+  "release_review": "root and expert_compiler PASS; pinned offline compile and CPU mapping/dispatch PASS",
+  "modal_gpu_jobs": 0,
+  "job_id": "002617846e374c4c"
+}

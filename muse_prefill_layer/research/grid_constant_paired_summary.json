@@ -1,0 +1,578 @@
+[
+  {
+    "seed": 8181,
+    "rows": 1001,
+    "skew": false,
+    "mode": 0,
+    "baseline_us": 381.3280016183853,
+    "candidate_us": 375.39200484752655,
+    "paired_candidate_us": 375.48482174061957,
+    "speedup": 1.0155616939472514,
+    "speedup_ci95": [
+      1.0003282685380426,
+      1.03079511935646
+    ],
+    "decision": "promising",
+    "replay_overhead_us": 0.0,
+    "replay_stability": {
+      "passed": true,
+      "metric": "relative_l2_and_rows",
+      "rtol": 0.01,
+      "atol": 1e-05
+    },
+    "environment": {
+      "gpu": "NVIDIA H200",
+      "capability": [
+        9,
+        0
+      ],
+      "total_memory": 150101688320,
+      "torch": "2.14.1+cu130",
+      "cuda": "13.0"
+    }
+  },
+  {
+    "seed": 8181,
+    "rows": 1001,
+    "skew": true,
+    "mode": 2,
+    "baseline_us": 239.58399891853333,
+    "candidate_us": 238.5600060224533,
+    "paired_candidate_us": 238.6839534121601,
+    "speedup": 1.0037708672640386,
+    "speedup_ci95": [
+      0.988714304255078,
+      1.0188274302729992
+    ],
+    "decision": "inconclusive",
+    "replay_overhead_us": 0.0,
+    "replay_stability": {
+      "passed": true,
+      "metric": "relative_l2_and_rows",
+      "rtol": 0.01,
+      "atol": 1e-05
+    },
+    "environment": {
+      "gpu": "NVIDIA H200",
+      "capability": [
+        9,
+        0
+      ],
+      "total_memory": 150101688320,
+      "torch": "2.14.1+cu130",
+      "cuda": "13.0"
+    }
+  },
+  {
+    "seed": 8181,
+    "rows": 3008,
+    "skew": false,
+    "mode": 1,
+    "baseline_us": 829.2960226535797,
+    "candidate_us": 821.9999969005585,
+    "paired_candidate_us": 821.1495924172887,
+    "speedup": 1.00992076268626,
+    "speedup_ci95": [
+      0.9947719512459662,
+      1.0250695741265539
+    ],
+    "decision": "inconclusive",
+    "replay_overhead_us": 0.0,
+    "replay_stability": {
+      "passed": true,
+      "metric": "relative_l2_and_rows",
+      "rtol": 0.01,
+      "atol": 1e-05
+    },
+    "environment": {
+      "gpu": "NVIDIA H200",
+      "capability": [
+        9,
+        0
+      ],
+      "total_memory": 150101688320,
+      "torch": "2.14.1+cu130",
+      "cuda": "13.0"
+    }
+  },
+  {
+    "seed": 8181,
+    "rows": 3008,
+    "skew": true,
+    "mode": 0,
+    "baseline_us": 475.0080108642578,
+    "candidate_us": 475.0719964504242,
+    "paired_candidate_us": 474.9016740471486,
+    "speedup": 1.000223913333897,
+    "speedup_ci95": [
+      0.9852205546338886,
+      1.0152272720339055
+    ],
+    "decision": "inconclusive",
+    "replay_overhead_us": 0.0,
+    "replay_stability": {
+      "passed": true,
+      "metric": "relative_l2_and_rows",
+      "rtol": 0.01,
+      "atol": 1e-05
+    },
+    "environment": {
+      "gpu": "NVIDIA H200",
+      "capability": [
+        9,
+        0
+      ],
+      "total_memory": 150101688320,
+      "torch": "2.14.1+cu130",
+      "cuda": "13.0"
+    }
+  },
+  {
+    "seed": 8181,
+    "rows": 16385,
+    "skew": false,
+    "mode": 2,
+    "baseline_us": 1713.9999866485596,
+    "candidate_us": 1685.1040124893188,
+    "paired_candidate_us": 1686.2821041101304,
+    "speedup": 1.0164372749202935,
+    "speedup_ci95": [
+      1.001190715796489,
+      1.0316838340440977
+    ],
+    "decision": "promising",
+    "replay_overhead_us": 0.0,
+    "replay_stability": {
+      "passed": true,
+      "metric": "relative_l2_and_rows",
+      "rtol": 0.01,
+      "atol": 1e-05
+    },
+    "environment": {
+      "gpu": "NVIDIA H200",
+      "capability": [
+        9,
+        0
+      ],
+      "total_memory": 150101688320,
+      "torch": "2.14.1+cu130",
+      "cuda": "13.0"
+    }
+  },
+  {
+    "seed": 8181,
+    "rows": 16385,
+    "skew": true,
+    "mode": 1,
+    "baseline_us": 1686.4320039749146,
+    "candidate_us": 1659.503996372223,
+    "paired_candidate_us": 1659.0611019428964,
+    "speedup": 1.0164978263910622,
+    "speedup_ci95": [
+      1.0012503589951962,
+      1.031745293786928
+    ],
+    "decision": "promising",
+    "replay_overhead_us": 0.0,
+    "replay_stability": {
+      "passed": true,
+      "metric": "relative_l2_and_rows",
+      "rtol": 0.01,
+      "atol": 1e-05
+    },
+    "environment": {
+      "gpu": "NVIDIA H200",
+      "capability": [
+        9,
+        0
+      ],
+      "total_memory": 150101688320,
+      "torch": "2.14.1+cu130",
+      "cuda": "13.0"
+    }
+  },
+  {
+    "seed": 8182,
+    "rows": 1001,
+    "skew": false,
+    "mode": 0,
+    "baseline_us": 384.65599715709686,
+    "candidate_us": 378.6400109529495,
+    "paired_candidate_us": 378.872167308941,
+    "speedup": 1.0152659138021072,
+    "speedup_ci95": [
+      1.0000369250950756,
+      1.0304949025091388
+    ],
+    "decision": "promising",
+    "replay_overhead_us": 0.0,
+    "replay_stability": {
+      "passed": true,
+      "metric": "relative_l2_and_rows",
+      "rtol": 0.01,
+      "atol": 1e-05
+    },
+    "environment": {
+      "gpu": "NVIDIA H200",
+      "capability": [
+        9,
+        0
+      ],
+      "total_memory": 150101688320,
+      "torch": "2.14.1+cu130",
+      "cuda": "13.0"
+    }
+  },
+  {
+    "seed": 8182,
+    "rows": 1001,
+    "skew": true,
+    "mode": 2,
+    "baseline_us": 240.49600213766098,
+    "candidate_us": 238.22399973869324,
+    "paired_candidate_us": 238.3825560311966,
+    "speedup": 1.008865775003217,
+    "speedup_ci95": [
+      0.9937327883781688,
+      1.0239987616282653
+    ],
+    "decision": "inconclusive",
+    "replay_overhead_us": 0.0,
+    "replay_stability": {
+      "passed": true,
+      "metric": "relative_l2_and_rows",
+      "rtol": 0.01,
+      "atol": 1e-05
+    },
+    "environment": {
+      "gpu": "NVIDIA H200",
+      "capability": [
+        9,
+        0
+      ],
+      "total_memory": 150101688320,
+      "torch": "2.14.1+cu130",
+      "cuda": "13.0"
+    }
+  },
+  {
+    "seed": 8182,
+    "rows": 3008,
+    "skew": false,
+    "mode": 1,
+    "baseline_us": 831.3439786434174,
+    "candidate_us": 823.9839971065521,
+    "paired_candidate_us": 824.131314638863,
+    "speedup": 1.0087518383010539,
+    "speedup_ci95": [
+      0.993620560726538,
+      1.0238831158755695
+    ],
+    "decision": "inconclusive",
+    "replay_overhead_us": 0.0,
+    "replay_stability": {
+      "passed": true,
+      "metric": "relative_l2_and_rows",
+      "rtol": 0.01,
+      "atol": 1e-05
+    },
+    "environment": {
+      "gpu": "NVIDIA H200",
+      "capability": [
+        9,
+        0
+      ],
+      "total_memory": 150101688320,
+      "torch": "2.14.1+cu130",
+      "cuda": "13.0"
+    }
+  },
+  {
+    "seed": 8182,
+    "rows": 3008,
+    "skew": true,
+    "mode": 0,
+    "baseline_us": 472.448006272316,
+    "candidate_us": 472.0799922943115,
+    "paired_candidate_us": 471.7117282171064,
+    "speedup": 1.0015608644245342,
+    "speedup_ci95": [
+      0.9865374514581662,
+      1.0165842773909022
+    ],
+    "decision": "inconclusive",
+    "replay_overhead_us": 0.0,
+    "replay_stability": {
+      "passed": true,
+      "metric": "relative_l2_and_rows",
+      "rtol": 0.01,
+      "atol": 1e-05
+    },
+    "environment": {
+      "gpu": "NVIDIA H200",
+      "capability": [
+        9,
+        0
+      ],
+      "total_memory": 150101688320,
+      "torch": "2.14.1+cu130",
+      "cuda": "13.0"
+    }
+  },
+  {
+    "seed": 8182,
+    "rows": 16385,
+    "skew": false,
+    "mode": 2,
+    "baseline_us": 1742.0960068702698,
+    "candidate_us": 1707.8720331192017,
+    "paired_candidate_us": 1708.9086517545986,
+    "speedup": 1.0194202042816018,
+    "speedup_ci95": [
+      1.0041289012173777,
+      1.0347115073458257
+    ],
+    "decision": "promising",
+    "replay_overhead_us": 0.0,
+    "replay_stability": {
+      "passed": true,
+      "metric": "relative_l2_and_rows",
+      "rtol": 0.01,
+      "atol": 1e-05
+    },
+    "environment": {
+      "gpu": "NVIDIA H200",
+      "capability": [
+        9,
+        0
+      ],
+      "total_memory": 150101688320,
+      "torch": "2.14.1+cu130",
+      "cuda": "13.0"
+    }
+  },
+  {
+    "seed": 8182,
+    "rows": 16385,
+    "skew": true,
+    "mode": 1,
+    "baseline_us": 1686.352014541626,
+    "candidate_us": 1663.2959842681885,
+    "paired_candidate_us": 1663.4541346621077,
+    "speedup": 1.0137652607321028,
+    "speedup_ci95": [
+      0.9985587818211212,
+      1.0289717396430842
+    ],
+    "decision": "inconclusive",
+    "replay_overhead_us": 0.0,
+    "replay_stability": {
+      "passed": true,
+      "metric": "relative_l2_and_rows",
+      "rtol": 0.01,
+      "atol": 1e-05
+    },
+    "environment": {
+      "gpu": "NVIDIA H200",
+      "capability": [
+        9,
+        0
+      ],
+      "total_memory": 150101688320,
+      "torch": "2.14.1+cu130",
+      "cuda": "13.0"
+    }
+  },
+  {
+    "seed": 8183,
+    "rows": 1001,
+    "skew": false,
+    "mode": 0,
+    "baseline_us": 382.6719969511032,
+    "candidate_us": 377.375990152359,
+    "paired_candidate_us": 377.58394192034916,
+    "speedup": 1.0134752950691621,
+    "speedup_ci95": [
+      0.9982731656431246,
+      1.0286774244951995
+    ],
+    "decision": "inconclusive",
+    "replay_overhead_us": 0.0,
+    "replay_stability": {
+      "passed": true,
+      "metric": "relative_l2_and_rows",
+      "rtol": 0.01,
+      "atol": 1e-05
+    },
+    "environment": {
+      "gpu": "NVIDIA H200",
+      "capability": [
+        9,
+        0
+      ],
+      "total_memory": 150101688320,
+      "torch": "2.14.1+cu130",
+      "cuda": "13.0"
+    }
+  },
+  {
+    "seed": 8183,
+    "rows": 1001,
+    "skew": true,
+    "mode": 2,
+    "baseline_us": 239.44000154733658,
+    "candidate_us": 237.4880015850067,
+    "paired_candidate_us": 237.5474373698154,
+    "speedup": 1.0079670999547548,
+    "speedup_ci95": [
+      0.9928475934554334,
+      1.023086606454076
+    ],
+    "decision": "inconclusive",
+    "replay_overhead_us": 0.0,
+    "replay_stability": {
+      "passed": true,
+      "metric": "relative_l2_and_rows",
+      "rtol": 0.01,
+      "atol": 1e-05
+    },
+    "environment": {
+      "gpu": "NVIDIA H200",
+      "capability": [
+        9,
+        0
+      ],
+      "total_memory": 150101688320,
+      "torch": "2.14.1+cu130",
+      "cuda": "13.0"
+    }
+  },
+  {
+    "seed": 8183,
+    "rows": 3008,
+    "skew": false,
+    "mode": 1,
+    "baseline_us": 831.9840133190155,
+    "candidate_us": 824.9120116233826,
+    "paired_candidate_us": 823.5759273916977,
+    "speedup": 1.0102092419747462,
+    "speedup_ci95": [
+      0.995056103345125,
+      1.0253623806043672
+    ],
+    "decision": "inconclusive",
+    "replay_overhead_us": 0.0,
+    "replay_stability": {
+      "passed": true,
+      "metric": "relative_l2_and_rows",
+      "rtol": 0.01,
+      "atol": 1e-05
+    },
+    "environment": {
+      "gpu": "NVIDIA H200",
+      "capability": [
+        9,
+        0
+      ],
+      "total_memory": 150101688320,
+      "torch": "2.14.1+cu130",
+      "cuda": "13.0"
+    }
+  },
+  {
+    "seed": 8183,
+    "rows": 3008,
+    "skew": true,
+    "mode": 0,
+    "baseline_us": 471.76000475883484,
+    "candidate_us": 470.94400227069855,
+    "paired_candidate_us": 471.0476177409537,
+    "speedup": 1.0015123460793574,
+    "speedup_ci95": [
+      0.986489660888167,
+      1.0165350312705477
+    ],
+    "decision": "inconclusive",
+    "replay_overhead_us": 0.0,
+    "replay_stability": {
+      "passed": true,
+      "metric": "relative_l2_and_rows",
+      "rtol": 0.01,
+      "atol": 1e-05
+    },
+    "environment": {
+      "gpu": "NVIDIA H200",
+      "capability": [
+        9,
+        0
+      ],
+      "total_memory": 150101688320,
+      "torch": "2.14.1+cu130",
+      "cuda": "13.0"
+    }
+  },
+  {
+    "seed": 8183,
+    "rows": 16385,
+    "skew": false,
+    "mode": 2,
+    "baseline_us": 1717.3759937286377,
+    "candidate_us": 1690.6399726867676,
+    "paired_candidate_us": 1690.6498152666625,
+    "speedup": 1.0158082284223713,
+    "speedup_ci95": [
+      1.0005711049960357,
+      1.0310453518487068
+    ],
+    "decision": "promising",
+    "replay_overhead_us": 0.0,
+    "replay_stability": {
+      "passed": true,
+      "metric": "relative_l2_and_rows",
+      "rtol": 0.01,
+      "atol": 1e-05
+    },
+    "environment": {
+      "gpu": "NVIDIA H200",
+      "capability": [
+        9,
+        0
+      ],
+      "total_memory": 150101688320,
+      "torch": "2.14.1+cu130",
+      "cuda": "13.0"
+    }
+  },
+  {
+    "seed": 8183,
+    "rows": 16385,
+    "skew": true,
+    "mode": 1,
+    "baseline_us": 1702.0800113677979,
+    "candidate_us": 1675.6800413131714,
+    "paired_candidate_us": 1673.2052708696506,
+    "speedup": 1.017257141727231,
+    "speedup_ci95": [
+      1.0019982846013225,
+      1.0325159988531394
+    ],
+    "decision": "promising",
+    "replay_overhead_us": 0.0,
+    "replay_stability": {
+      "passed": true,
+      "metric": "relative_l2_and_rows",
+      "rtol": 0.01,
+      "atol": 1e-05
+    },
+    "environment": {
+      "gpu": "NVIDIA H200",
+      "capability": [
+        9,
+        0
+      ],
+      "total_memory": 150101688320,
+      "torch": "2.14.1+cu130",
+      "cuda": "13.0"
+    }
+  }
+]

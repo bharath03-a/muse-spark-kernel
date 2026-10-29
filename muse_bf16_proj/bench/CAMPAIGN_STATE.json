@@ -1,0 +1,294 @@
+{
+  "problem": "muse_bf16_proj",
+  "goal": "verified leaderboard rank <= 50",
+  "goal_achieved": false,
+  "canonical": {
+    "path": "submission.py",
+    "checkpoint": "cp18_cw8_meta_pooler_pass.py",
+    "sha256": "8c943911bf27e71f7713466e18541fece2064aa2c7fc5f5cab96388e378f1b1c",
+    "verified_gain": "cp17 unpooler m32 retained; cp18 pooler m32 first22.400->21.536us, confirm22.496->21.504us (0.992us/4.41%)",
+    "overall_score_improvement_established": false
+  },
+  "modal_h200": {
+    "cap_s": 1800,
+    "used_s": 1782.614646911621,
+    "new_gpu_jobs_allowed": false,
+    "offline_cpu_compile_allowed": true
+  },
+  "pending": [
+    {
+      "job_id": "002617846e374c4c",
+      "source": "bench/top50_candidate_router_cluster_bt64.py",
+      "sha256": "e98d58899ed2f04cf0dce36aff7fff610e3c9b9a301477f68e3fcbb933192494",
+      "mechanism": "Triton-only BT64 hi/lo MMA2 cp.async ring plus intra-cluster K reduction; no global reduction tail",
+      "status": "pending"
+    }
+  ],
+  "completed_rejected": {
+    "2bf4dc23c8c742a6": {
+      "mechanism": "direct adaptive global loads",
+      "pooler_us": 318.72,
+      "unpooler_us": 162.176,
+      "selected": false
+    },
+    "9a4165d0f3e948a2": {
+      "mechanism": "adaptive intra-CTA split without prefetch",
+      "pooler_us": 109.344,
+      "unpooler_us": 58.24,
+      "selected": false,
+      "score": 1.4514582026691498,
+      "score_is_fallback_variation": true
+    },
+    "e24565548306424f": {
+      "mechanism": "conservative cluster weight multicast",
+      "pooler_us": 71.52,
+      "unpooler_us": 71.296,
+      "selected": false
+    },
+    "571959ca10f24e68": {
+      "mechanism": "ac2 incl RW=1 split-K",
+      "result": "run failed: illegal address on pooler m32 rw1_s2 first launch; rw2_s2 had passed setup correctness"
+    },
+    "ef1b63eb9e5b428f": {
+      "mechanism": "ac2 RW=2 splits (tile-ordered payload)",
+      "score": 1.4361,
+      "selected": false,
+      "raw_us": {
+        "pooler32": [
+          22.27,
+          28.61
+        ],
+        "unpooler32_cp17_vs_rw2": [
+          20.19,
+          21.02
+        ],
+        "qkv32": [
+          15.74,
+          26.21
+        ],
+        "pooler16": [
+          20.32,
+          22.75
+        ],
+        "qkv16": [
+          15.36,
+          19.52
+        ],
+        "unpooler16": [
+          18.85,
+          19.78
+        ],
+        "o32": [
+          10.21,
+          11.2
+        ],
+        "o16": [
+          10.08,
+          10.85
+        ]
+      },
+      "finding": "halving x traffic (RW=2) loses; K=8192 layers lose badly -> suspect tile-ordered payload streams; RW=1 row bug found (rejected by correctness)"
+    },
+    "cecfa932f4db40f6": {
+      "mechanism": "ac2 consumption-ordered payload",
+      "score": 1.436,
+      "selected": false,
+      "raw_us": {
+        "unpooler32": {
+          "current": 20.29,
+          "rw1L": 20.42,
+          "rw2L": 21.22
+        },
+        "pooler32": {
+          "current": 21.98,
+          "rw1s1L": 24.54,
+          "rw1s2L": 28.0,
+          "rw2s2L": 29.02
+        },
+        "qkv32": {
+          "current": 16.03,
+          "rw1s2": 24.38,
+          "rw1s1": 23.33
+        }
+      },
+      "finding": "payload layout not the cause; K=8192 layers 3-8us slow in this family regardless of CTA count/layout"
+    },
+    "bdcbe951888c483c": {
+      "mechanism": "diag: meta consumption order / x padded stride",
+      "selected": false,
+      "raw_us": {
+        "pooler32": {
+          "current": 22.05,
+          "tile_meta": 24.29,
+          "co_meta": 34.02,
+          "xpad": 24.51
+        },
+        "qkv32": {
+          "current": 15.87,
+          "tile": 24.42,
+          "co": 26.27
+        },
+        "unpooler32_co": [
+          20.1,
+          23.74
+        ]
+      },
+      "finding": "x stride irrelevant; metadata global-load latency on issue path dominates (co order loses L1 reuse -> +10us)"
+    },
+    "dc389a40f61d4701": {
+      "mechanism": "ac2 smem-preloaded metadata",
+      "score": 1.4255,
+      "selected": false,
+      "raw_us": {
+        "pooler32": {
+          "current": 22.53,
+          "s1": 22.78,
+          "s2": 27.81
+        },
+        "unpooler32": {
+          "current_cp17": 20.22,
+          "s1": 19.97
+        },
+        "qkv32": {
+          "current": 15.81,
+          "s2": 24.83,
+          "s1": 21.66
+        },
+        "pooler16": {
+          "current": 20.06,
+          "s1": 21.57,
+          "s2": 21.54
+        },
+        "qkv16": {
+          "current": 15.42,
+          "s2": 18.53
+        },
+        "unpooler16": {
+          "current": 18.91,
+          "s1": 19.1
+        },
+        "o32": [
+          10.08,
+          10.69
+        ],
+        "o16": [
+          10.08,
+          10.14
+        ]
+      },
+      "finding": "smem metadata cut pooler32 24.3->22.8, qkv32 23.3->21.7; cross-CTA split costs +5-8us at m32 (unexplained); low-CTA configs underfill in-flight bytes"
+    },
+    "f133c38e5e2e4446": {
+      "mechanism": "ac2 smem-meta deeper rings",
+      "score": 1.4364,
+      "selected": false,
+      "raw_us": {
+        "pooler32": {
+          "current": 21.92,
+          "d4": 21.95,
+          "d6": 22.53
+        },
+        "unpooler32": {
+          "current_cp17": 20.06,
+          "d3": 19.87
+        },
+        "qkv32": {
+          "current": 15.68,
+          "d4": 20.86,
+          "d6": 21.73
+        },
+        "pooler16": {
+          "current": 19.65,
+          "d6": 19.84
+        },
+        "qkv16": {
+          "current": 15.3,
+          "d6": 18.66
+        }
+      }
+    },
+    "326978ecb91b416d": {
+      "mechanism": "CW8 R32 intra-CTA Kpartition",
+      "passed": true,
+      "flags": [],
+      "selected": false,
+      "score": 1.4286875836368582,
+      "score_is_fallback_variation": true,
+      "pooler_raw_us": {
+        "current": 22.207999601960182,
+        "CW8": 22.336000576615334
+      },
+      "controls_raw_us": {
+        "CW4": 24.09599907696247,
+        "CW8": 22.304000332951546
+      },
+      "finding": "halved serialloop cuts ownfamily7.4% but only reachescanonicalparity; metadata criticalchain remains candidateorthogonalmechanism"
+    }
+  },
+  "release_gates": [
+    "correctness including fresh captured graph inputs",
+    "two cold paired rounds >= max(0.5us,2.5%) improvement",
+    "judge passed with no flags",
+    "no promotion based solely on fallback score variation"
+  ],
+  "compiler_evidence": {
+    "file": "bench/adaptive_async_compile_final.out",
+    "torch": "2.14.1+cu130",
+    "triton": "3.8.0",
+    "weight_ring": {
+      "registers": 104,
+      "shared_bytes": 49248,
+      "spills": 0
+    },
+    "weight_x_ring": {
+      "registers": 128,
+      "shared_bytes": 98400,
+      "spills": 0
+    },
+    "gpu_correctness_or_performance_proven": false
+  },
+  "completed_verified": {
+    "83233f53d5ff4a84": {
+      "passed": true,
+      "flags": [],
+      "selected": {
+        "unpooler": true
+      },
+      "unpooler_m32_raw_current_us": 21.695999428629875,
+      "unpooler_m32_raw_candidate_us": 20.416000857949257,
+      "score": 1.4274359703571495,
+      "score_ci": [
+        1.4060244308017922,
+        1.4488475099125067
+      ]
+    },
+    "1dd77d0577fe4152": {
+      "passed": true,
+      "flags": [],
+      "selected": {
+        "pooler_m32": true
+      },
+      "pooler_raw_us": {
+        "first": {
+          "current": 22.39999920129776,
+          "candidate": 21.536000072956085
+        },
+        "confirm": {
+          "current": 22.495999932289124,
+          "candidate": 21.503999829292297
+        },
+        "controls": {
+          "GLOBAL": 22.272000089287758,
+          "META": 21.536000072956085
+        }
+      },
+      "score": 1.438075146901073,
+      "score_ci": [
+        1.416504019697557,
+        1.459646274104589
+      ],
+      "overall_gain_proven": false
+    }
+  },
+  "ac2_conclusion": "ac2 family reaches parity (pooler m32/m16) but no gated win; qkv loses 3-5us (72 CTAs, split-K costs +5-8us at m32). Line closed; canonical stays cp17."
+}

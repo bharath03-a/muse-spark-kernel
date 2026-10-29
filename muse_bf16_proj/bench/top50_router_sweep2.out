@@ -1,0 +1,23 @@
+✓ Initialized. View run at 
+https://modal.com/apps/<workspace>/main/ap-XrVXRR5LdVPICBsIdD58YP
+✓ Created objects.
+├── ✓ Uploaded 
+│   <repo>/muse_bf16_proj/mo
+│   dal_app.py
+├── ✓ Uploaded 
+│   <repo>/muse_bf16_proj
+├── ✓ Created Function env.
+├── ✓ Created Function correct.
+├── ✓ Created Function bench.
+├── ✓ Created Function micro.
+├── ✓ Created Function session.
+├── ✓ Created Function compile_only.
+└── ✓ Created Function inspect.
+DISTRIBUTED 128 config (128, 32, 32, 64) rel 2.5204076015829683e-06 raw_us {'distributed': 14.016, 'cp14': 12.224}
+DISTRIBUTED 256 config (128, 64, 32, 64) rel 2.519131731273765e-06 raw_us {'distributed': 16.064, 'cp14': 14.848}
+DISTRIBUTED 256 config (64, 64, 16, 64) rel 2.6891022889459546e-06 raw_us {'distributed': 15.424, 'cp14': 14.88}
+Stopping app - local entrypoint completed.
+✓ App completed. View run at 
+https://modal.com/apps/<workspace>/main/ap-XrVXRR5LdVPICBsIdD58YP
+
+[gpu_q] top50 top50_router_sweep2: 20s, rc=0; budget used 1783/1800s

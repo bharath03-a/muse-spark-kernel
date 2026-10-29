@@ -1,0 +1,33 @@
+zip build 32.5s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 27
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 31
+qkv zip m=1 id 37: 20.93 us (base id 31: 15.23)
+qkv zip m=1 id 38: 26.21 us (base id 31: 15.23)
+qkv zip m=1 id 25: 15.23 us (base id 31: 15.23)
+qkv zip m=1 id 39: 14.78 us (base id 31: 15.23)
+qkv zip m=1 id 40: 20.10 us (base id 31: 15.23)
+qkv zip m=1 id 44: 15.07 us (base id 31: 15.23)
+qkv zip m=8 id 37: 21.09 us (base id 31: 15.58)
+qkv zip m=8 id 38: 27.23 us (base id 31: 15.58)
+qkv zip m=8 id 25: 15.42 us (base id 31: 15.58)
+qkv zip m=8 id 39: 16.03 us (base id 31: 15.58)
+qkv zip m=8 id 40: 20.96 us (base id 31: 15.58)
+qkv zip m=8 id 44: 15.42 us (base id 31: 15.58)
+qkv zip picked m=1 id 39, m=2-8 id 25
+zip prepare 32.8s
+r9 build 31.7s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.64 id3=18.98 -> id3
+r9 prepare 31.7s picks={('qkv_gate', 128): 3}
+r15 lt build 15.5s cublasLt 130101
+r15 qkv_gate m=128 cands=20 (raw us) cp10=18.69 c12=20.32 c14=20.26 c2=20.35 best=a66t80s35k1r0z0c7 -> cp10
+r15 qkv_gate m=256 cands=15 (raw us) cp10=23.20 c9=22.24 c0=23.20 c10=23.17 best=a66t134s35k1r0z0c9 -> lt
+r15 o m=128 cands=8 (raw us) cp10=11.01 c0=11.20 c1=11.39 c2=11.55 best=a66t18s35k1r0z0c5 -> cp10
+r15 o m=256 cands=8 (raw us) cp10=12.86 c0=13.12 c1=13.22 c4=13.86 best=a66t20s35k1r0z0c3 -> cp10
+r15 pooler m=128 cands=15 (raw us) cp10=25.60 c10=24.99 c9=25.47 c8=25.12 best=a66t134s35k1r0z0c7 -> lt
+r15 pooler m=256 cands=12 (raw us) cp10=30.40 c8=30.72 c3=32.32 c10=32.99 best=a66t183s35k1r0z0c9 -> cp10
+r15 unpooler m=128 cands=12 (raw us) cp10=23.87 c10=24.26 c4=24.42 c11=24.80 best=a66t193s35k1r0z0c7 -> cp10
+r15 unpooler m=256 cands=8 (raw us) cp10=27.78 c0=27.97 c2=30.30 c3=30.37 best=a66t20s35k1r0z0c3 -> cp10
+r15 prepare 16.1s total 116.4s picks=qkv_gate256,pooler128

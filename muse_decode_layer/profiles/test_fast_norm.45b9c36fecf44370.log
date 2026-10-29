@@ -1,0 +1,31 @@
+Traceback (most recent call last):
+  File "/tmp/muse_decode_layer-t06nz4hl/run/worker.py", line 468, in child_main
+    state["graph_out"] = fn(state["data"])
+                         ^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_decode_layer-t06nz4hl/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_decode_layer-t06nz4hl/run/submission.py", line 464, in kernel_fn
+    k_scale_val = float(data["k_scale"])
+                  ^^^^^^^^^^^^^^^^^^^^^^
+torch.AcceleratorError: CUDA error: operation not permitted when stream is capturing
+Search for `cudaErrorStreamCaptureUnsupported' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+The CUDA driver logged these messages, which may provide useful details:
+Returning 900 (CUDA_ERROR_STREAM_CAPTURE_UNSUPPORTED) from cuStreamSynchronize
+
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/tmp/muse_decode_layer-t06nz4hl/run/worker.py", line 467, in child_main
+    with torch.cuda.graph(graph, stream=stream):
+  File "/opt/sglang/lib/python3.12/site-packages/torch/cuda/graphs.py", line 1210, in __exit__
+    self.cuda_graph.capture_end()
+  File "/opt/sglang/lib/python3.12/site-packages/torch/cuda/graphs.py", line 649, in capture_end
+    self.capture_end_pre()
+  File "/opt/sglang/lib/python3.12/site-packages/torch/cuda/graphs.py", line 630, in capture_end_pre
+    super().capture_end_pre()
+torch.AcceleratorError: CUDA error: operation failed due to a previous error during capture
+Search for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+

@@ -1,0 +1,119 @@
+t32, num_splits=16
+get_scheduler_metadata signature: (batch_size: int, max_seqlen_q: int, max_seqlen_k: int, num_heads: int, num_heads_k: int, headdim: int, cache_seqlens: torch.Tensor, qkv_dtype=torch.bfloat16, headdim_v: Optional[int] = None, cu_seqlens_q: Optional[torch.Tensor] = None, cu_seqlens_k: Optional[torch.Tensor] = None, cu_seqlens_k_new: Optional[torch.Tensor] = None, seqused_q: Optional[torch.Tensor] = None, leftpad_k: Optional[torch.Tensor] = None, page_size: Optional[int] = None, max_seqlen_k_new: int = 0, causal: bool = False, window_size=(-1, -1), attention_chunk: int = 0, has_softcap: bool = False, num_splits: int = 0, pack_gqa: Optional[bool] = None, sm_margin: int = 0)
+seqlens: tensor([3001, 3001, 3001, 3001], device='cuda:0', dtype=torch.int32)
+cu_seqlens_q: tensor([0, 1, 2, 3, 4], device='cuda:0', dtype=torch.int32)
+scheduler_metadata passed in data: True
+splits=0: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=12
+splits=2: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=2
+splits=4: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=4
+splits=8: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=8
+splits=16: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=12
+get_scheduler_metadata signature: (batch_size: int, max_seqlen_q: int, max_seqlen_k: int, num_heads: int, num_heads_k: int, headdim: int, cache_seqlens: torch.Tensor, qkv_dtype=torch.bfloat16, headdim_v: Optional[int] = None, cu_seqlens_q: Optional[torch.Tensor] = None, cu_seqlens_k: Optional[torch.Tensor] = None, cu_seqlens_k_new: Optional[torch.Tensor] = None, seqused_q: Optional[torch.Tensor] = None, leftpad_k: Optional[torch.Tensor] = None, page_size: Optional[int] = None, max_seqlen_k_new: int = 0, causal: bool = False, window_size=(-1, -1), attention_chunk: int = 0, has_softcap: bool = False, num_splits: int = 0, pack_gqa: Optional[bool] = None, sm_margin: int = 0)
+seqlens: tensor([  622,  5009, 10678,  3227, 12575,  4987,  1269,  2704],
+       device='cuda:0', dtype=torch.int32)
+cu_seqlens_q: tensor([0, 1, 2, 3, 4, 5, 6, 7, 8], device='cuda:0', dtype=torch.int32)
+scheduler_metadata passed in data: True
+splits=0: meta shape=torch.Size([25]), dtype=torch.int32, num_splits=2
+splits=2: meta shape=torch.Size([25]), dtype=torch.int32, num_splits=2
+splits=4: meta shape=torch.Size([25]), dtype=torch.int32, num_splits=2
+splits=8: meta shape=torch.Size([25]), dtype=torch.int32, num_splits=2
+splits=16: meta shape=torch.Size([25]), dtype=torch.int32, num_splits=2
+get_scheduler_metadata signature: (batch_size: int, max_seqlen_q: int, max_seqlen_k: int, num_heads: int, num_heads_k: int, headdim: int, cache_seqlens: torch.Tensor, qkv_dtype=torch.bfloat16, headdim_v: Optional[int] = None, cu_seqlens_q: Optional[torch.Tensor] = None, cu_seqlens_k: Optional[torch.Tensor] = None, cu_seqlens_k_new: Optional[torch.Tensor] = None, seqused_q: Optional[torch.Tensor] = None, leftpad_k: Optional[torch.Tensor] = None, page_size: Optional[int] = None, max_seqlen_k_new: int = 0, causal: bool = False, window_size=(-1, -1), attention_chunk: int = 0, has_softcap: bool = False, num_splits: int = 0, pack_gqa: Optional[bool] = None, sm_margin: int = 0)
+seqlens: tensor([100008, 100008], device='cuda:0', dtype=torch.int32)
+cu_seqlens_q: tensor([ 0,  8, 16], device='cuda:0', dtype=torch.int32)
+scheduler_metadata passed in data: False
+splits=0: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=29
+splits=2: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=2
+splits=4: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=4
+splits=8: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=8
+splits=16: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=16
+get_scheduler_metadata signature: (batch_size: int, max_seqlen_q: int, max_seqlen_k: int, num_heads: int, num_heads_k: int, headdim: int, cache_seqlens: torch.Tensor, qkv_dtype=torch.bfloat16, headdim_v: Optional[int] = None, cu_seqlens_q: Optional[torch.Tensor] = None, cu_seqlens_k: Optional[torch.Tensor] = None, cu_seqlens_k_new: Optional[torch.Tensor] = None, seqused_q: Optional[torch.Tensor] = None, leftpad_k: Optional[torch.Tensor] = None, page_size: Optional[int] = None, max_seqlen_k_new: int = 0, causal: bool = False, window_size=(-1, -1), attention_chunk: int = 0, has_softcap: bool = False, num_splits: int = 0, pack_gqa: Optional[bool] = None, sm_margin: int = 0)
+seqlens: tensor([6001, 6001, 6001, 6001], device='cuda:0', dtype=torch.int32)
+cu_seqlens_q: tensor([0, 1, 2, 3, 4], device='cuda:0', dtype=torch.int32)
+scheduler_metadata passed in data: False
+splits=0: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=12
+splits=2: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=2
+splits=4: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=4
+splits=8: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=8
+splits=16: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=12
+get_scheduler_metadata signature: (batch_size: int, max_seqlen_q: int, max_seqlen_k: int, num_heads: int, num_heads_k: int, headdim: int, cache_seqlens: torch.Tensor, qkv_dtype=torch.bfloat16, headdim_v: Optional[int] = None, cu_seqlens_q: Optional[torch.Tensor] = None, cu_seqlens_k: Optional[torch.Tensor] = None, cu_seqlens_k_new: Optional[torch.Tensor] = None, seqused_q: Optional[torch.Tensor] = None, leftpad_k: Optional[torch.Tensor] = None, page_size: Optional[int] = None, max_seqlen_k_new: int = 0, causal: bool = False, window_size=(-1, -1), attention_chunk: int = 0, has_softcap: bool = False, num_splits: int = 0, pack_gqa: Optional[bool] = None, sm_margin: int = 0)
+seqlens: tensor([6008, 6008, 6008, 6008], device='cuda:0', dtype=torch.int32)
+cu_seqlens_q: tensor([ 0,  8, 16, 24, 32], device='cuda:0', dtype=torch.int32)
+scheduler_metadata passed in data: False
+splits=0: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=12
+splits=2: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=2
+splits=4: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=4
+splits=8: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=8
+splits=16: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=12
+get_scheduler_metadata signature: (batch_size: int, max_seqlen_q: int, max_seqlen_k: int, num_heads: int, num_heads_k: int, headdim: int, cache_seqlens: torch.Tensor, qkv_dtype=torch.bfloat16, headdim_v: Optional[int] = None, cu_seqlens_q: Optional[torch.Tensor] = None, cu_seqlens_k: Optional[torch.Tensor] = None, cu_seqlens_k_new: Optional[torch.Tensor] = None, seqused_q: Optional[torch.Tensor] = None, leftpad_k: Optional[torch.Tensor] = None, page_size: Optional[int] = None, max_seqlen_k_new: int = 0, causal: bool = False, window_size=(-1, -1), attention_chunk: int = 0, has_softcap: bool = False, num_splits: int = 0, pack_gqa: Optional[bool] = None, sm_margin: int = 0)
+seqlens: tensor([1048584], device='cuda:0', dtype=torch.int32)
+cu_seqlens_q: tensor([0, 8], device='cuda:0', dtype=torch.int32)
+scheduler_metadata passed in data: False
+splits=0: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=57
+splits=2: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=2
+splits=4: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=4
+splits=8: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=8
+splits=16: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=16
+get_scheduler_metadata signature: (batch_size: int, max_seqlen_q: int, max_seqlen_k: int, num_heads: int, num_heads_k: int, headdim: int, cache_seqlens: torch.Tensor, qkv_dtype=torch.bfloat16, headdim_v: Optional[int] = None, cu_seqlens_q: Optional[torch.Tensor] = None, cu_seqlens_k: Optional[torch.Tensor] = None, cu_seqlens_k_new: Optional[torch.Tensor] = None, seqused_q: Optional[torch.Tensor] = None, leftpad_k: Optional[torch.Tensor] = None, page_size: Optional[int] = None, max_seqlen_k_new: int = 0, causal: bool = False, window_size=(-1, -1), attention_chunk: int = 0, has_softcap: bool = False, num_splits: int = 0, pack_gqa: Optional[bool] = None, sm_margin: int = 0)
+seqlens: tensor([4008, 4008, 4008], device='cuda:0', dtype=torch.int32)
+cu_seqlens_q: tensor([ 0,  8, 16, 24], device='cuda:0', dtype=torch.int32)
+scheduler_metadata passed in data: False
+splits=0: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=16
+splits=2: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=2
+splits=4: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=4
+splits=8: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=8
+splits=16: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=16
+get_scheduler_metadata signature: (batch_size: int, max_seqlen_q: int, max_seqlen_k: int, num_heads: int, num_heads_k: int, headdim: int, cache_seqlens: torch.Tensor, qkv_dtype=torch.bfloat16, headdim_v: Optional[int] = None, cu_seqlens_q: Optional[torch.Tensor] = None, cu_seqlens_k: Optional[torch.Tensor] = None, cu_seqlens_k_new: Optional[torch.Tensor] = None, seqused_q: Optional[torch.Tensor] = None, leftpad_k: Optional[torch.Tensor] = None, page_size: Optional[int] = None, max_seqlen_k_new: int = 0, causal: bool = False, window_size=(-1, -1), attention_chunk: int = 0, has_softcap: bool = False, num_splits: int = 0, pack_gqa: Optional[bool] = None, sm_margin: int = 0)
+seqlens: tensor([9001, 9001], device='cuda:0', dtype=torch.int32)
+cu_seqlens_q: tensor([0, 1, 2], device='cuda:0', dtype=torch.int32)
+scheduler_metadata passed in data: True
+splits=0: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=24
+splits=2: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=2
+splits=4: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=4
+splits=8: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=8
+splits=16: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=16
+get_scheduler_metadata signature: (batch_size: int, max_seqlen_q: int, max_seqlen_k: int, num_heads: int, num_heads_k: int, headdim: int, cache_seqlens: torch.Tensor, qkv_dtype=torch.bfloat16, headdim_v: Optional[int] = None, cu_seqlens_q: Optional[torch.Tensor] = None, cu_seqlens_k: Optional[torch.Tensor] = None, cu_seqlens_k_new: Optional[torch.Tensor] = None, seqused_q: Optional[torch.Tensor] = None, leftpad_k: Optional[torch.Tensor] = None, page_size: Optional[int] = None, max_seqlen_k_new: int = 0, causal: bool = False, window_size=(-1, -1), attention_chunk: int = 0, has_softcap: bool = False, num_splits: int = 0, pack_gqa: Optional[bool] = None, sm_margin: int = 0)
+seqlens: tensor([80396, 17183, 57044, 40828], device='cuda:0', dtype=torch.int32)
+cu_seqlens_q: tensor([0, 1, 2, 3, 4], device='cuda:0', dtype=torch.int32)
+scheduler_metadata passed in data: True
+splits=0: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=25
+splits=2: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=2
+splits=4: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=4
+splits=8: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=8
+splits=16: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=16
+get_scheduler_metadata signature: (batch_size: int, max_seqlen_q: int, max_seqlen_k: int, num_heads: int, num_heads_k: int, headdim: int, cache_seqlens: torch.Tensor, qkv_dtype=torch.bfloat16, headdim_v: Optional[int] = None, cu_seqlens_q: Optional[torch.Tensor] = None, cu_seqlens_k: Optional[torch.Tensor] = None, cu_seqlens_k_new: Optional[torch.Tensor] = None, seqused_q: Optional[torch.Tensor] = None, leftpad_k: Optional[torch.Tensor] = None, page_size: Optional[int] = None, max_seqlen_k_new: int = 0, causal: bool = False, window_size=(-1, -1), attention_chunk: int = 0, has_softcap: bool = False, num_splits: int = 0, pack_gqa: Optional[bool] = None, sm_margin: int = 0)
+seqlens: tensor([6008, 6008, 6008, 6008], device='cuda:0', dtype=torch.int32)
+cu_seqlens_q: tensor([ 0,  8, 16, 24, 32], device='cuda:0', dtype=torch.int32)
+scheduler_metadata passed in data: False
+splits=0: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=12
+splits=2: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=2
+splits=4: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=4
+splits=8: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=8
+splits=16: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=12
+get_scheduler_metadata signature: (batch_size: int, max_seqlen_q: int, max_seqlen_k: int, num_heads: int, num_heads_k: int, headdim: int, cache_seqlens: torch.Tensor, qkv_dtype=torch.bfloat16, headdim_v: Optional[int] = None, cu_seqlens_q: Optional[torch.Tensor] = None, cu_seqlens_k: Optional[torch.Tensor] = None, cu_seqlens_k_new: Optional[torch.Tensor] = None, seqused_q: Optional[torch.Tensor] = None, leftpad_k: Optional[torch.Tensor] = None, page_size: Optional[int] = None, max_seqlen_k_new: int = 0, causal: bool = False, window_size=(-1, -1), attention_chunk: int = 0, has_softcap: bool = False, num_splits: int = 0, pack_gqa: Optional[bool] = None, sm_margin: int = 0)
+seqlens: tensor([20008, 20008], device='cuda:0', dtype=torch.int32)
+cu_seqlens_q: tensor([ 0,  8, 16], device='cuda:0', dtype=torch.int32)
+scheduler_metadata passed in data: False
+splits=0: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=4
+splits=2: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=2
+splits=4: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=4
+splits=8: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=4
+splits=16: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=4
+get_scheduler_metadata signature: (batch_size: int, max_seqlen_q: int, max_seqlen_k: int, num_heads: int, num_heads_k: int, headdim: int, cache_seqlens: torch.Tensor, qkv_dtype=torch.bfloat16, headdim_v: Optional[int] = None, cu_seqlens_q: Optional[torch.Tensor] = None, cu_seqlens_k: Optional[torch.Tensor] = None, cu_seqlens_k_new: Optional[torch.Tensor] = None, seqused_q: Optional[torch.Tensor] = None, leftpad_k: Optional[torch.Tensor] = None, page_size: Optional[int] = None, max_seqlen_k_new: int = 0, causal: bool = False, window_size=(-1, -1), attention_chunk: int = 0, has_softcap: bool = False, num_splits: int = 0, pack_gqa: Optional[bool] = None, sm_margin: int = 0)
+seqlens: tensor([102821,  65626,  75035,  38996], device='cuda:0', dtype=torch.int32)
+cu_seqlens_q: tensor([0, 1, 2, 3, 4], device='cuda:0', dtype=torch.int32)
+scheduler_metadata passed in data: True
+splits=0: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=22
+splits=2: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=2
+splits=4: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=4
+splits=8: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=8
+splits=16: meta shape=torch.Size([13]), dtype=torch.int32, num_splits=16
+get_scheduler_metadata signature: (batch_size: int, max_seqlen_q: int, max_seqlen_k: int, num_heads: int, num_heads_k: int, headdim: int, cache_seqlens: torch.Tensor, qkv_dtype=torch.bfloat16, headdim_v: Optional[int] = None, cu_seqlens_q: Optional[torch.Tensor] = None, cu_seqlens_k: Optional[torch.Tensor] = None, cu_seqlens_k_new: Optional[torch.Tensor] = None, seqused_q: Optional[torch.Tensor] = None, leftpad_k: Optional[torch.Tensor] = None, page_size: Optional[int] = None, max_seqlen_k_new: int = 0, causal: bool = False, window_size=(-1, -1), attention_chunk: int = 0, has_softcap: bool = False, num_splits: int = 0, pack_gqa: Optional[bool] = None, sm_margin: int = 0)
+seqlens: tensor([20008, 20008], device='cuda:0', dtype=torch.int32)
+cu_seqlens_q: tensor([ 0,  8, 16], device='cuda:0', dtype=torch.int32)
+scheduler_metadata passed in data: False
+splits=0: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=4
+splits=2: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=2
+splits=4: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=4
+splits=8: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=4
+splits=16: meta shape=torch.Size([17]), dtype=torch.int32, num_splits=4

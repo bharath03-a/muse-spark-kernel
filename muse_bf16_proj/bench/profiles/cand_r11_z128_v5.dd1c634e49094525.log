@@ -1,0 +1,20 @@
+zip build 38.3s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 27
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 31
+zip prepare 38.5s
+r9 build 37.5s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.35 id3=18.46 -> id3
+r9 prepare 37.5s picks={('qkv_gate', 128): 3}
+z11 build 40.5s
+z11 max clusters: id1(1, 2, 1, 8, 0, 1)=132 id2(1, 2, 2, 8, 0, 1)=66 id7(2, 2, 2, 5, 0, 1)=66 id8(2, 2, 3, 5, 0, 1)=39 id10(2, 2, 5, 5, 0, 1)=22 id15(1, 4, 1, 8, 0, 1)=132 id47(2, 2, 2, 5, 3, 1)=66 id45(1, 4, 1, 8, 3, 1)=132
+z11 pack pooler: escapes=4513 max/128-tile=158
+z11 bench pooler m=128 (raw us, ~4 graph overhead): cur=25.73 id2=32.11 id8=39.74 -> cur
+z11 pack unpooler: escapes=3150 max/128-tile=70
+z11 bench unpooler m=128 (raw us, ~4 graph overhead): cur=23.70 id1=26.93 id7=29.98 id15=29.57 -> cur
+z11 diag unpooler (raw us): id7m0=29.95 id47m3=28.77 id15m0=29.90 id45m3=27.18 | id7 med skew=0.00 fix=19.75 main=19.25 bar1=2.25 red=1.25 store=0.75 | max skew=0.25 fix=21.75 main=21.25 bar1=4.75 red=1.50 store=1.00 | span=25.50
+z11 pack qkv_gate: escapes=2571 max/128-tile=174
+z11 bench qkv_gate m=128 (raw us, ~4 graph overhead): cur=18.45 id10=32.75 -> cur
+z11 prepare 40.7s picks={}

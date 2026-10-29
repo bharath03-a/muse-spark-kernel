@@ -1,0 +1,37 @@
+{
+  "output": "research_harness/results/prefill",
+  "tasks": [
+    {
+      "id": "w13-fused-mixed-skewed",
+      "hypothesis": "Fused W13 epilogue remains finite and correct on mixed mode2 and skewed uneven expert counts",
+      "command": [
+        "<repo>/muse_bf16_proj/.venv/bin/modal",
+        "run",
+        "modal_research_compile.py::probe_w13_fused",
+        "--seed",
+        "7171",
+        "--modes",
+        "0,1,2",
+        "--row-counts",
+        "1001,3008,16385",
+        "--skewed"
+      ],
+      "sources": [
+        "modal_research_compile.py",
+        "research_harness/gpu.py",
+        "research_harness/stats.py",
+        "muse_prefill_layer/research_prefill_full_bf16.py",
+        "muse_prefill_layer/research_prefill_w13_fused.py"
+      ],
+      "timeout_seconds": 420,
+      "success_markers": [
+        "W13_FUSED_CHECK",
+        "W13_PAIRED_JSON"
+      ],
+      "minimum_marker_counts": {
+        "W13_FUSED_CHECK": 9,
+        "W13_PAIRED_JSON": 9
+      }
+    }
+  ]
+}

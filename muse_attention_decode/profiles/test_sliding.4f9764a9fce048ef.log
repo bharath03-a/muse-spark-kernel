@@ -1,0 +1,5 @@
+PROBE MODULE flashinfer: available at /opt/sglang/lib/python3.12/site-packages/flashinfer/__init__.py
+PROBE MODULE vllm: No module named 'vllm'
+PROBE MODULE sglang: available at /sgl-workspace/sglang-muse-spark/python/sglang/__init__.py
+PROBE MODULE sgl_kernel: available at /opt/sglang/lib/python3.12/site-packages/sgl_kernel/__init__.py
+PROBE MODULE flash_attn: available at None

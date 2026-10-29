@@ -1,0 +1,82 @@
+=== cutlass_fused_moe source lines 220-300 ===
+    ------
+    NotImplementedError:
+        If any of the following features are requested but not implemented:
+            - Minimum Latency Mode
+
+    Note
+    ----
+    - The function supports various data types including FP32, FP16, BF16, FP8, and NVFP4.
+    - It implements both tensor parallelism and expert parallelism.
+    - Currently, some advanced features like FP8 block scaling and minimum latency mode
+        are not implemented for Blackwell architecture.
+    """
+    major, minor = get_compute_capability(input.device)
+    device_arch = f"{major * 10 + minor}"
+
+    if use_wfp4afp8_humming and device_arch != "90":
+        raise NotImplementedError(
+            "Humming-style MXFP4 x FP8 fused MoE is only implemented for SM90."
+        )
+
+    if min_latency_mode:
+        raise NotImplementedError("min latency mode not yet implemented for Blackwell.")
+
+    if use_deepseek_fp8_block_scale:
+        if device_arch != "90":
+            raise NotImplementedError(
+                "FP8 block scaling not yet implemented for Blackwell."
+            )
+        elif not is_cuda_version_at_least("12.8"):
+            raise NotImplementedError("FP8 block scaling requires CUDA 12.8 or newer.")
+
+    if enable_pdl is None:
+        enable_pdl = device_support_pdl(input.device)
+
+    num_rows = input.shape[0]
+    if min_latency_mode:
+        num_rows *= fc2_expert_weights.shape[0]
+    hidden_size = fc2_expert_weights.shape[1]
+    output_shape = (num_rows, hidden_size)
+
+    if output is None:
+        output = torch.empty(output_shape, dtype=output_dtype, device=input.device)
+    else:
+        check_shape_dtype_device(
+            output, output_shape, output_dtype, input.device, "output"
+        )
+
+    with torch.cuda.device(input.device):
+        return get_cutlass_fused_moe_module(device_arch).cutlass_fused_moe(
+            output,
+            input,
+            token_selected_experts,
+            token_final_scales,
+            fc1_expert_weights,
+            fc1_expert_biases,
+            fc2_expert_weights,
+            fc2_expert_biases,
+            output_dtype,
+            quant_scales,
+            input_sf,
+            swiglu_alpha,
+            swiglu_beta,
+            swiglu_limit,
+            situ_beta,
+            situ_linear_beta,
+            swizzled_input_sf,
+            tp_size,
+            tp_rank,
+            ep_size,
+            ep_rank,
+            cluster_size,
+            cluster_rank,
+            use_packed_weights=use_packed_weights,
+            enable_alltoall=enable_alltoall,
+            use_deepseek_fp8_block_scale=use_deepseek_fp8_block_scale,
+            use_w4_group_scaling=use_w4_group_scaling,
+            use_mxfp8_act_scaling=use_mxfp8_act_scaling,
+            min_latency_mode=min_latency_mode,
+            tune_max_num_tokens=tune_max_num_tokens,
+            enable_pdl=enable_pdl,
+

@@ -1,0 +1,195 @@
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-rvjyqs11/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-rvjyqs11/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_prefill_layer-rvjyqs11/run/submission.py", line 719, in kernel_fn
+    _fused_prepare_kv_kernel[grid](
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 374, in <lambda>
+    return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 757, in run
+    kernel = self._do_compile(key, signature, device, constexprs, options, attrs, warmup)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 902, in _do_compile
+    kernel = self.compile(src, target=target, options=options.__dict__)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 80, in make_ir
+    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 107:53:
+                + page_offset * stride_k_cache_ps
+                + kv_head_idx * stride_k_cache_head
+            )
+            v_dst = (
+                v_cache_ptr
+                + page_idx * stride_v_cache_page
+                + page_offset * stride_v_cache_ps
+                + kv_head_idx * stride_v_cache_head
+                + offs_d
+            )
+
+            tl.store(k_dst + idx_even, rot_k_even.to(tl.float8e4m3fn))
+                                                     ^
+AttributeError("module 'triton.language' has no attribute 'float8e4m3fn'")
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-rvjyqs11/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-rvjyqs11/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_prefill_layer-rvjyqs11/run/submission.py", line 719, in kernel_fn
+    _fused_prepare_kv_kernel[grid](
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 374, in <lambda>
+    return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 757, in run
+    kernel = self._do_compile(key, signature, device, constexprs, options, attrs, warmup)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 902, in _do_compile
+    kernel = self.compile(src, target=target, options=options.__dict__)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 80, in make_ir
+    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 135:38:
+                + kv_head_idx * stride_k_cache_head
+                + offs_d
+            )
+            v_dst = (
+                v_cache_ptr
+                + page_idx * stride_v_cache_page
+                + page_offset * stride_v_cache_ps
+                + kv_head_idx * stride_v_cache_head
+                + offs_d
+            )
+
+            tl.store(k_dst, norm_k.to(tl.float8e4m3fn))
+                                      ^
+AttributeError("module 'triton.language' has no attribute 'float8e4m3fn'")
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-rvjyqs11/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-rvjyqs11/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_prefill_layer-rvjyqs11/run/submission.py", line 719, in kernel_fn
+    _fused_prepare_kv_kernel[grid](
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 374, in <lambda>
+    return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 757, in run
+    kernel = self._do_compile(key, signature, device, constexprs, options, attrs, warmup)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 902, in _do_compile
+    kernel = self.compile(src, target=target, options=options.__dict__)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 80, in make_ir
+    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 107:53:
+                + page_offset * stride_k_cache_ps
+                + kv_head_idx * stride_k_cache_head
+            )
+            v_dst = (
+                v_cache_ptr
+                + page_idx * stride_v_cache_page
+                + page_offset * stride_v_cache_ps
+                + kv_head_idx * stride_v_cache_head
+                + offs_d
+            )
+
+            tl.store(k_dst + idx_even, rot_k_even.to(tl.float8e4m3fn))
+                                                     ^
+AttributeError("module 'triton.language' has no attribute 'float8e4m3fn'")
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-rvjyqs11/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-rvjyqs11/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_prefill_layer-rvjyqs11/run/submission.py", line 719, in kernel_fn
+    _fused_prepare_kv_kernel[grid](
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 374, in <lambda>
+    return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 757, in run
+    kernel = self._do_compile(key, signature, device, constexprs, options, attrs, warmup)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 902, in _do_compile
+    kernel = self.compile(src, target=target, options=options.__dict__)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 80, in make_ir
+    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 135:38:
+                + kv_head_idx * stride_k_cache_head
+                + offs_d
+            )
+            v_dst = (
+                v_cache_ptr
+                + page_idx * stride_v_cache_page
+                + page_offset * stride_v_cache_ps
+                + kv_head_idx * stride_v_cache_head
+                + offs_d
+            )
+
+            tl.store(k_dst, norm_k.to(tl.float8e4m3fn))
+                                      ^
+AttributeError("module 'triton.language' has no attribute 'float8e4m3fn'")
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-rvjyqs11/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-rvjyqs11/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_prefill_layer-rvjyqs11/run/submission.py", line 719, in kernel_fn
+    _fused_prepare_kv_kernel[grid](
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 374, in <lambda>
+    return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 757, in run
+    kernel = self._do_compile(key, signature, device, constexprs, options, attrs, warmup)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 902, in _do_compile
+    kernel = self.compile(src, target=target, options=options.__dict__)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 80, in make_ir
+    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 107:53:
+                + page_offset * stride_k_cache_ps
+                + kv_head_idx * stride_k_cache_head
+            )
+            v_dst = (
+                v_cache_ptr
+                + page_idx * stride_v_cache_page
+                + page_offset * stride_v_cache_ps
+                + kv_head_idx * stride_v_cache_head
+                + offs_d
+            )
+
+            tl.store(k_dst + idx_even, rot_k_even.to(tl.float8e4m3fn))
+                                                     ^
+AttributeError("module 'triton.language' has no attribute 'float8e4m3fn'")

@@ -1,0 +1,81 @@
+✓ Initialized. View run at 
+https://modal.com/apps/<workspace>/main/ap-7vgJyyA8YJxTrv6LqDJpLa
+✓ Created objects.
+├── ✓ Uploaded 
+│   <repo>/muse_attention_de
+│   code/modal_bf16pv_compile.py
+├── ✓ Uploaded 
+│   <repo>/muse_attention_de
+│   code/candidate_openkernels_fdeccontrol.py
+├── ✓ Uploaded 
+│   <repo>/muse_attention_de
+│   code/candidate_openkernels_fdecfast.py
+├── ✓ Uploaded 
+│   <repo>/muse_attention_de
+│   code/candidate_openkernels_pvcontrol.py
+├── ✓ Uploaded 
+│   <repo>/muse_attention_de
+│   code/candidate_openkernels_bf16pv.py
+├── ✓ Created Function compile.
+└── ✓ Created Function resources.
+RESOURCE_LIB /cache/torch_ext/attn_v60_8/attn_v60_8.so rc 0
+ Function _Z4fdecILb1ELb1EEv1F:
+  REG:153 STACK:0 SHARED:1024 LOCAL:0 CONSTANT[0]:672 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z4fdecILb0ELb1EEv1F:
+  REG:157 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:672 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z4fdecILb0ELb0EEv1F:
+ Function _Z4fdecILb0ELb1EEv1F:
+  REG:157 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:672 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z4fdecILb0ELb0EEv1F:
+  REG:153 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:672 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z4comb1APK13__nv_bfloat16PS0_f:
+ Function _Z4fdecILb0ELb0EEv1F:
+  REG:153 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:672 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z4comb1APK13__nv_bfloat16PS0_f:
+  REG:96 STACK:0 SHARED:1024 LOCAL:0 CONSTANT[0]:660 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z5comb21APK13__nv_bfloat16PS0_f:
+RESOURCE_LIB /cache/torch_ext/attn_v60_fdecfast_8_DFD_FASTSOFT1/attn_v60_fdecfast_8_DFD_FASTSOFT1.so rc 0
+identifier = /cache/torch_ext/attn_v60_fdecfast_8_DFD_FASTSOFT1/cuda.cu
+
+Resource usage:
+ Common:
+  GLOBAL:28 CONSTANT[4]:224
+ Function _Z4fdecILb1ELb1EEv1F:
+  REG:160 STACK:0 SHARED:1024 LOCAL:0 CONSTANT[0]:672 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z4fdecILb0ELb1EEv1F:
+  REG:150 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:672 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z4fdecILb0ELb0EEv1F:
+ Function _Z4fdecILb0ELb1EEv1F:
+  REG:150 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:672 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z4fdecILb0ELb0EEv1F:
+  REG:150 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:672 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z4comb1APK13__nv_bfloat16PS0_f:
+ Function _Z4fdecILb0ELb0EEv1F:
+  REG:150 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:672 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z4comb1APK13__nv_bfloat16PS0_f:
+  REG:96 STACK:0 SHARED:1024 LOCAL:0 CONSTANT[0]:660 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z5comb21APK13__nv_bfloat16PS0_f:
+Stopping app - local entrypoint completed.
+RESOURCE_LIB /cache/torch_ext/attn_v60_fdeccontrol_8_DFD_FASTSOFT0/attn_v60_fdeccontrol_8_DFD_FASTSOFT0.so rc 0
+identifier = /cache/torch_ext/attn_v60_fdeccontrol_8_DFD_FASTSOFT0/cuda.cu
+
+Resource usage:
+ Common:
+  GLOBAL:28 CONSTANT[4]:224
+ Function _Z4fdecILb1ELb1EEv1F:
+  REG:146 STACK:0 SHARED:1024 LOCAL:0 CONSTANT[0]:672 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z4fdecILb0ELb1EEv1F:
+  REG:146 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:672 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z4fdecILb0ELb0EEv1F:
+ Function _Z4fdecILb0ELb1EEv1F:
+  REG:146 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:672 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z4fdecILb0ELb0EEv1F:
+  REG:146 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:672 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z4comb1APK13__nv_bfloat16PS0_f:
+ Function _Z4fdecILb0ELb0EEv1F:
+  REG:146 STACK:0 SHARED:1040 LOCAL:0 CONSTANT[0]:672 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z4comb1APK13__nv_bfloat16PS0_f:
+  REG:96 STACK:0 SHARED:1024 LOCAL:0 CONSTANT[0]:660 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z5comb21APK13__nv_bfloat16PS0_f:
+✓ App completed. View run at 
+https://modal.com/apps/<workspace>/main/ap-7vgJyyA8YJxTrv6LqDJpLa

@@ -1,0 +1,59 @@
+zip build 32.3s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 27
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 31
+qkv zip m=1 id 37: 19.62 us (base id 31: 15.01)
+qkv zip m=1 id 38: 26.34 us (base id 31: 15.01)
+qkv zip m=1 id 25: 15.10 us (base id 31: 15.01)
+qkv zip m=1 id 39: 14.75 us (base id 31: 15.01)
+qkv zip m=1 id 40: 19.87 us (base id 31: 15.01)
+qkv zip m=1 id 44: 14.88 us (base id 31: 15.01)
+qkv zip m=8 id 37: 21.54 us (base id 31: 15.26)
+qkv zip m=8 id 38: 27.36 us (base id 31: 15.26)
+qkv zip m=8 id 25: 15.39 us (base id 31: 15.26)
+qkv zip m=8 id 39: 16.00 us (base id 31: 15.26)
+qkv zip m=8 id 40: 21.31 us (base id 31: 15.26)
+qkv zip m=8 id 44: 15.20 us (base id 31: 15.26)
+qkv zip picked m=1 id 39, m=2-8 id 31
+zip prepare 32.7s
+r9 build 31.1s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.67 id3=18.37 -> id3
+r9 prepare 31.2s picks={('qkv_gate', 128): 3}
+os build 33.9s
+os skip router m=1 rA_l+f: co-resident 30 < 32
+os skip router m=1 rB_l+f: co-resident 15 < 16
+os skip router m=1 rC_l+f: co-resident 15 < 32
+os bench router m=1 (raw us): cur=7.65 rA_l=8.77 rB_l=8.72 rA_s=9.49 rB_s=9.31 rC_l=8.53 -> cur
+os skip router m=8 rA_l+f: co-resident 30 < 32
+os skip router m=8 rB_l+f: co-resident 15 < 16
+os skip router m=8 rC_l+f: co-resident 15 < 32
+os bench router m=8 (raw us): cur=8.54 rA_l=9.31 rB_l=9.06 rA_s=10.32 rB_s=9.87 rC_l=9.12 -> cur
+os skip router m=16 rA_l+f: co-resident 30 < 32
+os skip router m=16 rB_l+f: co-resident 15 < 16
+os skip router m=16 rA_s: co-resident 30 < 32
+os skip router m=16 rC_l+f: co-resident 15 < 32
+os bench router m=16 (raw us): cur=8.77 rA_l=10.98 rB_l=10.43 rB_s=11.30 rC_l=10.46 -> cur
+os skip router m=32 rA_l: co-resident 30 < 32
+os skip router m=32 rA_l+f: co-resident 30 < 32
+os skip router m=32 rB_l+f: co-resident 15 < 16
+os skip router m=32 rA_s: co-resident 30 < 32
+os skip router m=32 rB_s: co-resident 15 < 16
+os skip router m=32 rC_l+f: co-resident 15 < 32
+os bench router m=32 (raw us): cur=8.80 rB_l=14.53 rC_l=13.60 -> cur
+os skip unpooler_slice m=1 uB_l+f: co-resident 30 < 32
+os skip unpooler_slice m=1 uC_l+f: co-resident 30 < 64
+os bench unpooler_slice m=1 (raw us): cur=7.70 uA_l=8.27 uA_l+f=8.35 uB_l=8.78 uA_s=8.75 uB_s=9.44 uC_l=8.35 -> cur
+os skip unpooler_slice m=8 uB_l+f: co-resident 30 < 32
+os skip unpooler_slice m=8 uC_l+f: co-resident 30 < 64
+os bench unpooler_slice m=8 (raw us): cur=8.64 uA_l=9.18 uA_l+f=9.22 uB_l=9.28 uA_s=9.70 uB_s=10.24 uC_l=9.34 -> cur
+os skip o m=1 oC_l+f: co-resident 132 < 256
+os bench o m=1 (raw us): cur=9.30 oA_l=9.82 oA_l+f=9.89 oA_s=10.59 oC_l=9.76 -> cur
+os skip o m=8 oC_l+f: co-resident 132 < 256
+os bench o m=8 (raw us): cur=9.50 oA_l=10.88 oA_l+f=10.98 oA_s=11.65 oC_l=11.34 -> cur
+os skip o m=16 oC_l+f: co-resident 132 < 256
+os bench o m=16 (raw us): cur=9.94 oA_l=12.88 oA_l+f=12.85 oA_s=13.58 oC_l=13.36 -> cur
+os skip o m=32 oC_l+f: co-resident 132 < 256
+os bench o m=32 (raw us): cur=9.95 oA_l=18.45 oA_l+f=18.53 oA_s=19.28 oC_l=20.43 -> cur
+os prepare 34.2s picks=[]

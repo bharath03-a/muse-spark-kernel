@@ -1,0 +1,12 @@
+router split-K disabled m=128: ValueError: slower 12.93 vs 11.74 us
+router split-K disabled m=256: ValueError: slower 15.84 vs 14.37 us
+zip build 38.0s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 27
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 31
+zip prepare 38.1s
+r9 build 37.6s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.37 id3=18.86 -> id3
+r9 prepare 37.6s picks={('qkv_gate', 128): 3}

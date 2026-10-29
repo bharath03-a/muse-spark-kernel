@@ -1,0 +1,73 @@
+✓ Initialized. View run at 
+https://modal.com/apps/<workspace>/main/ap-rGSZMzdigebh6xvclZ9HJw
+✓ Created objects.
+├── ✓ Uploaded 
+│   <repo>/muse_bf16_proj/mo
+│   dal_app.py
+├── ✓ Uploaded 
+│   <repo>/muse_bf16_proj
+├── ✓ Created Function env.
+├── ✓ Created Function correct.
+├── ✓ Created Function bench.
+├── ✓ Created Function micro.
+├── ✓ Created Function session.
+├── ✓ Created Function compile_only.
+└── ✓ Created Function inspect.
+START top50_qkv_mma
+CHECK m=16 torch_cublas normal rel=0.00167 rowmax=0.00172
+Traceback (most recent call last):
+  File "/root/proj/bench/top50_combined.py", line 15, in <module>
+    runpy.run_path('/root/proj/bench/' + name + '.py', run_name='__main__')
+  File "<frozen runpy>", line 286, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/root/proj/bench/top50_qkv_mma.py", line 131, in <module>
+    main()
+  File "/root/proj/bench/top50_qkv_mma.py", line 118, in main
+    out = fn()
+          ^^^^
+  File "/root/proj/bench/top50_qkv_mma.py", line 66, in run
+    dense_qkv[(n // 32,)](wd, xd, out, m, n, k, depth, num_warps=4)
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 374, in <lambda>
+    return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 757, in run
+    kernel = self._do_compile(key, signature, device, constexprs, options, attrs, warmup)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 902, in _do_compile
+    kernel = self.compile(src, target=target, options=options.__dict__)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/_runtime.py", line 40, in make_ir
+    module = ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 20:4:
+    wb = gl.allocate_shared_memory(wdesc.dtype, [D, BN, BK], wdesc.layout)
+    xb = gl.allocate_shared_memory(xdesc.dtype, [D, BT, BK], xdesc.layout)
+    bars = gl.allocate_shared_memory(gl.int64, [D, 1], mbarrier.MBarrierLayout())
+    for s in gl.static_range(D):
+        mbarrier.init(bars.index(s), count=1)
+    n0 = gl.program_id(0) * BN
+    for s in gl.static_range(D):
+        mbarrier.expect(bars.index(s), wdesc.block_type.nbytes + xdesc.block_type.nbytes)
+        tma.async_load(wdesc, [n0, s * BK], bars.index(s), wb.index(s))
+        tma.async_load(xdesc, [0, s * BK], bars.index(s), xb.index(s))
+    acc = gl.zeros([BN, BT], gl.float32, mma)
+    for i in range(K // BK):
+    ^
+AssertionError("Loop carried variable s changed type, was <class 'triton.language.core.tensor'> but is now <class 'triton.language.core.constexpr'>")
+FINISHED top50_qkv_mma elapsed 3.8262212250000003
+START top50_large_pipeline
+BT64 BN64 BK64 D4 grid132 continueFalse FAIL CompilationError('def pipeline(xd, wd, out, M: gl.constexpr, N: gl.constexpr, K: gl.constexpr,\n             GRID: gl.constexpr, DEPTH: gl.constexpr, CONTINUE: gl.constexpr):\n    BT: gl.constexpr = xd.block_type.shape[0]\n    BN: gl.constexpr = wd.block_type.shape[0]\n    BK: gl.constexpr = xd.block_type.shape[1]\n    KI: gl.constexpr = K // BK\n    NM: gl.constexpr = triton.cdiv(M, BT)\n    TILES: gl.constexpr = NM * triton.cdiv(N, BN)\n    mma: gl.constexpr = gl.NVMMADistributedLayout(version=[3, 0], warps_per_cta=[4, 1], instr_shape=[16, BT, 16])\n    xb = gl.allocate_shared_memory(xd.dtype, [DEPTH] + xd.block_type.shape, xd.layout)\n    wb = gl.allocate_shared_memory(wd.dtype, [DEPTH] + wd.block_type.shape, wd.layout)\n    ready = gl.allocate_shared_memory(gl.int64, [DEPTH, 1], mbarrier.MBarrierLayout())\n    pid = gl.program_id(0)\n    tiles = (TILES - pid + GRID - 1) // GRID\n    BYTES: gl.constexpr = xd.block_type.nbytes + wd.block_type.nbytes\n    rm = gl.arange(0, BT, layout=gl.SliceLayout(0, mma))\n    rn = gl.arange(0, BN, layout=gl.SliceLayout(1, mma))\n    if CONTINUE:\n        for pre_s_1 in gl.static_range(DEPTH):\n            mbarrier.init(ready.index(pre_s_1), count=1)\n        steps = tiles * KI\n        for pre_j_2 in gl.static_range(DEPTH - 1):\n            pre_tile_2 = pid + (pre_j_2 // KI) * GRID\n            pre_valid_2 = pre_j_2 < steps\n            mbarrier.expect(ready.index(pre_j_2), BYTES, pred=pre_valid_2)\n            tma.async_load(xd, [(pre_tile_2 % NM) * BT, (pre_j_2 % KI) * BK], ready.index(pre_j_2), xb.index(pre_j_2), pred=pre_valid_2)\n            tma.async_load(wd, [(pre_tile_2 // NM) * BN, (pre_j_2 % KI) * BK], ready.index(pre_j_2), wb.index(pre_j_2), pred=pre_valid_2)\n        acc = gl.zeros([BN, BT], gl.float32, mma)\n        for i in range(steps):\n            s = i % DEPTH\n            mbarrier.wait(ready.index(s), (i // DEPTH) & 1)\n            acc = warpgroup_mma(wb.index(s), xb.index(s).permute((1, 0)), acc, is_async=True)\n            acc = warpgroup_mma_wait(1, deps=(acc,))\n            j = i + DEPTH - 1\n            sj = j % DEPTH\n            tile_j = pid + (j // KI) * GRID\n            valid = j < steps\n            mbarrier.expect(ready.index(sj), BYTES, pred=valid)\n            tma.async_load(xd, [(tile_j % NM) * BT, (j % KI) * BK], ready.index(sj), xb.index(sj), pred=valid)\n            tma.async_load(wd, [(tile_j // NM) * BN, (j % KI) * BK], ready.index(sj), wb.index(sj), pred=valid)\n            if (i + 1) % KI == 0:\n                acc = warpgroup_mma_wait(0, deps=(acc,))\n                tile = pid + (i // KI) * GRID\n                mm = (tile % NM) * BT + rm\n                nn = (tile // NM) * BN + rn\n                gl.store(out + mm[None, :] * N + nn[:, None], acc.to(gl.bfloat16), (mm < M)[None, :] & (nn < N)[:, None])\n                acc = gl.zeros([BN, BT], gl.float32, mma)\n        for pre_s_3 in gl.static_range(DEPTH):\n            mbarrier.invalidate(ready.index(pre_s_3))\n    else:\n        for ti in range(tiles):\n            tile = pid + ti * GRID\n            for pre_s_4 in gl.static_range(DEPTH):\n                mbarrier.init(ready.index(pre_s_4), count=1)\n            for pre_j_5 in gl.static_range(DEPTH - 1):\n                pre_valid_5 = pre_j_5 < KI\n                mbarrier.expect(ready.index(pre_j_5), BYTES, pred=pre_valid_5)\n                tma.async_load(xd, [(pre_tile_5 % NM) * BT, pre_j_5 * BK], ready.index(pre_j_5), xb.index(pre_j_5), pred=pre_valid_5)\n                tma.async_load(wd, [(pre_tile_5 // NM) * BN, pre_j_5 * BK], ready.index(pre_j_5), wb.index(pre_j_5), pred=pre_valid_5)\n            acc = gl.zeros([BN, BT], gl.float32, mma)\n            for i in range(KI):\n                s = i % DEPTH\n                mbarrier.wait(ready.index(s), (i // DEPTH) & 1)\n                acc = warpgroup_mma(wb.index(s), xb.index(s).permute((1, 0)), acc, is_async=True)\n                acc = warpgroup_mma_wait(1, deps=(acc,))\n                j = i + DEPTH - 1\n                sj = j % DEPTH\n                valid = j < KI\n                mbarrier.expect(ready.index(sj), BYTES, pred=valid)\n                tma.async_load(xd, [(tile % NM) * BT, j * BK], ready.index(sj), xb.index(sj), pred=valid)\n                tma.async_load(wd, [(tile // NM) * BN, j * BK], ready.index(sj), wb.index(sj), pred=valid)\n            acc = warpgroup_mma_wait(0, deps=(acc,))\n            mm = (tile % NM) * BT + rm\n            nn = (tile // NM) * BN + rn\n            gl.store(out + mm[None, :] * N + nn[:, None], acc.to(gl.bfloat16), (mm < M)[None, :] & (nn < N)[:, None])\n            for pre_s_6 in gl.static_range(DEPTH):\n                mbarrier.invalidate(ready.index(pre_s_6))\n            gl.barrier()\n', <ast.Name object at 0x2ac6448a8a10>, "NameError('pre_tile_5 is not defined')")
+BT64 BN64 BK64 D4 grid132 continueTrue correct 0.0016632962268487061 probe 0.0 regs 60 smem 65568
+BT64 BN64 BK64 D4 grid512 continueFalse FAIL CompilationError('def pipeline(xd, wd, out, M: gl.constexpr, N: gl.constexpr, K: gl.constexpr,\n             GRID: gl.constexpr, DEPTH: gl.constexpr, CONTINUE: gl.constexpr):\n    BT: gl.constexpr = xd.block_type.shape[0]\n    BN: gl.constexpr = wd.block_type.shape[0]\n    BK: gl.constexpr = xd.block_type.shape[1]\n    KI: gl.constexpr = K // BK\n    NM: gl.constexpr = triton.cdiv(M, BT)\n    TILES: gl.constexpr = NM * triton.cdiv(N, BN)\n    mma: gl.constexpr = gl.NVMMADistributedLayout(version=[3, 0], warps_per_cta=[4, 1], instr_shape=[16, BT, 16])\n    xb = gl.allocate_shared_memory(xd.dtype, [DEPTH] + xd.block_type.shape, xd.layout)\n    wb = gl.allocate_shared_memory(wd.dtype, [DEPTH] + wd.block_type.shape, wd.layout)\n    ready = gl.allocate_shared_memory(gl.int64, [DEPTH, 1], mbarrier.MBarrierLayout())\n    pid = gl.program_id(0)\n    tiles = (TILES - pid + GRID - 1) // GRID\n    BYTES: gl.constexpr = xd.block_type.nbytes + wd.block_type.nbytes\n    rm = gl.arange(0, BT, layout=gl.SliceLayout(0, mma))\n    rn = gl.arange(0, BN, layout=gl.SliceLayout(1, mma))\n    if CONTINUE:\n        for pre_s_1 in gl.static_range(DEPTH):\n            mbarrier.init(ready.index(pre_s_1), count=1)\n        steps = tiles * KI\n        for pre_j_2 in gl.static_range(DEPTH - 1):\n            pre_tile_2 = pid + (pre_j_2 // KI) * GRID\n            pre_valid_2 = pre_j_2 < steps\n            mbarrier.expect(ready.index(pre_j_2), BYTES, pred=pre_valid_2)\n            tma.async_load(xd, [(pre_tile_2 % NM) * BT, (pre_j_2 % KI) * BK], ready.index(pre_j_2), xb.index(pre_j_2), pred=pre_valid_2)\n            tma.async_load(wd, [(pre_tile_2 // NM) * BN, (pre_j_2 % KI) * BK], ready.index(pre_j_2), wb.index(pre_j_2), pred=pre_valid_2)\n        acc = gl.zeros([BN, BT], gl.float32, mma)\n        for i in range(steps):\n            s = i % DEPTH\n            mbarrier.wait(ready.index(s), (i // DEPTH) & 1)\n            acc = warpgroup_mma(wb.index(s), xb.index(s).permute((1, 0)), acc, is_async=True)\n            acc = warpgroup_mma_wait(1, deps=(acc,))\n            j = i + DEPTH - 1\n            sj = j % DEPTH\n            tile_j = pid + (j // KI) * GRID\n            valid = j < steps\n            mbarrier.expect(ready.index(sj), BYTES, pred=valid)\n            tma.async_load(xd, [(tile_j % NM) * BT, (j % KI) * BK], ready.index(sj), xb.index(sj), pred=valid)\n            tma.async_load(wd, [(tile_j // NM) * BN, (j % KI) * BK], ready.index(sj), wb.index(sj), pred=valid)\n            if (i + 1) % KI == 0:\n                acc = warpgroup_mma_wait(0, deps=(acc,))\n                tile = pid + (i // KI) * GRID\n                mm = (tile % NM) * BT + rm\n                nn = (tile // NM) * BN + rn\n                gl.store(out + mm[None, :] * N + nn[:, None], acc.to(gl.bfloat16), (mm < M)[None, :] & (nn < N)[:, None])\n                acc = gl.zeros([BN, BT], gl.float32, mma)\n        for pre_s_3 in gl.static_range(DEPTH):\n            mbarrier.invalidate(ready.index(pre_s_3))\n    else:\n        for ti in range(tiles):\n            tile = pid + ti * GRID\n            for pre_s_4 in gl.static_range(DEPTH):\n                mbarrier.init(ready.index(pre_s_4), count=1)\n            for pre_j_5 in gl.static_range(DEPTH - 1):\n                pre_valid_5 = pre_j_5 < KI\n                mbarrier.expect(ready.index(pre_j_5), BYTES, pred=pre_valid_5)\n                tma.async_load(xd, [(pre_tile_5 % NM) * BT, pre_j_5 * BK], ready.index(pre_j_5), xb.index(pre_j_5), pred=pre_valid_5)\n                tma.async_load(wd, [(pre_tile_5 // NM) * BN, pre_j_5 * BK], ready.index(pre_j_5), wb.index(pre_j_5), pred=pre_valid_5)\n            acc = gl.zeros([BN, BT], gl.float32, mma)\n            for i in range(KI):\n                s = i % DEPTH\n                mbarrier.wait(ready.index(s), (i // DEPTH) & 1)\n                acc = warpgroup_mma(wb.index(s), xb.index(s).permute((1, 0)), acc, is_async=True)\n                acc = warpgroup_mma_wait(1, deps=(acc,))\n                j = i + DEPTH - 1\n                sj = j % DEPTH\n                valid = j < KI\n                mbarrier.expect(ready.index(sj), BYTES, pred=valid)\n                tma.async_load(xd, [(tile % NM) * BT, j * BK], ready.index(sj), xb.index(sj), pred=valid)\n                tma.async_load(wd, [(tile // NM) * BN, j * BK], ready.index(sj), wb.index(sj), pred=valid)\n            acc = warpgroup_mma_wait(0, deps=(acc,))\n            mm = (tile % NM) * BT + rm\n            nn = (tile // NM) * BN + rn\n            gl.store(out + mm[None, :] * N + nn[:, None], acc.to(gl.bfloat16), (mm < M)[None, :] & (nn < N)[:, None])\n            for pre_s_6 in gl.static_range(DEPTH):\n                mbarrier.invalidate(ready.index(pre_s_6))\n            gl.barrier()\n', <ast.Name object at 0x2ac6448445d0>, "NameError('pre_tile_5 is not defined')")
+RESULT BT64 BN64 BK64 D4 grid132 continueTrue raw_us 25.824 minus4_us 21.824
+RESULT torch_cublas raw_us 13.776 minus4_us 9.776
+FINISHED top50_large_pipeline elapsed 4.042550879
+Stopping app - local entrypoint completed.
+✓ App completed. View run at 
+https://modal.com/apps/<workspace>/main/ap-rGSZMzdigebh6xvclZ9HJw
+
+[gpu_q] top50 top50_combined: 74s, rc=0; budget used 1653/1800s

@@ -1,0 +1,48 @@
+✓ Initialized. View run at 
+https://modal.com/apps/<workspace>/main/ap-Umd07AnN4cw6wHh32aqjZ5
+✓ Created objects.
+├── ✓ Uploaded 
+│   <repo>/muse_moe_w4a16/re
+│   search/modal_queue_research.py
+├── ✓ Uploaded 
+│   <repo>/research_harness
+├── ✓ Uploaded 
+│   <repo>/muse_moe_w4a16
+├── ✓ Created Function compile_and_inspect.
+└── ✓ Created Function compare_queue.
+W1027 15:11:08.188000 2 torch/utils/cpp_extension.py:183] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+COMPILE_OK candidate_moe_full_strict_gk v17 6.76 /cache/torch_ext/moe_fullbf16_v30_16_2/moe_fullbf16_v30_16_2.so
+SASS_COUNT candidate_moe_full_strict_gk v17 ATOM 0
+SASS_COUNT candidate_moe_full_strict_gk v17 RED 0
+SASS_COUNT candidate_moe_full_strict_gk v17 SHFL 134
+SASS_COUNT candidate_moe_full_strict_gk v17 MATCH 0
+SASS_COUNT candidate_moe_full_strict_gk v17 VOTE 1
+SASS_COUNT candidate_moe_full_strict_gk v17 LDL 26
+SASS_COUNT candidate_moe_full_strict_gk v17 STL 6
+COMPILE_OK candidate_moe_full_strict_gk ring 10.97 /cache/torch_ext/moe_fullbf16_v30L_DRPW2_DNSLOT4/moe_fullbf16_v30L_DRPW2_DNSLOT4.so
+SASS_COUNT candidate_moe_full_strict_gk ring ATOM 46
+SASS_COUNT candidate_moe_full_strict_gk ring RED 0
+SASS_COUNT candidate_moe_full_strict_gk ring SHFL 235
+SASS_COUNT candidate_moe_full_strict_gk ring MATCH 5
+SASS_COUNT candidate_moe_full_strict_gk ring VOTE 1
+SASS_COUNT candidate_moe_full_strict_gk ring LDL 106
+SASS_COUNT candidate_moe_full_strict_gk ring STL 17
+COMPILE_OK research_moe_queue_atomic v17 92.08 /cache/torch_ext/moe_queueatomic_v30_16_2/moe_queueatomic_v30_16_2.so
+SASS_COUNT research_moe_queue_atomic v17 ATOM 0
+SASS_COUNT research_moe_queue_atomic v17 RED 0
+SASS_COUNT research_moe_queue_atomic v17 SHFL 134
+SASS_COUNT research_moe_queue_atomic v17 MATCH 0
+SASS_COUNT research_moe_queue_atomic v17 VOTE 1
+SASS_COUNT research_moe_queue_atomic v17 LDL 26
+SASS_COUNT research_moe_queue_atomic v17 STL 6
+COMPILE_OK research_moe_queue_atomic ring 168.36 /cache/torch_ext/moe_queueatomic_v30L_DRPW2_DNSLOT4/moe_queueatomic_v30L_DRPW2_DNSLOT4.so
+SASS_COUNT research_moe_queue_atomic ring ATOM 43
+SASS_COUNT research_moe_queue_atomic ring RED 0
+SASS_COUNT research_moe_queue_atomic ring SHFL 235
+SASS_COUNT research_moe_queue_atomic ring MATCH 5
+SASS_COUNT research_moe_queue_atomic ring VOTE 1
+SASS_COUNT research_moe_queue_atomic ring LDL 106
+SASS_COUNT research_moe_queue_atomic ring STL 17
+Stopping app - local entrypoint completed.
+✓ App completed. View run at 
+https://modal.com/apps/<workspace>/main/ap-Umd07AnN4cw6wHh32aqjZ5
