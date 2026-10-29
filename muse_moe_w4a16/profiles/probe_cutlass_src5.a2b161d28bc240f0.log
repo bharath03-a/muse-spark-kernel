@@ -1,0 +1,8 @@
+=== cutlass_fused_moe source lines 300-360 ===
+            activation_type=activation_type,
+            use_fused_finalize=use_fused_finalize,
+            use_wfp4afp8_humming=use_wfp4afp8_humming,
+            profile_ids=profile_ids,
+            workspace_buffer=workspace_buffer,
+        )
+

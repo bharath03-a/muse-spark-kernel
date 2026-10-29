@@ -1,0 +1,213 @@
+ 968, in tvm_ffi.core.Function.__call__
+RuntimeError: Tensor match failed for Tensor<1, 1, 2, 64>[strides=<128, 128, 64, 1>, dtype=uint8, device=cuda:0] at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/elementwise/kvcache.cuh:115
+- Root cause: Tensor dimension mismatch: expected 2 but got 4
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-fccipe1g/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-fccipe1g/run/submission.py", line 30, in kernel_fn
+    store_cache(k.to(torch.float8_e4m3fn).view(torch.uint8), v.to(torch.float8_e4m3fn).view(torch.uint8),
+  File "/opt/sglang/lib/python3.12/site-packages/torch/_ops.py", line 1350, in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/sgl-workspace/sglang-muse-spark/python/sglang/kernels/ops/kvcache/kvcache.py", line 112, in store_cache
+    module.store_cache(
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+RuntimeError: Tensor match failed for Tensor<3, 1, 2, 64>[strides=<128, 128, 64, 1>, dtype=uint8, device=cuda:0] at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/elementwise/kvcache.cuh:115
+- Root cause: Tensor dimension mismatch: expected 2 but got 4
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-fccipe1g/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-fccipe1g/run/submission.py", line 30, in kernel_fn
+    store_cache(k.to(torch.float8_e4m3fn).view(torch.uint8), v.to(torch.float8_e4m3fn).view(torch.uint8),
+  File "/opt/sglang/lib/python3.12/site-packages/torch/_ops.py", line 1350, in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/sgl-workspace/sglang-muse-spark/python/sglang/kernels/ops/kvcache/kvcache.py", line 112, in store_cache
+    module.store_cache(
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+RuntimeError: Tensor match failed for Tensor<5, 8, 2, 64>[strides=<1024, 128, 64, 1>, dtype=uint8, device=cuda:0] at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/elementwise/kvcache.cuh:115
+- Root cause: Tensor dimension mismatch: expected 2 but got 4
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-fccipe1g/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-fccipe1g/run/submission.py", line 30, in kernel_fn
+    store_cache(k.to(torch.float8_e4m3fn).view(torch.uint8), v.to(torch.float8_e4m3fn).view(torch.uint8),
+  File "/opt/sglang/lib/python3.12/site-packages/torch/_ops.py", line 1350, in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/sgl-workspace/sglang-muse-spark/python/sglang/kernels/ops/kvcache/kvcache.py", line 112, in store_cache
+    module.store_cache(
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+RuntimeError: Tensor match failed for Tensor<4, 1, 2, 64>[strides=<128, 128, 64, 1>, dtype=uint8, device=cuda:0] at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/elementwise/kvcache.cuh:115
+- Root cause: Tensor dimension mismatch: expected 2 but got 4
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-fccipe1g/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-fccipe1g/run/submission.py", line 30, in kernel_fn
+    store_cache(k.to(torch.float8_e4m3fn).view(torch.uint8), v.to(torch.float8_e4m3fn).view(torch.uint8),
+  File "/opt/sglang/lib/python3.12/site-packages/torch/_ops.py", line 1350, in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/sgl-workspace/sglang-muse-spark/python/sglang/kernels/ops/kvcache/kvcache.py", line 112, in store_cache
+    module.store_cache(
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+RuntimeError: Tensor match failed for Tensor<8, 1, 16, 64>[strides=<1024, 1024, 64, 1>, dtype=uint8, device=cuda:0] at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/elementwise/kvcache.cuh:115
+- Root cause: Tensor dimension mismatch: expected 2 but got 4
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-fccipe1g/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-fccipe1g/run/submission.py", line 30, in kernel_fn
+    store_cache(k.to(torch.float8_e4m3fn).view(torch.uint8), v.to(torch.float8_e4m3fn).view(torch.uint8),
+  File "/opt/sglang/lib/python3.12/site-packages/torch/_ops.py", line 1350, in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/sgl-workspace/sglang-muse-spark/python/sglang/kernels/ops/kvcache/kvcache.py", line 112, in store_cache
+    module.store_cache(
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+RuntimeError: Tensor match failed for Tensor<2, 8, 2, 64>[strides=<1024, 128, 64, 1>, dtype=uint8, device=cuda:0] at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/elementwise/kvcache.cuh:115
+- Root cause: Tensor dimension mismatch: expected 2 but got 4
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-fccipe1g/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-fccipe1g/run/submission.py", line 30, in kernel_fn
+    store_cache(k.to(torch.float8_e4m3fn).view(torch.uint8), v.to(torch.float8_e4m3fn).view(torch.uint8),
+  File "/opt/sglang/lib/python3.12/site-packages/torch/_ops.py", line 1350, in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/sgl-workspace/sglang-muse-spark/python/sglang/kernels/ops/kvcache/kvcache.py", line 112, in store_cache
+    module.store_cache(
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+RuntimeError: Tensor match failed for Tensor<4, 1, 2, 64>[strides=<128, 128, 64, 1>, dtype=uint8, device=cuda:0] at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/elementwise/kvcache.cuh:115
+- Root cause: Tensor dimension mismatch: expected 2 but got 4
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-fccipe1g/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-fccipe1g/run/submission.py", line 30, in kernel_fn
+    store_cache(k.to(torch.float8_e4m3fn).view(torch.uint8), v.to(torch.float8_e4m3fn).view(torch.uint8),
+  File "/opt/sglang/lib/python3.12/site-packages/torch/_ops.py", line 1350, in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/sgl-workspace/sglang-muse-spark/python/sglang/kernels/ops/kvcache/kvcache.py", line 112, in store_cache
+    module.store_cache(
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+RuntimeError: Tensor match failed for Tensor<4, 8, 2, 64>[strides=<1024, 128, 64, 1>, dtype=uint8, device=cuda:0] at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/elementwise/kvcache.cuh:115
+- Root cause: Tensor dimension mismatch: expected 2 but got 4
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-fccipe1g/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-fccipe1g/run/submission.py", line 30, in kernel_fn
+    store_cache(k.to(torch.float8_e4m3fn).view(torch.uint8), v.to(torch.float8_e4m3fn).view(torch.uint8),
+  File "/opt/sglang/lib/python3.12/site-packages/torch/_ops.py", line 1350, in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/sgl-workspace/sglang-muse-spark/python/sglang/kernels/ops/kvcache/kvcache.py", line 112, in store_cache
+    module.store_cache(
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+RuntimeError: Tensor match failed for Tensor<1, 8, 2, 64>[strides=<1024, 128, 64, 1>, dtype=uint8, device=cuda:0] at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/elementwise/kvcache.cuh:115
+- Root cause: Tensor dimension mismatch: expected 2 but got 4
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-fccipe1g/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-fccipe1g/run/submission.py", line 30, in kernel_fn
+    store_cache(k.to(torch.float8_e4m3fn).view(torch.uint8), v.to(torch.float8_e4m3fn).view(torch.uint8),
+  File "/opt/sglang/lib/python3.12/site-packages/torch/_ops.py", line 1350, in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/sgl-workspace/sglang-muse-spark/python/sglang/kernels/ops/kvcache/kvcache.py", line 112, in store_cache
+    module.store_cache(
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+RuntimeError: Tensor match failed for Tensor<3, 8, 2, 64>[strides=<1024, 128, 64, 1>, dtype=uint8, device=cuda:0] at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/elementwise/kvcache.cuh:115
+- Root cause: Tensor dimension mismatch: expected 2 but got 4
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-fccipe1g/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-fccipe1g/run/submission.py", line 30, in kernel_fn
+    store_cache(k.to(torch.float8_e4m3fn).view(torch.uint8), v.to(torch.float8_e4m3fn).view(torch.uint8),
+  File "/opt/sglang/lib/python3.12/site-packages/torch/_ops.py", line 1350, in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/sgl-workspace/sglang-muse-spark/python/sglang/kernels/ops/kvcache/kvcache.py", line 112, in store_cache
+    module.store_cache(
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+RuntimeError: Tensor match failed for Tensor<2, 1, 2, 64>[strides=<128, 128, 64, 1>, dtype=uint8, device=cuda:0] at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/elementwise/kvcache.cuh:115
+- Root cause: Tensor dimension mismatch: expected 2 but got 4
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-fccipe1g/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-fccipe1g/run/submission.py", line 30, in kernel_fn
+    store_cache(k.to(torch.float8_e4m3fn).view(torch.uint8), v.to(torch.float8_e4m3fn).view(torch.uint8),
+  File "/opt/sglang/lib/python3.12/site-packages/torch/_ops.py", line 1350, in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/sgl-workspace/sglang-muse-spark/python/sglang/kernels/ops/kvcache/kvcache.py", line 112, in store_cache
+    module.store_cache(
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+RuntimeError: Tensor match failed for Tensor<4, 1, 2, 64>[strides=<128, 128, 64, 1>, dtype=uint8, device=cuda:0] at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/elementwise/kvcache.cuh:115
+- Root cause: Tensor dimension mismatch: expected 2 but got 4
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-fccipe1g/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-fccipe1g/run/submission.py", line 30, in kernel_fn
+    store_cache(k.to(torch.float8_e4m3fn).view(torch.uint8), v.to(torch.float8_e4m3fn).view(torch.uint8),
+  File "/opt/sglang/lib/python3.12/site-packages/torch/_ops.py", line 1350, in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/sgl-workspace/sglang-muse-spark/python/sglang/kernels/ops/kvcache/kvcache.py", line 112, in store_cache
+    module.store_cache(
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+RuntimeError: Tensor match failed for Tensor<4, 8, 2, 64>[strides=<1024, 128, 64, 1>, dtype=uint8, device=cuda:0] at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/elementwise/kvcache.cuh:115
+- Root cause: Tensor dimension mismatch: expected 2 but got 4
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-fccipe1g/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-fccipe1g/run/submission.py", line 30, in kernel_fn
+    store_cache(k.to(torch.float8_e4m3fn).view(torch.uint8), v.to(torch.float8_e4m3fn).view(torch.uint8),
+  File "/opt/sglang/lib/python3.12/site-packages/torch/_ops.py", line 1350, in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/sgl-workspace/sglang-muse-spark/python/sglang/kernels/ops/kvcache/kvcache.py", line 112, in store_cache
+    module.store_cache(
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+RuntimeError: Tensor match failed for Tensor<2, 8, 16, 64>[strides=<8192, 1024, 64, 1>, dtype=uint8, device=cuda:0] at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/elementwise/kvcache.cuh:115
+- Root cause: Tensor dimension mismatch: expected 2 but got 4
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-fccipe1g/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-fccipe1g/run/submission.py", line 30, in kernel_fn
+    store_cache(k.to(torch.float8_e4m3fn).view(torch.uint8), v.to(torch.float8_e4m3fn).view(torch.uint8),
+  File "/opt/sglang/lib/python3.12/site-packages/torch/_ops.py", line 1350, in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/sgl-workspace/sglang-muse-spark/python/sglang/kernels/ops/kvcache/kvcache.py", line 112, in store_cache
+    module.store_cache(
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+RuntimeError: Tensor match failed for Tensor<4, 1, 2, 64>[strides=<128, 128, 64, 1>, dtype=uint8, device=cuda:0] at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/elementwise/kvcache.cuh:115
+- Root cause: Tensor dimension mismatch: expected 2 but got 4
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-fccipe1g/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-fccipe1g/run/submission.py", line 30, in kernel_fn
+    store_cache(k.to(torch.float8_e4m3fn).view(torch.uint8), v.to(torch.float8_e4m3fn).view(torch.uint8),
+  File "/opt/sglang/lib/python3.12/site-packages/torch/_ops.py", line 1350, in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/sgl-workspace/sglang-muse-spark/python/sglang/kernels/ops/kvcache/kvcache.py", line 112, in store_cache
+    module.store_cache(
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+RuntimeError: Tensor match failed for Tensor<2, 8, 16, 64>[strides=<8192, 1024, 64, 1>, dtype=uint8, device=cuda:0] at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/elementwise/kvcache.cuh:115
+- Root cause: Tensor dimension mismatch: expected 2 but got 4

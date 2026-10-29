@@ -1,0 +1,371 @@
+✓ Initialized. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-GXe7oYX3vhzbeXvyXAWe5J
+✓ Created objects.
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/mo
+│   dal_probe.py
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16
+├── ✓ Created Function probe.
+└── ✓ Created Function inspect_marlin.
+Stopping app - local entrypoint completed.
+FILE /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/gemm/marlin_moe/moe_wna16_marlin.cuh
+135 
+typedef struct {
+  int thread_k;
+  int thread_n;
+  int num_threads;
+} thread_config_t;
+
+136 typedef struct {
+  int thread_k;
+  int thread_n;
+  int num_threads;
+} thread_config_t;
+
+thread_config_t small_batch_thread_configs[] = {
+143     // Ordered by priority
+
+    // thread_k, thread_n, num_threads
+    {128, 128, 256},
+    {64, 128, 128}};
+
+thread_config_t large_batch_thread_configs[] = {
+150     // Ordered by priority
+
+    // thread_k, thread_n, num_threads
+    {64, 256, 256},
+    {64, 128, 128}};
+
+typedef struct {
+173   bool cache_scales_chunk = has_act_order && !is_k_full;
+
+  int tb_n = th_config.thread_n;
+  int tb_k = th_config.thread_k;
+
+  // Get max scale groups per thread-block
+  int tb_groups;
+174 
+  int tb_n = th_config.thread_n;
+  int tb_k = th_config.thread_k;
+
+  // Get max scale groups per thread-block
+  int tb_groups;
+  if (group_size == -1) {
+213 
+  // Get B size
+  int tb_k = th_config.thread_k;
+  int tb_n = th_config.thread_n;
+  int tb_m = thread_m_blocks * 16;
+
+  // shm size for block_sorted_ids/rd_block_sorted_ids/block_topk_weights
+214   // Get B size
+  int tb_k = th_config.thread_k;
+  int tb_n = th_config.thread_n;
+  int tb_m = thread_m_blocks * 16;
+
+  // shm size for block_sorted_ids/rd_block_sorted_ids/block_topk_weights
+  // both of them requires tb_m * 4 bytes (tb_m * int32 or tb_m * float32)
+260     int max_shared_mem) {
+  // Sanity
+  if (th_config.thread_k == -1 || th_config.thread_n == -1 || th_config.num_threads == -1) {
+    return false;
+  }
+
+  // Verify K/N are divisible by thread K/N
+265 
+  // Verify K/N are divisible by thread K/N
+  if (prob_k % th_config.thread_k != 0 || prob_n % th_config.thread_n != 0) {
+    return false;
+  }
+
+  // Verify min for thread K/N
+270 
+  // Verify min for thread K/N
+  if (th_config.thread_n < min_thread_n || th_config.thread_k < min_thread_k) {
+    return false;
+  }
+
+  // num_threads must be at least 128 (= 4 warps)
+299     W_TYPE, THREAD_M_BLOCKS, THREAD_N_BLOCKS, THREAD_K_BLOCKS, M_BLOCK_SIZE_8, GROUP_BLOCKS, NUM_THREADS, IS_ZP_FLOAT) \
+  else if (                                                                                                            \
+      q_type == W_TYPE && thread_m_blocks == THREAD_M_BLOCKS && thread_n_blocks == THREAD_N_BLOCKS &&                  \
+      thread_k_blocks == THREAD_K_BLOCKS && m_block_size_8 == M_BLOCK_SIZE_8 && group_blocks == GROUP_BLOCKS &&        \
+      num_threads == NUM_THREADS && is_zp_float == IS_ZP_FLOAT) {                                                      \
+    constexpr auto S_TYPE = W_TYPE == host::kFE2M1f                                                                    \
+                                ? (GROUP_BLOCKS == 1 ? host::kFE4M3fn : host::kFE8M0fnu)                               \
+300   else if (                                                                                                            \
+      q_type == W_TYPE && thread_m_blocks == THREAD_M_BLOCKS && thread_n_blocks == THREAD_N_BLOCKS &&                  \
+      thread_k_blocks == THREAD_K_BLOCKS && m_block_size_8 == M_BLOCK_SIZE_8 && group_blocks == GROUP_BLOCKS &&        \
+      num_threads == NUM_THREADS && is_zp_float == IS_ZP_FLOAT) {                                                      \
+    constexpr auto S_TYPE = W_TYPE == host::kFE2M1f                                                                    \
+                                ? (GROUP_BLOCKS == 1 ? host::kFE4M3fn : host::kFE8M0fnu)                               \
+                                : (std::is_same<scalar_t, half>::value ? host::kFloat16 : host::kBFloat16);            \
+444 
+template <typename scalar_t, bool kIsEP, bool kHasBias>
+MarlinFuncPtr get_marlin_kernel(
+    const host::ScalarType q_type,
+    int thread_m_blocks,
+    int thread_n_blocks,
+    int thread_k_blocks,
+447     const host::ScalarType q_type,
+    int thread_m_blocks,
+    int thread_n_blocks,
+    int thread_k_blocks,
+    bool m_block_size_8,
+    bool has_act_order,
+    bool has_zp,
+448     int thread_m_blocks,
+    int thread_n_blocks,
+    int thread_k_blocks,
+    bool m_block_size_8,
+    bool has_act_order,
+    bool has_zp,
+    int group_blocks,
+552     }
+
+    auto kernel = get_marlin_kernel<scalar_t, kIsEP, kHasBias>(
+        q_type,
+        thread_m_blocks,
+        th_config.thread_n / 16,
+        th_config.thread_k / 16,
+555         q_type,
+        thread_m_blocks,
+        th_config.thread_n / 16,
+        th_config.thread_k / 16,
+        m_block_size_8,
+        has_act_order,
+        has_zp,
+556         thread_m_blocks,
+        th_config.thread_n / 16,
+        th_config.thread_k / 16,
+        m_block_size_8,
+        has_act_order,
+        has_zp,
+        group_blocks,
+575 
+    if (thread_m_blocks > 1) {
+      int problem_blocks = prob_n / th_config.thread_n * prob_m * top_k * 4;
+      if (problem_blocks < sms * allow_count) {
+        allow_count = max(problem_blocks / sms, 1);
+      }
+    }
+624     int dev,
+    cudaStream_t stream,
+    int thread_k,
+    int thread_n,
+    int sms,
+    bool use_atomic_add,
+    bool use_fp32_reduce,
+625     cudaStream_t stream,
+    int thread_k,
+    int thread_n,
+    int sms,
+    bool use_atomic_add,
+    bool use_fp32_reduce,
+    bool is_zp_float) {
+723   exec_config_t exec_cfg;
+  thread_config_t thread_tfg;
+  if (thread_k != -1 && thread_n != -1) {
+    thread_tfg = thread_config_t{thread_k, thread_n, default_threads};
+    exec_cfg = exec_config_t{1, thread_tfg};
+    host::RuntimeCheck(prob_n % thread_n == 0, "prob_n = ", prob_n, " is not divisible by thread_n = ", thread_n);
+    host::RuntimeCheck(prob_k % thread_k == 0, "prob_k = ", prob_k, " is not divisible by thread_k = ", thread_k);
+724   thread_config_t thread_tfg;
+  if (thread_k != -1 && thread_n != -1) {
+    thread_tfg = thread_config_t{thread_k, thread_n, default_threads};
+    exec_cfg = exec_config_t{1, thread_tfg};
+    host::RuntimeCheck(prob_n % thread_n == 0, "prob_n = ", prob_n, " is not divisible by thread_n = ", thread_n);
+    host::RuntimeCheck(prob_k % thread_k == 0, "prob_k = ", prob_k, " is not divisible by thread_k = ", thread_k);
+  } else {
+726     thread_tfg = thread_config_t{thread_k, thread_n, default_threads};
+    exec_cfg = exec_config_t{1, thread_tfg};
+    host::RuntimeCheck(prob_n % thread_n == 0, "prob_n = ", prob_n, " is not divisible by thread_n = ", thread_n);
+    host::RuntimeCheck(prob_k % thread_k == 0, "prob_k = ", prob_k, " is not divisible by thread_k = ", thread_k);
+  } else {
+    // Auto config
+    exec_cfg = determine_exec_config<scalar_t, kIsEP, kHasBias>(
+727     exec_cfg = exec_config_t{1, thread_tfg};
+    host::RuntimeCheck(prob_n % thread_n == 0, "prob_n = ", prob_n, " is not divisible by thread_n = ", thread_n);
+    host::RuntimeCheck(prob_k % thread_k == 0, "prob_k = ", prob_k, " is not divisible by thread_k = ", thread_k);
+  } else {
+    // Auto config
+    exec_cfg = determine_exec_config<scalar_t, kIsEP, kHasBias>(
+        q_type,
+750 
+  int num_threads = thread_tfg.num_threads;
+  thread_k = thread_tfg.thread_k;
+  thread_n = thread_tfg.thread_n;
+  int blocks = sms * exec_cfg.blocks_per_sm;
+  if (exec_cfg.blocks_per_sm > 1) max_shared_mem = max_shared_mem / exec_cfg.blocks_per_sm - kSharedMemoryLaunchReserve;
+
+751   int num_threads = thread_tfg.num_threads;
+  thread_k = thread_tfg.thread_k;
+  thread_n = thread_tfg.thread_n;
+  int blocks = sms * exec_cfg.blocks_per_sm;
+  if (exec_cfg.blocks_per_sm > 1) max_shared_mem = max_shared_mem / exec_cfg.blocks_per_sm - kSharedMemoryLaunchReserve;
+
+  int thread_k_blocks = thread_k / 16;
+755   if (exec_cfg.blocks_per_sm > 1) max_shared_mem = max_shared_mem / exec_cfg.blocks_per_sm - kSharedMemoryLaunchReserve;
+
+  int thread_k_blocks = thread_k / 16;
+  int thread_n_blocks = thread_n / 16;
+
+  host::RuntimeCheck(
+      is_valid_config(
+756 
+  int thread_k_blocks = thread_k / 16;
+  int thread_n_blocks = thread_n / 16;
+
+  host::RuntimeCheck(
+      is_valid_config(
+          thread_tfg,
+775       "Invalid thread config: thread_m_blocks = ",
+      thread_m_blocks,
+      ", thread_k = ",
+      thread_tfg.thread_k,
+      ", thread_n = ",
+      thread_tfg.thread_n,
+      ", num_threads = ",
+776       thread_m_blocks,
+      ", thread_k = ",
+      thread_tfg.thread_k,
+      ", thread_n = ",
+      thread_tfg.thread_n,
+      ", num_threads = ",
+      thread_tfg.num_threads,
+777       ", thread_k = ",
+      thread_tfg.thread_k,
+      ", thread_n = ",
+      thread_tfg.thread_n,
+      ", num_threads = ",
+      thread_tfg.num_threads,
+      " for MKN = [",
+778       thread_tfg.thread_k,
+      ", thread_n = ",
+      thread_tfg.thread_n,
+      ", num_threads = ",
+      thread_tfg.num_threads,
+      " for MKN = [",
+      prob_m,
+802       max_shared_mem);
+
+  auto kernel = get_marlin_kernel<scalar_t, kIsEP, kHasBias>(
+      q_type,
+      thread_m_blocks,
+      thread_n_blocks,
+      thread_k_blocks,
+805       q_type,
+      thread_m_blocks,
+      thread_n_blocks,
+      thread_k_blocks,
+      m_block_size_8,
+      has_act_order,
+      has_zp,
+806       thread_m_blocks,
+      thread_n_blocks,
+      thread_k_blocks,
+      m_block_size_8,
+      has_act_order,
+      has_zp,
+      group_blocks,
+831         ", thread_m_blocks = ",
+        thread_m_blocks,
+        ", thread_n_blocks = ",
+        thread_n_blocks,
+        ", thread_k_blocks = ",
+        thread_k_blocks,
+        ", num_bits = ",
+832         thread_m_blocks,
+        ", thread_n_blocks = ",
+        thread_n_blocks,
+        ", thread_k_blocks = ",
+        thread_k_blocks,
+        ", num_bits = ",
+        num_bits);
+833         ", thread_n_blocks = ",
+        thread_n_blocks,
+        ", thread_k_blocks = ",
+        thread_k_blocks,
+        ", num_bits = ",
+        num_bits);
+  }
+834         thread_n_blocks,
+        ", thread_k_blocks = ",
+        thread_k_blocks,
+        ", num_bits = ",
+        num_bits);
+  }
+
+854 
+template <typename scalar_t, bool kIsEP, bool kHasBias>
+void moe_wna16_marlin_gemm(
+    tvm::ffi::TensorView a,
+    tvm::ffi::TensorView c,
+    tvm::ffi::TensorView b_q_weight,
+    tvm::ffi::TensorView b_bias,
+940   RuntimeCheck(b_scales.is_contiguous(), "b_scales is not contiguous");
+
+  // thread_k, thread_n, sms
+  int thread_k = -1;
+  int thread_n = -1;
+  int sms = -1;
+  DLDevice dl_device = device.unwrap();
+941 
+  // thread_k, thread_n, sms
+  int thread_k = -1;
+  int thread_n = -1;
+  int sms = -1;
+  DLDevice dl_device = device.unwrap();
+  int dev = dl_device.device_id;
+942   // thread_k, thread_n, sms
+  int thread_k = -1;
+  int thread_n = -1;
+  int sms = -1;
+  DLDevice dl_device = device.unwrap();
+  int dev = dl_device.device_id;
+  cudaStream_t stream = LaunchKernel::resolve_device(dl_device);
+1071   // Verify workspace size
+  RuntimeCheck(
+      size_n % device::marlin::min_thread_n == 0,
+      "size_n = ",
+      size_n,
+      ", is not divisible by min_thread_n = ",
+      device::marlin::min_thread_n);
+1074       "size_n = ",
+      size_n,
+      ", is not divisible by min_thread_n = ",
+      device::marlin::min_thread_n);
+
+  int64_t max_n_tiles = size_n / device::marlin::min_thread_n;
+  int64_t min_workspace_size =
+1075       size_n,
+      ", is not divisible by min_thread_n = ",
+      device::marlin::min_thread_n);
+
+  int64_t max_n_tiles = size_n / device::marlin::min_thread_n;
+  int64_t min_workspace_size =
+      std::min(max_n_tiles * (sorted_token_ids.size(0) / moe_block_size), static_cast<int64_t>(sms) * 4);
+1077       device::marlin::min_thread_n);
+
+  int64_t max_n_tiles = size_n / device::marlin::min_thread_n;
+  int64_t min_workspace_size =
+      std::min(max_n_tiles * (sorted_token_ids.size(0) / moe_block_size), static_cast<int64_t>(sms) * 4);
+  RuntimeCheck(
+      workspace.size(0) >= min_workspace_size,
+1123       dev,
+      stream,
+      thread_k,
+      thread_n,
+      sms,
+      use_atomic_add,
+      use_fp32_reduce,
+1124       stream,
+      thread_k,
+      thread_n,
+      sms,
+      use_atomic_add,
+      use_fp32_reduce,
+      is_zp_float);
+✓ App completed. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-GXe7oYX3vhzbeXvyXAWe5J

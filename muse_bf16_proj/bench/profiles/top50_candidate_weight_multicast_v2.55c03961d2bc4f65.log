@@ -1,0 +1,169 @@
+File "/opt/sglang/lib/python3.12/site-packages/triton/language/semantic.py", line 1738, in broadcast_tensors
+    head, tail[i] = self.broadcast_impl_value(head, tail[i])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/_semantic.py", line 205, in broadcast_impl_value
+    elif lhs_ty.layout != rhs_ty.layout:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 4, in __eq__
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 1321, in __eq__
+    other = _normalize_tuple(other)
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 372, in _normalize_tuple
+    normalized_tuple = tuple(normalized_tuple)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 1287, in __init__
+    self.type = _type_for_tuple_values(self.values)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 1275, in _type_for_tuple_values
+    return tuple_type([constexpr_type(x) if isinstance(x, (int, float, dtype)) else x.type for x in values], fields)
+                                                                                    ^^^^^^
+AttributeError: 'list' object has no attribute 'type'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/muse_bf16_proj-sanblwl8/run/submission.py", line 3371, in prepare
+    _, compiled = _wmc_run(x, w, multicast=True, bn=64, bk=128, stages=4, ctas=2,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_bf16_proj-sanblwl8/run/submission.py", line 3315, in _wmc_run
+    compiled = _wmc_kernel[(triton.cdiv(n, bn), 1)](
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 374, in <lambda>
+    return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 757, in run
+    kernel = self._do_compile(key, signature, device, constexprs, options, attrs, warmup)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 902, in _do_compile
+    kernel = self.compile(src, target=target, options=options.__dict__)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/_runtime.py", line 40, in make_ir
+    module = ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 51:4:
+        mbarrier.expect(ready.index(sj), NB, pred=pred)
+        tma.async_load(wd, [n0, j * BK], ready.index(sj), wbuf.index(sj),
+                       pred=pred, multicast=MULTICAST)
+        tma.async_load(xd, [t0, j * BK], ready.index(sj), xbuf.index(sj), pred=pred)
+    acc = warpgroup_mma_wait(0, deps=(acc,))
+    epi: gl.constexpr = gl.BlockedLayout([2, 1], [32, 1], [1, 4], [0, 1], cga_layout=CGA)
+    out_val = gl.convert_layout(acc.to(gl.bfloat16), epi)
+    nr = n0 + gl.arange(0, BN, layout=gl.SliceLayout(1, epi))
+    mt = t0 + gl.arange(0, BT, layout=gl.SliceLayout(0, epi))
+    out_ptrs = out + mt[None, :] * N + nr[:, None]
+    out_mask = (mt < M)[None, :] & (nr < N)[:, None]
+    gl.store(out_ptrs, out_val, mask=out_mask)
+    ^
+'list' object has no attribute 'type'
+
+wmc compile rejected unpooler: CompilationError: at 51:4:
+        mbarrier.expect(ready.index(sj), NB, pred=pred)
+        tma.async_load(wd, [n0, j * BK], ready.index(sj), wbuf.index(sj),
+                       pred=pred, multicast=MULTICAST)
+        tma.async_load(xd, [t0, j * BK], ready.index(sj), xbuf.index(sj), pred=pred)
+    acc = warpgroup_mma_wait(0, deps=(acc,))
+    epi: gl.constexpr = gl.BlockedLayout([2, 1], [32, 1], [1, 4], [0, 1], cga_layout=CGA)
+    out_val = gl.convert_layout(acc.to(gl.bfloat16), epi)
+    nr = n0 + gl.arange(0, BN, layout=gl.SliceLayout(1, epi))
+    mt = t0 + gl.arange(0, BT, layout=gl.SliceLayout(0, epi))
+    out_ptrs = out + mt[None, :] * N + nr[:, None]
+    out_mask = (mt < M)[None, :] & (nr < N)[:, None]
+    gl.store(out_ptrs, out_val, mask=out_mask)
+    ^
+'list' object has no attribute 'type'
+Traceback (most recent call last):
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/_core.py", line 99, in wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 43, in wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 2610, in store
+    return _semantic.store(pointer, value, mask, boundary_check, cache_modifier, eviction_policy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/semantic.py", line 1231, in store
+    ptr, val, mask = self._broadcast_ptr_val_mask(ptr, val, mask)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/semantic.py", line 1200, in _broadcast_ptr_val_mask
+    ptr, val, mask = self.broadcast_tensors(ptr, val, mask)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/semantic.py", line 1738, in broadcast_tensors
+    head, tail[i] = self.broadcast_impl_value(head, tail[i])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/_semantic.py", line 205, in broadcast_impl_value
+    elif lhs_ty.layout != rhs_ty.layout:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 4, in __eq__
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 1321, in __eq__
+    other = _normalize_tuple(other)
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 372, in _normalize_tuple
+    normalized_tuple = tuple(normalized_tuple)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 1287, in __init__
+    self.type = _type_for_tuple_values(self.values)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 1275, in _type_for_tuple_values
+    return tuple_type([constexpr_type(x) if isinstance(x, (int, float, dtype)) else x.type for x in values], fields)
+                                                                                    ^^^^^^
+AttributeError: 'list' object has no attribute 'type'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/muse_bf16_proj-sanblwl8/run/submission.py", line 3371, in prepare
+    _, compiled = _wmc_run(x, w, multicast=True, bn=64, bk=128, stages=4, ctas=2,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_bf16_proj-sanblwl8/run/submission.py", line 3315, in _wmc_run
+    compiled = _wmc_kernel[(triton.cdiv(n, bn), 1)](
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 374, in <lambda>
+    return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 757, in run
+    kernel = self._do_compile(key, signature, device, constexprs, options, attrs, warmup)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 902, in _do_compile
+    kernel = self.compile(src, target=target, options=options.__dict__)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/_runtime.py", line 40, in make_ir
+    module = ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 51:4:
+        mbarrier.expect(ready.index(sj), NB, pred=pred)
+        tma.async_load(wd, [n0, j * BK], ready.index(sj), wbuf.index(sj),
+                       pred=pred, multicast=MULTICAST)
+        tma.async_load(xd, [t0, j * BK], ready.index(sj), xbuf.index(sj), pred=pred)
+    acc = warpgroup_mma_wait(0, deps=(acc,))
+    epi: gl.constexpr = gl.BlockedLayout([2, 1], [32, 1], [1, 4], [0, 1], cga_layout=CGA)
+    out_val = gl.convert_layout(acc.to(gl.bfloat16), epi)
+    nr = n0 + gl.arange(0, BN, layout=gl.SliceLayout(1, epi))
+    mt = t0 + gl.arange(0, BT, layout=gl.SliceLayout(0, epi))
+    out_ptrs = out + mt[None, :] * N + nr[:, None]
+    out_mask = (mt < M)[None, :] & (nr < N)[:, None]
+    gl.store(out_ptrs, out_val, mask=out_mask)
+    ^
+'list' object has no attribute 'type'
+
+wmc compile rejected pooler: CompilationError: at 51:4:
+        mbarrier.expect(ready.index(sj), NB, pred=pred)
+        tma.async_load(wd, [n0, j * BK], ready.index(sj), wbuf.index(sj),
+                       pred=pred, multicast=MULTICAST)
+        tma.async_load(xd, [t0, j * BK], ready.index(sj), xbuf.index(sj), pred=pred)
+    acc = warpgroup_mma_wait(0, deps=(acc,))
+    epi: gl.constexpr = gl.BlockedLayout([2, 1], [32, 1], [1, 4], [0, 1], cga_layout=CGA)
+    out_val = gl.convert_layout(acc.to(gl.bfloat16), epi)
+    nr = n0 + gl.arange(0, BN, layout=gl.SliceLayout(1, epi))
+    mt = t0 + gl.arange(0, BT, layout=gl.SliceLayout(0, epi))
+    out_ptrs = out + mt[None, :] * N + nr[:, None]
+    out_mask = (mt < M)[None, :] & (nr < N)[:, None]
+    gl.store(out_ptrs, out_val, mask=out_mask)
+    ^
+'list' object has no attribute 'type'
+wmc prepare elapsed=176.15s selected={}

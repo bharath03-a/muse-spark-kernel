@@ -1,0 +1,135 @@
+{
+  "utc": "2026-10-28T23:05:29.836263+00:00",
+  "boards": {
+    "overall": {
+      "you": {
+        "rank": 236,
+        "team": "bharath03-a",
+        "first": false,
+        "ahead": 235
+      },
+      "row": {
+        "rank": 236,
+        "solved": 4,
+        "team": "bharath03-a"
+      },
+      "top50": {
+        "rank": 50,
+        "solved": 4,
+        "team": "raulkr"
+      }
+    },
+    "muse_attention_decode": {
+      "you": {
+        "rank": 302,
+        "team": "bharath03-a",
+        "speedup": 1.9386,
+        "first": false,
+        "ahead": 301,
+        "to_first": 1.5755
+      },
+      "row": {
+        "attempts": 16,
+        "job": "7da917a2ea564131",
+        "rank": 302,
+        "speedup": 1.9386,
+        "submitted_at": 1793168458.6371722,
+        "team": "bharath03-a",
+        "value": 1942.7804203139192
+      },
+      "top50": {
+        "attempts": 1,
+        "job": "8318962e259b40df",
+        "rank": 50,
+        "speedup": 2.6132,
+        "submitted_at": 1793193444.7978137,
+        "team": "heartkilla",
+        "value": 1441.2409822750926
+      }
+    },
+    "muse_moe_w4a16": {
+      "you": {
+        "rank": 295,
+        "team": "bharath03-a",
+        "speedup": 1.9698,
+        "first": false,
+        "ahead": 294,
+        "to_first": 1.3632
+      },
+      "row": {
+        "attempts": 19,
+        "job": "4a60fa38515e4581",
+        "rank": 295,
+        "speedup": 1.9698,
+        "submitted_at": 1793169192.9377344,
+        "team": "bharath03-a",
+        "value": 6827.256923196509
+      },
+      "top50": {
+        "attempts": 29,
+        "job": "ea10f108671e47c2",
+        "rank": 50,
+        "speedup": 2.3598,
+        "submitted_at": 1793182979.2412455,
+        "team": "miketung",
+        "value": 5699.080918996303
+      }
+    },
+    "muse_decode_layer": {
+      "you": {
+        "rank": 236,
+        "team": "bharath03-a",
+        "speedup": 1.8094,
+        "first": false,
+        "ahead": 235,
+        "to_first": 1.328
+      },
+      "row": {
+        "attempts": 25,
+        "job": "5648767e139d441b",
+        "rank": 236,
+        "speedup": 1.8094,
+        "submitted_at": 1793228410.7678301,
+        "team": "bharath03-a",
+        "value": 12501.64589376277
+      },
+      "top50": {
+        "attempts": 30,
+        "job": "3cfadd31be2f4ba8",
+        "rank": 50,
+        "speedup": 2.1456,
+        "submitted_at": 1793171094.2322946,
+        "team": "raulkr",
+        "value": 10542.655200671104
+      }
+    },
+    "muse_prefill_layer": {
+      "you": {
+        "rank": 277,
+        "team": "bharath03-a",
+        "speedup": 1.4449,
+        "first": false,
+        "ahead": 276,
+        "to_first": 1.4051
+      },
+      "row": {
+        "attempts": 14,
+        "job": "0d00b0439c5d4a54",
+        "rank": 277,
+        "speedup": 1.4449,
+        "submitted_at": 1793166150.4909186,
+        "team": "bharath03-a",
+        "value": 268118.1032682949
+      },
+      "top50": {
+        "attempts": 2,
+        "job": "29f18053b93d4dfa",
+        "rank": 50,
+        "speedup": 1.7984,
+        "submitted_at": 1793197046.6279733,
+        "team": "shashank-100",
+        "value": 215419.9742142639
+      }
+    }
+  }
+}

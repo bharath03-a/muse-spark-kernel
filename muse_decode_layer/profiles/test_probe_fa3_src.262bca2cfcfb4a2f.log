@@ -1,0 +1,67 @@
+=== FA3 SOURCE FILE ===
+FILE: /opt/sglang/lib/python3.12/site-packages/sgl_kernel/flash_attn.py
+SOURCE:
+ @maybe_wrap_debug_kernel
+def flash_attn_with_kvcache(
+    q,
+    k_cache,
+    v_cache,
+    k=None,
+    v=None,
+    qv=None,
+    rotary_cos=None,
+    rotary_sin=None,
+    cache_seqlens: Optional[Union[int, torch.Tensor]] = None,
+    cache_batch_idx: Optional[torch.Tensor] = None,
+    cache_leftpad: Optional[torch.Tensor] = None,
+    page_table: Optional[torch.Tensor] = None,
+    cu_seqlens_q: Optional[torch.Tensor] = None,
+    cu_seqlens_k_new: Optional[torch.Tensor] = None,
+    max_seqlen_q: Optional[int] = None,
+    rotary_seqlens: Optional[torch.Tensor] = None,
+    q_descale: Optional[torch.Tensor] = None,
+    k_descale: Optional[torch.Tensor] = None,
+    v_descale: Optional[torch.Tensor] = None,
+    softmax_scale=None,
+    causal=False,
+    window_size=(-1, -1),  # -1 means infinite context window
+    attention_chunk: Optional[int] = None,
+    softcap=0.0,  # 0.0 means deactivated
+    rotary_interleaved=True,
+    scheduler_metadata=None,
+    num_splits=0,  # Can be tuned for speed
+    pack_gqa=None,  # Can be tuned for speed
+    only_qv=False,  # Only use QV (skip K matmul); requires qv. Used when qk rope dim is 0.
+    sm_margin=0,  # Can be tuned if some SMs are used for communication
+    return_softmax_lse=False,
+    sinks=None,
+    score_mod=None,
+    aux_tensors=None,
+    ver=3,
+    out=None,
+):
+    """
+    If k and v are not None, k_cache and v_cache will be updated *inplace* with the new values from
+    k and v. This is useful for incremental decoding: you can pass in the cached keys/values from
+    the previous step, and update them with the new keys/values from the current step, and do
+    attention with the updated cache, all in 1 kernel.
+
+    If you pass in k / v, you must make sure that the cache is large enough to hold the new values.
+    For example, the KV cache could be pre-allocated with the max sequence length, and you can use
+    cache_seqlens to keep track of the current sequence lengths of each sequence in the batch.
+
+    Also apply rotary embedding if rotary_cos and rotary_sin are passed in. The key @k will be
+    rotated by rotary_cos and rotary_sin at indices cache_seqlens, cache_seqlens + 1, etc.
+    If causal or local (i.e., window_size != (-1, -1)), the query @q will be rotated by rotary_cos
+    and rotary_sin at indices cache_seqlens, cache_seqlens + 1, etc.
+    If not causal and not local, the query @q will be rotated by rotary_cos and rotary_sin at
+    indices cache_seqlens only (i.e. we consider all tokens in @q to be at position cache_seqlens).
+
+    See tests/test_flash_attn.py::test_flash_attn_kvcache for examples of how to use this function.
+
+    Supports multi-query and grouped-query attention (MQA/GQA) by passing in KV with fewer heads
+    than Q. Note that the number of heads in Q must be divisible by the number of heads in KV.
+    For example, if Q has 6 heads and K, V have 2 heads, head 0, 1, 2 of Q will attention to head
+    0 of K, V, and head 3, 4, 5 of Q will attention to head 1 of K, V.
+
+    If causal

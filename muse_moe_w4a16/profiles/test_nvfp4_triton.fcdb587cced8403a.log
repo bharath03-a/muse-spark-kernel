@@ -1,0 +1,50 @@
+NVFP4 Triton dequant max absolute difference: 2.384185791015625e-07
+Traceback (most recent call last):
+  File "/tmp/muse_moe_w4a16-9alz0gfn/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_moe_w4a16-9alz0gfn/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_moe_w4a16-9alz0gfn/run/submission.py", line 82, in kernel_fn
+    assert diff == 0.0, f"Dequant mismatch: {diff}"
+           ^^^^^^^^^^^
+AssertionError: Dequant mismatch: 2.384185791015625e-07
+NVFP4 Triton dequant max absolute difference: 2.384185791015625e-07
+Traceback (most recent call last):
+  File "/tmp/muse_moe_w4a16-9alz0gfn/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_moe_w4a16-9alz0gfn/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_moe_w4a16-9alz0gfn/run/submission.py", line 82, in kernel_fn
+    assert diff == 0.0, f"Dequant mismatch: {diff}"
+           ^^^^^^^^^^^
+AssertionError: Dequant mismatch: 2.384185791015625e-07
+NVFP4 Triton dequant max absolute difference: 2.384185791015625e-07
+Traceback (most recent call last):
+  File "/tmp/muse_moe_w4a16-9alz0gfn/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_moe_w4a16-9alz0gfn/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_moe_w4a16-9alz0gfn/run/submission.py", line 82, in kernel_fn
+    assert diff == 0.0, f"Dequant mismatch: {diff}"
+           ^^^^^^^^^^^
+AssertionError: Dequant mismatch: 2.384185791015625e-07
+NVFP4 Triton dequant max absolute difference: 0.0
+MATCH 100% EXACT!
+NVFP4 Triton dequant max absolute difference: 4.76837158203125e-07
+Traceback (most recent call last):
+  File "/tmp/muse_moe_w4a16-9alz0gfn/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_moe_w4a16-9alz0gfn/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_moe_w4a16-9alz0gfn/run/submission.py", line 82, in kernel_fn
+    assert diff == 0.0, f"Dequant mismatch: {diff}"
+           ^^^^^^^^^^^
+AssertionError: Dequant mismatch: 4.76837158203125e-07

@@ -1,0 +1,88 @@
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-eh3pkhv5/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-eh3pkhv5/run/submission.py", line 242, in kernel_fn
+    attn_out = wrapper.run(
+               ^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BatchDecodeWithPagedKVCacheWrapper.run() got an unexpected keyword argument 'sm_scale'
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-eh3pkhv5/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-eh3pkhv5/run/submission.py", line 242, in kernel_fn
+    attn_out = wrapper.run(
+               ^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BatchDecodeWithPagedKVCacheWrapper.run() got an unexpected keyword argument 'sm_scale'
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-eh3pkhv5/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-eh3pkhv5/run/submission.py", line 242, in kernel_fn
+    attn_out = wrapper.run(
+               ^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BatchDecodeWithPagedKVCacheWrapper.run() got an unexpected keyword argument 'sm_scale'
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-eh3pkhv5/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-eh3pkhv5/run/submission.py", line 242, in kernel_fn
+    attn_out = wrapper.run(
+               ^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BatchDecodeWithPagedKVCacheWrapper.run() got an unexpected keyword argument 'sm_scale'
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-eh3pkhv5/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-eh3pkhv5/run/submission.py", line 242, in kernel_fn
+    attn_out = wrapper.run(
+               ^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BatchDecodeWithPagedKVCacheWrapper.run() got an unexpected keyword argument 'sm_scale'
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-eh3pkhv5/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-eh3pkhv5/run/submission.py", line 242, in kernel_fn
+    attn_out = wrapper.run(
+               ^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BatchDecodeWithPagedKVCacheWrapper.run() got an unexpected keyword argument 'sm_scale'
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-eh3pkhv5/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-eh3pkhv5/run/submission.py", line 242, in kernel_fn
+    attn_out = wrapper.run(
+               ^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BatchDecodeWithPagedKVCacheWrapper.run() got an unexpected keyword argument 'sm_scale'
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-eh3pkhv5/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-eh3pkhv5/run/submission.py", line 242, in kernel_fn
+    attn_out = wrapper.run(
+               ^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/flashinfer/api_logging.py", line 2348, in _auto_dump_wrapper
+    return _inner(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BatchDecodeWithPagedKVCacheWrapper.run() got an unexpected keyword argument 'sm_scale'

@@ -1,0 +1,75 @@
+zip build 39.4s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 137
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 121
+qkv zip variant id 39 disabled: ValueError: accuracy at m=1
+qkv zip m=1 id 110: 14.43 us (base id 121: 14.40)
+qkv zip m=1 id 31: 15.07 us (base id 121: 14.40)
+qkv zip m=1 id 44: 15.10 us (base id 121: 14.40)
+qkv zip m=1 id 25: 15.33 us (base id 121: 14.40)
+qkv zip m=8 id 110: 14.69 us (base id 121: 14.56)
+qkv zip m=8 id 31: 15.49 us (base id 121: 14.56)
+qkv zip m=8 id 44: 15.36 us (base id 121: 14.56)
+qkv zip m=8 id 25: 15.55 us (base id 121: 14.56)
+qkv zip picked m=1 id 121, m=2-8 id 121
+zip prepare 39.8s
+r9 build 37.6s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.85 id3=18.50 -> id3
+r9 prepare 37.6s picks={('qkv_gate', 128): 3}
+r15 lt build 18.8s cublasLt 130101
+r15 qkv_gate m=128 cands=20 (raw us) cp10=18.72 c14=20.00 c12=20.03 c3=20.35 best=a66t80s35k1r0z0c7 -> cp10
+r15 qkv_gate m=256 cands=15 (raw us) cp10=23.23 c9=22.08 c10=23.36 c0=23.52 best=a66t134s35k1r0z0c9 -> lt
+r15 o m=128 cands=8 (raw us) cp10=11.10 c0=11.30 c2=11.65 c4=11.55 best=a66t18s35k1r0z0c5 -> cp10
+r15 o m=256 cands=8 (raw us) cp10=13.66 c1=14.21 c0=13.76 c6=14.43 best=a66t20s35k1r0z0c3 -> cp10
+r15 pooler m=128 cands=15 (raw us) cp10=25.38 c10=24.80 c8=24.99 c9=25.06 best=a66t134s35k1r0z0c7 -> lt
+r15 pooler m=256 cands=12 (raw us) cp10=30.59 c8=30.69 c3=32.06 c10=32.74 best=a66t183s35k1r0z0c9 -> cp10
+r15 unpooler m=128 cands=12 (raw us) cp10=23.52 c8=24.00 c4=24.19 c10=24.22 best=a66t183s35k1r0z0c7 -> cp10
+r15 unpooler m=256 cands=8 (raw us) cp10=27.87 c0=28.10 c2=30.27 c1=29.98 best=a66t20s35k1r0z0c3 -> cp10
+r15 prepare 19.3s total 140.4s picks=qkv_gate256,pooler128
+slice m2: old 9.57 new 8.96
+slice m4: old 11.46 new 9.02
+slice m8: old 9.57 new 9.18
+slice mma path enabled m 2-8
+physical o m128: {'current': 11.19999960064888, 'transpose': 10.944000445306301} selected=False
+physical o m256: {'current': 12.959999963641167, 'transpose': 12.83199992030859} selected=False
+physical confirm unpooler m128: {'current': 23.615999147295952, 'transpose': 22.87999913096428}
+physical unpooler m128: {'current': 23.520000278949738, 'transpose': 22.84800074994564} selected=True
+physical unpooler m256: {'current': 28.00000086426735, 'transpose': 28.095999732613564} selected=False
+physical qkv_gate m128: {'current': 18.783999606966972, 'transpose': 20.767999812960625} selected=False
+physical qkv_gate m256: {'current': 22.08000048995018, 'transpose': 24.191999807953835} selected=False
+physical pooler m128: {'current': 24.639999493956566, 'transpose': 27.103999629616737} selected=False
+physical pooler m256: {'current': 30.432000756263733, 'transpose': 34.07999873161316} selected=False
+physical picks: [('unpooler', 128)]
+wmc compile rejected unpooler: CompilationError: at 47:4:
+        cluster.barrier()
+        j = i + STAGES - 1
+        sj = j % STAGES
+        pred = j < KI
+        mbarrier.expect(ready.index(sj), NB, pred=pred)
+        tma.async_load(wd, [n0, j * BK], ready.index(sj), wbuf.index(sj),
+                       pred=pred, multicast=MULTICAST)
+        tma.async_load(xd, [t0, j * BK], ready.index(sj), xbuf.index(sj), pred=pred)
+    acc = warpgroup_mma_wait(0, deps=(acc,))
+    nr = n0 + gl.arange(0, BN, layout=gl.SliceLayout(1, mma))
+    mt = t0 + gl.arange(0, BT, layout=gl.SliceLayout(0, mma))
+    gl.store(out + mt[None, :] * N + nr[:, None], acc.to(gl.bfloat16),
+    ^
+'list' object has no attribute 'type'
+wmc compile rejected pooler: CompilationError: at 47:4:
+        cluster.barrier()
+        j = i + STAGES - 1
+        sj = j % STAGES
+        pred = j < KI
+        mbarrier.expect(ready.index(sj), NB, pred=pred)
+        tma.async_load(wd, [n0, j * BK], ready.index(sj), wbuf.index(sj),
+                       pred=pred, multicast=MULTICAST)
+        tma.async_load(xd, [t0, j * BK], ready.index(sj), xbuf.index(sj), pred=pred)
+    acc = warpgroup_mma_wait(0, deps=(acc,))
+    nr = n0 + gl.arange(0, BN, layout=gl.SliceLayout(1, mma))
+    mt = t0 + gl.arange(0, BT, layout=gl.SliceLayout(0, mma))
+    gl.store(out + mt[None, :] * N + nr[:, None], acc.to(gl.bfloat16),
+    ^
+'list' object has no attribute 'type'
+wmc prepare elapsed=177.49s selected={}

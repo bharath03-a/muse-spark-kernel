@@ -1,0 +1,15 @@
+✓ Initialized. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-dKcp7I7ynsGxoSXFQPXuTr
+✓ Created objects.
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/research_harness/
+│   modal_validate.py
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/research_harness
+└── ✓ Created Function validate.
+HARNESS_GPU_PASS stable
+Stopping app - local entrypoint completed.
+HARNESS_GPU_PASS corruption_rejected
+HARNESS_GPU_PASS nonfinite_rejected
+✓ App completed. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-dKcp7I7ynsGxoSXFQPXuTr

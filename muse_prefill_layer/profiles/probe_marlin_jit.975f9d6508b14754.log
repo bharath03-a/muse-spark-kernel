@@ -1,0 +1,75 @@
+=== _jit_moe_wna16_marlin_module ===
+file: /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/utils/common.py
+source:
+ @cache_once
+def _jit_moe_wna16_marlin_module(
+    dtype: torch.dtype, is_ep: bool, has_bias: bool
+) -> Module:
+    args = make_cpp_args(dtype, is_ep, has_bias)
+    return load_jit(
+        "moe_wna16_marlin",
+        *args,
+        cuda_files=["gemm/marlin_moe/moe_wna16_marlin.cuh"],
+        cuda_wrappers=[
+            (
+                "moe_wna16_marlin_gemm",
+                f"moe_wna16_marlin_gemm<{args}>",
+            )
+        ],
+    )
+
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-i58c01b4/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-i58c01b4/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_prefill_layer-i58c01b4/run/submission.py", line 12, in kernel_fn
+    return data["hidden_states"]
+           ~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'hidden_states'
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-i58c01b4/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-i58c01b4/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_prefill_layer-i58c01b4/run/submission.py", line 12, in kernel_fn
+    return data["hidden_states"]
+           ~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'hidden_states'
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-i58c01b4/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-i58c01b4/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_prefill_layer-i58c01b4/run/submission.py", line 12, in kernel_fn
+    return data["hidden_states"]
+           ~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'hidden_states'
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-i58c01b4/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-i58c01b4/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_prefill_layer-i58c01b4/run/submission.py", line 12, in kernel_fn
+    return data["hidden_states"]
+           ~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'hidden_states'
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-i58c01b4/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-i58c01b4/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_prefill_layer-i58c01b4/run/submission.py", line 12, in kernel_fn
+    return data["hidden_states"]
+           ~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'hidden_states'

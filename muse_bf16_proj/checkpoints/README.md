@@ -1,0 +1,12 @@
+
+- cp5_submitted_1.3355_e55c4449.py: submission.py as of 21:04 (submit e55c4449 21:26, 3617.2 us, 1.3355x, rank 89). Built outside this session (CUDA wgmma + Gluon).
+- cp6_zip1_check1.338_69bc87ca.py: cp5 + 12-bit pooler m=1 CUDA kernel; check 1.338x (3610 us); trimmed correct ALL PASS; not submitted
+- cp6 submitted 4c0de63f: 1.329x (noise; board keeps 1.336x)
+- cp7_zip_check1.389_948a2ab2.py: 12-bit zip kernels pooler m1-16, unpooler m16, qkv m1-8; check 1.389x (3478.6 us); full correct_zip ALL PASS
+- cp7 submitted b3dec4f5: 3458.8 us
+- cp8_zip_robust_check1.399_f29380ec.py: cp7 + unbounded per-row escape list (cp7 falls back on rows with >8 escapes, seen on judge 9e0b6fbb); prepare self-tests; check 1.399x; not submitted
+- cp9_qkv128_cluster_check1.404.py: cp8 + qkv m128 cluster split-K DSMEM (BN64 S3, prepare self-select). Checks 1.391-1.411 (7 runs, mean ~1.404).
+- cp10_qz_check1.407.py: cp9 + qkv m1 zip rb2/cluster2 self-select. Checks 1.407/1.412/1.407.
+- cp11_lt_check1.401.py: cp10 + cuBLASLt heuristic algo self-select at m128/256 (wins qkv m256 -1.4us, pooler m128 -0.7us). Check 1.401 (noise). Prepare ~116-137s.
+- cp13_B_check1.415.py: cp11 + z9 configs 110/121/137 (qkv m1-8, pooler m16). Check bc3cf943 1.415.
+- cp14_D_slice_check1.426.py: cp13 + CUDA mma.sync slice kernel m2-8 (64 CTAs x16 rows, NW16). Check 9d8ae0d9 1.426; slice m8 5.06->4.2.

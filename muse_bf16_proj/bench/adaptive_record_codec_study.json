@@ -1,0 +1,14 @@
+{
+  "weights": 1048576,
+  "seed": 5151,
+  "base": 54,
+  "escapes": 146,
+  "escape_fraction": 0.0001392364501953125,
+  "raw_records": 137,
+  "records": 1024,
+  "raw_record_fraction": 0.1337890625,
+  "bits_per_weight": 12.56640625,
+  "payload_and_metadata_bytes": 1647104,
+  "roundtrip": true,
+  "cpu_pack_unpack_seconds": 1.432783916
+}

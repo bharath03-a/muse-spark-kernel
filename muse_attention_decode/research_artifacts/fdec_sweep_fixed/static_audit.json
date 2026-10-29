@@ -1,0 +1,28 @@
+{
+  "original_failure_job": "36749dbf05214f06",
+  "root_cause": "metadata torch.gather index beyond page_table capacity before fdec launch",
+  "cuda_sha256": "101e9ff26ab29d37fc75e3ee15dade74e1f1a926073c52f4b03c4650a80c6b51",
+  "production_functions_unchanged": true,
+  "CUDA_unchanged": true,
+  "capacity": 86008,
+  "seq_range_inclusive": [
+    74000,
+    85999
+  ],
+  "all_12000_possible_seq_lengths_in_bounds": true,
+  "reference_or_checks_import": false,
+  "unique_compile_flags": [
+    [],
+    [
+      "-DPFF=4"
+    ],
+    [
+      "-DPFF=8"
+    ]
+  ],
+  "initial_audit_sha256": "5e48dd0aae38653f2129a5a6d69b432cabe20f9bd229af3f52a3b4acc9875ebd",
+  "frozen_320s_source_sha256": "3b1285660fafedeb5f025017c6f59eab0e1068e4ff9cd29e3d1a3f8b47ed5734",
+  "budget_policy": "Skip unbuilt alternative modules after320s, skip absent variants, gracefully stop before next measurement after450s",
+  "uploaded_job": "0653d51aad4c4281",
+  "exact_uploaded_snapshot_unverified": true
+}

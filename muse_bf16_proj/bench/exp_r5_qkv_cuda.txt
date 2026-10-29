@@ -1,0 +1,184 @@
+
+// Stream-K qkv_gate kernel: swap-AB (W rows = wgmma M, tokens = N), fixed-order deterministic fixup.
+__device__ __forceinline__ int sk_owner(long u, long U, int G) {
+  int c = (int)((u * G) / U);
+  while (((long)(c + 1) * U) / G <= u) ++c;
+  while (((long)c * U) / G > u) --c;
+  return c;
+}
+
+template <int P, int BT, int STAGES, int SLOTS>
+__global__ void __launch_bounds__(THREADS, 1)
+qkv_sk(const __grid_constant__ CUtensorMap w_map, const __grid_constant__ CUtensorMap x_map,
+       bf16* __restrict__ out, float* __restrict__ ws, int* __restrict__ cnt, int m, int n, int mt,
+       int tiles, int G, int dbg) {
+  constexpr int KST = 128;
+  constexpr int BN_T = 64 * P;
+  constexpr int STAGE_ELEMS = (BN_T + BT) * 64;
+  constexpr uint32_t STAGE_BYTES = STAGE_ELEMS * sizeof(bf16);
+  constexpr int NT = BT / 8;
+  constexpr int TILE_F = BN_T * BT;
+
+  extern __shared__ __align__(1024) unsigned char smem[];
+  bf16* ring = reinterpret_cast<bf16*>(smem);
+  uint64_t* ready = reinterpret_cast<uint64_t*>(smem + (size_t)STAGES * STAGE_BYTES);
+
+  const int tid = threadIdx.x;
+  const long U = (long)tiles * KST;
+  const int c = blockIdx.x;
+  const long u0 = ((long)c * U) / G;
+  const long u1 = ((long)(c + 1) * U) / G;
+  const int nu = (int)(u1 - u0);
+  if (nu <= 0) return;
+
+  if (tid == 0) {
+    for (int s = 0; s < STAGES; ++s) mbar_init(&ready[s], 1);
+    asm volatile("fence.mbarrier_init.release.cluster;\n" ::: "memory");
+  }
+  __syncthreads();
+
+  auto issue = [&](int slot, int j) {
+    const long u = u0 + j;
+    const int tile = (int)(u / KST);
+    const int kb = (int)(u % KST);
+    bf16* base = ring + (size_t)slot * STAGE_ELEMS;
+    mbar_expect_tx(&ready[slot], STAGE_BYTES);
+    tma_load_2d(base, &w_map, kb * 64, (tile / mt) * BN_T, &ready[slot]);
+    tma_load_2d(base + BN_T * 64, &x_map, kb * 64, (tile % mt) * BT, &ready[slot]);
+  };
+
+  if (tid == 0) {
+    const int pre = STAGES - 1 < nu ? STAGES - 1 : nu;
+    for (int s = 0; s < pre; ++s) issue(s, s);
+  }
+
+  float acc[P][NT][4];
+#pragma unroll
+  for (int p = 0; p < P; ++p)
+#pragma unroll
+    for (int j = 0; j < NT; ++j)
+#pragma unroll
+      for (int r = 0; r < 4; ++r) acc[p][j][r] = 0.f;
+
+  const int warp = tid >> 5, lane = tid & 31, g = lane >> 2, q = lane & 3;
+
+  int seg_tile[2], seg_slot[2], seg_ncon[2], nseg = 0;
+
+  for (int i = 0; i < nu; ++i) {
+    const int s = i % STAGES;
+    mbar_wait(&ready[s], (i / STAGES) & 1);
+    asm volatile("fence.proxy.async.shared::cta;\n" ::: "memory");
+    wgmma_fence();
+    bf16* base = ring + (size_t)s * STAGE_ELEMS;
+    const uint64_t db = make_smem_desc(base + BN_T * 64);
+#pragma unroll
+    for (int p = 0; p < P; ++p) {
+      const uint64_t da = make_smem_desc(base + p * 64 * 64);
+#pragma unroll
+      for (int ks = 0; ks < 4; ++ks) wgmma_m64n<BT>(acc[p], da + (uint64_t)(ks * 2), db + (uint64_t)(ks * 2));
+    }
+    wgmma_commit();
+    const long u = u0 + i;
+    const bool seg_end = (u % KST) == KST - 1 || i == nu - 1;
+    if (seg_end) {
+      wgmma_wait<0>();
+      const int tile = (int)(u / KST);
+      const long ts = (long)tile * KST;
+      const int cf = sk_owner(ts, U, G);
+      const int cl = sk_owner(ts + KST - 1, U, G);
+      if (dbg & 2) { ++nseg; if (0) {} } else {
+      seg_tile[nseg] = tile;
+      seg_slot[nseg] = c - cf;
+      seg_ncon[nseg] = cl - cf + 1;
+      float* wsl = ws + ((size_t)tile * SLOTS + (c - cf)) * TILE_F;
+#pragma unroll
+      for (int p = 0; p < P; ++p)
+#pragma unroll
+        for (int j = 0; j < NT; ++j)
+#pragma unroll
+          for (int r = 0; r < 4; ++r) {
+            __stcg(wsl + ((p * NT + j) * 4 + r) * THREADS + tid, acc[p][j][r]);
+            acc[p][j][r] = 0.f;
+          }
+      __threadfence();
+      __syncthreads();
+      if (tid == 0) atomicAdd(&cnt[tile], 1);
+      ++nseg;
+      }
+    } else {
+      wgmma_wait<1>();
+    }
+    const int j = i + STAGES - 1;
+    if (j < nu && tid == 0) issue(j % STAGES, j);
+  }
+
+  for (int sg = 0; sg < ((dbg & 3) ? 0 : nseg); ++sg) {
+    const int tile = seg_tile[sg], slot = seg_slot[sg], ncon = seg_ncon[sg];
+    if (tid == 0) {
+      while (atomicAdd(&cnt[tile], 0) < ncon) {
+      }
+    }
+    __syncthreads();
+    __threadfence();
+    const float* wst = ws + (size_t)tile * SLOTS * TILE_F;
+    const int n0 = (tile / mt) * BN_T, t0 = (tile % mt) * BT;
+    constexpr int E = P * NT * 4;
+    const int e0 = slot * E / ncon, e1 = (slot + 1) * E / ncon;
+#pragma unroll 2
+    for (int e = e0; e < e1; ++e) {
+      float v[SLOTS];
+#pragma unroll
+      for (int sl = 0; sl < SLOTS; ++sl)
+        v[sl] = sl < ncon ? __ldcg(wst + (size_t)sl * TILE_F + e * THREADS + tid) : 0.f;
+      float sum = 0.f;
+#pragma unroll
+      for (int sl = 0; sl < SLOTS; ++sl)
+        if (sl < ncon) sum += v[sl];
+      const int pj = e >> 2, r = e & 3;
+      const int col = 8 * (pj % NT) + 2 * q + (r & 1);
+      const int row = (pj / NT) * 64 + warp * 16 + g + ((r >> 1) * 8);
+      if (t0 + col < m) out[(long)(t0 + col) * n + n0 + row] = __float2bfloat16(sum);
+    }
+    __syncthreads();
+    if (tid == 0) {
+      if (atomicAdd(&cnt[tiles + tile], 1) == ncon - 1) {
+        cnt[tile] = 0;
+        cnt[tiles + tile] = 0;
+      }
+    }
+  }
+}
+
+static int g_dbg = 0;
+template <int P, int BT, int STAGES, int SLOTS>
+void launch_qkv_sk_t(const torch::Tensor& x, const torch::Tensor& w, torch::Tensor& out, torch::Tensor& ws,
+                     torch::Tensor& cnt, int grid) {
+  constexpr int BN_T = 64 * P;
+  const int m = x.size(0), k = x.size(1), n = w.size(0);
+  TORCH_CHECK(k == 8192 && n % BN_T == 0, "qkv_sk: shape");
+  const int mt = (m + BT - 1) / BT;
+  const int tiles = (n / BN_T) * mt;
+  TORCH_CHECK((long)ws.numel() >= (long)tiles * SLOTS * BN_T * BT && cnt.numel() >= 2 * tiles, "qkv_sk: ws");
+  TORCH_CHECK(((long)tiles * 128 + grid - 1) / grid <= 128, "qkv_sk: >2 segments");
+  const long U = (long)tiles * 128;
+  TORCH_CHECK((128L * grid + U - 1) / U + 1 <= SLOTS, "qkv_sk: slots");
+  const int smem = STAGES * (BN_T + BT) * 64 * 2 + 128;
+  CUtensorMap w_map = make_tma_2d(w.data_ptr(), n, k, k, BN_T);
+  CUtensorMap x_map = make_tma_2d(x.data_ptr(), m, k, (int)x.stride(0), BT);
+  auto kern = qkv_sk<P, BT, STAGES, SLOTS>;
+  C10_CUDA_CHECK(cudaFuncSetAttribute(reinterpret_cast<const void*>(kern), cudaFuncAttributeMaxDynamicSharedMemorySize, smem));
+  kern<<<grid, THREADS, smem, at::cuda::getCurrentCUDAStream().stream()>>>(
+      w_map, x_map, static_cast<bf16*>(out.data_ptr()), static_cast<float*>(ws.data_ptr()),
+      static_cast<int*>(cnt.data_ptr()), m, n, mt, tiles, grid, g_dbg);
+  C10_CUDA_CHECK(cudaGetLastError());
+}
+
+void launch_qkv_sk(torch::Tensor x, torch::Tensor w, torch::Tensor out, torch::Tensor ws, torch::Tensor cnt,
+                   int64_t p, int64_t bt, int64_t stages, int64_t grid, int64_t dbg) {
+  g_dbg = (int)dbg;
+  TORCH_CHECK(bt == 128, "qkv_sk: bt");
+  if (p == 2 && stages == 4) { launch_qkv_sk_t<2, 128, 4, 10>(x, w, out, ws, cnt, (int)grid); return; }
+  if (p == 2 && stages == 5) { launch_qkv_sk_t<2, 128, 5, 10>(x, w, out, ws, cnt, (int)grid); return; }
+  if (p == 1 && stages == 6) { launch_qkv_sk_t<1, 128, 6, 10>(x, w, out, ws, cnt, (int)grid); return; }
+  TORCH_CHECK(false, "qkv_sk: config not compiled");
+}

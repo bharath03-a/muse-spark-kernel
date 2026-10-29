@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-opt49sui/run/worker.py", line 423, in child_main
+    send(_setup_op(msg, module, state, sync, perf))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-opt49sui/run/worker.py", line 322, in _setup_op
+    state["prep"] = prepare(weights)
+                    ^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-opt49sui/run/submission.py", line 354, in prepare
+    "routing": FusedMuseSparkRouting(weights["router_bias"]),
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: FusedMuseSparkRouting.__init__() missing 1 required positional argument: 'route_scale'

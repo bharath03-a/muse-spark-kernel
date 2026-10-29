@@ -1,0 +1,79 @@
+r15 cutlass headers: /opt/sglang/lib/python3.12/site-packages/flashinfer/data/cutlass/include v4.5.0 sm90sk=True; /opt/sglang/lib/python3.12/site-packages/deep_gemm/include v4.2.1 sm90sk=True; /opt/sglang/lib/python3.12/site-packages/tilelang/3rdparty/cutlass/include v4.1.0 sm90sk=True; /opt/cutlass/include v4.8.0 sm90sk=True
+zip build 38.9s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 27
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 31
+qkv zip m=1 id 37: 20.74 us (base id 31: 15.17)
+qkv zip m=1 id 38: 26.62 us (base id 31: 15.17)
+qkv zip m=1 id 25: 15.07 us (base id 31: 15.17)
+qkv zip m=1 id 39: 15.01 us (base id 31: 15.17)
+qkv zip m=1 id 40: 20.32 us (base id 31: 15.17)
+qkv zip m=1 id 44: 15.04 us (base id 31: 15.17)
+qkv zip m=8 id 37: 21.44 us (base id 31: 15.49)
+qkv zip m=8 id 38: 26.66 us (base id 31: 15.49)
+qkv zip m=8 id 25: 15.49 us (base id 31: 15.49)
+qkv zip m=8 id 39: 16.00 us (base id 31: 15.49)
+qkv zip m=8 id 40: 21.44 us (base id 31: 15.49)
+qkv zip m=8 id 44: 15.62 us (base id 31: 15.49)
+qkv zip picked m=1 id 39, m=2-8 id 31
+zip prepare 39.2s
+r9 build 37.3s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.77 id3=18.51 -> id3
+r9 prepare 37.3s picks={('qkv_gate', 128): 3}
+r15 cp10 prepare done 120.8s
+r15 env torch=2.14.1+cu130 cuda=13.0 gpu=NVIDIA H200 sms=132 cpus=192 triton=3.8.0 py=3.12.3
+r15 CUDA_HOME=/usr/local/cuda nvcc_exists=True ver=#define CUDA_VERSION 13000 toolkit_cublasLt_h=True
+r15 lt build 18.8s cublasLt version 130101
+r15 enum pid=0: 6245 valid configs, timing 120
+r15 qkv_gate m=128: cands=140 (heur 20) ok=140 scr_best_heur=19.84 scr_best_enum=34.21 | cp10=18.53 mm=21.41 lt0=20.29 lt1=20.32 lt2=20.61 lt3=20.54 lt4=20.48 | lt0:Ha66t80s35k1r0z0c7w0.88 lt1:Ha66t92s35k1r0z0c7w0.73 lt2:Ha66t17s35k3r2z0c4w0.27 lt3:Ha66t28s35k4r2z0c4w0.18 lt4:Ha66t15s35k1r0z0c7w0.55
+r15 qkv_gate m=128 lt0 det10=True relL2=1.66e-03
+r15 enum pid=6: 6245 valid configs, timing 120
+r15 qkv_gate m=256: cands=135 (heur 15) ok=135 scr_best_heur=22.11 scr_best_enum=40.26 | cp10=23.17 mm=23.30 lt0=22.34 lt1=23.49 lt2=23.62 lt3=24.61 lt4=25.06 | lt0:Ha66t134s35k1r0z0c9w0.88 lt1:Ha66t27s35k1r0z0c9w0.73 lt2:Ha66t143s35k1r0z0c9w0.82 lt3:Ha66t184s35k4r2z0c5w0.24 lt4:Ha66t164s35k1r0z0c9w0.64
+r15 qkv_gate m=256 lt0 det10=True relL2=1.66e-03
+r15 enum pid=12: 6245 valid configs, timing 120
+r15 o m=128: cands=128 (heur 8) ok=128 scr_best_heur=10.98 scr_best_enum=15.30 | cp10=11.07 mm=10.94 lt0=11.30 lt1=11.90 lt2=11.62 lt3=11.55 lt4=11.62 | lt0:Ha66t18s35k1r0z0c5w0.97 lt1:Ha66t183s35k1r0z0c7w0.86 lt2:Ha66t17s35k1r0z0c3w0.97 lt3:Ha66t135s35k1r0z0c4w0.78 lt4:Ha66t193s35k1r0z0c7w0.79
+r15 o m=128 lt0 det10=True relL2=1.66e-03
+r15 enum pid=18: 6245 valid configs, timing 120
+r15 o m=256: cands=128 (heur 8) ok=128 scr_best_heur=12.74 scr_best_enum=27.52 | cp10=13.02 mm=12.93 lt0=13.12 lt1=13.28 lt2=13.89 lt3=13.92 lt4=13.82 | lt0:Ha66t20s35k1r0z0c3w0.97 lt1:Ha66t21s35k1r0z0c5w0.97 lt2:Ha66t458s35k1r0z0c3w0.98 lt3:Ha66t184s35k1r0z0c7w0.86 lt4:Ha66t17s35k1r0z0c3w1.94
+r15 o m=256 lt0 det10=True relL2=1.66e-03
+r15 enum pid=24: 6245 valid configs, timing 120
+r15 pooler m=128: cands=135 (heur 15) ok=135 scr_best_heur=24.48 scr_best_enum=36.77 | cp10=25.60 mm=29.57 lt0=24.93 lt1=25.41 lt2=25.54 lt3=26.43 lt4=27.90 | lt0:Ha66t134s35k1r0z0c7w0.79 lt1:Ha66t143s35k1r0z0c7w0.71 lt2:Ha66t124s35k1r0z0c7w0.86 lt3:Ha66t27s35k1r0z0c7w0.65 lt4:Ha66t21s35k4r2z0c5w0.24
+r15 pooler m=128 lt0 det10=True relL2=1.66e-03
+r15 enum pid=30: 6245 valid configs, timing 120
+r15 pooler m=256: cands=132 (heur 12) ok=132 scr_best_heur=30.40 scr_best_enum=53.44 | cp10=31.04 mm=35.87 lt0=30.75 lt1=32.54 lt2=32.64 lt3=33.82 lt4=33.98 | lt0:Ha66t183s35k1r0z0c9w0.88 lt1:Ha66t135s35k1r0z0c7w0.79 lt2:Ha66t193s35k1r0z0c9w0.79 lt3:Ha66t196s35k1r0z0c9w0.76 lt4:Ha66t20s35k2r2z0c3w0.48
+r15 pooler m=256 lt0 det10=True relL2=1.66e-03
+r15 enum pid=36: 6245 valid configs, timing 120
+r15 unpooler m=128: cands=132 (heur 12) ok=132 scr_best_heur=23.49 scr_best_enum=36.54 | cp10=23.46 mm=23.52 lt0=23.84 lt1=24.51 lt2=24.51 lt3=24.70 lt4=24.93 | lt0:Ha66t18s35k1r0z0c5w0.97 lt1:Ha66t28s35k1r0z0c4w0.65 lt2:Ha66t193s35k1r0z0c7w0.79 lt3:Ha66t200s35k1r0z0c7w0.71 lt4:Ha66t135s35k1r0z0c4w0.78
+r15 unpooler m=128 lt0 det10=True relL2=1.66e-03
+r15 enum pid=42: 6245 valid configs, timing 120
+r15 unpooler m=256: cands=128 (heur 8) ok=128 scr_best_heur=28.26 scr_best_enum=52.26 | cp10=28.22 mm=28.16 lt0=28.67 lt1=31.04 lt2=31.14 lt3=30.94 lt4=34.24 | lt0:Ha66t20s35k1r0z0c3w0.97 lt1:Ha66t184s35k1r0z0c7w0.86 lt2:Ha66t21s35k1r0z0c5w0.97 lt3:Ha66t458s35k1r0z0c3w0.98 lt4:Ha66t197s35k1r0z0c7w0.74
+r15 unpooler m=256 lt0 det10=True relL2=1.66e-03
+r15 enum pid=48: 6245 valid configs, timing 60
+r15 router-hi m=128: cands=76 (heur 16) ok=76 scr_best_heur=11.49 scr_best_enum=18.43 | cp10=11.01 mm2=20.64 lt0=11.87 lt1=11.71 lt2=11.81 lt3=12.29 lt4=12.99 | lt0:Ha66t13s35k6r2z0c9w0.12 lt1:Ha66t12s35k6r2z0c7w0.12 lt2:Ha66t15s35k6r2z0c7w0.06 lt3:Ha66t27s35k6r2z0c7w0.05 lt4:Ha66t17s35k6r2z0c4w0.03
+r15 enum pid=54: 6245 valid configs, timing 60
+r15 router-lo(beta1) m=128: cands=76 (heur 16) ok=76 scr_best_heur=12.03 scr_best_enum=18.98 | lt0=12.06 lt1=12.00 lt2=12.06 lt3=13.31 lt4=12.61 | lt0:Ha66t13s35k6r2z0c9w0.12 lt1:Ha66t12s35k6r2z0c7w0.12 lt2:Ha66t15s35k6r2z0c7w0.06 lt3:Ha66t17s35k6r2z0c4w0.03 lt4:Ha66t27s35k6r2z0c7w0.05
+r15 enum pid=60: 6245 valid configs, timing 60
+r15 router-cat512 m=128: cands=76 (heur 16) ok=76 scr_best_heur=12.38 scr_best_enum=27.62 | lt0=12.32 lt1=13.28 lt2=13.31 lt3=13.41 lt4=13.50 | lt0:Ha66t15s35k6r2z0c7w0.12 lt1:Ha66t12s35k3r2z0c7w0.24 lt2:Ha66t17s35k6r2z0c4w0.06 lt3:Ha66t13s35k3r2z0c9w0.24 lt4:Ha66t18s35k6r2z0c7w0.06
+r15 router m=128 final: cp10=10.85 mm2=20.29 lt2=19.23 ltcat=14.46 | lt2 det10=True relL2=2.82e-06 ltcat det10=True relL2=2.82e-06
+r15 enum pid=66: 6245 valid configs, timing 60
+r15 router-hi m=256: cands=76 (heur 16) ok=76 scr_best_heur=12.13 scr_best_enum=28.00 | cp10=13.47 mm2=21.44 lt0=12.45 lt1=12.45 lt2=13.38 lt3=13.18 lt4=13.12 | lt0:Ha66t15s35k6r2z0c7w0.12 lt1:Ha66t27s35k6r2z0c8w0.09 lt2:Ha66t13s35k3r2z0c9w0.24 lt3:Ha66t12s35k3r2z0c7w0.24 lt4:Ha66t17s35k6r2z0c7w0.06
+r15 enum pid=72: 6245 valid configs, timing 60
+r15 router-lo(beta1) m=256: cands=76 (heur 16) ok=76 scr_best_heur=12.45 scr_best_enum=28.45 | lt0=12.74 lt1=13.73 lt2=12.93 lt3=13.76 lt4=13.92 | lt0:Ha66t15s35k6r2z0c7w0.12 lt1:Ha66t12s35k3r2z0c7w0.24 lt2:Ha66t27s35k6r2z0c8w0.09 lt3:Ha66t17s35k6r2z0c7w0.06 lt4:Ha66t18s35k6r2z0c9w0.06
+r15 enum pid=78: 6245 valid configs, timing 60
+r15 router-cat512 m=256: cands=76 (heur 16) ok=76 scr_best_heur=13.44 scr_best_enum=29.28 | lt0=13.79 lt1=14.08 lt2=14.21 lt3=14.50 lt4=15.07 | lt0:Ha66t27s35k4r2z0c9w0.18 lt1:Ha66t15s35k3r2z0c7w0.24 lt2:Ha66t17s35k6r2z0c7w0.12 lt3:Ha66t18s35k6r2z0c9w0.12 lt4:Ha66t400s35k6r2z0c9w0.12
+r15 router m=256 final: cp10=13.66 mm2=21.50 lt2=20.64 ltcat=15.87 | lt2 det10=True relL2=2.80e-06 ltcat det10=True relL2=3.23e-06
+r15 cutlass build bf16: ok 50.8s 
+r15 cutlass build f32: ok 49.5s 
+r15 cut qkv_gate m=256 mode3/2/1 rc=-2
+r15 cut qkv_gate m=256: cp10=23.71 m0s1z1=33.41 m1s1z1=47.39 m3s1z1=32.99 m3s1z2=35.07 m2s2z1=34.69 m2s3z1=31.78 m2s4z1=38.40
+r15 cut qkv_gate m=128 mode3/2/1 rc=-2
+r15 cut qkv_gate m=128: cp10=18.82 m0s1z1=37.70 m1s1z1=46.85 m3s1z1=37.54 m3s1z2=37.57 m2s2z1=34.40 m2s3z1=30.88 m2s4z1=31.36
+r15 cut o m=256 mode3/2/1 rc=-2
+r15 cut o m=256: cp10=13.44 m0s1z1=16.03 m1s1z1=15.68 m3s1z1=18.27 m3s1z2=18.30 m2s2z1=24.32 m2s3z1=30.30 m2s4z1=34.40
+r15 cut pooler m=256 mode3/2/1 rc=-2
+r15 cut pooler m=256: cp10=31.01 m0s1z1=38.14 m1s1z1=48.22 m3s1z1=37.76 m3s1z2=39.81 m2s2z1=36.64 m2s3z1=45.57 m2s4z1=43.58
+r15 cut router mode3/2/1 BAD relL2=1.29e+19
+r15 cut router m=256 (2 gemms, beta1): cp10=13.70 m0s1z1=88.10 m1s1z1=90.14 m3s1z1=89.41 m3s1z2=90.02 m2s2z1=63.49 m2s3z1=55.81 m2s4z1=53.38
+r15 probe 23.6s, prepare total 144.3s

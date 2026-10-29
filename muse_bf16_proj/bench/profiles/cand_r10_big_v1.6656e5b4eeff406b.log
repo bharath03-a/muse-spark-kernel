@@ -1,0 +1,25 @@
+zip build 30.8s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 27
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 31
+zip prepare 31.1s
+r9 build 33.9s
+r9 max clusters: id3(1, 128, 3, 8, 1)=39 id4(2, 128, 3, 6, 1)=39 id6(2, 128, 2, 6, 1)=66 id9(2, 128, 4, 6, 1)=30 id13(1, 256, 3, 5, 1)=39 id15(1, 128, 2, 8, 1)=66 id16(1, 128, 1, 8, 1)=132 id17(1, 256, 2, 5, 1)=66 id19(1, 256, 1, 5, 1)=132 id20(1, 128, 3, 4, 2)=39 id21(1, 128, 1, 4, 2)=132 id23(2, 128, 4, 3, 2)=30
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.94 id3=21.49 id3h=21.50 id20=20.08 id20h=20.11 id9h=22.72 id23h=24.98 -> id20
+r9 bench qkv_gate m=256 (raw us, ~4 graph overhead): cp8=23.63 id13=29.63 id13h=29.71 id4h=26.99 -> cp8
+r9 bench pooler m=128 (raw us, ~4 graph overhead): cp8=25.54 id15=26.94 id15h=27.15 -> cp8
+r9 bench pooler m=256 (raw us, ~4 graph overhead): cp8=30.40 id17h=37.89 -> cp8
+r9 bench unpooler m=128 (raw us, ~4 graph overhead): cp8=23.78 id16h=25.97 id21h=25.02 -> cp8
+r9 bench unpooler m=256 (raw us, ~4 graph overhead): cp8=27.79 id19h=36.38 -> cp8
+r9 bench o m=128 (raw us, ~4 graph overhead): cp8=11.34 id16=12.54 id16h=12.56 id21=11.97 id21h=11.97 id6h=13.47 -> cp8
+r9 bench o m=256 (raw us, ~4 graph overhead): cp8=13.34 id19=15.65 id19h=15.52 -> cp8
+r9 diag qkv_gate m=128 id3h blocks=108: mode0=21.49 mode1=19.01 mode2=21.14 | med skew=0.00 first=1.25 main=14.00 bar1=0.50 red=1.25 store=0.50 | max skew=0.00 first=1.75 main=14.25 bar1=1.00 red=1.50 store=0.75 | span=16.50
+r9 diag qkv_gate m=128 id9h blocks=72: mode0=22.67 mode1=18.94 mode2=22.54 | med skew=0.00 first=1.50 main=13.75 bar1=0.50 red=2.25 store=0.50 | max skew=0.00 first=2.00 main=14.25 bar1=1.00 red=2.50 store=0.75 | span=17.75
+r9 diag qkv_gate m=256 id13h blocks=108: mode0=30.03 mode1=23.63 mode2=29.44 | med skew=0.00 first=1.25 main=20.75 bar1=0.50 red=2.00 store=0.75 | max skew=0.25 first=1.75 main=21.25 bar1=1.50 red=2.50 store=1.00 | span=25.25
+r9 diag qkv_gate m=256 id4h blocks=108: mode0=27.07 mode1=26.21 mode2=26.78 | med skew=0.25 first=1.25 main=18.00 bar1=0.50 red=2.00 store=0.75 | max skew=0.25 first=1.75 main=18.50 bar1=1.25 red=2.50 store=0.75 | span=21.75
+r9 diag o m=128 id16h blocks=128: mode0=12.51 mode1=11.07 mode2=12.54 | med skew=0.00 first=1.50 main=6.25 bar1=0.00 red=0.00 store=0.75 | max skew=0.25 first=2.00 main=6.50 bar1=0.25 red=0.25 store=1.00 | span=7.50
+r9 diag o m=128 id6h blocks=128: mode0=13.50 mode1=12.98 mode2=13.34 | med skew=0.00 first=2.00 main=5.25 bar1=0.50 red=1.50 store=0.75 | max skew=0.25 first=2.25 main=5.50 bar1=1.00 red=1.50 store=1.00 | span=8.50
+r9 diag o m=256 id19h blocks=128: mode0=15.73 mode1=12.61 mode2=15.65 | med skew=0.25 first=1.25 main=8.75 bar1=0.00 red=0.00 store=1.50 | max skew=0.25 first=1.75 main=9.25 bar1=0.25 red=0.25 store=1.50 | span=10.75
+r9 diag pooler m=128 id15h blocks=128: mode0=27.49 mode1=24.93 mode2=27.17 | med skew=0.00 first=1.50 main=20.50 bar1=0.50 red=0.75 store=0.75 | max skew=0.00 first=2.00 main=20.75 bar1=0.75 red=1.00 store=0.75 | span=22.75
+r9 prepare 34.2s picks={('qkv_gate', 128): (20, 0)}

@@ -1,0 +1,35 @@
+zip build 38.7s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 137
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 121
+qkv zip variant id 39 disabled: ValueError: accuracy at m=1
+qkv zip m=1 id 110: 14.43 us (base id 121: 14.50)
+qkv zip m=1 id 31: 15.17 us (base id 121: 14.50)
+qkv zip m=1 id 44: 15.23 us (base id 121: 14.50)
+qkv zip m=1 id 25: 15.26 us (base id 121: 14.50)
+qkv zip m=8 id 110: 14.53 us (base id 121: 14.53)
+qkv zip m=8 id 31: 15.52 us (base id 121: 14.53)
+qkv zip m=8 id 44: 15.52 us (base id 121: 14.53)
+qkv zip m=8 id 25: 15.65 us (base id 121: 14.53)
+qkv zip picked m=1 id 121, m=2-8 id 121
+zip prepare 39.0s
+r9 build 36.8s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.51 id3=18.45 -> id3
+r9 prepare 36.8s picks={('qkv_gate', 128): 3}
+r15 lt build 18.4s cublasLt 130101
+r15 qkv_gate m=128 cands=20 (raw us) cp10=18.50 c12=20.06 c14=20.10 c2=20.38 best=a66t92s35k1r0z0c7 -> cp10
+r15 qkv_gate m=256 cands=15 (raw us) cp10=23.36 c9=22.75 c0=23.62 c11=23.58 best=a66t134s35k1r0z0c9 -> lt
+r15 o m=128 cands=8 (raw us) cp10=11.01 c0=11.23 c1=11.39 c4=11.58 best=a66t18s35k1r0z0c5 -> cp10
+r15 o m=256 cands=8 (raw us) cp10=12.80 c0=12.99 c4=13.76 c1=13.31 best=a66t20s35k1r0z0c3 -> cp10
+r15 pooler m=128 cands=15 (raw us) cp10=25.25 c10=24.80 c9=25.25 c8=25.41 best=a66t134s35k1r0z0c7 -> lt
+r15 pooler m=256 cands=12 (raw us) cp10=30.30 c8=30.37 c0=33.12 c3=32.03 best=a66t183s35k1r0z0c9 -> cp10
+r15 unpooler m=128 cands=12 (raw us) cp10=23.33 c4=24.06 c10=24.06 c11=24.38 best=a66t28s35k1r0z0c4 -> cp10
+r15 unpooler m=256 cands=8 (raw us) cp10=27.94 c0=28.00 c2=30.24 c1=30.18 best=a66t20s35k1r0z0c3 -> cp10
+r15 prepare 18.9s total 136.6s picks=qkv_gate256,pooler128
+slice m2: old 9.54 new 8.99
+slice m4: old 11.65 new 9.06
+slice m8: old 9.63 new 9.18
+slice mma path enabled m 2-8
+cp14 whole-layer prepare seconds: 212.4

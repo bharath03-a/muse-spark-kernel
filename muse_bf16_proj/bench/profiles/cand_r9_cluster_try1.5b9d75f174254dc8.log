@@ -1,0 +1,17 @@
+zip build 36.6s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 27
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 31
+zip prepare 36.9s
+r9 build 40.0s
+r9 max clusters: id1(2, 128, 5, 6)=22 id2(3, 128, 8, 5)=15 id3(1, 128, 3, 8)=39 id4(2, 128, 3, 6)=39 id5(2, 256, 5, 4)=22 id6(2, 128, 2, 6)=66 id7(2, 256, 2, 4)=66 id8(2, 64, 2, 8)=66 id9(2, 128, 4, 6)=30 id10(2, 128, 1, 6)=132
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.61 id1=21.73 id2=24.43 id3=18.56 id9=20.90 -> id3
+r9 bench qkv_gate m=256 (raw us, ~4 graph overhead): cp8=23.49 id4=24.99 id5=30.35 -> cp8
+r9 bench pooler m=128 (raw us, ~4 graph overhead): cp8=25.46 id4=27.46 id8=30.40 -> cp8
+r9 bench pooler m=256 (raw us, ~4 graph overhead): cp8=30.22 id6=34.29 -> cp8
+r9 bench unpooler m=128 (raw us, ~4 graph overhead): cp8=24.30 id6=25.42 -> cp8
+r9 bench unpooler m=256 (raw us, ~4 graph overhead): cp8=28.05 id7=31.46 id10=31.23 -> cp8
+r9 bench o m=128 (raw us, ~4 graph overhead): cp8=11.14 id6=13.58 -> cp8
+r9 bench o m=256 (raw us, ~4 graph overhead): cp8=13.04 id7=16.83 id10=13.58 -> cp8
+r9 prepare 40.1s picks={('qkv_gate', 128): 3}

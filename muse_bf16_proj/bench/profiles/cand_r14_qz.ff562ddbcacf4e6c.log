@@ -1,0 +1,23 @@
+zip build 33.4s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 27
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 31
+qkv zip m=1 id 37: 20.48 us (base id 31: 15.14)
+qkv zip m=1 id 38: 26.50 us (base id 31: 15.14)
+qkv zip m=1 id 25: 15.04 us (base id 31: 15.14)
+qkv zip m=1 id 39: 14.82 us (base id 31: 15.14)
+qkv zip m=1 id 40: 19.87 us (base id 31: 15.14)
+qkv zip m=1 id 44: 15.20 us (base id 31: 15.14)
+qkv zip m=8 id 37: 21.09 us (base id 31: 15.46)
+qkv zip m=8 id 38: 27.04 us (base id 31: 15.46)
+qkv zip m=8 id 25: 15.49 us (base id 31: 15.46)
+qkv zip m=8 id 39: 15.94 us (base id 31: 15.46)
+qkv zip m=8 id 40: 21.63 us (base id 31: 15.46)
+qkv zip m=8 id 44: 15.62 us (base id 31: 15.46)
+qkv zip picked m=1 id 39, m=2-8 id 31
+zip prepare 33.7s
+r9 build 32.0s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.58 id3=18.64 -> id3
+r9 prepare 32.0s picks={('qkv_gate', 128): 3}

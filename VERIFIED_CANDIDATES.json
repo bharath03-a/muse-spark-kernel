@@ -1,0 +1,186 @@
+[
+  {
+    "problem": "muse_attention_decode",
+    "source": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_decode/candidate_openkernels_attention.py",
+    "file_sha256": "c2f63c05f8283c9cb3da85d026b74e6280fb704eef5ca5170de9d0d89253705d",
+    "passing_check": "59cbe07c5b5941a3",
+    "check_score_us": 2058.318434911071,
+    "scored_job": "c81dff9234ee4ecd",
+    "scored_result_verified": true,
+    "scored_result_us": 2029.2726616027728
+  },
+  {
+    "problem": "muse_decode_layer",
+    "source": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/candidate_dense_cp14.py",
+    "file_sha256": "be77ac4624536e9ca1a874f7bb1d91943d9cfb47664079c1b555769d78d2abe4",
+    "passing_check": "54f2a41cdd424d40",
+    "check_score_us": 17275.38962976487,
+    "scored_job": "22316a25039248e1",
+    "scored_result_verified": true,
+    "scored_result_us": 17369.22249813601
+  },
+  {
+    "problem": "muse_decode_layer",
+    "source": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/candidate_openkernels_attention.py",
+    "file_sha256": "05fbf44535e439cdde04f8dce876f41680d81efb217e87a05c71210773e6e16d",
+    "passing_check": "f1e076dca5db4640",
+    "check_score_us": 16527.873969753382,
+    "scored_job": "40b62805457b4721",
+    "scored_result_verified": true,
+    "scored_result_us": 16527.049909426652
+  },
+  {
+    "problem": "muse_moe_w4a16",
+    "source": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/candidate_moe_full_strict_gk.py",
+    "file_sha256": "bea9abbe6dbcb2d6b17982c9b5588e4dcd3e14c4cba3ac82b669f37475eff453",
+    "passing_check": "6afd2a4709f54525",
+    "check_score_us": 7763.219336034839,
+    "scored_result_verified": true,
+    "scored_job": "81277f7dc1c04131",
+    "scored_result_us": 7760.355300772296
+  },
+  {
+    "problem": "muse_decode_layer",
+    "source": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/candidate_cp14_attention_strict_moe.py",
+    "file_sha256": "6e9384e363de3a56e9944ab101f82e2f0cba86b3396d488f205557ccc9cb3dae",
+    "passing_check": "56c0b49b63f542d9",
+    "check_score_us": 14177.520545309382,
+    "scored_result_verified": true,
+    "scored_job": "7e7f05d4f8ed46a2",
+    "scored_result_us": 13940.155673071418
+  },
+  {
+    "problem": "muse_prefill_layer",
+    "source": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_layer/candidate_prefill_w13_mixed.py",
+    "file_sha256": "9ea29dfdd62bf352718e732599c0b547393d6d94c159dea5ef1eacc94a750538",
+    "passing_check": "3f290bf89ce445cb",
+    "check_score_us": 273675.1172703312,
+    "scored_job": "dcf056bc66d54bde",
+    "scored_result_verified": true,
+    "scored_result_us": 274396.62723699614
+  },
+  {
+    "problem": "muse_moe_w4a16",
+    "source": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/research_moe_grid_constant.py",
+    "file_sha256": "b8d304a841189a8e382f6a8af402b1bdbdbbcb43167c9a70578aa66172912a9f",
+    "passing_check": "041ed31d40cf4296",
+    "check_score_us": 7686.962802981974,
+    "scored_job": "91e2025666e54aec",
+    "scored_result_verified": true,
+    "notes": "Three fresh paired seeds show consistent ~3% ring gain; aggregate ~0.95% check gain is below judge minimum uncertainty. Scored run will remeasure; preserve prior default until result.",
+    "scored_result_us": 7675.941888410299
+  },
+  {
+    "problem": "muse_prefill_layer",
+    "source": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_layer/candidate_prefill_grid_constant.py",
+    "file_sha256": "d19a338b3e328aa2ad2fd1922fe399f9c95432158e6d21e9112d5fea07919f9a",
+    "passing_check": "4356078995734993",
+    "check_score_us": 268591.13502065087,
+    "scored_job": "0d00b0439c5d4a54",
+    "scored_result_verified": true,
+    "scored_result_us": 268118.1032682949
+  },
+  {
+    "problem": "muse_attention_decode",
+    "source": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_decode/candidate_openkernels_v75_f16pv.py",
+    "file_sha256": "3c1e0ec3228aec602d791a9f48201c36158e0828936fac37442c0e2be273d0dd",
+    "scored_result_verified": true,
+    "passing_check": "86386fd15bdb45fe",
+    "check_score_us": 1937.8276211653765,
+    "scored_job": "7da917a2ea564131",
+    "scored_result_us": 1942.8,
+    "notes": "Promoted to submission.py; prior default backed up as submission_before_v75_7da917a2ea564131.py"
+  },
+  {
+    "problem": "muse_decode_layer",
+    "source": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/candidate_cp14_v75_f16_grid_moe.py",
+    "file_sha256": "cd20c103af93555bf5816b9b0998c17e07430a993db09c834241700a67fed1a1",
+    "scored_result_verified": false,
+    "passing_check": "797d533547674a39",
+    "check_score_us": 14044.936565737993
+  },
+  {
+    "problem": "muse_attention_decode",
+    "source": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_decode/candidate_openkernels_v75.py",
+    "file_sha256": "83cec45121e28abeb898a539dcb358714b63b5cd5c2040f63a9c015619abe3d2",
+    "scored_result_verified": false,
+    "passing_check": "7a50c7bf7ca043e0",
+    "check_score_us": 1910.5,
+    "notes": "FP8-PV; CI overlaps f16pv check, modest precision margin (0.1446 vs 0.150). Not submitted."
+  },
+  {
+    "problem": "muse_moe_w4a16",
+    "source": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/research_moe_v56_strict.py",
+    "file_sha256": "89642e3bc6e1eba111a3f561c296e46d4fc52ca54cd34e9465b595f9fb93ca2b",
+    "passing_check": "97a2667c85984f5b",
+    "check_score_us": 6822.054976846635,
+    "scored_job": "4a60fa38515e4581",
+    "scored_result_verified": true,
+    "scored_result_us": 6827.256923196509,
+    "notes": "upstream e6b48c8 v56 + strict BF16 boundaries, frozen dispatch; promoted"
+  },
+  {
+    "problem": "muse_decode_layer",
+    "source": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/candidate_cp14_v75_f16_wx_moe.py",
+    "file_sha256": "72d6a1638ddbc7df5ba1779ba0c0ac89a6edfeca11b90b5e81141616d0eb84bf",
+    "passing_check": "79366ecf17244d59",
+    "check_score_us": 13363.093851246538,
+    "scored_job": "2f8b9a4afddc43e0",
+    "scored_result_verified": true,
+    "scored_result_us": 13269.357762114632,
+    "notes": "promoted"
+  },
+  {
+    "problem": "muse_decode_layer",
+    "source": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/candidate_cp14_v75_f16_v56moe.py",
+    "file_sha256": "31d5bc391b3a093aa5aa11dcfacce33e63ba7091ac2c07ae20d29106001b759f",
+    "passing_check": "cdf34cb4f1394eec",
+    "check_score_us": 12675.562218957708,
+    "scored_job": "a6986c85974540a5",
+    "scored_result_verified": true,
+    "scored_result_us": 12714.48157327826,
+    "notes": "promoted"
+  },
+  {
+    "problem": "muse_decode_layer",
+    "source": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/candidate_cp14_v81_minimal_v56moe.py",
+    "file_sha256": "6ba94a299dc420039cbef2d39b9418598781622209301e0ca3aa952b15870999",
+    "scored_result_verified": false,
+    "notes": "Passed but slower than newer v35wx scored12484.08; no scored rollout.",
+    "passing_check": "2a18a8f8184b4924",
+    "check_score_us": 12574.670722785668
+  },
+  {
+    "problem": "muse_decode_layer",
+    "source": "muse_decode_layer/candidate_v35_wxpin32.py",
+    "sha256": "197896a0b019aad5c5cb3429114c06e4eb3a983127b62bbcd76568aca08cbfdf",
+    "base": "upstream openkernels e6b48c8 dl v35 (unmodified check 41d729f88b184002 12,540 us)",
+    "change": "DL_PIN M32 -> wx NCW16 WXG2 UDESC, margin 0 (was fs f1s3)",
+    "check": "f8794cd650f845d5 12,463.6 us 1.8149x",
+    "scored": "5ab92e7e91d64475 12,484.1 us 1.8119x rank 210",
+    "previous_default": "candidate_cp14_v75_f16_v56moe.py a6986c85974540a5 12,714 us; backup muse_decode_layer/submission_before_v35wx_5ab92e7e91d64475.py"
+  },
+  {
+    "problem": "muse_decode_layer",
+    "source": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/candidate_v35_wxpin32.py",
+    "file_sha256": "197896a0b019aad5c5cb3429114c06e4eb3a983127b62bbcd76568aca08cbfdf",
+    "passing_check": "f8794cd650f845d5",
+    "scored_job": "5ab92e7e91d64475",
+    "scored_result_verified": true,
+    "scored_result_us": 12484.08000992514,
+    "withdrawn": true,
+    "withdrawal_reason": "Live MoE paths skip TASK103 BF16 gate/up/down rounding and effective norm boundary; replacing with strict candidate."
+  },
+  {
+    "problem": "muse_decode_layer",
+    "source": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/candidate_v35_wxpin32_strict.py",
+    "file_sha256": "8dc4c65ec5facdd12dfe345fab90a85ccd2324370c0a79a8f2a6d84cb0815140",
+    "scored_result_verified": true,
+    "notes": "StrictBF16 repair ofv35wx preservingnonMoEAST/PDL/glue;rawFSunreachable. Independentlypeerreviewed; defaultremainsstricta698.",
+    "passing_check": "474298298c394dd8",
+    "check_score_us": 12499.280783640212,
+    "scored_job": "5648767e139d441b",
+    "scored_result_us": 12501.64589376277,
+    "promoted": true
+  }
+]

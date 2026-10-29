@@ -1,0 +1,179 @@
+=== CuteDslRunner ===
+class CuteDslRunner(MoERunner):
+    """Translate activation and weight packs into a CuTe DSL runner input list."""
+
+    backend_key = "cute_dsl"
+    # CuteDSL has no in-kernel router; it only consumes pre-routed packs.
+    supported_routing_modes = (RoutingInputMode.PackedPrecomputed,)
+    supported_quant_variants = (
+        (QuantFormat.NVFP4, QuantFormat.NVFP4),
+        (QuantFormat.MXFP4, QuantFormat.MXFP8),
+        (QuantFormat.NVFP4, QuantFormat.BF16),
+    )
+    supported_activation_classes = (SwiGLU, GeGLUTanh, ReLU2, SiTU)
+
+    def _check_support(self) -> None:
+        super()._check_support()
+        if isinstance(self.config.activation, SiTU) and (
+            self.config.activation.clamp_limit is not None
+        ):
+            raise NotImplementedError(
+                f"{type(self).__name__} SiTU does not expose a separate clamp_limit."
+            )
+        if not self.config.finalize.do_finalize:
+            raise NotImplementedError(
+                f"{type(self).__name__} requires do_finalize=True."
+            )
+        if (
+            self.config.quant.pair != (QuantFormat.NVFP4, QuantFormat.NVFP4)
+            and self.config.quant.per_token_scale
+        ):
+            raise NotImplementedError(
+                f"{type(self).__name__} does not support per-token "
+                f"{self.config.quant.weight.name}×{self.config.quant.activation.name} "
+                "activation scales."
+            )
+        mxfp4_mxfp8 = self.config.quant.pair == (QuantFormat.MXFP4, QuantFormat.MXFP8)
+        if mxfp4_mxfp8 and isinstance(self.config.activation, SiTU):
+            raise NotImplementedError("CuTe-DSL W4A8 does not support SiTU.")
+        if mxfp4_mxfp8 and not self.config.finalize.use_fused_finalize:
+            raise NotImplementedError("CuTe-DSL W4A8 requires fused finalize.")
+        if mxfp4_mxfp8 and hasattr(self, "device"):
+            from ..utils import get_compute_capability
+
+            if get_compute_capability(self.device) == (10, 7):
+                raise NotImplementedError("CuTe-DSL W4A8 does not support SM107.")
+        self._assert_rubin_cute_dsl_available()
+
+    def _assert_rubin_cute_dsl_available(self) -> None:
+        """Reject SM107 when the installed CuTe DSL cannot provide its kernels.
+
+        The SM107 gather/activation-fusion and finalize-fusion kernels are built
+        on ``cutlass.utils.rubin_helpers``, which only exists from CuTe DSL 4.8.
+        Without it the kernel factories raise ``NotImplementedError`` when they
+        are first called -- that is, in the middle of ``forward()``, long after
+        this backend has been accepted as a candidate.
+
+        Declining here instead lets ``MoELayer`` drop the backend at build time,
+        so ``auto`` routes elsewhere and callers that enumerate backends see it
+        absent rather than failing mid-call.
+
+        The probe is arch-conditional on purpose: only the SM107 kernels need
+        ``rubin_helpers``, so an older DSL is perfectly usable on SM100/SM103.
+        """
+        from ..utils import get_compute_capability
+
+        # #4787 put this on CuteDslNvfp4Runner; #4793 unified that into
+        # CuteDslRunner. Keep the original blast radius -- only the NVFP4 path
+        # reaches the SM107 rubin kernels. MXFP4/W4A8 is already declined on
+        # SM107 above, and W4A16 gates itself via require_cute_dsl_arch().
+        if self.config.quant.pair != (QuantFormat.NVFP4, QuantFormat.NVFP4):
+            return
+
+        # check_support() is also exercised on runners built with __new__ and only
+        # a config attached (see TestMoERunnerSupport), so there may be no bound
+        # device. Nothing arch-specific can be decided in that case; the real
+        # dispatch path always sets device in __init__ before check_support().
+        device = getattr(self, "device", None)
+        if device is None:
+            return
+        if get_compute_capability(device) != (10, 7):
+            return
+
+        # ``cute_dsl.utils`` imports cutlass at module scope, so on a stack with no
+        # CuTe DSL installed the probe cannot be reached at all. Failing to import
+        # it is itself proof the SM107 kernels are unavailable, so decline rather
+        # than propagating an ImportError out of a support check.
+        #
+        # #4753 adds a cutlass-free ``cute_dsl.availability`` module and reroutes
+        # the package off ``utils``; once that lands this collapses to a plain
+        # ``from ..cute_dsl.availability import is_rubin_cute_dsl_available``,
+        # matching what release-v0.6.18 already does. The try/except is kept so
+        # this commit is correct whichever of the two merges first.
+        try:
+            from ..cute_dsl.utils import is_rubin_cute_dsl_available
+
+            rubin_dsl_available = is_rubin_cute_dsl_available()
+        except ImportError:
+            rubin_dsl_available = False
+
+        if not rubin_dsl_available:
+            raise NotImplementedError(
+                f"{type(self).__name__} requires CuTe DSL >= 4.8 on SM107 "
+                "(Rubin), which provides cutlass.utils.rubin_helpers; the "
+                "installed CuTe DSL does not have it."
+            )
+
+    def __init__(self, config: MoEConfig, device: torch.device):
+        super().__init__()
+        self.config = config
+        self.device = torch.device(device)
+        self._inner: Any = None
+        self.tuning_config = TuningConfig()
+
+    def _build(self) -> None:
+        """Create the shape-independent CuTe DSL tuning runner."""
+        from .cute_dsl.fused_moe import _cute_dsl_fused_moe_impl
+        from .cute_dsl.tuner import (
+            CuteDslFusedMoERunner,
+            CuteDslFusedMoEW4A16Runner,
+        )
+
+        experts = self.config.experts
+        routing = self.config.routing
+        num_local_experts = experts.local_num_experts or routing.num_experts
+        enable_pdl = (
+            True
+            if self.config.execution.enable_pdl is None
+            else self.config.execu
+=== CuteDslConfig ===
+@dataclass(frozen=True)
+class CuteDslConfig:
+    """CuteDSL FP4 backend for W4A4, W4A8, and W4A16.
+
+    The underlying CuteDSL kernel throws at launch on SM120/SM121/SM130.
+    """
+
+    @classmethod
+    def supported(cls, arch: int) -> bool:
+        # SM100, SM103 (Blackwell) + SM107 (Rubin) — tighten when CuteDSL adds more targets
+        return arch in (100, 103, 107)
+
+    @staticmethod
+    def prepare_weights(
+        w1_bf16,
+        w2_bf16,
+        *,
+        quant: QuantConfig = _NVFP4_NVFP4,
+        num_local_experts: int,
+        hidden_size: int,
+        intermediate_size: int,
+        activation: Optional[ActivationConfig] = None,
+        device=None,
+    ):
+        """Build the ``cute_dsl`` weight view from canonical BF16 weights.
+
+        Register the result with ``MoEWeightPack.prepare_for("cute_dsl", ...)``.
+        ``quant`` selects NVFP4×NVFP4, MXFP4×MXFP8, or NVFP4×BF16 (CuTe-DSL W4A16).
+        Defaults to NVFP4×NVFP4.
+        """
+        from .prepare import prepare_cute_dsl_weights
+
+        return prepare_cute_dsl_weights(
+            w1_bf16,
+            w2_bf16,
+            quant=quant,
+            num_local_experts=num_local_experts,
+            hidden_size=hidden_size,
+            intermediate_size=intermediate_size,
+            activation=activation,
+            device=device,
+        )
+
+    def __repr__(self) -> str:
+        return "CuteDslConfig()"
+
+=== CuteDsl functions ===
+cute_dsl_fused_moe sig: (x: torch.Tensor, x_sf: Optional[torch.Tensor], token_selected_experts: torch.Tensor, token_final_scales: torch.Tensor, w1_weight: torch.Tensor, w1_weight_sf: torch.Tensor, w1_alpha: torch.Tensor, fc2_input_scale: Optional[torch.Tensor], w2_weight: torch.Tensor, w2_weight_sf: torch.Tensor, w2_alpha: torch.Tensor, num_experts: int, top_k: int, num_local_experts: Optional[int] = None, local_expert_offset: int = 0, output_dtype: torch.dtype = torch.bfloat16, use_fused_finalize: bool = True, moe_output: Optional[torch.Tensor] = None, aux_stream: Optional[torch.cuda.streams.Stream] = None, enable_pdl: bool = True, activation_type: int = 3, swiglu_alpha: float = 1.0, swiglu_beta: float = 0.0, swiglu_limit: float = 3.4028234663852886e+38, situ_beta: Optional[float] = None, situ_linear_beta: Optional[float] = None, *, quant_mode: str = 'w4a4', per_token_scale: Optional[torch.Tensor] = None, tactic: Optional[Tuple] = None) -> torch.Tensor
+cute_dsl_fused_moe_nvfp4 sig: (x: torch.Tensor, x_sf: Optional[torch.Tensor], token_selected_experts: torch.Tensor, token_final_scales: torch.Tensor, w1_weight: torch.Tensor, w1_weight_sf: torch.Tensor, w1_alpha: torch.Tensor, fc2_input_scale: Optional[torch.Tensor], w2_weight: torch.Tensor, w2_weight_sf: torch.Tensor, w2_alpha: torch.Tensor, num_experts: int, top_k: int, num_local_experts: Optional[int] = None, local_expert_offset: int = 0, output_dtype: torch.dtype = torch.bfloat16, use_fused_finalize: bool = True, moe_output: Optional[torch.Tensor] = None, aux_stream: Optional[torch.cuda.streams.Stream] = None, enable_pdl: bool = True, activation_type: int = 3, swiglu_alpha: float = 1.0, swiglu_beta: float = 0.0, swiglu_limit: float = 3.4028234663852886e+38, situ_beta: Optional[float] = None, situ_linear_beta: Optional[float] = None, *, quant_mode: str = 'w4a4', per_token_scale: Optional[torch.Tensor] = None) -> torch.Tensor
+b12x_fused_moe sig: (x: torch.Tensor, w1_weight: torch.Tensor, w1_weight_sf: torch.Tensor, w2_weight: torch.Tensor, w2_weight_sf: torch.Tensor, token_selected_experts: torch.Tensor, token_final_scales: torch.Tensor, num_experts: int, top_k: int, *, w1_alpha: torch.Tensor, w2_alpha: torch.Tensor, fc2_input_scale: Optional[torch.Tensor] = None, input_global_scale: Optional[torch.Tensor] = None, num_local_experts: Optional[int] = None, output: Optional[torch.Tensor] = None, output_dtype: torch.dtype = torch.bfloat16, activation: str = 'silu', swiglu_alpha: float = 1.702, swiglu_beta: float = 1.0, swiglu_limit: Optional[float] = None, activation_precision: str = 'fp4', quant_mode: Optional[str] = None, source_format: str = 'modelopt') -> torch.Tensor

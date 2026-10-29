@@ -1,0 +1,102 @@
+✓ Initialized. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-PHcntFsppd015mLXbc0IQX
+✓ Created objects.
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/re
+│   search/modal_queue_research.py
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/research_harness
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16
+├── ✓ Created Function compile_and_inspect.
+├── ✓ Created Function compare_queue.
+├── ✓ Created Function compile_heavy.
+├── ✓ Created Function compile_grid_constant.
+├── ✓ Created Function inspect_cached_small.
+├── ✓ Created Function compile_latest_wx.
+└── ✓ Created Function compile_gk_round_store.
+W1028 06:47:31.144000 2 torch/utils/cpp_extension.py:183] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+GK_ROUND_STORE_RESOURCE research_moe_v56_strict -DSW=4 -DKS2=1 -DMAXM=8 /cache/torch_ext/moe_v56strict_v56K_DSW4_DKS21_DMAXM8/moe_v56strict_v56K_DSW4_DKS21_DMAXM8.so 
+Fatbin elf code:
+================
+arch = sm_90a
+code version = [1,8]
+host = linux
+compile_size = 64bit
+identifier = /cache/torch_ext/moe_v56strict_v56K_DSW4_DKS21_DMAXM8/cuda.cu
+
+Resource usage:
+ Common:
+  GLOBAL:28 CONSTANT[4]:224
+ Function _Z5moe_k1P:
+  REG:82 STACK:0 SHARED:1024 LOCAL:0 CONSTANT[0]:672 TEXTURE:0 SURFACE:0 SAMPLER:0
+
+GK_SASS_COUNT research_moe_v56_strict -DSW=4 -DKS2=1 -DMAXM=8 LDL 0
+GK_SASS_COUNT research_moe_v56_strict -DSW=4 -DKS2=1 -DMAXM=8 STL 0
+GK_SASS_COUNT research_moe_v56_strict -DSW=4 -DKS2=1 -DMAXM=8 BAR 17
+GK_SASS_COUNT research_moe_v56_strict -DSW=4 -DKS2=1 -DMAXM=8 LDS 201
+GK_SASS_COUNT research_moe_v56_strict -DSW=4 -DKS2=1 -DMAXM=8 STS 54
+GK_ROUND_STORE_RESOURCE research_moe_v56_strict -DSW=4 -DKS2=2 /cache/torch_ext/moe_v56strict_v56K_DSW4_DKS22/moe_v56strict_v56K_DSW4_DKS22.so 
+Fatbin elf code:
+================
+arch = sm_90a
+code version = [1,8]
+host = linux
+compile_size = 64bit
+identifier = /cache/torch_ext/moe_v56strict_v56K_DSW4_DKS22/cuda.cu
+
+Resource usage:
+ Common:
+  GLOBAL:28 CONSTANT[4]:224
+ Function _Z5moe_k1P:
+  REG:117 STACK:0 SHARED:1024 LOCAL:0 CONSTANT[0]:672 TEXTURE:0 SURFACE:0 SAMPLER:0
+
+GK_SASS_COUNT research_moe_v56_strict -DSW=4 -DKS2=2 LDL 0
+GK_SASS_COUNT research_moe_v56_strict -DSW=4 -DKS2=2 STL 0
+GK_SASS_COUNT research_moe_v56_strict -DSW=4 -DKS2=2 BAR 23
+GK_SASS_COUNT research_moe_v56_strict -DSW=4 -DKS2=2 LDS 336
+GK_SASS_COUNT research_moe_v56_strict -DSW=4 -DKS2=2 STS 88
+GK_ROUND_STORE_RESOURCE research_moe_v56_round_store -DSW=4 -DKS2=1 -DMAXM=8 /cache/torch_ext/moe_v56strict_roundstoreK_DSW4_DKS21_DMAXM8/moe_v56strict_roundstoreK_DSW4_DKS21_DMAXM8.so 
+Fatbin elf code:
+================
+arch = sm_90a
+code version = [1,8]
+host = linux
+compile_size = 64bit
+identifier = /cache/torch_ext/moe_v56strict_roundstoreK_DSW4_DKS21_DMAXM8/cuda.cu
+
+Resource usage:
+ Common:
+  GLOBAL:28 CONSTANT[4]:224
+ Function _Z5moe_k1P:
+  REG:80 STACK:0 SHARED:1024 LOCAL:0 CONSTANT[0]:672 TEXTURE:0 SURFACE:0 SAMPLER:0
+
+GK_SASS_COUNT research_moe_v56_round_store -DSW=4 -DKS2=1 -DMAXM=8 LDL 0
+GK_SASS_COUNT research_moe_v56_round_store -DSW=4 -DKS2=1 -DMAXM=8 STL 0
+GK_SASS_COUNT research_moe_v56_round_store -DSW=4 -DKS2=1 -DMAXM=8 BAR 16
+GK_SASS_COUNT research_moe_v56_round_store -DSW=4 -DKS2=1 -DMAXM=8 LDS 183
+GK_SASS_COUNT research_moe_v56_round_store -DSW=4 -DKS2=1 -DMAXM=8 STS 49
+GK_ROUND_STORE_RESOURCE research_moe_v56_round_store -DSW=4 -DKS2=2 /cache/torch_ext/moe_v56strict_roundstoreK_DSW4_DKS22/moe_v56strict_roundstoreK_DSW4_DKS22.so 
+Fatbin elf code:
+================
+arch = sm_90a
+code version = [1,8]
+host = linux
+compile_size = 64bit
+identifier = /cache/torch_ext/moe_v56strict_roundstoreK_DSW4_DKS22/cuda.cu
+
+Resource usage:
+ Common:
+  GLOBAL:28 CONSTANT[4]:224
+ Function _Z5moe_k1P:
+  REG:117 STACK:0 SHARED:1024 LOCAL:0 CONSTANT[0]:672 TEXTURE:0 SURFACE:0 SAMPLER:0
+
+GK_SASS_COUNT research_moe_v56_round_store -DSW=4 -DKS2=2 LDL 0
+GK_SASS_COUNT research_moe_v56_round_store -DSW=4 -DKS2=2 STL 0
+GK_SASS_COUNT research_moe_v56_round_store -DSW=4 -DKS2=2 BAR 22
+GK_SASS_COUNT research_moe_v56_round_store -DSW=4 -DKS2=2 LDS 340
+GK_SASS_COUNT research_moe_v56_round_store -DSW=4 -DKS2=2 STS 83
+GK_ROUND_STORE_CPU_DONE 225.347962464
+Stopping app - local entrypoint completed.
+✓ App completed. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-PHcntFsppd015mLXbc0IQX

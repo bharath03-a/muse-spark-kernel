@@ -1,0 +1,98 @@
+✓ Initialized. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-c0K82UrvZU72iOejAjcFJl
+✓ Created objects.
+├── ✓ Uploaded 
+│   /var/folders/dt/nf7j33w51gj7cv6bx6633tm40000gn/T/muse_router_cpu_4nlisc29/mo
+│   dal_app.py
+├── ✓ Uploaded 
+│   /var/folders/dt/nf7j33w51gj7cv6bx6633tm40000gn/T/muse_router_cpu_4nlisc29
+├── ✓ Created Function env.
+├── ✓ Created Function correct.
+├── ✓ Created Function bench.
+├── ✓ Created Function micro.
+├── ✓ Created Function session.
+├── ✓ Created Function compile_only.
+└── ✓ Created Function inspect.
+
+######## compile_only: router_cluster_compile_only
+CLUSTER_COMPILE_FAIL False Traceback (most recent call last):
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 43, in wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 1116, in __getitem__
+    ret = _semantic.expand_dims(ret, dim)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/_semantic.py", line 146, in expand_dims
+    _check(
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/_semantic.py", line 15, in _check
+    raise category(msg_fn())
+ValueError: expected expand_dims input layout to be sliced in axis 1 but got 0
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/proj/bench/router_cluster_compile_only.py", line 51, in <module>
+    k=triton.compile(src,target=GPUTarget('cuda',90,32),options={'num_warps':4,'num_ctas':2})
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/_runtime.py", line 40, in make_ir
+    module = ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 9:67:
+def reduce_partials(P, O, R: gl.constexpr, T: gl.constexpr, ASYNC: gl.constexpr):
+        # Each source CTA holds one K-split plane. Destination CTAs own tokens.
+        src: gl.constexpr = gl.BlockedLayout([1, 1, 2], [1, 8, 4], [1, 4, 1], [2, 1, 0], cga_layout=[[1, 0, 0]])
+        dst: gl.constexpr = gl.BlockedLayout([1, 1, 2], [1, 8, 4], [1, 4, 1], [2, 1, 0], cga_layout=[[0, 0, 1]])
+        shared: gl.constexpr = gl.SwizzledSharedLayout(1, 1, 1, order=[2, 1, 0], cga_layout=[[0, 0, 1]])
+        sf = gl.arange(0, 2, gl.SliceLayout(1, gl.SliceLayout(2, src)))
+        rr = gl.arange(0, R, gl.SliceLayout(0, gl.SliceLayout(2, src)))
+        tt = gl.arange(0, T, gl.SliceLayout(0, gl.SliceLayout(0, src)))
+        offs = sf[:, None, None] * (R*T) + rr[None, :, None] * T + tt[None, None, :]
+                                                                   ^
+expected expand_dims input layout to be sliced in axis 1 but got 0
+
+CLUSTER_COMPILE_FAIL True Traceback (most recent call last):
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 43, in wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 1116, in __getitem__
+    ret = _semantic.expand_dims(ret, dim)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/_semantic.py", line 146, in expand_dims
+    _check(
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/_semantic.py", line 15, in _check
+    raise category(msg_fn())
+ValueError: expected expand_dims input layout to be sliced in axis 1 but got 0
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/proj/bench/router_cluster_compile_only.py", line 51, in <module>
+    k=triton.compile(src,target=GPUTarget('cuda',90,32),options={'num_warps':4,'num_ctas':2})
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/_runtime.py", line 40, in make_ir
+    module = ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 9:67:
+def reduce_partials(P, O, R: gl.constexpr, T: gl.constexpr, ASYNC: gl.constexpr):
+        # Each source CTA holds one K-split plane. Destination CTAs own tokens.
+        src: gl.constexpr = gl.BlockedLayout([1, 1, 2], [1, 8, 4], [1, 4, 1], [2, 1, 0], cga_layout=[[1, 0, 0]])
+        dst: gl.constexpr = gl.BlockedLayout([1, 1, 2], [1, 8, 4], [1, 4, 1], [2, 1, 0], cga_layout=[[0, 0, 1]])
+        shared: gl.constexpr = gl.SwizzledSharedLayout(1, 1, 1, order=[2, 1, 0], cga_layout=[[0, 0, 1]])
+        sf = gl.arange(0, 2, gl.SliceLayout(1, gl.SliceLayout(2, src)))
+        rr = gl.arange(0, R, gl.SliceLayout(0, gl.SliceLayout(2, src)))
+        tt = gl.arange(0, T, gl.SliceLayout(0, gl.SliceLayout(0, src)))
+        offs = sf[:, None, None] * (R*T) + rr[None, :, None] * T + tt[None, None, :]
+                                                                   ^
+expected expand_dims input layout to be sliced in axis 1 but got 0
+
+######## router_cluster_compile_only took 2s
+compile_only total 3s
+Stopping app - local entrypoint completed.
+✓ App completed. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-c0K82UrvZU72iOejAjcFJl

@@ -1,0 +1,207 @@
+{
+  "caveat": "Top profile rows only; overlapping kernels include waits. These are opportunity bounds, not exclusive critical-path attribution.",
+  "loads": {
+    "turn 1": {
+      "w4": 29490.2,
+      "dense": 13762.2,
+      "residual": 2789.6000000000004,
+      "attention": 8277.0,
+      "other": 1624.6,
+      "timed": 58168.770091785605
+    },
+    "turn 4": {
+      "w4": 71133.0,
+      "dense": 52059.600000000006,
+      "residual": 10129.4,
+      "attention": 27714.199999999997,
+      "other": 4673.2,
+      "timed": 162869.6360093406
+    },
+    "first turn": {
+      "w4": 891374.2000000001,
+      "dense": 753264.0000000001,
+      "attention": 246879.4,
+      "residual": 153529.2,
+      "other": 27305.4,
+      "timed": 2094265.3883915972
+    }
+  },
+  "shapes": [
+    {
+      "case": {
+        "batch": 1,
+        "ctx": 80000,
+        "dist": "soft",
+        "layer": "sliding",
+        "load": "turn 1",
+        "page": 1,
+        "q_len": 753,
+        "repeats": 6,
+        "seed": 2547308172278454222,
+        "weight": 46
+      },
+      "top_profile_us": {
+        "w4": 495.70000000000005,
+        "dense": 205.3,
+        "residual": 45.2,
+        "attention": 31.9,
+        "other": 26.099999999999998
+      },
+      "timed_us": 829.7894302279147
+    },
+    {
+      "case": {
+        "batch": 1,
+        "ctx": 80000,
+        "dist": "soft",
+        "layer": "full",
+        "load": "turn 1",
+        "page": 1,
+        "q_len": 753,
+        "repeats": 6,
+        "seed": 2547568093540059178,
+        "weight": 16
+      },
+      "top_profile_us": {
+        "attention": 425.6,
+        "w4": 418.0,
+        "dense": 269.9,
+        "residual": 44.4,
+        "other": 26.5
+      },
+      "timed_us": 1249.9035188313455
+    },
+    {
+      "case": {
+        "batch": 4,
+        "ctx": 80000,
+        "dist": "soft",
+        "layer": "sliding",
+        "load": "turn 4",
+        "page": 1,
+        "q_len": 753,
+        "repeats": 6,
+        "seed": 2547828014801664135,
+        "weight": 46
+      },
+      "top_profile_us": {
+        "w4": 1132.7,
+        "dense": 853.4,
+        "residual": 163.3,
+        "attention": 62.1,
+        "other": 61.0
+      },
+      "timed_us": 2248.5949324231733
+    },
+    {
+      "case": {
+        "batch": 4,
+        "ctx": 80000,
+        "dist": "soft",
+        "layer": "full",
+        "load": "turn 4",
+        "page": 1,
+        "q_len": 753,
+        "repeats": 6,
+        "seed": 2548087936063269093,
+        "weight": 16
+      },
+      "top_profile_us": {
+        "attention": 1553.6,
+        "w4": 1189.3,
+        "dense": 800.2,
+        "residual": 163.6,
+        "other": 116.69999999999999
+      },
+      "timed_us": 3714.641819867165
+    },
+    {
+      "case": {
+        "batch": 1,
+        "ctx": 0,
+        "dist": "soft",
+        "layer": "full",
+        "load": "first turn",
+        "page": 1,
+        "q_len": 16384,
+        "repeats": 6,
+        "seed": 2548607778586479012,
+        "weight": 16
+      },
+      "top_profile_us": {
+        "w4": 4864.1,
+        "dense": 4097.6,
+        "attention": 866.8,
+        "residual": 829.5,
+        "other": 148.0
+      },
+      "timed_us": 10851.685949350449
+    },
+    {
+      "case": {
+        "batch": 1,
+        "ctx": 32768,
+        "dist": "soft",
+        "layer": "sliding",
+        "load": "first turn",
+        "page": 1,
+        "q_len": 16384,
+        "repeats": 6,
+        "seed": 2548867699848083973,
+        "weight": 138
+      },
+      "top_profile_us": {
+        "w4": 4737.900000000001,
+        "dense": 4038.4000000000005,
+        "residual": 819.0,
+        "attention": 293.7,
+        "other": 145.9
+      },
+      "timed_us": 10223.374701549907
+    },
+    {
+      "case": {
+        "batch": 1,
+        "ctx": 32768,
+        "dist": "soft",
+        "layer": "full",
+        "load": "first turn",
+        "page": 1,
+        "q_len": 16384,
+        "repeats": 6,
+        "seed": 2549127621109688935,
+        "weight": 16
+      },
+      "top_profile_us": {
+        "w4": 4887.0,
+        "attention": 4270.4,
+        "dense": 4050.8999999999996,
+        "residual": 855.0,
+        "other": 151.0
+      },
+      "timed_us": 14135.763765428735
+    },
+    {
+      "case": {
+        "batch": 1,
+        "ctx": 65536,
+        "dist": "soft",
+        "layer": "full",
+        "load": "first turn",
+        "page": 1,
+        "q_len": 16384,
+        "repeats": 6,
+        "seed": 2549647463632898862,
+        "weight": 16
+      },
+      "top_profile_us": {
+        "attention": 7759.6,
+        "w4": 5095.4,
+        "dense": 4099.3,
+        "residual": 847.2,
+        "other": 149.2
+      },
+      "timed_us": 17727.53025882769
+    }
+  ]
+}

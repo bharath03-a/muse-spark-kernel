@@ -1,0 +1,74 @@
+=== FMC CONFIG MEMBERS ===
+fmc error: No module named 'flashinfer.fused_moe.config'
+=== B12x PACK_INPUTS & BUILD ===
+pack_inputs sig: (self, act: 'MoEActivationPack', weights: 'MoEWeightPack') -> 'List[torch.Tensor]'
+pack_inputs source:
+    def pack_inputs(
+        self, act: MoEActivationPack, weights: MoEWeightPack
+    ) -> List[torch.Tensor]:
+        self._require_built()
+        v = weights.get_view(self.backend_key)
+        self._validate_prepared_weights(v)
+        first_weight = v[self.required_weight_keys[0]]
+        if first_weight.shape[0] != self.config.routing.num_experts:
+            raise ValueError(
+                f"{self.backend_key} prepared {first_weight.shape[0]} "
+                f"experts, expected {self.config.routing.num_experts}."
+            )
+
+        hidden_states = act.hidden_states_q
+        if hidden_states.dtype != torch.bfloat16:
+            raise TypeError(
+                f"{self.backend_key} requires BF16 hidden_states, "
+                f"got {hidden_states.dtype}."
+            )
+        if hidden_states.device != self.device:
+            raise ValueError(
+                f"hidden_states is on {hidden_states.device}, expected {self.device}."
+            )
+        if hidden_states.ndim != 2:
+            raise ValueError(
+                "b12x hidden_states must have shape [num_tokens, hidden_size]."
+            )
+        prepared_hidden_size = int(v["w1_weight"].shape[2]) * 2
+        prepared_intermediate_size = int(v["w2_weight"].shape[2]) * 2
+        expected_w1_rows = prepared_intermediate_size * (
+            2 if self.config.activation.is_gated else 1
+        )
+        if v["w1_weight"].shape[1] != expected_w1_rows:
+            raise ValueError(
+                f"{self.backend_key} prepared weights are incompatible with "
+                f"activation {self.config.activation.type!r}."
+            )
+        if prepared_intermediate_size != self.config.experts.intermediate_size:
+            raise ValueError(
+                f"{self.backend_key} prepared intermediate size "
+                f"{prepared_intermediate_size} does not match config "
+                f"{self.config.experts.intermediate_size}."
+            )
+        if hidden_states.shape[1] != prepared_hidden_size:
+            raise ValueError(
+                f"hidden size {hidden_states.shape[1]} does not match prepared "
+                f"weights ({prepared_hidden_size})."
+            )
+        _validate_prerouted_inputs(
+            act,
+            hidden_states.shape[0],
+            self.config.routing.top_k,
+            type(self).__name__,
+        )
+        if act.topk_weights.dtype != torch.float32:
+            raise TypeError("b12x topk_weights must use torch.float32.")
+        self._prepared_weights = v
+        self._ensure_inner(hidden_states.shape[1], hidden_states.shape[0])
+        return [hidden_states, act.topk_ids, act.topk_weights]
+
+build source:
+    def _build(self) -> None:
+        """Load the b12x wrapper factory; shapes remain per-call."""
+        from .cute_dsl import B12xMoEWrapper
+
+        self._wrapper_cls = B12xMoEWrapper
+
+=== TRTLLM DECODE TEST ===
+trtllm doc/sig: (query: torch.Tensor, kv_cache: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]], workspace_buffer: torch.Tensor, block_tables: torch.Tensor, seq_lens: torch.Tensor, max_seq_len: int, bmm1_scale: Union[float, torch.Tensor] = 1.0, bmm2_scale: Union[float, torch.Tensor] = 1.0, window_left: int = -1, out: Union[torch.Tensor, flashinfer.utils.FP4Tensor, NoneType] = None, out_dtype: Union[str, torch.dtype, NoneType] = None, o_sf_scale: Optional[float] = None, o_sf_vec_size: Optional[int] = None, sinks: Optional[List[torch.Tensor]] = None, kv_layout: str = 'HND', enable_pdl: Optional[bool] = None, backend: str = 'auto', q_len_per_req: Optional[int] = 1, o_scale: Optional[float] = 1.0, mask: Optional[torch.Tensor] = None, max_q_len: Optional[int] = None, cum_seq_lens_q: Optional[torch.Tensor] = None, skip_softmax_threshold_scale_factor: Optional[float] = None, kv_cache_sf: Optional[Tuple[torch.Tensor, torch.Tensor]] = None, uses_shared_paged_kv_idx: bool = True, lse: Optional[torch.Tensor] = None, return_lse: bool = False, bmm1_scale_log2: Optional[torch.Tensor] = None, multi_ctas_kv_counter_buffer: Optional[torch.Tensor] = None, enable_block_sparse_attention: bool = False, cp_world: int = 1, cp_rank: int = 0, causal_seqlens_kv_global: Optional[torch.Tensor] = None, bf16q_fp8kv_transform_mode: Optional[Literal['k_only', 'separate_kv']] = None) -> Union[torch.Tensor, flashinfer.utils.FP4Tensor, Tuple[Union[torch.Tensor, flashinfer.utils.FP4Tensor], torch.Tensor]]

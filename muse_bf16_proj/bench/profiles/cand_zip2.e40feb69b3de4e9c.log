@@ -1,0 +1,10 @@
+zip build 39.0s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 27
+zip path enabled: pooler m 17-32 id 60
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: unpooler m 17-32 id 61
+zip path enabled: qkv_gate m 1-8 id 31
+zip path enabled: qkv_gate m 9-16 id 63
+zip path enabled: qkv_gate m 17-32 id 62
+zip prepare 39.3s

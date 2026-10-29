@@ -1,0 +1,59 @@
+zip build 39.2s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 137
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 121
+qkv zip variant id 39 disabled: ValueError: accuracy at m=1
+qkv zip m=1 id 110: 14.53 us (base id 121: 14.50)
+qkv zip m=1 id 31: 15.23 us (base id 121: 14.50)
+qkv zip m=1 id 44: 15.23 us (base id 121: 14.50)
+qkv zip m=1 id 25: 15.33 us (base id 121: 14.50)
+qkv zip m=8 id 110: 14.62 us (base id 121: 14.82)
+qkv zip m=8 id 31: 15.71 us (base id 121: 14.82)
+qkv zip m=8 id 44: 15.65 us (base id 121: 14.82)
+qkv zip m=8 id 25: 15.58 us (base id 121: 14.82)
+qkv zip picked m=1 id 121, m=2-8 id 110
+zip prepare 39.6s
+r9 build 37.6s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.74 id3=18.91 -> id3
+r9 prepare 37.7s picks={('qkv_gate', 128): 3}
+r15 lt build 18.8s cublasLt 130101
+r15 qkv_gate m=128 cands=20 (raw us) cp10=18.75 c3=20.58 c12=20.32 c2=20.42 best=a66t92s35k1r0z0c7 -> cp10
+r15 qkv_gate m=256 cands=15 (raw us) cp10=23.46 c9=22.30 c10=23.14 c0=23.52 best=a66t134s35k1r0z0c9 -> lt
+r15 o m=128 cands=8 (raw us) cp10=11.07 c0=11.42 c1=11.62 c4=11.62 best=a66t18s35k1r0z0c5 -> cp10
+r15 o m=256 cands=8 (raw us) cp10=13.31 c0=13.22 c1=13.41 c4=13.89 best=a66t20s35k1r0z0c3 -> cp10
+r15 pooler m=128 cands=15 (raw us) cp10=25.44 c10=24.86 c9=25.25 c8=25.28 best=a66t134s35k1r0z0c7 -> lt
+r15 pooler m=256 cands=12 (raw us) cp10=30.46 c8=30.46 c0=35.74 c3=32.13 best=a66t183s35k1r0z0c9 -> cp10
+r15 unpooler m=128 cands=12 (raw us) cp10=23.52 c0=23.87 c10=24.35 c4=24.38 best=a66t18s35k1r0z0c5 -> cp10
+r15 unpooler m=256 cands=8 (raw us) cp10=28.10 c0=28.16 c2=30.27 c1=33.28 best=a66t20s35k1r0z0c3 -> cp10
+r15 prepare 19.3s total 139.7s picks=qkv_gate256,pooler128
+slice m2: old 9.82 new 9.22
+slice m4: old 11.78 new 9.25
+slice m8: old 9.79 new 9.31
+slice mma path enabled m 2-8
+physical o m128: {'current': 11.136000044643879, 'transpose': 11.008000001311302} selected=False
+physical o m256: {'current': 13.183999806642532, 'transpose': 13.055999763309956} selected=False
+physical confirm unpooler m128: {'current': 23.520000278949738, 'transpose': 22.784000262618065}
+physical unpooler m128: {'current': 23.48800003528595, 'transpose': 22.71999977529049} selected=True
+physical unpooler m256: {'current': 28.12799997627735, 'transpose': 28.095999732613564} selected=False
+physical qkv_gate m128: {'current': 18.880000337958336, 'transpose': 20.800000056624413} selected=False
+physical qkv_gate m256: {'current': 22.112000733613968, 'transpose': 24.25600029528141} selected=False
+physical pooler m128: {'current': 24.671999737620354, 'transpose': 26.847999542951584} selected=False
+physical pooler m256: {'current': 30.49599938094616, 'transpose': 33.79200026392937} selected=False
+physical picks: [('unpooler', 128)]
+async pack pooler: bits=12.548340 raw=4236/32768
+async compile pooler/W: regs=104 spills=0 shared=49248
+async correctness passed pooler/W
+async compile pooler/WX: regs=128 spills=0 shared=98400
+async correctness passed pooler/WX
+async controls pooler m32: {'W': 95.10400146245956, 'WX': 24.73600022494793} chosen=WX
+async pooler m32 first={'current': 22.36800082027912, 'async': 24.447999894618988} confirm=None selected=False
+async pack unpooler: bits=12.412231 raw=3121/32768
+async compile unpooler/W: regs=104 spills=0 shared=49248
+async correctness passed unpooler/W
+async compile unpooler/WX: regs=128 spills=0 shared=98400
+async correctness passed unpooler/WX
+async controls unpooler m32: {'W': 55.93600124120712, 'WX': 20.67199908196926} chosen=WX
+async unpooler m32 first={'current': 21.75999991595745, 'async': 20.479999482631683} confirm={'current': 21.695999428629875, 'async': 20.416000857949257} selected=True
+async prepare elapsed=178.26s selected={'unpooler': True}

@@ -1,0 +1,280 @@
+✓ Initialized. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-F1BQgSejDjIlNaAXuFzdVL
+✓ Created objects.
+├── ✓ Uploaded 
+│   /var/folders/dt/nf7j33w51gj7cv6bx6633tm40000gn/T/muse_router_main_cpu_ulehy9
+│   9i/modal_app.py
+├── ✓ Uploaded 
+│   /var/folders/dt/nf7j33w51gj7cv6bx6633tm40000gn/T/muse_router_main_cpu_ulehy9
+│   9i
+├── ✓ Created Function env.
+├── ✓ Created Function correct.
+├── ✓ Created Function bench.
+├── ✓ Created Function micro.
+├── ✓ Created Function session.
+├── ✓ Created Function compile_only.
+└── ✓ Created Function inspect.
+
+######## compile_only: router_cluster_bt64_compile_only
+{"triton": "3.8.0", "audit": "CPU-only offline SM90 compiler; GPU validation deferred"}
+C4_M256_STORE COMPILE_FAILED
+Traceback (most recent call last):
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/_core.py", line 99, in wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/nvidia/ampere/async_copy.py", line 32, in async_load
+    pointer, mask = _semantic.broadcast_impl_value(pointer, mask)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/_semantic.py", line 185, in broadcast_impl_value
+    rhs_ty = rhs.type
+             ^^^^^^^^
+AttributeError: 'bool' object has no attribute 'type'
+
+The above exception was the direct cause of the following exception:
+
+triton.compiler.errors.CompilationError: at 10:4:
+def _copy_tile(ptr,stage,n0,step,K:gl.constexpr,C:gl.constexpr,ROWS:gl.constexpr,
+               BK:gl.constexpr,COPY:gl.constexpr):
+    batch=gl.arange(0,C,gl.SliceLayout(1,gl.SliceLayout(2,COPY)))
+    row=gl.arange(0,ROWS,gl.SliceLayout(0,gl.SliceLayout(2,COPY)))
+    kk=gl.arange(0,BK,gl.SliceLayout(0,gl.SliceLayout(0,COPY)))
+    batch=batch[:,None][:,:,None]
+    row=row[None,:][:,:,None]
+    kk=kk[None,:][None,:,:]
+    offsets=(n0+row)*K+batch*(K//C)+step*BK+kk
+    async_copy.async_load(stage,ptr+offsets,mask=step<K//(C*BK))
+    ^
+'bool' object has no attribute 'type'
+
+The above exception was the direct cause of the following exception:
+
+triton.compiler.errors.CompilationError: at 3:4:
+def _issue(hi,lo,x,hs,ls,xs,n0,t0,step,K:gl.constexpr,C:gl.constexpr,
+           BK:gl.constexpr,COPY:gl.constexpr):
+    _copy_tile(hi,hs,n0,step,K,C,32,BK,COPY)
+    ^
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/proj/bench/router_cluster_bt64_compile_only.py", line 22, in <module>
+    compiled=triton.compile(source,target=GPUTarget('cuda',90,32),options={'num_warps':4,'num_ctas':c})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/_runtime.py", line 40, in make_ir
+    module = ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 21:8:
+    KI:gl.constexpr=K//(C*BK)
+    gl.static_assert(KI>=DEPTH)
+    pid=gl.program_id(0)
+    n0=(pid%(N//32))*32
+    t0=(pid//(N//32))*64
+    hb=gl.allocate_shared_memory(gl.bfloat16,[DEPTH,C,32,BK],A_SHARED)
+    lb=gl.allocate_shared_memory(gl.bfloat16,[DEPTH,C,32,BK],A_SHARED)
+    xb=gl.allocate_shared_memory(gl.bfloat16,[DEPTH,C,64,BK],X_SHARED)
+    adot:gl.constexpr=gl.DotOperandLayout(0,MMA,2)
+    bdot:gl.constexpr=gl.DotOperandLayout(1,MMA,2)
+    for pre_s in gl.static_range(DEPTH):
+        _issue(hi,lo,x,hb.index(pre_s),lb.index(pre_s),xb.index(pre_s),
+        ^
+
+C4_M256_ASYNC COMPILE_FAILED
+Traceback (most recent call last):
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/_core.py", line 99, in wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/nvidia/ampere/async_copy.py", line 32, in async_load
+    pointer, mask = _semantic.broadcast_impl_value(pointer, mask)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/_semantic.py", line 185, in broadcast_impl_value
+    rhs_ty = rhs.type
+             ^^^^^^^^
+AttributeError: 'bool' object has no attribute 'type'
+
+The above exception was the direct cause of the following exception:
+
+triton.compiler.errors.CompilationError: at 10:4:
+def _copy_tile(ptr,stage,n0,step,K:gl.constexpr,C:gl.constexpr,ROWS:gl.constexpr,
+               BK:gl.constexpr,COPY:gl.constexpr):
+    batch=gl.arange(0,C,gl.SliceLayout(1,gl.SliceLayout(2,COPY)))
+    row=gl.arange(0,ROWS,gl.SliceLayout(0,gl.SliceLayout(2,COPY)))
+    kk=gl.arange(0,BK,gl.SliceLayout(0,gl.SliceLayout(0,COPY)))
+    batch=batch[:,None][:,:,None]
+    row=row[None,:][:,:,None]
+    kk=kk[None,:][None,:,:]
+    offsets=(n0+row)*K+batch*(K//C)+step*BK+kk
+    async_copy.async_load(stage,ptr+offsets,mask=step<K//(C*BK))
+    ^
+'bool' object has no attribute 'type'
+
+The above exception was the direct cause of the following exception:
+
+triton.compiler.errors.CompilationError: at 3:4:
+def _issue(hi,lo,x,hs,ls,xs,n0,t0,step,K:gl.constexpr,C:gl.constexpr,
+           BK:gl.constexpr,COPY:gl.constexpr):
+    _copy_tile(hi,hs,n0,step,K,C,32,BK,COPY)
+    ^
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/proj/bench/router_cluster_bt64_compile_only.py", line 22, in <module>
+    compiled=triton.compile(source,target=GPUTarget('cuda',90,32),options={'num_warps':4,'num_ctas':c})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/_runtime.py", line 40, in make_ir
+    module = ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 21:8:
+    KI:gl.constexpr=K//(C*BK)
+    gl.static_assert(KI>=DEPTH)
+    pid=gl.program_id(0)
+    n0=(pid%(N//32))*32
+    t0=(pid//(N//32))*64
+    hb=gl.allocate_shared_memory(gl.bfloat16,[DEPTH,C,32,BK],A_SHARED)
+    lb=gl.allocate_shared_memory(gl.bfloat16,[DEPTH,C,32,BK],A_SHARED)
+    xb=gl.allocate_shared_memory(gl.bfloat16,[DEPTH,C,64,BK],X_SHARED)
+    adot:gl.constexpr=gl.DotOperandLayout(0,MMA,2)
+    bdot:gl.constexpr=gl.DotOperandLayout(1,MMA,2)
+    for pre_s in gl.static_range(DEPTH):
+        _issue(hi,lo,x,hb.index(pre_s),lb.index(pre_s),xb.index(pre_s),
+        ^
+
+C8_M128_STORE COMPILE_FAILED
+Traceback (most recent call last):
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/_core.py", line 99, in wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/nvidia/ampere/async_copy.py", line 32, in async_load
+    pointer, mask = _semantic.broadcast_impl_value(pointer, mask)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/_semantic.py", line 185, in broadcast_impl_value
+    rhs_ty = rhs.type
+             ^^^^^^^^
+AttributeError: 'bool' object has no attribute 'type'
+
+The above exception was the direct cause of the following exception:
+
+triton.compiler.errors.CompilationError: at 10:4:
+def _copy_tile(ptr,stage,n0,step,K:gl.constexpr,C:gl.constexpr,ROWS:gl.constexpr,
+               BK:gl.constexpr,COPY:gl.constexpr):
+    batch=gl.arange(0,C,gl.SliceLayout(1,gl.SliceLayout(2,COPY)))
+    row=gl.arange(0,ROWS,gl.SliceLayout(0,gl.SliceLayout(2,COPY)))
+    kk=gl.arange(0,BK,gl.SliceLayout(0,gl.SliceLayout(0,COPY)))
+    batch=batch[:,None][:,:,None]
+    row=row[None,:][:,:,None]
+    kk=kk[None,:][None,:,:]
+    offsets=(n0+row)*K+batch*(K//C)+step*BK+kk
+    async_copy.async_load(stage,ptr+offsets,mask=step<K//(C*BK))
+    ^
+'bool' object has no attribute 'type'
+
+The above exception was the direct cause of the following exception:
+
+triton.compiler.errors.CompilationError: at 3:4:
+def _issue(hi,lo,x,hs,ls,xs,n0,t0,step,K:gl.constexpr,C:gl.constexpr,
+           BK:gl.constexpr,COPY:gl.constexpr):
+    _copy_tile(hi,hs,n0,step,K,C,32,BK,COPY)
+    ^
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/proj/bench/router_cluster_bt64_compile_only.py", line 22, in <module>
+    compiled=triton.compile(source,target=GPUTarget('cuda',90,32),options={'num_warps':4,'num_ctas':c})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/_runtime.py", line 40, in make_ir
+    module = ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 21:8:
+    KI:gl.constexpr=K//(C*BK)
+    gl.static_assert(KI>=DEPTH)
+    pid=gl.program_id(0)
+    n0=(pid%(N//32))*32
+    t0=(pid//(N//32))*64
+    hb=gl.allocate_shared_memory(gl.bfloat16,[DEPTH,C,32,BK],A_SHARED)
+    lb=gl.allocate_shared_memory(gl.bfloat16,[DEPTH,C,32,BK],A_SHARED)
+    xb=gl.allocate_shared_memory(gl.bfloat16,[DEPTH,C,64,BK],X_SHARED)
+    adot:gl.constexpr=gl.DotOperandLayout(0,MMA,2)
+    bdot:gl.constexpr=gl.DotOperandLayout(1,MMA,2)
+    for pre_s in gl.static_range(DEPTH):
+        _issue(hi,lo,x,hb.index(pre_s),lb.index(pre_s),xb.index(pre_s),
+        ^
+
+C8_M128_ASYNC COMPILE_FAILED
+Traceback (most recent call last):
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/_core.py", line 99, in wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/nvidia/ampere/async_copy.py", line 32, in async_load
+    pointer, mask = _semantic.broadcast_impl_value(pointer, mask)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/_semantic.py", line 185, in broadcast_impl_value
+    rhs_ty = rhs.type
+             ^^^^^^^^
+AttributeError: 'bool' object has no attribute 'type'
+
+The above exception was the direct cause of the following exception:
+
+triton.compiler.errors.CompilationError: at 10:4:
+def _copy_tile(ptr,stage,n0,step,K:gl.constexpr,C:gl.constexpr,ROWS:gl.constexpr,
+               BK:gl.constexpr,COPY:gl.constexpr):
+    batch=gl.arange(0,C,gl.SliceLayout(1,gl.SliceLayout(2,COPY)))
+    row=gl.arange(0,ROWS,gl.SliceLayout(0,gl.SliceLayout(2,COPY)))
+    kk=gl.arange(0,BK,gl.SliceLayout(0,gl.SliceLayout(0,COPY)))
+    batch=batch[:,None][:,:,None]
+    row=row[None,:][:,:,None]
+    kk=kk[None,:][None,:,:]
+    offsets=(n0+row)*K+batch*(K//C)+step*BK+kk
+    async_copy.async_load(stage,ptr+offsets,mask=step<K//(C*BK))
+    ^
+'bool' object has no attribute 'type'
+
+The above exception was the direct cause of the following exception:
+
+triton.compiler.errors.CompilationError: at 3:4:
+def _issue(hi,lo,x,hs,ls,xs,n0,t0,step,K:gl.constexpr,C:gl.constexpr,
+           BK:gl.constexpr,COPY:gl.constexpr):
+    _copy_tile(hi,hs,n0,step,K,C,32,BK,COPY)
+    ^
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/proj/bench/router_cluster_bt64_compile_only.py", line 22, in <module>
+    compiled=triton.compile(source,target=GPUTarget('cuda',90,32),options={'num_warps':4,'num_ctas':c})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/_runtime.py", line 40, in make_ir
+    module = ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 21:8:
+    KI:gl.constexpr=K//(C*BK)
+    gl.static_assert(KI>=DEPTH)
+    pid=gl.program_id(0)
+    n0=(pid%(N//32))*32
+    t0=(pid//(N//32))*64
+    hb=gl.allocate_shared_memory(gl.bfloat16,[DEPTH,C,32,BK],A_SHARED)
+    lb=gl.allocate_shared_memory(gl.bfloat16,[DEPTH,C,32,BK],A_SHARED)
+    xb=gl.allocate_shared_memory(gl.bfloat16,[DEPTH,C,64,BK],X_SHARED)
+    adot:gl.constexpr=gl.DotOperandLayout(0,MMA,2)
+    bdot:gl.constexpr=gl.DotOperandLayout(1,MMA,2)
+    for pre_s in gl.static_range(DEPTH):
+        _issue(hi,lo,x,hb.index(pre_s),lb.index(pre_s),xb.index(pre_s),
+        ^
+
+######## router_cluster_bt64_compile_only took 4s
+Stopping app - local entrypoint completed.
+compile_only total 5s
+✓ App completed. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-F1BQgSejDjIlNaAXuFzdVL

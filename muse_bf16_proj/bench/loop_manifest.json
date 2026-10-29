@@ -1,0 +1,24 @@
+{
+  "baseline": {
+    "path": "checkpoints/cp15_descriptor_check1.427.py",
+    "sha256": "011f10751d37fe8935e52075ef2f3361d232de5aebf28cf490f37e1b35e7f771"
+  },
+  "candidates": {
+    "physical_layout": {
+      "path": "checkpoints/cp16_layout_check1.4314.py",
+      "sha256": "32f9375be194f5a42dc846df26fc5e80adf2d1407655f4adf086cce6df4c1f97"
+    }
+  },
+  "ms": [
+    128
+  ],
+  "layers": [
+    "unpooler"
+  ],
+  "reps": 40,
+  "cohorts": 2,
+  "min_gain_us": 0.35,
+  "min_speedup": 1.015,
+  "overhead_us": 0,
+  "max_wall_seconds": 600
+}

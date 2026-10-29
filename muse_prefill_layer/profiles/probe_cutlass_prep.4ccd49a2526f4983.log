@@ -1,0 +1,202 @@
+=== FlashInfer MoE Prepare Inspection ===
+fused_moe.prepare functions: ['ActivationType', 'Dict', 'Optional', 'TYPE_CHECKING', 'Tuple', 'Union', 'annotations', 'flashinfer_api', 'functools', 'get_compute_capability', 'interleave_moe_scales_for_sm90_mixed_gemm', 'interleave_moe_weights_for_sm90_mixed_gemm', 'prepare_b12x_nvfp4_weights', 'prepare_b12x_w4a16_weights', 'prepare_cute_dsl_weights', 'prepare_cutile_bf16_weights', 'prepare_cutile_nvfp4_weights', 'prepare_cutlass_bf16_weights', 'prepare_cutlass_fp8_block_weights', 'prepare_cutlass_fp8_per_tensor_activations', 'prepare_cutlass_fp8_per_tensor_weights', 'prepare_cutlass_humming_weights', 'prepare_cutlass_mxfp8_activations', 'prepare_cutlass_mxfp8_mxfp4_weights', 'prepare_cutlass_mxfp8_weights', 'prepare_cutlass_nvfp4_weights', 'prepare_cutlass_w4a16_weights', 'prepare_cutlass_w4a8_weights', 'prepare_trtllm_bf16_weights', 'prepare_trtllm_fp4_activations', 'prepare_trtllm_fp4_weights', 'prepare_trtllm_fp8_block_activations', 'prepare_trtllm_fp8_block_weights', 'prepare_trtllm_fp8_per_tensor_activations', 'prepare_trtllm_fp8_per_tensor_weights', 'prepare_trtllm_mxint4_weights', 'preprocess_moe_weights_for_sm90_mixed_gemm_humming', 'round_up', 'sm90_mixed_gemm_humming_weight_preprocess_trace_dispatch', 'sm90_mixed_gemm_scale_interleave_trace', 'sm90_mixed_gemm_weight_interleave_trace', 'struct', 'torch', 'warnings']
+
+--- prepare_cutlass_w4a16_weights source ---
+def prepare_cutlass_w4a16_weights(
+    w1_bf16: torch.Tensor,
+    w2_bf16: torch.Tensor,
+    *,
+    num_local_experts: int,
+    hidden_size: int,
+    intermediate_size: int,
+    activation=None,
+    device: Optional[torch.device] = None,
+) -> Dict[str, torch.Tensor]:
+    """Build the SM90 mixed-input MXFP4 view for ``CutlassW4A16Runner``.
+
+    An SM90-safe Torch quantizer first produces logical packed E2M1 weights and
+    linear UE8M0 scales. Both are then folded into the byte layouts consumed by
+    the Hopper mixed-input GEMM.
+    """
+    if w1_bf16.dtype != torch.bfloat16 or w2_bf16.dtype != torch.bfloat16:
+        raise TypeError(
+            "prepare_cutlass_w4a16_weights expects BF16 weights, got "
+            f"w1={w1_bf16.dtype}, w2={w2_bf16.dtype}."
+        )
+    if hidden_size % 128 != 0 or intermediate_size % 128 != 0:
+        raise ValueError(
+            "Cutlass W4A16 requires hidden_size and intermediate_size divisible by 128."
+        )
+    activation = _normalize_activation(activation)
+    gemm1_rows = _gemm1_rows(intermediate_size, activation)
+    expected_w1 = (num_local_experts, gemm1_rows, hidden_size)
+    expected_w2 = (num_local_experts, hidden_size, intermediate_size)
+    if tuple(w1_bf16.shape) != expected_w1 or tuple(w2_bf16.shape) != expected_w2:
+        raise ValueError(
+            f"weight shapes {tuple(w1_bf16.shape)}/{tuple(w2_bf16.shape)} != "
+            f"expected {expected_w1}/{expected_w2}."
+        )
+    if device is None:
+        device = w1_bf16.device
+    device = torch.device(device)
+    if device.type != "cuda":
+        raise ValueError(f"Cutlass W4A16 preparation requires CUDA, got {device}.")
+
+
+--- prepare_cutlass_nvfp4_weights source ---
+def prepare_cutlass_nvfp4_weights(
+    w1_bf16: torch.Tensor,
+    w2_bf16: torch.Tensor,
+    *,
+    num_local_experts: int,
+    hidden_size: int,
+    intermediate_size: int,
+    activation=None,
+    device: Optional[torch.device] = None,
+) -> Dict[str, torch.Tensor]:
+    """Build the CUTLASS NVFP4 view consumed by ``CutlassNvfp4Runner``.
+
+    Canonical source is BF16 ``w1_bf16 [E, rows, H]``, where ``rows`` is
+    ``2*I`` in semantic ``[up, gate]`` order for gated activations and ``I``
+    for non-gated activations, plus ``w2_bf16 [E, H, I]``. Each expert is quantized
+    independently with ``fp4_quantize`` (``sf_vec_size=16``, swizzled scales)
+    so 128-row swizzle tiles never cross expert boundaries. Global scales are
+    fixed at 1.0 to match the other unified NVFP4 prepares; the kernel still
+    receives the six-tensor CUTLASS ``quant_scales`` contract.
+
+    Do not reuse TRTLLM shuffled or BlockMajorK tensors: CUTLASS consumes the
+    packed uint8 payload plus the swizzled ``fp4_quantize`` scale buffer.
+    """
+    from ..quantization.fp4_quantization import fp4_quantize
+
+    if w1_bf16.dtype != torch.bfloat16 or w2_bf16.dtype != torch.bfloat16:
+        raise TypeError(
+            "prepare_cutlass_nvfp4_weights expects BF16 weights, got "
+            f"w1={w1_bf16.dtype}, w2={w2_bf16.dtype}."
+        )
+    if (
+        hidden_size % _NVFP4_SF_VEC_SIZE != 0
+        or intermediate_size % _NVFP4_SF_VEC_SIZE != 0
+    ):
+        raise ValueError(
+            "Cutlass NVFP4 requires hidden_size and intermediate_size "
+            f"divisible by {_NVFP4_SF_VEC_SIZE}."
+        )
+    activation = _normalize_activation(activation)
+    gemm1_rows = _gemm1_rows(intermediate_size, activation)
+
+--- interleave_moe_weights_for_sm90_mixed_gemm source ---
+@flashinfer_api(trace=sm90_mixed_gemm_weight_interleave_trace)
+def interleave_moe_weights_for_sm90_mixed_gemm(
+    weight: torch.Tensor,
+    quant_type: str = "fp4",
+) -> torch.Tensor:
+    """Interleave 4-bit packed MoE weights for the SM90 mixed-input GEMM.
+
+    The SM90 mixed-dtype MoE GEMM (used by ``cutlass_fused_moe`` with
+    ``use_w4_group_scaling=True``) expects weights in a specific interleaved
+    layout; without preprocessing, the LUT-based FP4->BF16 conversion reads
+    bytes from the wrong positions and the output diverges from a dequantized
+    reference for any K > 128. TensorRT-LLM's W4A16 MoE runs the equivalent
+    preprocessing at weight-load time (see
+    ``interleave_4bit_weights_for_Hopper_mixed_gemm`` in TRT-LLM PR #12451).
+
+    Parameters
+    ----------
+    weight : torch.Tensor
+        ``[num_experts, n, k // 2]`` uint8 CUDA tensor (4-bit values packed
+        two-per-byte).
+    quant_type : str
+        ``"fp4"`` for MXFP4 (the W4A16 path), ``"fp4_fp8"`` for MXFP4 consumed
+        by the FP8/Humming-style pre-MMA-scale path, or ``"int4"`` for INT4
+        (the W4A8 path).
+
+    Returns
+    -------
+    torch.Tensor
+        A new uint8 tensor with the same shape as ``weight`` holding the
+        interleaved layout. Feed this directly as ``fc1_expert_weights`` /
+        ``fc2_expert_weights`` to :func:`cutlass_fused_moe`.
+    """
+    if weight.dim() != 3:
+        raise ValueError(
+            f"weight must be 3D (num_experts, n, k/2); got shape {tuple(weight.shape)}"
+        )
+    if weight.dtype != torch.uint8:
+        raise ValueError(f"weight must be uint8 (packed 4-bit); got {weight.dtype}")
+    if not weight.is_cuda:
+        raise ValueError("weight must live on CUDA")
+
+--- CutlassW4A16Runner run/call methods ---
+CutlassW4A16Runner.__call__:
+     def __call__(self, inputs, **kwargs):
+        return self.forward(inputs, **kwargs)
+
+CutlassW4A16Runner.forward:
+     def forward(
+        self,
+        inputs: List[torch.Tensor],
+        tactic: Any = -1,
+        do_preparation: bool = False,
+        **kwargs: Any,
+    ) -> torch.Tensor:
+        self._require_built()
+        self._validate_input_count(inputs)
+        if self._workspace is None:
+            raise RuntimeError("pack_inputs must allocate the CUTLASS workspace first.")
+        if tactic == -1:
+            profile_ids = [-1, -1]
+        elif isinstance(tactic, (tuple, list)) and len(tactic) == 2:
+            profile_ids = [int(tactic[0]), int(tactic[1])]
+        else:
+            raise ValueError(
+                f"{type(self).__name__} tactic must be -1 or a (gemm1, gemm2) pair."
+            )
+
+        # CUTLASS tactics require a stage-specific preparation launch before
+        # they can be selected by run_moe.  The legacy flat API gets this from
+        # its two internal autotuner passes; the unified compound tactic must
+        # preserve the same contract when the outer autotuner requests setup.
+        if do_preparation:
+            profile_inputs = [inputs[1], inputs[4], None, inputs[5], None]
+            self._inner.forward(
+                profile_inputs,
+                tactic=profile_ids[0],
+                do_preparation=True,
+
+--- CutlassNvfp4Runner run/call methods ---
+CutlassNvfp4Runner.__call__:
+     def __call__(self, inputs, **kwargs):
+        return self.forward(inputs, **kwargs)
+
+CutlassNvfp4Runner.forward:
+     def forward(
+        self,
+        inputs: List[torch.Tensor],
+        tactic: Any = -1,
+        do_preparation: bool = False,
+        **kwargs: Any,
+    ) -> torch.Tensor:
+        self._require_built()
+        self._validate_input_count(inputs)
+        if self._workspace is None:
+            raise RuntimeError("pack_inputs must allocate the CUTLASS workspace first.")
+        if tactic == -1:
+            profile_ids = [-1, -1]
+        elif isinstance(tactic, (tuple, list)) and len(tactic) == 2:
+            profile_ids = [int(tactic[0]), int(tactic[1])]
+        else:
+            raise ValueError(
+                f"{type(self).__name__} tactic must be -1 or a (gemm1, gemm2) pair."
+            )
+
+        # CUTLASS tactics require a stage-specific preparation launch before
+        # they can be selected by run_moe.  The legacy flat API gets this from
+        # its two internal autotuner passes; the unified compound tactic must
+        # preserve the same contract when the outer autotuner requests setup.
+        if do_preparation:
+            profile_inputs = [inputs[1], inputs[4], None, inputs[5], None]
+            self._inner.forward(
+                profile_inputs,
+                tactic=profile_ids[0],
+                do_preparation=True,

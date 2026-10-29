@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-tttc68tk/run/worker.py", line 468, in child_main
+    state["graph_out"] = fn(state["data"])
+                         ^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-tttc68tk/run/submission.py", line 261, in kernel_fn
+    q=q_out.to(FP8),
+      ^^^^^^^^^^^^^
+RuntimeError: info.status != cudaStreamCaptureStatusInvalidated INTERNAL ASSERT FAILED at "/__w/pytorch/pytorch/c10/cuda/CUDACachingAllocator.cpp":2214, please report a bug to PyTorch. Invalid stream capture status
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-tttc68tk/run/worker.py", line 467, in child_main
+    with torch.cuda.graph(graph, stream=stream):
+  File "/opt/sglang/lib/python3.12/site-packages/torch/cuda/graphs.py", line 1210, in __exit__
+    self.cuda_graph.capture_end()
+  File "/opt/sglang/lib/python3.12/site-packages/torch/cuda/graphs.py", line 649, in capture_end
+    self.capture_end_pre()
+  File "/opt/sglang/lib/python3.12/site-packages/torch/cuda/graphs.py", line 630, in capture_end_pre
+    super().capture_end_pre()
+torch.AcceleratorError: CUDA error: operation failed due to a previous error during capture
+Search for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+

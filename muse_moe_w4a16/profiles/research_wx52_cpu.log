@@ -1,0 +1,44 @@
+✓ Initialized. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-oAIddndQNHmzOHkQspALit
+✓ Created objects.
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/re
+│   search/modal_queue_research.py
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/research_harness
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16
+├── ✓ Created Function compile_and_inspect.
+├── ✓ Created Function compare_queue.
+├── ✓ Created Function compile_heavy.
+├── ✓ Created Function compile_grid_constant.
+├── ✓ Created Function inspect_cached_small.
+└── ✓ Created Function compile_latest_wx.
+W1028 00:52:15.789000 2 torch/utils/cpp_extension.py:183] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+COMPILE_WX52_OK 73.715985044 /cache/torch_ext/moe_strict_wxg2_v52X_DRPW2_DWXG2/moe_strict_wxg2_v52X_DRPW2_DWXG2.so
+WX52_RESOURCES 
+Fatbin elf code:
+================
+arch = sm_90a
+code version = [1,8]
+host = linux
+compile_size = 64bit
+identifier = /cache/torch_ext/moe_strict_wxg2_v52X_DRPW2_DWXG2/cuda.cu
+
+Resource usage:
+ Common:
+  GLOBAL:28 CONSTANT[4]:224
+ Function _Z5moe_x1P:
+  REG:168 STACK:0 SHARED:1024 LOCAL:0 CONSTANT[0]:648 TEXTURE:0 SURFACE:0 SAMPLER:0
+ Function _Z7xgatherPK13__nv_bfloat16PKiiiPh:
+  REG:32 STACK:0 SHARED:2048 LOCAL:0 CONSTANT[0]:560 TEXTURE:0 SURFACE:0 SAMPLER:0
+
+WX52_SASS_COUNT LDL 0
+WX52_SASS_COUNT STL 0
+WX52_SASS_COUNT LDC 120
+WX52_SASS_COUNT SHFL 454
+WX52_SASS_COUNT HGMMA 256
+WX52_SASS_COUNT WARPGROUP 68
+Stopping app - local entrypoint completed.
+✓ App completed. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-oAIddndQNHmzOHkQspALit

@@ -1,0 +1,240 @@
+=== CutlassHummingRunner ===
+class CutlassHummingRunner(_CutlassRunnerBase):
+    """Unified adapter for CUTLASS Humming MXFP4 x FP8 fused MoE."""
+
+    backend_key = "cutlass_humming"
+    supported_quant_variants = ((QuantFormat.MXFP4, QuantFormat.FP8PerTensor),)
+    supported_activation_classes = _CUTLASS_SEMANTIC_ACTIVATIONS
+    _supported_archs = _CUTLASS_HUMMING_ARCHS
+    _weight_dtype = torch.uint8
+    _use_w4_group_scaling = True
+    _use_wfp4afp8_humming = True
+    _required_weight_keys = (
+        "fc1_expert_weights",
+        "fc2_expert_weights",
+        "fc1_expert_scales",
+        "fc2_expert_scales",
+        "fc1_residual_scale",
+        "fc2_residual_scale",
+        "fc2_act_global",
+    )
+    _expected_num_inputs = 11
+
+    def _pack_weight_inputs(
+        self, view: dict[str, torch.Tensor], hidden_size: int
+    ) -> List[torch.Tensor]:
+        w1, w2, w1_scale, w2_scale, r1, r2, a2 = (
+            view[key] for key in self._required_weight_keys
+        )
+        num_experts = self.config.routing.num_experts
+        intermediate_size = self.config.experts.intermediate_size
+        gemm1_rows = intermediate_size * (2 if self.config.activation.is_gated else 1)
+        expected_w1 = (num_experts, gemm1_rows, hidden_size // 2)
+        expected_w2 = (num_experts, hidden_size, intermediate_size // 2)
+        if w1.dtype is not torch.uint8 or w2.dtype is not torch.uint8:
+            raise TypeError("Cutlass Humming packed weights must be uint8.")
+        if (tuple(w1.shape), tuple(w2.shape)) != (expected_w1, expected_w2):
+            raise ValueError(
+                "Cutlass Humming weight shapes "
+                f"{tuple(w1.shape)}/{tuple(w2.shape)} != expected "
+                f"{expected_w1}/{expected_w2}."
+            )
+        expected_s1 = (
+            num_experts,
+            gemm1_rows // 64,
+            hidden_size // 128,
+            16,
+            16,
+        )
+        expected_s2 = (
+            num_experts,
+            hidden_size // 64,
+            intermediate_size // 128,
+            16,
+            16,
+        )
+        _require_cutlass_tensor(
+            w1_scale, name="fc1_expert_scales", dtype=torch.uint8, shape=expected_s1
+        )
+        _require_cutlass_tensor(
+            w2_scale, name="fc2_expert_scales", dtype=torch.uint8, shape=expected_s2
+        )
+        _require_cutlass_tensor(
+            r1, name="fc1_residual_scale", dtype=torch.float32, shape=(num_experts,)
+        )
+        _require_cutlass_tensor(
+            r2, name="fc2_residual_scale", dtype=torch.float32, shape=(num_experts,)
+        )
+        _require_cutlass_tensor(
+            a2, name="fc2_act_global", dtype=torch.float32, shape=()
+        )
+        self._validate_weight_storage((w1, w2, w1_scale, w2_scale, r1, r2, a2))
+        return [w1, w2, w1_scale, w2_scale, r1, r2, a2]
+
+    def _quant_scales(self, inputs: List[torch.Tensor]) -> List[torch.Tensor]:
+        return [
+            inputs[6].view(torch.int32),
+            inputs[8],
+            inputs[10],
+            inputs[7].view(torch.int32),
+            inputs[9],
+        ]
+
+=== CutlassHummingConfig ===
+@dataclass(frozen=True)
+class CutlassHummingConfig:
+    """CUTLASS Humming MXFP4-weight x FP8-activation backend for SM90.
+
+    Activations stay BF16; weights use Humming pre-MMA E8M0 fusion plus the
+    SM90 mixed-input interleave. Packed precomputed routing with all flat
+    CUTLASS activation semantics and
+    ``do_finalize=True``.
+    """
+
+    @classmethod
+    def supported(cls, arch: int) -> bool:
+        return arch in _CUTLASS_HUMMING_ARCHS
+
+    @staticmethod
+    def prepare_weights(
+        w1_bf16,
+        w2_bf16,
+        *,
+        num_local_experts: int,
+        hidden_size: int,
+        intermediate_size: int,
+        activation: Optional[ActivationConfig] = None,
+        device=None,
+    ):
+        """Quantize canonical BF16 weights into the Humming mixed-input layout."""
+        from .prepare import prepare_cutlass_humming_weights
+
+        return prepare_cutlass_humming_weights(
+            w1_bf16,
+            w2_bf16,
+            num_local_experts=num_local_experts,
+            hidden_size=hidden_size,
+            intermediate_size=intermediate_size,
+            activation=activation,
+            device=device,
+        )
+
+    def __repr__(self) -> str:
+        return "CutlassHummingConfig()"
+
+=== CuTileNvfp4Runner ===
+class CuTileNvfp4Runner(CuTileBf16Runner):
+    """cuTile NVFP4 weights and inputs for both grouped GEMMs."""
+
+    backend_key = "cutile_nvfp4"
+    supported_routing_modes = (RoutingInputMode.PackedPrecomputed,)
+    supported_quant_variants = ((QuantFormat.NVFP4, QuantFormat.NVFP4),)
+    _block_sizes = (16, 32, 64, 128)
+    _supported_archs = _CUTILE_NVFP4_ARCHS
+    _precision_name = "NVFP4"
+
+    def _build(self) -> None:
+        from .cutile import fp4
+
+        self._kernel_module = fp4
+
+    def _candidate_block_sizes(self, num_assignments: int) -> tuple[int, ...]:
+        num_experts = self.config.routing.num_experts
+        rows_per_expert = (num_assignments + num_experts - 1) // num_experts
+        if rows_per_expert <= 8:
+            return (16, 32)
+        intermediate_size = self.config.experts.intermediate_size
+        if num_assignments >= 4096 and (
+            intermediate_size >= 1024 or num_assignments >= 65536
+        ):
+            return (32, 64)
+        return (32, 64, 128)
+
+    def _w4a4_gemm_problem(
+        self,
+        inputs: List[torch.Tensor],
+        *,
+        stage: int,
+        block_size: int,
+        fuse_gemm1: bool | None = None,
+    ) -> _CuTileGemmProblem:
+        hidden_size = inputs[1].shape[1]
+        intermediate_size = self.config.experts.intermediate_size
+        if stage == 1:
+            if fuse_gemm1 is None:
+                fuse_gemm1 = True
+            n = intermediate_size * (
+                2 if self.config.activation.is_gated and not fuse_gemm1 else 1
+            )
+            k = hidden_size
+        elif stage == 2:
+            fuse_gemm1 = False
+            n, k = hidden_size, intermediate_size
+        else:
+            raise ValueError(f"stage must be 1 or 2, got {stage}")
+        num_assignments = inputs[2].numel()
+        from .cutile.fp4 import _use_row_major_scale_layout
+
+        input_sorted = _use_row_major_scale_layout(num_assignments, intermediate_size)
+        return _CuTileGemmProblem(
+            stage=stage,
+            arch=self._device_arch,
+            block_size=block_size,
+            n=n,
+            k=k,
+            fused_epilogue=bool(fuse_gemm1),
+            is_gated=self.config.activation.is_gated,
+            input_sorted=input_sorted,
+        )
+
+    def _w4a4_fused_gemm1_supported(
+        self, inputs: List[torch.Tensor], block_size: int
+    ) -> bool:
+        problem = self._w4a4_gemm_problem(
+            inputs, stage=1, block_size=block_size, fuse_gemm1=True
+        )
+        return any(
+            _cutile_w4a4_config_rejection_reason(problem, config) is None
+            for config in _CUTILE_W4A4_GEMM_CONFIGS
+        )
+
+    def _w4a4_fusion_modes(
+        self, inputs: List[torch.Tensor], block_size: int
+    ) -> tuple[bool, ...]:
+        if not self.config.activation.is_gated:
+            return (True,)
+        fallback = self._w4a4_fallback_fuse_gemm1(inputs, block_size)
+        if (
+            inputs[2].numel() < _CUTILE_W4A4_GATED_FUSION_MIN_ASSIGNMENTS
+            or not self._w4a4_fused_gemm1_supported(inputs, block_size)
+        ):
+            return (False,)
+        return (fallback, not fallback)
+
+    def _stage_tactics(
+        self,
+        inputs: List[torch.Tensor],
+        *,
+        stage: int,
+        block_size: int,
+    ) -> List[Any]:
+        if stage == 2:
+            return _cutile_w4a4_gemm_configs(
+                self._w4a4_gemm_problem(inputs, stage=2, block_size=block_size)
+            )
+        return list(
+            dict.fromkeys(
+                (int(fuse_gemm1), *config)
+                for fuse_gemm1 in self._w4a4_fusion_modes(inputs, block_size)
+                for config in _cutile_w4a4_gemm_configs(
+                    self._w4a4_gemm_problem(
+                        inputs,
+                        stage=1,
+                        block_size=block_size,
+                        fuse_gemm1=fuse_gemm1,
+                    )
+                )
+            )
+        )
+
+    def _stage_tactic_slice(self, stage: int) -

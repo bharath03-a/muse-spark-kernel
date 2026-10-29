@@ -1,0 +1,106 @@
+=== CutlassW4A16Config and CutlassW4A16Runner ===
+CutlassW4A16Config:
+@dataclass(frozen=True)
+class CutlassW4A16Config:
+    """CUTLASS MXFP4-weight x BF16-activation backend for SM90.
+
+    This backend supports packed precomputed routing with all flat CUTLASS
+    activation semantics and requires ``do_finalize=True``.
+    Expert parallelism and shared experts are not supported. Both
+    ``hidden_size`` and ``intermediate_size`` must be divisible by 128.
+    """
+
+    @classmethod
+    def supported(cls, arch: int) -> bool:
+        return arch in _CUTLASS_W4A16_ARCHS
+
+    @staticmethod
+    def prepare_weights(
+        w1_bf16,
+        w2_bf16,
+        *,
+        num_local_experts: int,
+        hidden_size: int,
+        intermediate_size: int,
+        activation: Optional[ActivationConfig] = None,
+        device=None,
+    ):
+        """Quantize and interleave canonical BF16 weights for SM90 W4A16."""
+        from .prepare import prepare_cutlass_w4a16_weights
+
+        return prepare_cutlass_w4a16_weights(
+            w1_bf16,
+            w2_bf16,
+            num_local_experts=num_local_experts,
+            hidden_size=hidden_size,
+            intermediate_size=intermediate_size,
+            activation=activation,
+            device=device,
+        )
+
+    def __repr__(self) -> str:
+        return "CutlassW4A16Config()"
+
+CutlassW4A16Runner:
+class CutlassW4A16Runner(_CutlassRunnerBase):
+    """Unified adapter for MXFP4-weight x BF16-activation fused MoE."""
+
+    backend_key = "cutlass_w4a16"
+    supported_quant_variants = ((QuantFormat.MXFP4, QuantFormat.BF16),)
+    supported_activation_classes = _CUTLASS_SEMANTIC_ACTIVATIONS
+    _supported_archs = _CUTLASS_W4A16_ARCHS
+    _weight_dtype = torch.uint8
+    _use_w4_group_scaling = True
+    _required_weight_keys = (
+        "fc1_expert_weights",
+        "fc2_expert_weights",
+        "fc1_expert_scales",
+        "fc2_expert_scales",
+    )
+    _expected_num_inputs = 8
+
+    def _pack_weight_inputs(
+        self, view: dict[str, torch.Tensor], hidden_size: int
+    ) -> List[torch.Tensor]:
+        w1, w2, w1_scale, w2_scale = (view[key] for key in self._required_weight_keys)
+        num_experts = self.config.routing.num_experts
+        intermediate_size = self.config.experts.intermediate_size
+        gemm1_rows = intermediate_size * (2 if self.config.activation.is_gated else 1)
+        expected_w1 = (num_experts, gemm1_rows, hidden_size // 2)
+        expected_w2 = (num_experts, hidden_size, intermediate_size // 2)
+        expected_s1 = (
+            num_experts,
+            gemm1_rows // 64,
+            hidden_size // 128,
+            16,
+            16,
+        )
+        expected_s2 = (
+            num_experts,
+            hidden_size // 64,
+            intermediate_size // 128,
+            16,
+            16,
+        )
+        if any(t.dtype is not torch.uint8 for t in (w1, w2, w1_scale, w2_scale)):
+            raise TypeError("Cutlass W4A16 prepared weights and scales must be uint8.")
+        if (tuple(w1.shape), tuple(w2.shape)) != (expected_w1, expected_w2):
+            raise ValueError(
+                f"Cutlass W4A16 weight shapes {tuple(w1.shape)}/{tuple(w2.shape)} "
+                f"!= expected {expected_w1}/{expected_w2}."
+            )
+        if (tuple(w1_scale.shape), tuple(w2_scale.shape)) != (
+            expected_s1,
+            expected_s2,
+        ):
+            raise ValueError(
+                "Cutlass W4A16 scale shapes "
+                f"{tuple(w1_scale.shape)}/{tuple(w2_scale.shape)} != expected "
+                f"{expected_s1}/{expected_s2}."
+            )
+        self._validate_weight_storage((w1, w2, w1_scale, w2_scale))
+        return [w1, w2, w1_scale, w2_scale]
+
+    def _quant_scales(self, inputs: List[torch.Tensor]) -> List[torch.Tensor]:
+        return [inputs[6].view(torch.int32), inputs[7].view(torch.int32)]
+

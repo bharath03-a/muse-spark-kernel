@@ -1,0 +1,359 @@
+ntFormat.NVFP4, QuantFormat.NVFP4):
+            if act.hidden_states_q.dtype != torch.uint8:
+                raise TypeError(
+                    "NVFP4 hidden_states_q must be packed uint8, got "
+                    f"{act.hidden_states_q.dtype}."
+                )
+            scale = act.hidden_states_scale
+            expected_scale = (num_tokens, hidden_size // 16)
+            if (
+                scale is None
+                or scale.dtype not in (torch.uint8, torch.float8_e4m3fn)
+                or tuple(scale.shape) != expected_scale
+            ):
+                got = None if scale is None else (scale.dtype, tuple(scale.shape))
+                raise ValueError(
+                    "NVFP4 hidden_states_scale must have shape "
+                    f"{expected_scale} and uint8/float8_e4m3fn storage, got {got}."
+                )
+            if scale.dtype == torch.uint8:
+                scale = scale.view(torch.float8_e4m3fn)
+            scale_dtype = torch.float8_e4m3fn
+            sf_vec_size = 16
+        elif self._pair == (QuantFormat.MXFP4, QuantFormat.MXFP8):
+            if act.hidden_states_q.dtype != torch.float8_e4m3fn:
+                raise TypeError(
+                    "MXFP4×MXFP8 hidden_states_q must be float8_e4m3fn, got "
+                    f"{act.hidden_states_q.dtype}."
+                )
+            scale = act.hidden_states_scale
+            expected_scale = (num_tokens, hidden_size // 32)
+            if (
+                scale is None
+                or scale.dtype != torch.float8_e4m3fn
+                or tuple(scale.shape) != expected_scale
+            ):
+                got = None if scale is None else (scale.dtype, tuple(scale.shape))
+                raise ValueError(
+                    "MXFP4×MXFP8 hidden_states_scale must carry UE8M0 bytes in "
+                    f"a float8_e4m3fn tensor with shape {expected_scale}, got {got}."
+                )
+            scale_dtype = torch.float8_e4m3fn
+            sf_vec_size = 32
+        else:
+            if act.hidden_states_q.dtype != torch.bfloat16:
+                raise TypeError(
+                    "TRTLLM W4A16 hidden_states_q must be bfloat16, got "
+                    f"{act.hidden_states_q.dtype}."
+                )
+            if act.hidden_states_scale is not None:
+                raise ValueError("TRTLLM W4A16 does not consume hidden_states_scale.")
+            scale = None
+            scale_dtype = torch.float8_e4m3fn
+            sf_vec_size = 32
+
+        expected_weights = {
+            "gemm1_weights": (
+                self._num_weight_rows,
+                self._intermediate_size * (2 if self.config.activation.is_gated else 1),
+                hidden_size // 2,
+            ),
+            "gemm2_weights": (
+                self._num_weight_rows,
+                hidden_size,
+                self._intermediate_size // 2,
+            ),
+        }
+        for name, expected in expected_weights.items():
+            tensor = view[name]
+            if tensor.dtype != torch.uint8 or tuple(tensor.shape) != expected:
+                raise ValueError(
+                    f"{name} must be packed uint8 with shape {expected}, got "
+                    f"{tensor.dtype} {tuple(tensor.shape)}."
+                )
+
+        for name, expected in (
+            (
+                "gemm1_weights_scale",
+                (
+                    self._num_weight_rows,
+                    self._intermediate_size
+                    * (2 if self.config.activation.is_gated else 1),
+                    hidden_size // sf_vec_size,
+                ),
+            ),
+            (
+                "gemm2_weights_scale",
+                (
+                    self._num_weight_rows,
+                    hidden_size,
+                    self._intermediate_size // sf_vec_size,
+                ),
+            ),
+        ):
+            tensor = view[name]
+            if tensor.dtype != scale_dtype or tuple(tensor.shape) != expected:
+                raise ValueError(
+                    f"{name} must be {scale_dtype} with shape {expected}, got "
+                    f"{tensor.dtype} {tuple(tensor.shape)}."
+                )
+
+        for name in (
+            "gemm1_alpha",
+            "gemm1_beta",
+            "gemm1_clamp_limit",
+            "output1_scale_scalar",
+            "output1_scale_gate_scalar",
+            "output2_scale_scalar",
+        ):
+            tensor = view.get(name)
+            if tensor is None:
+                continue
+            if tensor.device != act.hidden_states_q.device:
+                raise ValueError(
+                    f"{name} is on {tensor.device}, expected "
+                    f"{act.hidden_states_q.device}."
+                )
+            if tensor.dtype != torch.float32:
+                raise TypeError(f"{name} must be float32, got {tensor.dtype}.")
+            if tuple(tensor.shape) != (self._num_weight_rows,):
+                raise ValueError(
+                    f"{name} must have shape ({self._num_weight_rows},), got "
+                    f"{tuple(tensor.shape)}."
+                )
+            if not tensor.is_contiguous():
+                raise ValueError(f"{name} must be contiguous.")
+        return scale
+
+    def pack_inputs(
+        self, act: MoEActivationPack, weights: MoEWeightPack
+    ) -> List[torch.Tensor]:
+        """Translate Packs → the ``MoeRunnerInputs`` list ``core.MoERunner`` expects.
+
+        Expected weight view keys: gemm1_weights, gemm1_weights_scale,
+        gemm1_alpha, gemm2_weights, gemm2_weights_scale, and optionally
+        output1_scale_scalar, output1_scale_gate_scalar, output2_scale_scalar.
+
+        Routing mode is read from ``act.routing_input_mode``: ``FromLogits`` drives
+        in-kernel routing from ``act.routing_logits``; ``PackedPrecomputed`` packs the
+        pre-routed ``act.topk_ids`` / ``act.topk_weights``; and
+        ``UnpackedPrecomputed`` forwards int32 ids plus BF16 or FP32 weights directly.
+
+        The local-shard offset comes from ``ExpertConfig.local_expert_offset``
+        on the config this runner was built with.  ``topk_ids`` carries
+        GLOBAL expert ids and is packed as-is; the kernel performs the
+        global→local mapping itself by subtracting ``local_expert_offset``
+        (passed via the paired launch state) and dropping ids outside
+        ``[offset, offset + local_num_experts)``.
+        """
+        self._require_built()
+        from ..tllm_enums import SfLayout
+        from .core import MoeRunnerInputs, RoutingInputMode
+
+        v = weights.get_view(self.backend_key)
+        _validate_prepared_activation_params(
+            v, self.config.activation, type(self).__name__
+        )
+        routing = self.config.routing
+
+        num_tokens = act.hidden_states_q.shape[0]
+        hidden_size = (
+            act.hidden_states_q.shape[1] * 2
+            if self._pair == (QuantFormat.NVFP4, QuantFormat.NVFP4)
+            else act.hidden_states_q.shape[1]
+        )
+        hidden_states_scale = self._validate_fp4_tensors(act, v, hidden_size)
+
+        output = act.hidden_states_q.new_empty(
+            (
+                num_tokens,
+                hidden_size if self.config.finalize.do_finalize else 0,
+            ),
+            dtype=torch.bfloat16,
+        )
+
+        routing_input_mode = act.routing_input_mode
+        if (
+            self._num_fused_shared_experts > 0
+            and routing_input_mode is not RoutingInputMode.FromLogits
+        ):
+            raise NotImplementedError(
+                "Dedicated fused shared experts require FromLogits routing; "
+                "pre-routed callers must append shared ids and weights themselves."
+            )
+
+        if self._per_token and act.per_token_scale is None:
+            raise RuntimeError(
+                "Per-token NVFP4 scale is configured but no activation scale is given."
+            )
+
+        if routing_input_mode == RoutingInputMode.FromLogits:
+            # In-kernel routing: topk_ids/expert_weights are OUTPUT buffers the kernel fills.
+            # Unlike the FP8 launcher, FP4 receives routing_input_mode explicitly;
+            # non-empty output buffers therefore do not select precomputed routing.
+            # We allocate them here (mirroring trtllm_fp4_block_scale_moe_op, core.py ~2268)
+            # because MoERunner.forward calls the raw op directly, bypassing the buffer-allocating
+            # wrapper. Weight dtype mirrors logits dtype (core.py:2253).
+            _validate_logits_inputs(
+                act, num_tokens, routing.num_experts, "TrtllmFp4RoutedRunner"
+            )
+            routing_logits = act.routing_logits
+            if (
+                self._pair
+                in (
+                    (QuantFormat.MXFP4, QuantFormat.MXFP8),
+                    (QuantFormat.MXFP4, QuantFormat.BF16),
+                )
+                and routing_logits.dtype != torch.bfloat16
+            ):
+                raise TypeError(
+                    f"{self._pair[0].name}×{self._pair[1].name} FromLogits requires "
+                    f"bfloat16 routing_logits, got {routing_logits.dtype}."
+                )
+            routing_bias = act.routing_bias
+            topk_ids = act.hidden_states_q.new_empty(
+                (
+                    num_tokens,
+                    routing.top_k + self._num_fused_shared_experts,
+                ),
+                dtype=torch.int32,
+            )
+            # MUST be bf16 regardless of logits dtype: the fp4 routing kernel
+            # writes bf16 expert weights, so inheriting fp32 from the logits
+            # mislabels the returned buffer (gh #3595 — the canonical wrapper
+            # in core.py hardcodes bf16 for the same reason).
+            expert_weights = routing_logits.new_empty(
+                (
+                    num_tokens,
+                    routing.top_k + self._num_fused_shared_experts,
+                ),
+                dtype=torch.bfloat16,
+            )
+        elif routing_input_mode == RoutingInputMode.PackedPrecomputed:
+            # Pre-routed: pack the host selection into (GLOBAL expert_id << 16) | bf16(weight).
+            # The kernel expects GLOBAL ids and filters/maps them via the separately
+            # passed ``local_expert_offset`` (mirrors trtllm_bf16_routed_moe in
+            # tests/moe/test_trtllm_gen_routed_fused_moe.py). Do NOT pre-subtract the
+            # offset: on ranks with local_expert_offset>0 that yields a local id below
+            # the offset, which the kernel treats as non-local and skips → zero output.
+            _validate_prerouted_inputs(
+                act, num_tokens, routing.top_k, "TrtllmFp4RoutedRunner"
+            )
+            routing_logits = None
+            routing_bias = None
+            topk_ids = _pack_prerouted_topk_ids(act)
+            # FP4 borrows this buffer but leaves its returned FFI slot undefined.
+            # Supply the packed weights so _unpack_trtllm_moe_output() can return
+            # them directly for do_finalize=False. Use BF16 to match the weights
+            # encoded in topk_ids.
+            expert_weights = act.topk_weights.to(torch.bfloat16).contiguous()
+        elif routing_input_mode == RoutingInputMode.UnpackedPrecomputed:
+            # UnpackedPrecomputed: both routing tensors are caller-owned kernel
+            # inputs. Keep global ids intact; the launcher applies
+            # local_expert_offset.
+            _validate_prerouted_inputs(
+                act,
+                num_tokens,
+                routing.top_k,
+                "TrtllmFp4RoutedRunner",
+                allowed_weights_dtypes=(torch.bfloat16, torch.float32),
+                require_contiguous=True,
+            )
+            routing_logits = None
+            routing_bias = None
+            topk_ids = act.topk_ids
+            expert_weights = act.topk_weights
+        else:
+            raise NotImplementedError(
+                f"TrtllmFp4RoutedRunner does not support "
+                f"routing_input_mode={routing_input_mode!r} "
+                "(only FromLogits, PackedPrecomputed, and "
+                "UnpackedPrecomputed are wired)."
+            )
+
+        moe_inputs = MoeRunnerInputs(
+            output=output,
+            routing_logits=routing_logits,
+            topk_ids=topk_ids,
+            expert_weights=expert_weights,
+            hidden_states=act.hidden_states_q,
+            hidden_states_scale=hidden_states_scale,
+            gemm1_lora_delta=None,
+            per_token_scale=act.per_token_scale,
+        )
+
+        # Static (num_tokens-invariant) launch arguments for the fp4 branch of
+        # MoERunner.forward. None-valued entries are optional GEMM bias and
+        # activation-scalar paths. per_token_scale intentionally stays in
+        # MoeRunnerInputs because it is num_tokens-dynamic and the autotuner
+        # resizes it with the synthesized token bucket.
+        static_kwargs = dict(
+            routing_input_mode=routing_input_mode,
+            routing_bias=routing_bias,
+            gemm1_weights=v["gemm1_weights"],
+            gemm1_weights_scale=v["gemm1_weights_scale"],
+            gemm1_bias=None,
+            gemm1_alpha=v.get("gemm1_alpha"),
+            gemm1_beta=v.get("gemm1_beta"),
+            gemm1_clamp_limit=v.get("gemm1_clamp_limit"),
+            gemm2_weights=v["gemm2_weights"],
+            gemm2_weights_scale=v["gemm2_weights_scale"],
+            gemm2_bias=None,
+            output1_scale_scalar=v.get("output1_scale_scalar"),
+            output1_scale_gate_scalar=v.get("output1_scale_gate_scalar"),
+            output2_scale_scalar=v.get("output2_scale_scalar"),
+            num_experts=routing.num_experts,
+            num_fused_shared_experts=self._num_fused_shared_experts,
+            n_group=routing.n_group,
+            topk_group=routing.topk_group,
+            local_expert_offset=self._local_expert_offset,
+            routed_scaling_factor=routing.routed_scaling_factor,
+            routing_method_type=int(routing.method),
+            do_finalize=self.config.finalize.do_finalize,
+            enable_pdl=self._enable_pdl,
+        )
+
+        self._ensure_inner(hidden_size)
+        # Reuse the inner runner's tuning-config builder so the num_tokens
+        # buckets honor ExecutionConfig.tune_max_num_tokens (CR5).
+        tuning_config = self._inner._make_tuning_config(
+            moe_inputs,
+            tune_max_num_tokens=self._tune_max_num_tokens,
+            routing_input_mode=routing_input_mode,
+            # Declare the activation scale-factor layout instead of letting the
+            # runner infer it (deprecated). The unified path's own activation
+            # preparation quantizes linear for trtllm-gen — see
+            # prepare_trtllm_fp4_activations in prepare.py, which passes
+            # is_sf_swizzled_layout=False for both the MXFP4 and NVFP4 variants
+            # — which is also the only layout the routed GEMM can consume.
+            hidden_states_scale_layout=SfLayout.layout_linear,
+            # Match the canonical trtllm-gen wrappers' profiling regime so
+            # choose_one() tunes under the same conditions as deployment
+            # (otherwise it can cache a tactic picked under a different regime).
+            use_cuda_graph=True,
+            use_cold_l2_cache=True,
+        )
+        return _TrtllmPackedInputs(
+            moe_inputs.to_list(),
+            tuning_config=tuning_config,
+            launch_state=_TrtllmLaunchState(static_kwargs),
+        )
+
+=== B12xNvfp4Runner Source ===
+class B12xNvfp4Runner(_B12xRunner):
+    """Unified SM120/SM121 adapter for b12x NVFP4/W4A4 MoE."""
+
+    backend_key = "b12x_nvfp4"
+    supported_routing_modes = (RoutingInputMode.PackedPrecomputed,)
+    supported_quant_variants = ((QuantFormat.NVFP4, QuantFormat.NVFP4),)
+    supported_activation_classes = (SwiGLU, GeGLUTanh, ReLU2)
+    required_weight_keys = (
+        "w1_weight",
+        "w1_weight_sf",
+        "w1_alpha",
+        "w2_weight",
+        "w2_weight_sf",
+        "w2_alpha",
+        "fc2_input_scale",
+    )
+

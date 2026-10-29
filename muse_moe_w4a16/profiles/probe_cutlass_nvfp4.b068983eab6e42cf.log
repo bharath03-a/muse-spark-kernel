@@ -1,0 +1,172 @@
+=== CutlassNvfp4Config and CutlassNvfp4Runner ===
+CutlassNvfp4Config:
+@dataclass(frozen=True)
+class CutlassNvfp4Config:
+    """CUTLASS NVFP4 backend for SM100 / SM110 / SM12x.
+
+    Packed precomputed routing with all flat CUTLASS activation semantics and
+    ``do_finalize=True``. Expert
+    parallelism and shared experts are not supported. Both ``hidden_size``
+    and ``intermediate_size`` must be divisible by 16 (the NVFP4 scale-vector
+    size). Activations stay BF16; the kernel quantizes them internally.
+
+    This config is not in the default backend search list. TRTLLM NVFP4 uses
+    a quantized activation pack, so the two contracts cannot share one
+    ``MoEActivationPack``. Select it explicitly with
+    ``BackendOptions((CutlassNvfp4Config(),))``.
+    """
+
+    @classmethod
+    def supported(cls, arch: int) -> bool:
+        return arch in _CUTLASS_NVFP4_ARCHS
+
+    @staticmethod
+    def prepare_weights(
+        w1_bf16,
+        w2_bf16,
+        *,
+        num_local_experts: int,
+        hidden_size: int,
+        intermediate_size: int,
+        activation: Optional[ActivationConfig] = None,
+        device=None,
+    ):
+        """Quantize canonical BF16 weights into CUTLASS-swizzled NVFP4.
+
+        Uses the flat CUTLASS scale layout (``fp4_quantize`` with swizzled
+        scales), not the TRTLLM shuffle / BlockMajorK path.
+        """
+        from .prepare import prepare_cutlass_nvfp4_weights
+
+        return prepare_cutlass_nvfp4_weights(
+            w1_bf16,
+            w2_bf16,
+            num_local_experts=num_local_experts,
+            hidden_size=hidden_size,
+            intermediate_size=intermediate_size,
+            activation=activation,
+            device=device,
+        )
+
+    def __repr__(self) -> str:
+        return "CutlassNvfp4Config()"
+
+CutlassNvfp4Runner:
+class CutlassNvfp4Runner(_CutlassRunnerBase):
+    """Unified adapter for CUTLASS NVFP4 fused MoE.
+
+    Weights stay packed uint8 in the ``MoEWeightPack`` view. At launch they are
+    viewed as ``int64``, matching the flat ``cutlass_fused_moe`` NVFP4 ABI; the
+    inner ``MoERunner`` selects the NVFP4 kernel from that dtype. Activations
+    remain BF16 and are quantized inside the kernel with unit global scale.
+    """
+
+    backend_key = "cutlass_nvfp4"
+    supported_quant_variants = ((QuantFormat.NVFP4, QuantFormat.NVFP4),)
+    supported_activation_classes = _CUTLASS_SEMANTIC_ACTIVATIONS
+    _supported_archs = _CUTLASS_NVFP4_ARCHS
+    _weight_dtype = torch.int64
+    _use_w4_group_scaling = False
+    _required_weight_keys = (
+        "fc1_expert_weights",
+        "fc2_expert_weights",
+        "fc1_act_global_scale",
+        "fc1_weight_block_scale",
+        "fc1_dequant_scale",
+        "fc2_act_global_scale",
+        "fc2_weight_block_scale",
+        "fc2_dequant_scale",
+    )
+    _expected_num_inputs = 12
+
+    def _pack_weight_inputs(
+        self, view: dict[str, torch.Tensor], hidden_size: int
+    ) -> List[torch.Tensor]:
+        (
+            w1,
+            w2,
+            a1_gs,
+            w1_scale,
+            fc1_dequant,
+            a2_gs,
+            w2_scale,
+            fc2_dequant,
+        ) = (view[key] for key in self._required_weight_keys)
+        num_experts = self.config.routing.num_experts
+        intermediate_size = self.config.experts.intermediate_size
+        if hidden_size % 16 != 0 or intermediate_size % 16 != 0:
+            raise ValueError(
+                "Cutlass NVFP4 requires hidden_size and intermediate_size "
+                f"divisible by 16, got H={hidden_size}, I={intermediate_size}."
+            )
+        gemm1_rows = intermediate_size * (2 if self.config.activation.is_gated else 1)
+        expected_w1 = (num_experts, gemm1_rows, hidden_size // 2)
+        expected_w2 = (num_experts, hidden_size, intermediate_size // 2)
+        expected_s1 = (
+            num_experts,
+            round_up(gemm1_rows, 128),
+            round_up(hidden_size // 16, 4),
+        )
+        expected_s2 = (
+            num_experts,
+            round_up(hidden_size, 128),
+            round_up(intermediate_size // 16, 4),
+        )
+        if w1.dtype is not torch.uint8 or w2.dtype is not torch.uint8:
+            raise TypeError("Cutlass NVFP4 packed weights must be uint8.")
+        if w1_scale.dtype is not torch.uint8 or w2_scale.dtype is not torch.uint8:
+            raise TypeError("Cutlass NVFP4 block scales must be uint8.")
+        if any(
+            t.dtype is not torch.float32
+            for t in (a1_gs, a2_gs, fc1_dequant, fc2_dequant)
+        ):
+            raise TypeError("Cutlass NVFP4 global and dequant scales must be float32.")
+        if (tuple(w1.shape), tuple(w2.shape)) != (expected_w1, expected_w2):
+            raise ValueError(
+                f"Cutlass NVFP4 weight shapes {tuple(w1.shape)}/{tuple(w2.shape)} "
+                f"!= expected {expected_w1}/{expected_w2}."
+            )
+        if (tuple(w1_scale.shape), tuple(w2_scale.shape)) != (
+            expected_s1,
+            expected_s2,
+        ):
+            raise ValueError(
+                "Cutlass NVFP4 scale shapes "
+                f"{tuple(w1_scale.shape)}/{tuple(w2_scale.shape)} != expected "
+                f"{expected_s1}/{expected_s2}."
+            )
+        expected_dequant = (num_experts,)
+        if (
+            tuple(fc1_dequant.shape) != expected_dequant
+            or tuple(fc2_dequant.shape) != expected_dequant
+        ):
+            raise ValueError(
+                "Cutlass NVFP4 dequant scale shapes "
+                f"{tuple(fc1_dequant.shape)}/{tuple(fc2_dequant.shape)} != "
+                f"expected {expected_dequant}."
+            )
+        self._validate_weight_storage(
+            (w1, w2, a1_gs, w1_scale, fc1_dequant, a2_gs, w2_scale, fc2_dequant)
+        )
+        # Flat NVFP4 CUTLASS selects the kernel from weight dtype int64.
+        return [
+            w1.view(torch.int64),
+            w2.view(torch.int64),
+            a1_gs,
+            w1_scale,
+            fc1_dequant,
+            a2_gs,
+            w2_scale,
+            fc2_dequant,
+        ]
+
+    def _quant_scales(self, inputs: List[torch.Tensor]) -> List[torch.Tensor]:
+        return [
+            inputs[6],
+            inputs[7].view(torch.int32),
+            inputs[8],
+            inputs[9],
+            inputs[10].view(torch.int32),
+            inputs[11],
+        ]
+

@@ -1,0 +1,84 @@
+ p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_moe_w4a16-wltldwhi/run/submission.py", line 21, in kernel_fn
+    if hasattr(flashinfer, 'grouped_mm_fp4'):
+               ^^^^^^^^^^
+NameError: name 'flashinfer' is not defined
+=== CutlassNvfp4Runner ===
+init: (self, config: 'MoEConfig', device: 'torch.device')
+forward: (self, inputs: 'List[torch.Tensor]', tactic: 'Any' = -1, do_preparation: 'bool' = False, **kwargs: 'Any') -> 'torch.Tensor'
+=== TrtllmFp4RoutedRunner ===
+init: (self, config: 'MoEConfig', device: 'torch.device')
+forward: (self, inputs: 'List[torch.Tensor]', tactic: 'Any' = -1, do_preparation: 'bool' = False, **kwargs: 'Any') -> 'torch.Tensor | List[torch.Tensor]'
+=== cutlass_fused_moe ===
+sig: (input: torch.Tensor, token_selected_experts: torch.Tensor, token_final_scales: torch.Tensor, fc1_expert_weights: torch.Tensor, fc2_expert_weights: torch.Tensor, output_dtype: torch.dtype, quant_scales: List[torch.Tensor], fc1_expert_biases: Optional[torch.Tensor] = None, fc2_expert_biases: Optional[torch.Tensor] = None, input_sf: Optional[torch.Tensor] = None, swiglu_alpha: Optional[torch.Tensor] = None, swiglu_beta: Optional[torch.Tensor] = None, swiglu_limit: Optional[torch.Tensor] = None, tp_size: int = 1, tp_rank: int = 0, ep_size: int = 1, ep_rank: int = 0, cluster_size: int = 1, cluster_rank: int = 0, output: Optional[torch.Tensor] = None, enable_alltoall: bool = False, use_deepseek_fp8_block_scale: bool = False, use_w4_group_scaling: bool = False, use_mxfp8_act_scaling: bool = False, min_latency_mode: bool = False, use_packed_weights: bool = False, use_wfp4afp8_humming: bool = False, tune_max_num_tokens: int = 8192, enable_pdl: Optional[bool] = None, activation_type: flashinfer.tllm_enums.ActivationType = ActivationType.Swiglu, swizzled_input_sf: bool = True, use_fused_finalize: bool = True, profile_ids: Optional[List[int]] = None, workspace_buffer: Optional[torch.Tensor] = None, *, situ_beta: Optional[torch.Tensor] = None, situ_linear_beta: Optional[torch.Tensor] = None) -> torch.Tensor
+=== trtllm_fp4_block_scale_routed_moe ===
+sig: (topk_ids: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]], routing_bias: Optional[torch.Tensor], hidden_states: torch.Tensor, hidden_states_scale: Optional[torch.Tensor], gemm1_weights: torch.Tensor, gemm1_weights_scale: torch.Tensor, gemm1_bias: Optional[torch.Tensor], gemm1_alpha: Optional[torch.Tensor], gemm1_beta: Optional[torch.Tensor], gemm1_clamp_limit: Optional[torch.Tensor], gemm2_weights: torch.Tensor, gemm2_weights_scale: torch.Tensor, gemm2_bias: Optional[torch.Tensor], output1_scale_scalar: Optional[torch.Tensor], output1_scale_gate_scalar: Optional[torch.Tensor], output2_scale_scalar: Optional[torch.Tensor], num_experts: int, top_k: int, n_group: Optional[int], topk_group: Optional[int], intermediate_size: int, local_expert_offset: int, local_num_experts: int, routed_scaling_factor: Optional[float], routing_method_type: int = 0, do_finalize: bool = True, enable_pdl: Optional[bool] = None, activation_type: int = 3, per_token_scale: Optional[torch.Tensor] = None, output: Optional[torch.Tensor] = None, tune_max_num_tokens: int = 8192, gemm1_lora_delta: Optional[torch.Tensor] = None, valid_hidden_size: Optional[int] = None, valid_intermediate_size: Optional[int] = None, num_fused_shared_experts: Optional[int] = None, hidden_states_scale_layout: Optional[flashinfer.tllm_enums.SfLayout] = None) -> List[torch.Tensor]
+=== prims_ts_fp4_block_scale_routed_moe ===
+sig: (topk_ids: 'Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]', routing_bias: 'Optional[torch.Tensor]', hidden_states: 'torch.Tensor', hidden_states_scale: 'Optional[torch.Tensor]', gemm1_weights: 'torch.Tensor', gemm1_weights_scale: 'torch.Tensor', gemm1_bias: 'Optional[torch.Tensor]', gemm1_alpha: 'Optional[torch.Tensor]', gemm1_beta: 'Optional[torch.Tensor]', gemm1_clamp_limit: 'Optional[torch.Tensor]', gemm2_weights: 'torch.Tensor', gemm2_weights_scale: 'torch.Tensor', gemm2_bias: 'Optional[torch.Tensor]', output1_scale_scalar: 'Optional[torch.Tensor]', output1_scale_gate_scalar: 'Optional[torch.Tensor]', output2_scale_scalar: 'Optional[torch.Tensor]', num_experts: 'int', top_k: 'int', n_group: 'Optional[int]', topk_group: 'Optional[int]', intermediate_size: 'int', local_expert_offset: 'int', local_num_experts: 'int', routed_scaling_factor: 'Optional[float]', routing_method_type: 'int' = 0, weight_layout: 'int' = 0, do_finalize: 'bool' = True, enable_pdl: 'Optional[bool]' = None, activation_type: 'int' = 3, per_token_scale: 'Optional[torch.Tensor]' = None, output: 'Optional[torch.Tensor]' = None, tune_max_num_tokens: 'int' = 8192) -> 'List[torch.Tensor]'
+=== B12xNvfp4Runner ===
+init: (self, config: 'MoEConfig', device: 'torch.device')
+forward: (self, inputs: 'List[torch.Tensor]', tactic: 'Any' = -1, do_preparation: 'bool' = False, **kwargs: 'Any') -> 'torch.Tensor'
+Traceback (most recent call last):
+  File "/tmp/muse_moe_w4a16-wltldwhi/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_moe_w4a16-wltldwhi/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_moe_w4a16-wltldwhi/run/submission.py", line 21, in kernel_fn
+    if hasattr(flashinfer, 'grouped_mm_fp4'):
+               ^^^^^^^^^^
+NameError: name 'flashinfer' is not defined
+=== CutlassNvfp4Runner ===
+init: (self, config: 'MoEConfig', device: 'torch.device')
+forward: (self, inputs: 'List[torch.Tensor]', tactic: 'Any' = -1, do_preparation: 'bool' = False, **kwargs: 'Any') -> 'torch.Tensor'
+=== TrtllmFp4RoutedRunner ===
+init: (self, config: 'MoEConfig', device: 'torch.device')
+forward: (self, inputs: 'List[torch.Tensor]', tactic: 'Any' = -1, do_preparation: 'bool' = False, **kwargs: 'Any') -> 'torch.Tensor | List[torch.Tensor]'
+=== cutlass_fused_moe ===
+sig: (input: torch.Tensor, token_selected_experts: torch.Tensor, token_final_scales: torch.Tensor, fc1_expert_weights: torch.Tensor, fc2_expert_weights: torch.Tensor, output_dtype: torch.dtype, quant_scales: List[torch.Tensor], fc1_expert_biases: Optional[torch.Tensor] = None, fc2_expert_biases: Optional[torch.Tensor] = None, input_sf: Optional[torch.Tensor] = None, swiglu_alpha: Optional[torch.Tensor] = None, swiglu_beta: Optional[torch.Tensor] = None, swiglu_limit: Optional[torch.Tensor] = None, tp_size: int = 1, tp_rank: int = 0, ep_size: int = 1, ep_rank: int = 0, cluster_size: int = 1, cluster_rank: int = 0, output: Optional[torch.Tensor] = None, enable_alltoall: bool = False, use_deepseek_fp8_block_scale: bool = False, use_w4_group_scaling: bool = False, use_mxfp8_act_scaling: bool = False, min_latency_mode: bool = False, use_packed_weights: bool = False, use_wfp4afp8_humming: bool = False, tune_max_num_tokens: int = 8192, enable_pdl: Optional[bool] = None, activation_type: flashinfer.tllm_enums.ActivationType = ActivationType.Swiglu, swizzled_input_sf: bool = True, use_fused_finalize: bool = True, profile_ids: Optional[List[int]] = None, workspace_buffer: Optional[torch.Tensor] = None, *, situ_beta: Optional[torch.Tensor] = None, situ_linear_beta: Optional[torch.Tensor] = None) -> torch.Tensor
+=== trtllm_fp4_block_scale_routed_moe ===
+sig: (topk_ids: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]], routing_bias: Optional[torch.Tensor], hidden_states: torch.Tensor, hidden_states_scale: Optional[torch.Tensor], gemm1_weights: torch.Tensor, gemm1_weights_scale: torch.Tensor, gemm1_bias: Optional[torch.Tensor], gemm1_alpha: Optional[torch.Tensor], gemm1_beta: Optional[torch.Tensor], gemm1_clamp_limit: Optional[torch.Tensor], gemm2_weights: torch.Tensor, gemm2_weights_scale: torch.Tensor, gemm2_bias: Optional[torch.Tensor], output1_scale_scalar: Optional[torch.Tensor], output1_scale_gate_scalar: Optional[torch.Tensor], output2_scale_scalar: Optional[torch.Tensor], num_experts: int, top_k: int, n_group: Optional[int], topk_group: Optional[int], intermediate_size: int, local_expert_offset: int, local_num_experts: int, routed_scaling_factor: Optional[float], routing_method_type: int = 0, do_finalize: bool = True, enable_pdl: Optional[bool] = None, activation_type: int = 3, per_token_scale: Optional[torch.Tensor] = None, output: Optional[torch.Tensor] = None, tune_max_num_tokens: int = 8192, gemm1_lora_delta: Optional[torch.Tensor] = None, valid_hidden_size: Optional[int] = None, valid_intermediate_size: Optional[int] = None, num_fused_shared_experts: Optional[int] = None, hidden_states_scale_layout: Optional[flashinfer.tllm_enums.SfLayout] = None) -> List[torch.Tensor]
+=== prims_ts_fp4_block_scale_routed_moe ===
+sig: (topk_ids: 'Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]', routing_bias: 'Optional[torch.Tensor]', hidden_states: 'torch.Tensor', hidden_states_scale: 'Optional[torch.Tensor]', gemm1_weights: 'torch.Tensor', gemm1_weights_scale: 'torch.Tensor', gemm1_bias: 'Optional[torch.Tensor]', gemm1_alpha: 'Optional[torch.Tensor]', gemm1_beta: 'Optional[torch.Tensor]', gemm1_clamp_limit: 'Optional[torch.Tensor]', gemm2_weights: 'torch.Tensor', gemm2_weights_scale: 'torch.Tensor', gemm2_bias: 'Optional[torch.Tensor]', output1_scale_scalar: 'Optional[torch.Tensor]', output1_scale_gate_scalar: 'Optional[torch.Tensor]', output2_scale_scalar: 'Optional[torch.Tensor]', num_experts: 'int', top_k: 'int', n_group: 'Optional[int]', topk_group: 'Optional[int]', intermediate_size: 'int', local_expert_offset: 'int', local_num_experts: 'int', routed_scaling_factor: 'Optional[float]', routing_method_type: 'int' = 0, weight_layout: 'int' = 0, do_finalize: 'bool' = True, enable_pdl: 'Optional[bool]' = None, activation_type: 'int' = 3, per_token_scale: 'Optional[torch.Tensor]' = None, output: 'Optional[torch.Tensor]' = None, tune_max_num_tokens: 'int' = 8192) -> 'List[torch.Tensor]'
+=== B12xNvfp4Runner ===
+init: (self, config: 'MoEConfig', device: 'torch.device')
+forward: (self, inputs: 'List[torch.Tensor]', tactic: 'Any' = -1, do_preparation: 'bool' = False, **kwargs: 'Any') -> 'torch.Tensor'
+Traceback (most recent call last):
+  File "/tmp/muse_moe_w4a16-wltldwhi/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_moe_w4a16-wltldwhi/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_moe_w4a16-wltldwhi/run/submission.py", line 21, in kernel_fn
+    if hasattr(flashinfer, 'grouped_mm_fp4'):
+               ^^^^^^^^^^
+NameError: name 'flashinfer' is not defined
+=== CutlassNvfp4Runner ===
+init: (self, config: 'MoEConfig', device: 'torch.device')
+forward: (self, inputs: 'List[torch.Tensor]', tactic: 'Any' = -1, do_preparation: 'bool' = False, **kwargs: 'Any') -> 'torch.Tensor'
+=== TrtllmFp4RoutedRunner ===
+init: (self, config: 'MoEConfig', device: 'torch.device')
+forward: (self, inputs: 'List[torch.Tensor]', tactic: 'Any' = -1, do_preparation: 'bool' = False, **kwargs: 'Any') -> 'torch.Tensor | List[torch.Tensor]'
+=== cutlass_fused_moe ===
+sig: (input: torch.Tensor, token_selected_experts: torch.Tensor, token_final_scales: torch.Tensor, fc1_expert_weights: torch.Tensor, fc2_expert_weights: torch.Tensor, output_dtype: torch.dtype, quant_scales: List[torch.Tensor], fc1_expert_biases: Optional[torch.Tensor] = None, fc2_expert_biases: Optional[torch.Tensor] = None, input_sf: Optional[torch.Tensor] = None, swiglu_alpha: Optional[torch.Tensor] = None, swiglu_beta: Optional[torch.Tensor] = None, swiglu_limit: Optional[torch.Tensor] = None, tp_size: int = 1, tp_rank: int = 0, ep_size: int = 1, ep_rank: int = 0, cluster_size: int = 1, cluster_rank: int = 0, output: Optional[torch.Tensor] = None, enable_alltoall: bool = False, use_deepseek_fp8_block_scale: bool = False, use_w4_group_scaling: bool = False, use_mxfp8_act_scaling: bool = False, min_latency_mode: bool = False, use_packed_weights: bool = False, use_wfp4afp8_humming: bool = False, tune_max_num_tokens: int = 8192, enable_pdl: Optional[bool] = None, activation_type: flashinfer.tllm_enums.ActivationType = ActivationType.Swiglu, swizzled_input_sf: bool = True, use_fused_finalize: bool = True, profile_ids: Optional[List[int]] = None, workspace_buffer: Optional[torch.Tensor] = None, *, situ_beta: Optional[torch.Tensor] = None, situ_linear_beta: Optional[torch.Tensor] = None) -> torch.Tensor
+=== trtllm_fp4_block_scale_routed_moe ===
+sig: (topk_ids: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]], routing_bias: Optional[torch.Tensor], hidden_states: torch.Tensor, hidden_states_scale: Optional[torch.Tensor], gemm1_weights: torch.Tensor, gemm1_weights_scale: torch.Tensor, gemm1_bias: Optional[torch.Tensor], gemm1_alpha: Optional[torch.Tensor], gemm1_beta: Optional[torch.Tensor], gemm1_clamp_limit: Optional[torch.Tensor], gemm2_weights: torch.Tensor, gemm2_weights_scale: torch.Tensor, gemm2_bias: Optional[torch.Tensor], output1_scale_scalar: Optional[torch.Tensor], output1_scale_gate_scalar: Optional[torch.Tensor], output2_scale_scalar: Optional[torch.Tensor], num_experts: int, top_k: int, n_group: Optional[int], topk_group: Optional[int], intermediate_size: int, local_expert_offset: int, local_num_experts: int, routed_scaling_factor: Optional[float], routing_method_type: int = 0, do_finalize: bool = True, enable_pdl: Optional[bool] = None, activation_type: int = 3, per_token_scale: Optional[torch.Tensor] = None, output: Optional[torch.Tensor] = None, tune_max_num_tokens: int = 8192, gemm1_lora_delta: Optional[torch.Tensor] = None, valid_hidden_size: Optional[int] = None, valid_intermediate_size: Optional[int] = None, num_fused_shared_experts: Optional[int] = None, hidden_states_scale_layout: Optional[flashinfer.tllm_enums.SfLayout] = None) -> List[torch.Tensor]
+=== prims_ts_fp4_block_scale_routed_moe ===
+sig: (topk_ids: 'Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]', routing_bias: 'Optional[torch.Tensor]', hidden_states: 'torch.Tensor', hidden_states_scale: 'Optional[torch.Tensor]', gemm1_weights: 'torch.Tensor', gemm1_weights_scale: 'torch.Tensor', gemm1_bias: 'Optional[torch.Tensor]', gemm1_alpha: 'Optional[torch.Tensor]', gemm1_beta: 'Optional[torch.Tensor]', gemm1_clamp_limit: 'Optional[torch.Tensor]', gemm2_weights: 'torch.Tensor', gemm2_weights_scale: 'torch.Tensor', gemm2_bias: 'Optional[torch.Tensor]', output1_scale_scalar: 'Optional[torch.Tensor]', output1_scale_gate_scalar: 'Optional[torch.Tensor]', output2_scale_scalar: 'Optional[torch.Tensor]', num_experts: 'int', top_k: 'int', n_group: 'Optional[int]', topk_group: 'Optional[int]', intermediate_size: 'int', local_expert_offset: 'int', local_num_experts: 'int', routed_scaling_factor: 'Optional[float]', routing_method_type: 'int' = 0, weight_layout: 'int' = 0, do_finalize: 'bool' = True, enable_pdl: 'Optional[bool]' = None, activation_type: 'int' = 3, per_token_scale: 'Optional[torch.Tensor]' = None, output: 'Optional[torch.Tensor]' = None, tune_max_num_tokens: 'int' = 8192) -> 'List[torch.Tensor]'
+=== B12xNvfp4Runner ===
+init: (self, config: 'MoEConfig', device: 'torch.device')
+forward: (self, inputs: 'List[torch.Tensor]', tactic: 'Any' = -1, do_preparation: 'bool' = False, **kwargs: 'Any') -> 'torch.Tensor'
+Traceback (most recent call last):
+  File "/tmp/muse_moe_w4a16-wltldwhi/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_moe_w4a16-wltldwhi/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_moe_w4a16-wltldwhi/run/submission.py", line 21, in kernel_fn
+    if hasattr(flashinfer, 'grouped_mm_fp4'):
+               ^^^^^^^^^^
+NameError: name 'flashinfer' is not defined

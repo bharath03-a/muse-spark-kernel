@@ -1,0 +1,37 @@
+zip build 33.0s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 137
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 121
+qkv zip variant id 39 disabled: ValueError: accuracy at m=1
+qkv zip m=1 id 110: 14.30 us (base id 121: 14.40)
+qkv zip m=1 id 31: 15.04 us (base id 121: 14.40)
+qkv zip m=1 id 44: 15.14 us (base id 121: 14.40)
+qkv zip m=1 id 25: 15.10 us (base id 121: 14.40)
+qkv zip m=8 id 110: 14.59 us (base id 121: 14.66)
+qkv zip m=8 id 31: 15.36 us (base id 121: 14.66)
+qkv zip m=8 id 44: 15.26 us (base id 121: 14.66)
+qkv zip m=8 id 25: 15.42 us (base id 121: 14.66)
+qkv zip picked m=1 id 121, m=2-8 id 121
+zip prepare 33.3s
+r9 build 31.0s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.10 id3=18.91 -> id3
+r9 prepare 31.0s picks={('qkv_gate', 128): 3}
+r15 lt build 15.8s cublasLt 130101
+r15 qkv_gate m=128 cands=20 (raw us) cp10=18.82 c14=19.87 c12=19.84 c3=20.16 best=a66t92s35k1r0z0c7 -> cp10
+r15 qkv_gate m=256 cands=15 (raw us) cp10=23.10 c9=22.18 c10=23.74 c0=23.46 best=a66t134s35k1r0z0c9 -> lt
+r15 o m=128 cands=8 (raw us) cp10=10.91 c0=11.17 c4=11.42 c5=11.71 best=a66t18s35k1r0z0c5 -> cp10
+r15 o m=256 cands=8 (raw us) cp10=12.77 c0=13.02 c1=13.18 c5=13.31 best=a66t20s35k1r0z0c3 -> cp10
+r15 pooler m=128 cands=15 (raw us) cp10=25.54 c8=26.34 c10=25.98 c11=25.95 best=a66t27s35k1r0z0c7 -> cp10
+r15 pooler m=256 cands=12 (raw us) cp10=30.24 c8=30.08 c3=31.74 c10=32.06 best=a66t183s35k1r0z0c9 -> cp10
+r15 unpooler m=128 cands=12 (raw us) cp10=23.01 c0=23.39 c2=24.26 c10=24.67 best=a66t18s35k1r0z0c5 -> cp10
+r15 unpooler m=256 cands=8 (raw us) cp10=27.65 c0=28.03 c2=30.02 c1=33.44 best=a66t20s35k1r0z0c3 -> cp10
+r15 prepare 16.2s total 116.2s picks=qkv_gate256
+slice m2: old 9.50 new 8.80
+slice m4: old 11.52 new 8.86
+slice m8: old 9.54 new 9.02
+slice mma path enabled m 2-8
+cp14 whole-layer prepare seconds: 184.5
+v48 prepare 0s before tuning
+strict combo prepare seconds 184.69982736901147

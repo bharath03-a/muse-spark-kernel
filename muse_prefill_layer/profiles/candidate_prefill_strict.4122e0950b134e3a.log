@@ -1,0 +1,27 @@
+pf2 w4g packed in 0.2s, smem 202384044632
+pf2 compiled at 48.9s (lean True)
+pf2 deep_gemm 0.2.1.post1+muse.cbe1727 ['bf16_m_grouped_gemm_nt_masked', 'fp8_m_grouped_gemm_nt_masked', 'get_k_grouped_mn_major_tma_aligned_packed_ue8m0_tensor', 'k_grouped_bf16_gemm_tn_contiguous', 'k_grouped_fp4_gemm_nt_contiguous', 'k_grouped_fp8_gemm_nt_contiguous', 'k_grouped_fp8_gemm_tn_contiguous', 'm_grouped_bf16_gemm_nn_contiguous', 'm_grouped_bf16_gemm_nt_contiguous', 'm_grouped_bf16_gemm_nt_masked', 'm_grouped_fp4_gemm_nt_contiguous', 'm_grouped_fp4_gemm_nt_masked']
+pf2 lt o m3012 torch 75.3us best 0:66.197.1.0.0.0.35.0.5 70.5us (12 tried, 0.2s)
+pf2 lt o m16384 torch 376.2us best 3:66.29.1.0.0.1.35.0.3 338.0us (12 tried, 0.3s)
+pf2 lt pooler m16384 torch 1524.1us best 0:66.24.1.0.0.7.35.0.5 1450.3us (12 tried, 0.7s)
+pf2 lt unpooler m16384 torch 1529.2us best 0:66.197.1.0.0.2.35.0.5 1460.6us (12 tried, 1.0s)
+pf2 moe T753 coarse (us, MoE = graph - context 96): w4k1w 488 h432ak1w 497 w4k1m 500 w4k1 511 h496ak1w 518 h4192ak1w 535 qa 556 qb 668 h256ao 676 h384ad 676 h384ao 676 h512ao 677 h1024ao 690 h768ao 691 mar 746 bigo 1192 big 1197
+pf2 moe T753 final x7 (MoE us median +- spread, err): w4k1w 481+-1 3e-04 w4k1m 492+-1 3e-04 h432ak1w 500+-8 7e-04 w4k1 503+-1 3e-04 h496ak1w 519+-10 1e-03 qa 546+-1 5e-05 -> w4k1w
+pf2 moe T3012 coarse (us, MoE = graph - context 317): w4k1w 1293 w4k1m 1306 h496ak1w 1329 h4192ak1w 1346 h432ak1w 1377 w4k1 1410 h384ad 1431 h384a 1435 h256a 1463 h512a 1522 h1024a 1562 h768a 1563 qa 1960 big 1969 bigo 1971 qb 1996 mar 2340
+pf2 moe T3012 final x7 (MoE us median +- spread, err): w4k1w 1270+-14 4e-04 w4k1m 1302+-2 4e-04 h496ak1w 1358+-8 7e-04 h4192ak1w 1359+-15 8e-04 w4k1 1382+-22 4e-04 h432ak1w 1389+-15 5e-04 qa 1983+-28 6e-05 -> w4k1w
+pf2 moe T16384 coarse (us, MoE = graph - context 1693): bigo 5580 big 5737 w4k1w 5785 h512bo 5792 h384bo 5808 w4k1m 5812 h256bo 5819 h768bo 6065 h384bd 6126 h1024bo 6288 h4192bk1w 6468 h496bk1w 6625 h432bk1w 6663 w4k1 6787 qb 10985 qa 11414
+pf2 moe T16384 final x7 (MoE us median +- spread, err): bigo 5935+-217 0e+00 big 5975+-181 0e+00 h384bo 6222+-124 1e-03 w4k1m 6223+-241 5e-03 h512bo 6326+-187 1e-03 w4k1w 6360+-243 5e-03 w4k1 7481+-368 5e-03 -> big
+pf2 moe T16384: pinned w4k1m (err 5e-03; the context graph under-rates w4 at this size)
+pf2 kvc B1 L753 ctx80000 win0: paged 469.4us contiguous 448.8us err 0.0e+00 -> True
+pf2 fa3 B1 L753 ctx80000 win0 (us): default 448.8 8p 420.9 8 421.6 6p 421.7 3p 421.8 6 422.5 4p 422.7 -> {'num_splits': 8, 'pack_gqa': True}
+pf2 kvc B1 L753 ctx80000 win2048: paged 35.1us contiguous 37.3us err 0.0e+00 -> False
+pf2 fa3 B1 L753 ctx80000 win2048 (us): default 35.1 6p 34.9 2 35.1 4 35.1 6 35.1 8p 35.1 3 35.1 -> None
+pf2 kvc B4 L753 ctx80000 win0: paged 1630.4us contiguous 1584.1us err 0.0e+00 -> True
+pf2 fa3 B4 L753 ctx80000 win0 (us): default 1584.1 1p 1576.3 8p 1590.4 3p 1591.4 4 1591.5 8 1593.1 4p 1593.9 -> None
+pf2 kvc B4 L753 ctx80000 win2048: paged 66.7us contiguous 67.1us err 0.0e+00 -> False
+pf2 fa3 B4 L753 ctx80000 win2048 (us): default 66.7 1p 66.7 1 66.8 2p 68.5 4 68.5 2 68.6 3 68.6 -> None
+pf2 kvc B1 L16384 ctx32768 win0: paged 4464.9us contiguous 4244.2us err 0.0e+00 -> True
+pf2 fa3 B1 L16384 ctx32768 win0 (us): default 4244.2 1p 4246.0 8p 4305.3 2p 4306.2 6p 4306.5 3p 4306.8 4 4307.5 -> None
+pf2 kvc B1 L16384 ctx32768 win2048: paged 306.0us contiguous 291.1us err 0.0e+00 -> True
+pf2 fa3 B1 L16384 ctx32768 win2048 (us): default 291.1 1p 291.4 8p 307.4 6 307.7 8 307.8 2 308.0 6p 308.0 -> None
+pf2 prepare done at 57.6s

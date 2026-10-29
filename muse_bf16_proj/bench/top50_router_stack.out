@@ -1,0 +1,41 @@
+✓ Initialized. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-HMMv61Kjk5KLPAOyqaehGI
+✓ Created objects.
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/mo
+│   dal_app.py
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj
+├── ✓ Created Function env.
+├── ✓ Created Function correct.
+├── ✓ Created Function bench.
+├── ✓ Created Function micro.
+├── ✓ Created Function session.
+├── ✓ Created Function compile_only.
+└── ✓ Created Function inspect.
+CHECK stacked512_mm_sum m128 normal rel3.776e-06 row4.167e-06
+CHECK two256_mm_sum m128 normal rel2.81e-06 row3.198e-06
+CHECK cp14_cuda m128 normal rel2.652e-06 row3.036e-06
+CHECK stacked512_mm_sum m128 outliers rel4.034e-06 row4.692e-06
+CHECK two256_mm_sum m128 outliers rel2.93e-06 row3.537e-06
+CHECK cp14_cuda m128 outliers rel2.743e-06 row3.26e-06
+CHECK stacked512_mm_sum m128 onehot rel2.437e-06 row3.074e-06
+CHECK two256_mm_sum m128 onehot rel2.437e-06 row3.074e-06
+CHECK cp14_cuda m128 onehot rel2.437e-06 row3.074e-06
+ROUTER_RAW_COLD_US m128 {'stacked512_mm_sum': 16.096, 'two256_mm_sum': 21.296, 'cp14_cuda': 12.176}
+CHECK stacked512_mm_sum m256 normal rel3.766e-06 row4.205e-06
+CHECK two256_mm_sum m256 normal rel3.766e-06 row4.205e-06
+CHECK cp14_cuda m256 normal rel3.222e-06 row3.66e-06
+CHECK stacked512_mm_sum m256 outliers rel4.069e-06 row4.738e-06
+CHECK two256_mm_sum m256 outliers rel4.069e-06 row4.738e-06
+CHECK cp14_cuda m256 outliers rel3.452e-06 row4e-06
+CHECK stacked512_mm_sum m256 onehot rel2.444e-06 row3.074e-06
+CHECK two256_mm_sum m256 onehot rel2.444e-06 row3.074e-06
+CHECK cp14_cuda m256 onehot rel2.444e-06 row3.074e-06
+ROUTER_RAW_COLD_US m256 {'stacked512_mm_sum': 17.296, 'two256_mm_sum': 24.672, 'cp14_cuda': 15.056}
+router_stack total 1.70s
+Stopping app - local entrypoint completed.
+✓ App completed. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-HMMv61Kjk5KLPAOyqaehGI
+
+[gpu_q] top50 top50_router_stack: 49s, rc=0; budget used 1723/1800s

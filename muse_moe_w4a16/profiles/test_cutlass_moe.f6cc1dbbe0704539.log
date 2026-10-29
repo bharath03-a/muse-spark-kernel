@@ -1,0 +1,10 @@
+Testing cutlass_fused_moe with x=torch.Size([4, 4096]), topk_ids=torch.Size([4, 8])
+cutlass_fused_moe error: Check failed: (!mAllProfiles.empty()) is false: No valid tactics available for fused moe op with the requested input combination Activation: bfloat16, Weight: int64, Output: bfloat16
+Testing cutlass_fused_moe with x=torch.Size([33, 4096]), topk_ids=torch.Size([33, 8])
+cutlass_fused_moe error: Check failed: (!mAllProfiles.empty()) is false: No valid tactics available for fused moe op with the requested input combination Activation: bfloat16, Weight: int64, Output: bfloat16
+Testing cutlass_fused_moe with x=torch.Size([257, 4096]), topk_ids=torch.Size([257, 8])
+cutlass_fused_moe error: Check failed: (!mAllProfiles.empty()) is false: No valid tactics available for fused moe op with the requested input combination Activation: bfloat16, Weight: int64, Output: bfloat16
+Testing cutlass_fused_moe with x=torch.Size([128, 4096]), topk_ids=torch.Size([128, 8])
+cutlass_fused_moe error: Check failed: (!mAllProfiles.empty()) is false: No valid tactics available for fused moe op with the requested input combination Activation: bfloat16, Weight: int64, Output: bfloat16
+Testing cutlass_fused_moe with x=torch.Size([1, 4096]), topk_ids=torch.Size([1, 8])
+cutlass_fused_moe error: Check failed: (!mAllProfiles.empty()) is false: No valid tactics available for fused moe op with the requested input combination Activation: bfloat16, Weight: int64, Output: bfloat16

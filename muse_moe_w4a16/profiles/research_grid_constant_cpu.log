@@ -1,0 +1,60 @@
+✓ Initialized. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-c9oW1nw4yHUQUCtr4MbRD0
+✓ Created objects.
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/re
+│   search/modal_queue_research.py
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/research_harness
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16
+├── ✓ Created Function compile_and_inspect.
+├── ✓ Created Function compare_queue.
+├── ✓ Created Function compile_heavy.
+└── ✓ Created Function compile_grid_constant.
+W1027 20:23:14.179000 2 torch/utils/cpp_extension.py:183] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+COMPILE_GRID_OK v17 60.84835918 /cache/torch_ext/moe_gridconstant_v30_16_2/moe_gridconstant_v30_16_2.so
+GRID_RESOURCES v17 
+Fatbin elf code:
+================
+arch = sm_90a
+code version = [1,8]
+host = linux
+compile_size = 64bit
+identifier = /cache/torch_ext/moe_gridconstant_v30_16_2/cuda.cu
+
+Resource usage:
+ Common:
+  GLOBAL:28 CONSTANT[4]:224
+ Function _Z10moe_kernel1P:
+  REG:128 STACK:24 SHARED:1024 LOCAL:0 CONSTANT[0]:664 TEXTURE:0 SURFACE:0 SAMPLER:0
+
+GRID_SASS_COUNT v17 LDL 26
+GRID_SASS_COUNT v17 STL 6
+GRID_SASS_COUNT v17 LDC 69
+GRID_SASS_COUNT v17 SHFL 134
+GRID_SASS_COUNT v17 MATCH 0
+COMPILE_GRID_OK ring 121.503782666 /cache/torch_ext/moe_gridconstant_v30L_DRPW2_DNSLOT4/moe_gridconstant_v30L_DRPW2_DNSLOT4.so
+GRID_RESOURCES ring 
+Fatbin elf code:
+================
+arch = sm_90a
+code version = [1,8]
+host = linux
+compile_size = 64bit
+identifier = /cache/torch_ext/moe_gridconstant_v30L_DRPW2_DNSLOT4/cuda.cu
+
+Resource usage:
+ Common:
+  GLOBAL:28 CONSTANT[4]:224
+ Function _Z10moe_kernel1P:
+  REG:130 STACK:0 SHARED:1024 LOCAL:0 CONSTANT[0]:664 TEXTURE:0 SURFACE:0 SAMPLER:0
+
+GRID_SASS_COUNT ring LDL 0
+GRID_SASS_COUNT ring STL 0
+GRID_SASS_COUNT ring LDC 34
+GRID_SASS_COUNT ring SHFL 236
+GRID_SASS_COUNT ring MATCH 3
+Stopping app - local entrypoint completed.
+✓ App completed. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-c9oW1nw4yHUQUCtr4MbRD0

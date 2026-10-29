@@ -1,0 +1,154 @@
+✓ Initialized. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-cHao6zZDS4gXzTp5DzXRJ1
+✓ Created objects.
+├── ✓ Uploaded 
+│   /var/folders/dt/nf7j33w51gj7cv6bx6633tm40000gn/T/muse_router_cpu_32cx1liw/mo
+│   dal_app.py
+├── ✓ Uploaded 
+│   /var/folders/dt/nf7j33w51gj7cv6bx6633tm40000gn/T/muse_router_cpu_32cx1liw
+├── ✓ Created Function env.
+├── ✓ Created Function correct.
+├── ✓ Created Function bench.
+├── ✓ Created Function micro.
+├── ✓ Created Function session.
+├── ✓ Created Function compile_only.
+└── ✓ Created Function inspect.
+
+######## compile_only: router_cluster_compile_only
+CLUSTER_COMPILE_FAIL False Traceback (most recent call last):
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/_core.py", line 99, in wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 43, in wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 2610, in store
+    return _semantic.store(pointer, value, mask, boundary_check, cache_modifier, eviction_policy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/semantic.py", line 1231, in store
+    ptr, val, mask = self._broadcast_ptr_val_mask(ptr, val, mask)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/semantic.py", line 1197, in _broadcast_ptr_val_mask
+    ptr, val = self.broadcast_tensors(ptr, val)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/semantic.py", line 1738, in broadcast_tensors
+    head, tail[i] = self.broadcast_impl_value(head, tail[i])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/_semantic.py", line 205, in broadcast_impl_value
+    elif lhs_ty.layout != rhs_ty.layout:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 4, in __eq__
+  File "<string>", line 4, in __eq__
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 1321, in __eq__
+    other = _normalize_tuple(other)
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 372, in _normalize_tuple
+    normalized_tuple = tuple(normalized_tuple)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 1287, in __init__
+    self.type = _type_for_tuple_values(self.values)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 1275, in _type_for_tuple_values
+    return tuple_type([constexpr_type(x) if isinstance(x, (int, float, dtype)) else x.type for x in values], fields)
+                                                                                    ^^^^^^
+AttributeError: 'list' object has no attribute 'type'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/proj/bench/router_cluster_compile_only.py", line 51, in <module>
+    k=triton.compile(src,target=GPUTarget('cuda',90,32),options={'num_warps':4,'num_ctas':2})
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/_runtime.py", line 40, in make_ir
+    module = ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 35:8:
+            mbarrier.invalidate(bar)
+        else:
+            smem.store(values)
+            gl.barrier(cluster=True)
+            local = smem.load(dst)
+            gl.barrier(cluster=True)
+        total = gl.convert_layout(gl.sum(local, axis=0), gl.SliceLayout(0, dst))
+        epi: gl.constexpr = gl.SliceLayout(0, dst)
+        ro = gl.arange(0, R, gl.SliceLayout(1, epi))
+        to = gl.arange(0, T, gl.SliceLayout(0, epi))
+        outoffs = ro[:, None]*T + to[None, :]
+        gl.store(O + gl.program_id(0)*(R*T) + outoffs, total)
+        ^
+'list' object has no attribute 'type'
+
+CLUSTER_COMPILE_FAIL True Traceback (most recent call last):
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/_core.py", line 99, in wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 43, in wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 2610, in store
+    return _semantic.store(pointer, value, mask, boundary_check, cache_modifier, eviction_policy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/semantic.py", line 1231, in store
+    ptr, val, mask = self._broadcast_ptr_val_mask(ptr, val, mask)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/semantic.py", line 1197, in _broadcast_ptr_val_mask
+    ptr, val = self.broadcast_tensors(ptr, val)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/semantic.py", line 1738, in broadcast_tensors
+    head, tail[i] = self.broadcast_impl_value(head, tail[i])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/language/_semantic.py", line 205, in broadcast_impl_value
+    elif lhs_ty.layout != rhs_ty.layout:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 4, in __eq__
+  File "<string>", line 4, in __eq__
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 1321, in __eq__
+    other = _normalize_tuple(other)
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 372, in _normalize_tuple
+    normalized_tuple = tuple(normalized_tuple)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 1287, in __init__
+    self.type = _type_for_tuple_values(self.values)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 1275, in _type_for_tuple_values
+    return tuple_type([constexpr_type(x) if isinstance(x, (int, float, dtype)) else x.type for x in values], fields)
+                                                                                    ^^^^^^
+AttributeError: 'list' object has no attribute 'type'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/proj/bench/router_cluster_compile_only.py", line 51, in <module>
+    k=triton.compile(src,target=GPUTarget('cuda',90,32),options={'num_warps':4,'num_ctas':2})
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/experimental/gluon/_runtime.py", line 40, in make_ir
+    module = ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 35:8:
+            mbarrier.invalidate(bar)
+        else:
+            smem.store(values)
+            gl.barrier(cluster=True)
+            local = smem.load(dst)
+            gl.barrier(cluster=True)
+        total = gl.convert_layout(gl.sum(local, axis=0), gl.SliceLayout(0, dst))
+        epi: gl.constexpr = gl.SliceLayout(0, dst)
+        ro = gl.arange(0, R, gl.SliceLayout(1, epi))
+        to = gl.arange(0, T, gl.SliceLayout(0, epi))
+        outoffs = ro[:, None]*T + to[None, :]
+        gl.store(O + gl.program_id(0)*(R*T) + outoffs, total)
+        ^
+'list' object has no attribute 'type'
+
+######## router_cluster_compile_only took 1s
+compile_only total 2s
+Stopping app - local entrypoint completed.
+✓ App completed. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-cHao6zZDS4gXzTp5DzXRJ1

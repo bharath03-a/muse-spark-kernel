@@ -1,0 +1,147 @@
+=== Testing trtllm_batch_decode: batch=1, q_len=1, window=2048, page_size=64 ===
+k_cache shape: torch.Size([1, 64, 2, 64]) torch.float8_e4m3fn
+page_table shape: torch.Size([1, 1]) torch.int32
+seq_lens shape: torch.Size([1]) torch.int32
+trtllm NHD call succeeded! res shape: torch.Size([1, 16, 64])
+trtllm HND error: Invalid page_size: 2, only 16, 32, 64, 128 are supported
+=== Testing trtllm_batch_decode: batch=3, q_len=1, window=2048, page_size=64 ===
+k_cache shape: torch.Size([96, 64, 2, 64]) torch.float8_e4m3fn
+page_table shape: torch.Size([3, 32]) torch.int32
+seq_lens shape: torch.Size([3]) torch.int32
+trtllm NHD call succeeded! res shape: torch.Size([3, 16, 64])
+trtllm HND error: Invalid page_size: 2, only 16, 32, 64, 128 are supported
+=== Testing trtllm_batch_decode: batch=5, q_len=8, window=2048, page_size=1 ===
+k_cache shape: torch.Size([100040, 1, 2, 64]) torch.float8_e4m3fn
+page_table shape: torch.Size([5, 20008]) torch.int32
+seq_lens shape: torch.Size([5]) torch.int32
+trtllm NHD error: Invalid page_size: 1, only 16, 32, 64, 128 are supported
+trtllm HND error: Invalid page_size: 2, only 16, 32, 64, 128 are supported
+=== Testing trtllm_batch_decode: batch=4, q_len=1, window=0, page_size=64 ===
+k_cache shape: torch.Size([188, 64, 2, 64]) torch.float8_e4m3fn
+page_table shape: torch.Size([4, 47]) torch.int32
+seq_lens shape: torch.Size([4]) torch.int32
+trtllm NHD call succeeded! res shape: torch.Size([4, 16, 64])
+trtllm HND error: Invalid page_size: 2, only 16, 32, 64, 128 are supported
+=== Testing trtllm_batch_decode: batch=8, q_len=1, window=0, page_size=64 ===
+k_cache shape: torch.Size([4104, 64, 16, 64]) torch.float8_e4m3fn
+page_table shape: torch.Size([8, 513]) torch.int32
+seq_lens shape: torch.Size([8]) torch.int32
+trtllm NHD call succeeded! res shape: torch.Size([8, 128, 64])
+trtllm HND call succeeded! res shape: torch.Size([8, 128, 64])
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-o41fj3rx/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-o41fj3rx/run/reference.py", line 346, in collect
+    raise ValueError(f"expected a bfloat16 tensor of shape {shape}")
+ValueError: expected a bfloat16 tensor of shape (8, 1, 8192)
+=== Testing trtllm_batch_decode: batch=2, q_len=8, window=0, page_size=1 ===
+k_cache shape: torch.Size([200016, 1, 2, 64]) torch.float8_e4m3fn
+page_table shape: torch.Size([2, 100008]) torch.int32
+seq_lens shape: torch.Size([2]) torch.int32
+trtllm NHD error: Invalid page_size: 1, only 16, 32, 64, 128 are supported
+trtllm HND error: Invalid page_size: 2, only 16, 32, 64, 128 are supported
+=== Testing trtllm_batch_decode: batch=4, q_len=1, window=2048, page_size=1 ===
+k_cache shape: torch.Size([24004, 1, 2, 64]) torch.float8_e4m3fn
+page_table shape: torch.Size([4, 6001]) torch.int32
+seq_lens shape: torch.Size([4]) torch.int32
+trtllm NHD error: Invalid page_size: 1, only 16, 32, 64, 128 are supported
+trtllm HND error: Invalid page_size: 2, only 16, 32, 64, 128 are supported
+=== Testing trtllm_batch_decode: batch=4, q_len=8, window=0, page_size=64 ===
+k_cache shape: torch.Size([376, 64, 2, 64]) torch.float8_e4m3fn
+page_table shape: torch.Size([4, 94]) torch.int32
+seq_lens shape: torch.Size([4]) torch.int32
+trtllm NHD call succeeded! res shape: torch.Size([4, 16, 64])
+trtllm HND error: Invalid page_size: 2, only 16, 32, 64, 128 are supported
+=== Testing trtllm_batch_decode: batch=1, q_len=8, window=0, page_size=64 ===
+k_cache shape: torch.Size([16385, 64, 2, 64]) torch.float8_e4m3fn
+page_table shape: torch.Size([1, 16385]) torch.int32
+seq_lens shape: torch.Size([1]) torch.int32
+trtllm NHD call succeeded! res shape: torch.Size([1, 16, 64])
+trtllm HND error: Invalid page_size: 2, only 16, 32, 64, 128 are supported
+=== Testing trtllm_batch_decode: batch=3, q_len=8, window=2048, page_size=1 ===
+k_cache shape: torch.Size([12024, 1, 2, 64]) torch.float8_e4m3fn
+page_table shape: torch.Size([3, 4008]) torch.int32
+seq_lens shape: torch.Size([3]) torch.int32
+trtllm NHD error: Invalid page_size: 1, only 16, 32, 64, 128 are supported
+trtllm HND error: Invalid page_size: 2, only 16, 32, 64, 128 are supported
+=== Testing trtllm_batch_decode: batch=2, q_len=1, window=0, page_size=64 ===
+k_cache shape: torch.Size([282, 64, 2, 64]) torch.float8_e4m3fn
+page_table shape: torch.Size([2, 141]) torch.int32
+seq_lens shape: torch.Size([2]) torch.int32
+trtllm NHD call succeeded! res shape: torch.Size([2, 16, 64])
+trtllm HND error: Invalid page_size: 2, only 16, 32, 64, 128 are supported
+=== Testing trtllm_batch_decode: batch=4, q_len=1, window=0, page_size=64 ===
+k_cache shape: torch.Size([20004, 64, 2, 64]) torch.float8_e4m3fn
+page_table shape: torch.Size([4, 5001]) torch.int32
+seq_lens shape: torch.Size([4]) torch.int32
+trtllm NHD call succeeded! res shape: torch.Size([4, 16, 64])
+trtllm HND error: Invalid page_size: 2, only 16, 32, 64, 128 are supported
+=== Testing trtllm_batch_decode: batch=4, q_len=8, window=2048, page_size=1 ===
+k_cache shape: torch.Size([24032, 1, 2, 64]) torch.float8_e4m3fn
+page_table shape: torch.Size([4, 6008]) torch.int32
+seq_lens shape: torch.Size([4]) torch.int32
+trtllm NHD error: Invalid page_size: 1, only 16, 32, 64, 128 are supported
+trtllm HND error: Invalid page_size: 2, only 16, 32, 64, 128 are supported
+=== Testing trtllm_batch_decode: batch=2, q_len=8, window=0, page_size=64 ===
+k_cache shape: torch.Size([626, 64, 16, 64]) torch.float8_e4m3fn
+page_table shape: torch.Size([2, 313]) torch.int32
+seq_lens shape: torch.Size([2]) torch.int32
+trtllm NHD call succeeded! res shape: torch.Size([2, 128, 64])
+trtllm HND call succeeded! res shape: torch.Size([2, 128, 64])
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-o41fj3rx/run/worker.py", line 485, in child_main
+    sync()
+  File "/opt/sglang/lib/python3.12/site-packages/torch/cuda/__init__.py", line 1281, in synchronize
+    return torch._C._cuda_synchronize()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.AcceleratorError: CUDA error: an illegal memory access was encountered
+Search for `cudaErrorIllegalAddress' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+The CUDA driver logged these messages, which may provide useful details:
+Returning 700 (CUDA_ERROR_ILLEGAL_ADDRESS) from cuCtxSynchronize_v2
+
+
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-o41fj3rx/run/worker.py", line 450, in child_main
+    torch.cuda.empty_cache()
+  File "/opt/sglang/lib/python3.12/site-packages/torch/cuda/memory.py", line 229, in empty_cache
+    torch._C._cuda_emptyCache()
+torch.AcceleratorError: CUDA error: an illegal memory access was encountered
+Search for `cudaErrorIllegalAddress' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+The CUDA driver logged these messages, which may provide useful details:
+Sticky error detected
+Returning 700 (CUDA_ERROR_ILLEGAL_ADDRESS) from cuMemFree_v2
+
+
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-o41fj3rx/run/worker.py", line 450, in child_main
+    torch.cuda.empty_cache()
+  File "/opt/sglang/lib/python3.12/site-packages/torch/cuda/memory.py", line 229, in empty_cache
+    torch._C._cuda_emptyCache()
+torch.AcceleratorError: CUDA error: an illegal memory access was encountered
+Search for `cudaErrorIllegalAddress' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+The CUDA driver logged these messages, which may provide useful details:
+Sticky error detected
+Returning 700 (CUDA_ERROR_ILLEGAL_ADDRESS) from cuMemFree_v2
+
+
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-o41fj3rx/run/worker.py", line 450, in child_main
+    torch.cuda.empty_cache()
+  File "/opt/sglang/lib/python3.12/site-packages/torch/cuda/memory.py", line 229, in empty_cache
+    torch._C._cuda_emptyCache()
+torch.AcceleratorError: CUDA error: an illegal memory access was encountered
+Search for `cudaErrorIllegalAddress' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+The CUDA driver logged these messages, which may provide useful details:
+Sticky error detected
+Returning 700 (CUDA_ERROR_ILLEGAL_ADDRESS) from cuMemFree_v2
+
+

@@ -1,0 +1,8 @@
+zip path disabled for pooler m 1-8: ValueError: zip: too many escapes in one row
+zip path disabled for pooler m 9-16: ValueError: packing failed earlier
+zip path disabled for pooler m 17-32: ValueError: zip: too many escapes in one row
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: unpooler m 17-32 id 51
+zip path enabled: qkv_gate m 1-8 id 31
+zip path enabled: qkv_gate m 9-16 id 53
+zip path enabled: qkv_gate m 17-32 id 52

@@ -1,0 +1,21 @@
+zip build 31.0s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 27
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 31
+zip prepare 31.3s
+r9 build 34.3s
+r9 max clusters: id3(1, 128, 3, 8, 1, 1, 0)=39 id16(1, 128, 1, 8, 1, 1, 0)=132 id20(1, 128, 3, 4, 2, 1, 0)=39 id41(1, 128, 3, 8, 1, 2, 0)=39 id42(1, 128, 3, 4, 2, 2, 0)=39 id43(1, 256, 3, 5, 1, 2, 0)=39 id45(1, 128, 1, 8, 1, 2, 0)=132 id46(1, 256, 1, 5, 1, 2, 0)=132 id47(1, 128, 2, 8, 1, 2, 0)=66 id48(1, 256, 2, 5, 1, 2, 0)=66 id49(2, 128, 3, 6, 1, 2, 0)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.43 id3=18.59 id20=18.88 id41=18.96 id42=21.87 -> id3
+r9 bench qkv_gate m=256 (raw us, ~4 graph overhead): cp8=23.41 id43=26.48 id49=26.51 -> cp8
+r9 bench pooler m=128 (raw us, ~4 graph overhead): cp8=25.33 id47=25.90 -> cp8
+r9 bench pooler m=256 (raw us, ~4 graph overhead): cp8=30.46 id48=35.06 -> cp8
+r9 bench unpooler m=128 (raw us, ~4 graph overhead): cp8=23.28 id45=24.26 -> cp8
+r9 bench unpooler m=256 (raw us, ~4 graph overhead): cp8=28.14 id46=33.54 -> cp8
+r9 bench o m=128 (raw us, ~4 graph overhead): cp8=11.14 id16=11.42 id45=11.60 -> cp8
+r9 bench o m=256 (raw us, ~4 graph overhead): cp8=13.07 id46=14.40 -> cp8
+r9 diag qkv_gate m=128 id41 blocks=108: med skew=0.00 main=10.75 bar1=1.00 red=1.25 store=0.50 | max skew=0.25 main=11.75 bar1=1.50 red=1.50 store=0.75 | span=14.25
+r9 diag qkv_gate m=256 id43 blocks=108: med skew=0.00 main=16.75 bar1=1.00 red=2.25 store=1.00 | max skew=0.00 main=17.00 bar1=2.00 red=2.75 store=1.00 | span=21.50
+r9 diag o m=128 id45 blocks=128: med skew=0.00 main=5.00 bar1=0.50 red=0.00 store=0.75 | max skew=0.25 main=5.50 bar1=0.75 red=0.25 store=1.00 | span=6.75
+r9 diag o m=256 id46 blocks=128: med skew=0.25 main=7.25 bar1=1.00 red=0.00 store=1.50 | max skew=0.25 main=7.50 bar1=1.00 red=0.25 store=1.50 | span=10.00
+r9 prepare 34.5s picks={('qkv_gate', 128): 3}

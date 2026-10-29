@@ -1,0 +1,53 @@
+Testing flashinfer on batch=1, length=1, window=2048, page_size=64
+Planning FlashInfer with total_pages=1...
+Plan succeeded!
+Testing flashinfer on batch=3, length=1, window=2048, page_size=64
+Planning FlashInfer with total_pages=96...
+Plan succeeded!
+Testing flashinfer on batch=5, length=8, window=2048, page_size=1
+Testing flashinfer on batch=4, length=1, window=0, page_size=64
+Planning FlashInfer with total_pages=188...
+Plan succeeded!
+Testing flashinfer on batch=8, length=1, window=0, page_size=64
+Planning FlashInfer with total_pages=1028...
+Plan succeeded!
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-77h7ahje/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-77h7ahje/run/reference.py", line 346, in collect
+    raise ValueError(f"expected a bfloat16 tensor of shape {shape}")
+ValueError: expected a bfloat16 tensor of shape (8, 1, 8192)
+Testing flashinfer on batch=2, length=8, window=0, page_size=1
+Testing flashinfer on batch=4, length=1, window=2048, page_size=1
+Planning FlashInfer with total_pages=24004...
+Plan succeeded!
+Testing flashinfer on batch=4, length=8, window=0, page_size=64
+Testing flashinfer on batch=1, length=8, window=0, page_size=64
+Testing flashinfer on batch=3, length=8, window=2048, page_size=1
+Testing flashinfer on batch=2, length=1, window=0, page_size=64
+Planning FlashInfer with total_pages=282...
+Plan succeeded!
+Testing flashinfer on batch=4, length=1, window=0, page_size=64
+Planning FlashInfer with total_pages=5903...
+Plan succeeded!
+Testing flashinfer on batch=4, length=8, window=2048, page_size=1
+Testing flashinfer on batch=2, length=8, window=0, page_size=64
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-77h7ahje/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-77h7ahje/run/reference.py", line 346, in collect
+    raise ValueError(f"expected a bfloat16 tensor of shape {shape}")
+ValueError: expected a bfloat16 tensor of shape (2, 8, 8192)
+Testing flashinfer on batch=4, length=1, window=0, page_size=1
+Planning FlashInfer with total_pages=220300...
+Plan succeeded!
+Testing flashinfer on batch=2, length=8, window=0, page_size=64
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-77h7ahje/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-77h7ahje/run/reference.py", line 346, in collect
+    raise ValueError(f"expected a bfloat16 tensor of shape {shape}")
+ValueError: expected a bfloat16 tensor of shape (2, 8, 8192)

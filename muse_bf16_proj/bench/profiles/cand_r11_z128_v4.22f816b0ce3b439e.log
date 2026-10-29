@@ -1,0 +1,21 @@
+zip build 37.6s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 27
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 31
+zip prepare 37.8s
+r9 build 37.2s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.32 id3=18.85 -> id3
+r9 prepare 37.2s picks={('qkv_gate', 128): 3}
+z11 build 42.1s
+z11 max clusters: id1(1, 2, 1, 8, 0, 1)=132 id2(1, 2, 2, 8, 0, 1)=66 id11(1, 2, 1, 4, 0, 2)=132 id12(1, 2, 2, 4, 0, 2)=66 id13(1, 3, 1, 8, 0, 1)=132 id14(1, 3, 2, 8, 0, 1)=66 id31(1, 2, 1, 8, 3, 1)=132 id33(1, 2, 1, 4, 3, 2)=132 id35(1, 3, 1, 8, 3, 1)=132
+z11 pack pooler: escapes=4604 max/128-tile=160
+z11 selftest FAILED pooler id=2: ValueError: non-deterministic
+z11 selftest FAILED pooler id=14: ValueError: one-hot readback not bit-exact
+z11 bench pooler m=128 (raw us, ~4 graph overhead): cur=26.00 id12=32.43 -> cur
+z11 pack unpooler: escapes=3289 max/128-tile=69
+z11 selftest FAILED unpooler id=13: ValueError: non-deterministic
+z11 bench unpooler m=128 (raw us, ~4 graph overhead): cur=23.36 id1=27.78 id11=28.96 -> cur
+z11 diag unpooler (raw us): id1m0=27.79 id31m3=26.83 id11m0=29.47 id33m3=24.50 id13m0=28.42 id35m3=27.28 | id1 med skew=0.00 fix=18.75 main=17.75 bar1=1.00 red=0.00 store=0.75 | max skew=0.00 fix=22.00 main=20.75 bar1=2.00 red=0.25 store=1.00 | span=23.25
+z11 prepare 42.2s picks={}

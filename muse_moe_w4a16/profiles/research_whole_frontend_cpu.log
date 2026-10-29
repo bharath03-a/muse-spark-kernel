@@ -1,0 +1,29 @@
+✓ Initialized. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-nVzf4MtLmajJlyGpp0lwQR
+✓ Created objects.
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/re
+│   search/modal_whole_routes.py
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/research_harness
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16
+├── ✓ Created Function compile_frontend.
+└── ✓ Created Function compare_actual_routes.
+W1028 05:51:41.208000 2 torch/utils/cpp_extension.py:183] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+CPU_DYNAMIC_LOAD_UNAVAILABLE _build_cuda libcuda.so.1: cannot open shared object file: No such file or directory
+FRONTEND_CACHE_READY _build_cuda /cache/torch_ext/muse_proj_cuda_cp4_432cf565e2/muse_proj_cuda_cp4_432cf565e2.so 1.9449705890000004
+CPU_DYNAMIC_LOAD_UNAVAILABLE cp14__build_cuda libcuda.so.1: cannot open shared object file: No such file or directory
+FRONTEND_CACHE_READY cp14__build_cuda /cache/torch_ext/muse_proj_cuda_cp4_3ccbd21b2b/muse_proj_cuda_cp4_3ccbd21b2b.so 2.7263966909999997
+CPU_DYNAMIC_LOAD_UNAVAILABLE cp14__build_zip libcuda.so.1: cannot open shared object file: No such file or directory
+FRONTEND_CACHE_READY cp14__build_zip /cache/torch_ext/muse_zip9_f9a3c60fa4/muse_zip9_f9a3c60fa4.so 3.610241296
+CPU_DYNAMIC_LOAD_UNAVAILABLE cp14__r9_build libcuda.so.1: cannot open shared object file: No such file or directory
+FRONTEND_CACHE_READY cp14__r9_build /cache/torch_ext/muse_r9_eaeb048fc7/muse_r9_eaeb048fc7.so 6.067280789
+FRONTEND_CACHE_READY cp14__r15_build /cache/torch_ext/muse_r15lt_97dc0ed89c/muse_r15lt_97dc0ed89c.so 36.576212797
+FRONTEND_CACHE_READY OKA__ext /cache/torch_ext/attn_v60_8/attn_v60_8.so 39.270679515
+FRONTEND_CACHE_DONE 6e9384e363de3a56e9944ab101f82e2f0cba86b3396d488f205557ccc9cb3dae 104.1652768
+Stopping app - local entrypoint completed.
+✓ App completed. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-nVzf4MtLmajJlyGpp0lwQR

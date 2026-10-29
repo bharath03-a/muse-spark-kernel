@@ -1,0 +1,87 @@
+ional[bool] = None, window_left: Optional[int] = None, sinks: Optional[torch.Tensor] = None, q_len_per_req: Optional[int] = None, skip_softmax_threshold_scale_factor: Optional[float] = None, kv_cache_sf: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor], NoneType] = None) -> Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]
+=== FLASHINFER DECODE INSPECTION ===
+FlashInfer version: 0.7.0.post1
+CUDAGraphBatchDecodeWithPagedKVCacheWrapper exists: True
+Init doc/sig: (self, workspace_buffer: torch.Tensor, indptr_buffer: torch.Tensor, indices_buffer: torch.Tensor, last_page_len_buffer: torch.Tensor, kv_layout: str = 'NHD', use_tensor_cores: bool = False) -> None
+Methods: ['begin_forward', 'forward', 'forward_return_lse', 'is_cuda_graph_enabled', 'plan', 'prewarm_paged_kv_stride_variant', 'reset_workspace_buffer', 'run', 'run_return_lse', 'use_tensor_cores', 'workspace_size']
+Method plan sig: (self, indptr: torch.Tensor, indices: torch.Tensor, last_page_len: torch.Tensor, num_qo_heads: int, num_kv_heads: int, head_dim: int, page_size: int, *deprecated_positional_args: Any, **kwargs: Any) -> None
+Method begin_forward sig: (self, indptr: torch.Tensor, indices: torch.Tensor, last_page_len: torch.Tensor, num_qo_heads: int, num_kv_heads: int, head_dim: int, page_size: int, *deprecated_positional_args: Any, **kwargs: Any) -> None
+Method forward sig: (self, q: torch.Tensor, paged_kv_cache: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]], pos_encoding_mode: str = 'NONE', q_scale: Optional[float] = None, k_scale: Optional[float] = None, v_scale: Optional[float] = None, window_left: int = -1, logits_soft_cap: Optional[float] = None, sm_scale: Optional[float] = None, rope_scale: Optional[float] = None, rope_theta: Optional[float] = None) -> torch.Tensor
+Method run sig: (self, q: torch.Tensor, paged_kv_cache: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]], *args, q_scale: Optional[float] = None, k_scale: Optional[float] = None, v_scale: Optional[float] = None, out: Optional[torch.Tensor] = None, lse: Optional[torch.Tensor] = None, return_lse: bool = False, enable_pdl: Optional[bool] = None, window_left: Optional[int] = None, sinks: Optional[torch.Tensor] = None, q_len_per_req: Optional[int] = None, skip_softmax_threshold_scale_factor: Optional[float] = None, kv_cache_sf: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor], NoneType] = None) -> Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]
+BatchDecodeWithPagedKVCacheWrapper exists: True
+Base Init doc/sig: (self, float_workspace_buffer: torch.Tensor, kv_layout: str = 'NHD', use_cuda_graph: bool = False, use_tensor_cores: bool = False, paged_kv_indptr_buffer: Optional[torch.Tensor] = None, paged_kv_indices_buffer: Optional[torch.Tensor] = None, paged_kv_last_page_len_buffer: Optional[torch.Tensor] = None, backend: str = 'auto', jit_args: Optional[List[Any]] = None) -> None
+Base Methods: ['begin_forward', 'forward', 'forward_return_lse', 'is_cuda_graph_enabled', 'plan', 'prewarm_paged_kv_stride_variant', 'reset_workspace_buffer', 'run', 'run_return_lse', 'use_tensor_cores', 'workspace_size']
+Base Method plan sig: (self, indptr: torch.Tensor, indices: torch.Tensor, last_page_len: torch.Tensor, num_qo_heads: int, num_kv_heads: int, head_dim: int, page_size: int, *deprecated_positional_args: Any, **kwargs: Any) -> None
+Base Method begin_forward sig: (self, indptr: torch.Tensor, indices: torch.Tensor, last_page_len: torch.Tensor, num_qo_heads: int, num_kv_heads: int, head_dim: int, page_size: int, *deprecated_positional_args: Any, **kwargs: Any) -> None
+Base Method forward sig: (self, q: torch.Tensor, paged_kv_cache: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]], pos_encoding_mode: str = 'NONE', q_scale: Optional[float] = None, k_scale: Optional[float] = None, v_scale: Optional[float] = None, window_left: int = -1, logits_soft_cap: Optional[float] = None, sm_scale: Optional[float] = None, rope_scale: Optional[float] = None, rope_theta: Optional[float] = None) -> torch.Tensor
+Base Method run sig: (self, q: torch.Tensor, paged_kv_cache: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]], *args, q_scale: Optional[float] = None, k_scale: Optional[float] = None, v_scale: Optional[float] = None, out: Optional[torch.Tensor] = None, lse: Optional[torch.Tensor] = None, return_lse: bool = False, enable_pdl: Optional[bool] = None, window_left: Optional[int] = None, sinks: Optional[torch.Tensor] = None, q_len_per_req: Optional[int] = None, skip_softmax_threshold_scale_factor: Optional[float] = None, kv_cache_sf: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor], NoneType] = None) -> Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-bm6cpx52/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^
+  File "/tmp/muse_attention_decode-bm6cpx52/run/worker.py", line 408, in kernel
+    sub = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/tmp/muse_attention_decode-bm6cpx52/run/submission.py", line 29, in <module>
+    from submission import kernel_fn as orig_kernel_fn
+ImportError: cannot import name 'kernel_fn' from partially initialized module 'submission' (most likely due to a circular import) (/tmp/muse_attention_decode-bm6cpx52/run/submission.py)
+=== FLASHINFER DECODE INSPECTION ===
+FlashInfer version: 0.7.0.post1
+CUDAGraphBatchDecodeWithPagedKVCacheWrapper exists: True
+Init doc/sig: (self, workspace_buffer: torch.Tensor, indptr_buffer: torch.Tensor, indices_buffer: torch.Tensor, last_page_len_buffer: torch.Tensor, kv_layout: str = 'NHD', use_tensor_cores: bool = False) -> None
+Methods: ['begin_forward', 'forward', 'forward_return_lse', 'is_cuda_graph_enabled', 'plan', 'prewarm_paged_kv_stride_variant', 'reset_workspace_buffer', 'run', 'run_return_lse', 'use_tensor_cores', 'workspace_size']
+Method plan sig: (self, indptr: torch.Tensor, indices: torch.Tensor, last_page_len: torch.Tensor, num_qo_heads: int, num_kv_heads: int, head_dim: int, page_size: int, *deprecated_positional_args: Any, **kwargs: Any) -> None
+Method begin_forward sig: (self, indptr: torch.Tensor, indices: torch.Tensor, last_page_len: torch.Tensor, num_qo_heads: int, num_kv_heads: int, head_dim: int, page_size: int, *deprecated_positional_args: Any, **kwargs: Any) -> None
+Method forward sig: (self, q: torch.Tensor, paged_kv_cache: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]], pos_encoding_mode: str = 'NONE', q_scale: Optional[float] = None, k_scale: Optional[float] = None, v_scale: Optional[float] = None, window_left: int = -1, logits_soft_cap: Optional[float] = None, sm_scale: Optional[float] = None, rope_scale: Optional[float] = None, rope_theta: Optional[float] = None) -> torch.Tensor
+Method run sig: (self, q: torch.Tensor, paged_kv_cache: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]], *args, q_scale: Optional[float] = None, k_scale: Optional[float] = None, v_scale: Optional[float] = None, out: Optional[torch.Tensor] = None, lse: Optional[torch.Tensor] = None, return_lse: bool = False, enable_pdl: Optional[bool] = None, window_left: Optional[int] = None, sinks: Optional[torch.Tensor] = None, q_len_per_req: Optional[int] = None, skip_softmax_threshold_scale_factor: Optional[float] = None, kv_cache_sf: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor], NoneType] = None) -> Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]
+BatchDecodeWithPagedKVCacheWrapper exists: True
+Base Init doc/sig: (self, float_workspace_buffer: torch.Tensor, kv_layout: str = 'NHD', use_cuda_graph: bool = False, use_tensor_cores: bool = False, paged_kv_indptr_buffer: Optional[torch.Tensor] = None, paged_kv_indices_buffer: Optional[torch.Tensor] = None, paged_kv_last_page_len_buffer: Optional[torch.Tensor] = None, backend: str = 'auto', jit_args: Optional[List[Any]] = None) -> None
+Base Methods: ['begin_forward', 'forward', 'forward_return_lse', 'is_cuda_graph_enabled', 'plan', 'prewarm_paged_kv_stride_variant', 'reset_workspace_buffer', 'run', 'run_return_lse', 'use_tensor_cores', 'workspace_size']
+Base Method plan sig: (self, indptr: torch.Tensor, indices: torch.Tensor, last_page_len: torch.Tensor, num_qo_heads: int, num_kv_heads: int, head_dim: int, page_size: int, *deprecated_positional_args: Any, **kwargs: Any) -> None
+Base Method begin_forward sig: (self, indptr: torch.Tensor, indices: torch.Tensor, last_page_len: torch.Tensor, num_qo_heads: int, num_kv_heads: int, head_dim: int, page_size: int, *deprecated_positional_args: Any, **kwargs: Any) -> None
+Base Method forward sig: (self, q: torch.Tensor, paged_kv_cache: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]], pos_encoding_mode: str = 'NONE', q_scale: Optional[float] = None, k_scale: Optional[float] = None, v_scale: Optional[float] = None, window_left: int = -1, logits_soft_cap: Optional[float] = None, sm_scale: Optional[float] = None, rope_scale: Optional[float] = None, rope_theta: Optional[float] = None) -> torch.Tensor
+Base Method run sig: (self, q: torch.Tensor, paged_kv_cache: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]], *args, q_scale: Optional[float] = None, k_scale: Optional[float] = None, v_scale: Optional[float] = None, out: Optional[torch.Tensor] = None, lse: Optional[torch.Tensor] = None, return_lse: bool = False, enable_pdl: Optional[bool] = None, window_left: Optional[int] = None, sinks: Optional[torch.Tensor] = None, q_len_per_req: Optional[int] = None, skip_softmax_threshold_scale_factor: Optional[float] = None, kv_cache_sf: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor], NoneType] = None) -> Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]
+=== FLASHINFER DECODE INSPECTION ===
+FlashInfer version: 0.7.0.post1
+CUDAGraphBatchDecodeWithPagedKVCacheWrapper exists: True
+Init doc/sig: (self, workspace_buffer: torch.Tensor, indptr_buffer: torch.Tensor, indices_buffer: torch.Tensor, last_page_len_buffer: torch.Tensor, kv_layout: str = 'NHD', use_tensor_cores: bool = False) -> None
+Methods: ['begin_forward', 'forward', 'forward_return_lse', 'is_cuda_graph_enabled', 'plan', 'prewarm_paged_kv_stride_variant', 'reset_workspace_buffer', 'run', 'run_return_lse', 'use_tensor_cores', 'workspace_size']
+Method plan sig: (self, indptr: torch.Tensor, indices: torch.Tensor, last_page_len: torch.Tensor, num_qo_heads: int, num_kv_heads: int, head_dim: int, page_size: int, *deprecated_positional_args: Any, **kwargs: Any) -> None
+Method begin_forward sig: (self, indptr: torch.Tensor, indices: torch.Tensor, last_page_len: torch.Tensor, num_qo_heads: int, num_kv_heads: int, head_dim: int, page_size: int, *deprecated_positional_args: Any, **kwargs: Any) -> None
+Method forward sig: (self, q: torch.Tensor, paged_kv_cache: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]], pos_encoding_mode: str = 'NONE', q_scale: Optional[float] = None, k_scale: Optional[float] = None, v_scale: Optional[float] = None, window_left: int = -1, logits_soft_cap: Optional[float] = None, sm_scale: Optional[float] = None, rope_scale: Optional[float] = None, rope_theta: Optional[float] = None) -> torch.Tensor
+Method run sig: (self, q: torch.Tensor, paged_kv_cache: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]], *args, q_scale: Optional[float] = None, k_scale: Optional[float] = None, v_scale: Optional[float] = None, out: Optional[torch.Tensor] = None, lse: Optional[torch.Tensor] = None, return_lse: bool = False, enable_pdl: Optional[bool] = None, window_left: Optional[int] = None, sinks: Optional[torch.Tensor] = None, q_len_per_req: Optional[int] = None, skip_softmax_threshold_scale_factor: Optional[float] = None, kv_cache_sf: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor], NoneType] = None) -> Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]
+BatchDecodeWithPagedKVCacheWrapper exists: True
+Base Init doc/sig: (self, float_workspace_buffer: torch.Tensor, kv_layout: str = 'NHD', use_cuda_graph: bool = False, use_tensor_cores: bool = False, paged_kv_indptr_buffer: Optional[torch.Tensor] = None, paged_kv_indices_buffer: Optional[torch.Tensor] = None, paged_kv_last_page_len_buffer: Optional[torch.Tensor] = None, backend: str = 'auto', jit_args: Optional[List[Any]] = None) -> None
+Base Methods: ['begin_forward', 'forward', 'forward_return_lse', 'is_cuda_graph_enabled', 'plan', 'prewarm_paged_kv_stride_variant', 'reset_workspace_buffer', 'run', 'run_return_lse', 'use_tensor_cores', 'workspace_size']
+Base Method plan sig: (self, indptr: torch.Tensor, indices: torch.Tensor, last_page_len: torch.Tensor, num_qo_heads: int, num_kv_heads: int, head_dim: int, page_size: int, *deprecated_positional_args: Any, **kwargs: Any) -> None
+Base Method begin_forward sig: (self, indptr: torch.Tensor, indices: torch.Tensor, last_page_len: torch.Tensor, num_qo_heads: int, num_kv_heads: int, head_dim: int, page_size: int, *deprecated_positional_args: Any, **kwargs: Any) -> None
+Base Method forward sig: (self, q: torch.Tensor, paged_kv_cache: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]], pos_encoding_mode: str = 'NONE', q_scale: Optional[float] = None, k_scale: Optional[float] = None, v_scale: Optional[float] = None, window_left: int = -1, logits_soft_cap: Optional[float] = None, sm_scale: Optional[float] = None, rope_scale: Optional[float] = None, rope_theta: Optional[float] = None) -> torch.Tensor
+Base Method run sig: (self, q: torch.Tensor, paged_kv_cache: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]], *args, q_scale: Optional[float] = None, k_scale: Optional[float] = None, v_scale: Optional[float] = None, out: Optional[torch.Tensor] = None, lse: Optional[torch.Tensor] = None, return_lse: bool = False, enable_pdl: Optional[bool] = None, window_left: Optional[int] = None, sinks: Optional[torch.Tensor] = None, q_len_per_req: Optional[int] = None, skip_softmax_threshold_scale_factor: Optional[float] = None, kv_cache_sf: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor], NoneType] = None) -> Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-bm6cpx52/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^
+  File "/tmp/muse_attention_decode-bm6cpx52/run/worker.py", line 408, in kernel
+    sub = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/tmp/muse_attention_decode-bm6cpx52/run/submission.py", line 29, in <module>
+    from submission import kernel_fn as orig_kernel_fn
+ImportError: cannot import name 'kernel_fn' from partially initialized module 'submission' (most likely due to a circular import) (/tmp/muse_attention_decode-bm6cpx52/run/submission.py)

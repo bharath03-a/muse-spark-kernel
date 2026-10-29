@@ -1,0 +1,135 @@
+✓ Initialized. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-2sWkjbSVtdI6jfzSHQbrsR
+✓ Created objects.
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   code/modal_bf16pv_compile.py
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   code/candidate_openkernels_v75.py
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   code/candidate_openkernels_fdeccontrol.py
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   code/candidate_openkernels_pvcontrol.py
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   code/candidate_openkernels_fdecfast.py
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   code/candidate_openkernels_bf16pv.py
+├── ✓ Created Function inspect_fa3_baseline.
+├── ✓ Created Function compile.
+├── ✓ Created Function inspect_fp8_mma.
+├── ✓ Created Function inspect_fdec_sass.
+├── ✓ Created Function resources.
+└── ✓ Created Function inspect_fa3_binary.
+FDEC_CACHED_SOURCE_SHA256 101e9ff26ab29d37fc75e3ee15dade74e1f1a926073c52f4b03c4650a80c6b51
+FDEC_RESOURCES 0 
+Fatbin elf code:
+================
+arch = sm_90a
+code version = [1,8]
+host = linux
+compile_size = 64bit
+compressed
+identifier = /cache/torch_ext/attn_v75_8/cuda.cu
+
+Resource usage:
+ Common:
+  GLOBAL:28 CONSTANT[4]:224
+ Function _Z4fdecILb0ELb1EEv1F:
+  REG:157 STACK:0 SHARED:1152 LOCAL:0 CONSTANT[0]:672 TEXTURE:0 SURFACE:0 SAMPLER:0
+ 
+FDEC_SASS_SIZE 0 1025201 
+FDEC_SASS_COUNT HMMA. 32
+FDEC_SASS_COUNT MUFU.EX2 51
+FDEC_SASS_COUNT LDGSTS 52
+FDEC_SASS_COUNT LDS. 69
+FDEC_CHAIN         /*8600*/                   HMMA.16816.F32 R88, R88, R2, RZ ;                             /* 0x000000025858723c */
+FDEC_CHAIN         /*8630*/                   HMMA.16816.F32 R96, R60, R96, RZ ;                            /* 0x000000603c60723c */
+FDEC_CHAIN         /*8680*/                   HMMA.16816.F32 R88, R84, R2, R88 ;                            /* 0x000000025458723c */
+FDEC_CHAIN         /*8690*/                   HMMA.16816.F32 R96, R56, R66, R96 ;                           /* 0x000000423860723c */
+FDEC_CHAIN         /*8730*/                   HMMA.16816.F32 R88, R84, R2, R88 ;                            /* 0x000000025458723c */
+FDEC_CHAIN         /*8740*/                   HMMA.16816.F32 R96, R52, R66, R96 ;                           /* 0x000000423460723c */
+FDEC_CHAIN         /*87d0*/                   HMMA.16816.F32 R88, R76, R2, R88 ;                            /* 0x000000024c58723c */
+FDEC_CHAIN         /*87f0*/                   HMMA.16816.F32 R96, R48, R66, R96 ;                           /* 0x000000423060723c */
+FDEC_CHAIN         /*8a00*/                   HMMA.16816.F32 R84, R44, R84, RZ ;                            /* 0x000000542c54723c */
+FDEC_CHAIN         /*8ab0*/                   HMMA.16816.F32 R88, R88, R2, RZ ;                             /* 0x000000025858723c */
+FDEC_CHAIN         /*8b50*/                   HMMA.16816.F32 R84, R40, R2, R84 ;                            /* 0x000000022854723c */
+FDEC_CHAIN         /*8c10*/                   HMMA.16816.F32 R88, R40, R2, R88 ;                            /* 0x000000022858723c */
+FDEC_CHAIN         /*8cb0*/                   HMMA.16816.F32 R84, R36, R2, R84 ;                            /* 0x000000022454723c */
+FDEC_CHAIN         /*8cc0*/                   HMMA.16816.F32 R76, R96, R76, R88 ;                           /* 0x0000004c604c723c */
+FDEC_CHAIN         /*8d90*/                   HMMA.16816.F32 R84, R32, R100, R84 ;                          /* 0x000000642054723c */
+FDEC_CHAIN         /*8db0*/                   HMMA.16816.F32 R76, R72, R82, R76 ;                           /* 0x00000052484c723c */
+FDEC_CHAIN         /*8e30*/                   MUFU.EX2 R37, R37 ;                                           /* 0x0000002500257308 */
+FDEC_CHAIN         /*8e70*/                   MUFU.EX2 R154, R154 ;                                         /* 0x0000009a009a7308 */
+FDEC_CHAIN         /*8ef0*/                   MUFU.EX2 R106, R106 ;                                         /* 0x0000006a006a7308 */
+FDEC_CHAIN         /*8f50*/                   MUFU.EX2 R104, R104 ;                                         /* 0x0000006800687308 */
+FDEC_CHAIN         /*8fd0*/                   MUFU.EX2 R35, R35 ;                                           /* 0x0000002300237308 */
+FDEC_CHAIN         /*9150*/                   HMMA.16816.F32 R128, R88, R72, R128 ;                         /* 0x000000485880723c */
+FDEC_CHAIN         /*91b0*/                   HMMA.16816.F32 R76, R88, R82, R76 ;                           /* 0x00000052584c723c */
+FDEC_CHAIN         /*9240*/                   HMMA.16816.F32 R72, R84, R96, R72 ;                           /* 0x000000605448723c */
+FDEC_CHAIN         /*9350*/                   HMMA.16816.F32 R80, R88, R78, R80 ;                           /* 0x0000004e5850723c */
+FDEC_CHAIN         /*9380*/                   HMMA.16816.F32 R124, R4, R74, R124 ;                          /* 0x0000004a047c723c */
+FDEC_CHAIN         /*94c0*/                   HMMA.16816.F32 R84, R88, R4, R84 ;                            /* 0x000000045854723c */
+FDEC_CHAIN         /*9510*/                   MUFU.EX2 R116, R116 ;                                         /* 0x0000007400747308 */
+FDEC_CHAIN         /*9590*/                   MUFU.EX2 R82, R82 ;                                           /* 0x0000005200527308 */
+FDEC_CHAIN         /*9600*/                   MUFU.EX2 R43, R43 ;                                           /* 0x0000002b002b7308 */
+FDEC_CHAIN         /*9610*/                   HMMA.16816.F32 R92, R12, R66, R92 ;                           /* 0x000000420c5c723c */
+FDEC_CHAIN         /*9620*/                   HMMA.16816.F32 R88, R88, R78, R4 ;                            /* 0x0000004e5858723c */
+FDEC_CHAIN         /*9630*/                   MUFU.EX2 R86, R86 ;                                           /* 0x0000005600567308 */
+FDEC_CHAIN         /*96b0*/                   MUFU.EX2 R41, R41 ;                                           /* 0x0000002900297308 */
+FDEC_CHAIN         /*9830*/                   HMMA.16816.F32 R64, R4, R10, R64 ;                            /* 0x0000000a0440723c */
+FDEC_CHAIN         /*9950*/                   HMMA.16816.F32 R96, R12, R10, R96 ;                           /* 0x0000000a0c60723c */
+FDEC_CHAIN         /*9980*/                   HMMA.16816.F32 R100, R4, R66, R100 ;                          /* 0x000000420464723c */
+FDEC_CHAIN         /*9a20*/                   HMMA.16816.F32 R104, R4, R10, R104 ;                          /* 0x0000000a0468723c */
+FDEC_CHAIN         /*9b40*/                   HMMA.16816.F32 R108, R8, R2, R108 ;                           /* 0x00000002086c723c */
+FDEC_CHAIN         /*9b70*/                   HMMA.16816.F32 R112, R4, R12, R112 ;                          /* 0x0000000c0470723c */
+FDEC_CHAIN         /*9c00*/                   HMMA.16816.F32 R116, R4, R2, R116 ;                           /* 0x000000020474723c */
+FDEC_CHAIN         /*9c20*/                   HMMA.16816.F32 R68, R8, R12, R68 ;                            /* 0x0000000c0844723c */
+FDEC_CHAIN         /*a390*/                   MUFU.EX2 R2, R2 ;                                             /* 0x0000000200027308 */
+FDEC_CHAIN         /*a4c0*/                   MUFU.EX2 R13, R13 ;                                           /* 0x0000000d000d7308 */
+FDEC_CHAIN         /*a590*/                   MUFU.EX2 R15, R15 ;                                           /* 0x0000000f000f7308 */
+FDEC_CHAIN         /*a650*/                   MUFU.EX2 R17, R17 ;                                           /* 0x0000001100117308 */
+FDEC_CHAIN         /*a710*/                   MUFU.EX2 R19, R19 ;                                           /* 0x0000001300137308 */
+FDEC_CHAIN         /*a7d0*/                   MUFU.EX2 R21, R21 ;                                           /* 0x0000001500157308 */
+FDEC_CHAIN         /*a890*/                   MUFU.EX2 R23, R23 ;                                           /* 0x0000001700177308 */
+FDEC_CHAIN         /*a950*/                   MUFU.EX2 R2, R25 ;                                            /* 0x0000001900027308 */
+FDEC_CHAIN         /*ba30*/               @P0 MUFU.EX2 R59, R58 ;                                           /* 0x0000003a003b0308 */
+FDEC_CHAIN         /*ba50*/               @P6 MUFU.EX2 R64, R70 ;                                           /* 0x0000004600406308 */
+FDEC_CHAIN         /*bb90*/               @P4 MUFU.EX2 R33, R32 ;                                           /* 0x0000002000214308 */
+FDEC_CHAIN         /*bbb0*/               @P6 MUFU.EX2 R34, R42 ;                                           /* 0x0000002a00226308 */
+FDEC_CHAIN         /*bcf0*/               @P5 MUFU.EX2 R5, R4 ;                                             /* 0x0000000400055308 */
+FDEC_CHAIN         /*bd10*/               @P6 MUFU.EX2 R6, R56 ;                                            /* 0x0000003800066308 */
+FDEC_CHAIN         /*be50*/               @P3 MUFU.EX2 R5, R4 ;                                             /* 0x0000000400053308 */
+FDEC_CHAIN         /*be70*/               @P6 MUFU.EX2 R6, R60 ;                                            /* 0x0000003c00066308 */
+FDEC_CHAIN         /*bfb0*/               @P0 MUFU.EX2 R5, R4 ;                                             /* 0x0000000400050308 */
+FDEC_CHAIN         /*bfd0*/               @P6 MUFU.EX2 R6, R62 ;                                            /* 0x0000003e00066308 */
+FDEC_CHAIN         /*c100*/               @P0 MUFU.EX2 R5, R4 ;                                             /* 0x0000000400050308 */
+FDEC_CHAIN         /*c120*/               @P4 MUFU.EX2 R6, R68 ;                                            /* 0x0000004400064308 */
+FDEC_CHAIN         /*c250*/               @P0 MUFU.EX2 R5, R4 ;                                             /* 0x0000000400050308 */
+FDEC_CHAIN         /*c270*/               @P4 MUFU.EX2 R6, R72 ;                                            /* 0x0000004800064308 */
+FDEC_CHAIN         /*c3a0*/               @P0 MUFU.EX2 R5, R4 ;                                             /* 0x0000000400050308 */
+FDEC_CHAIN         /*c3c0*/               @P3 MUFU.EX2 R6, R76 ;                                            /* 0x0000004c00063308 */
+FDEC_CHAIN         /*c740*/               @P3 MUFU.EX2 R7, R53 ;                                            /* 0x0000003500073308 */
+FDEC_CHAIN         /*cf90*/               @P0 MUFU.EX2 R8, R14 ;                                            /* 0x0000000e00080308 */
+FDEC_CHAIN         /*d090*/               @P0 MUFU.EX2 R8, R14 ;                                            /* 0x0000000e00080308 */
+FDEC_CHAIN         /*d190*/               @P0 MUFU.EX2 R8, R14 ;                                            /* 0x0000000e00080308 */
+FDEC_CHAIN         /*d290*/               @P0 MUFU.EX2 R8, R14 ;                                            /* 0x0000000e00080308 */
+FDEC_CHAIN         /*d390*/               @P0 MUFU.EX2 R8, R14 ;                                            /* 0x0000000e00080308 */
+FDEC_CHAIN         /*d490*/               @P0 MUFU.EX2 R8, R14 ;                                            /* 0x0000000e00080308 */
+FDEC_CHAIN         /*d590*/               @P0 MUFU.EX2 R8, R10 ;                                            /* 0x0000000a00080308 */
+FDEC_CHAIN         /*d690*/               @P0 MUFU.EX2 R8, R14 ;                                            /* 0x0000000e00080308 */
+FDEC_CHAIN         /*e1a0*/                   MUFU.EX2 R3, R16 ;                                            /* 0x0000001000037308 */
+FDEC_CHAIN         /*e370*/                   MUFU.EX2 R3, R3 ;                                             /* 0x0000000300037308 */
+FDEC_CHAIN         /*e4f0*/                   MUFU.EX2 R3, R3 ;                                             /* 0x0000000300037308 */
+FDEC_CHAIN         /*e670*/                   MUFU.EX2 R3, R8 ;                                             /* 0x0000000800037308 */
+Stopping app - local entrypoint completed.
+FDEC_CHAIN         /*ede0*/                   MUFU.EX2 R5, R5 ;                                             /* 0x0000000500057308 */
+FDEC_CHAIN         /*efd0*/                   MUFU.EX2 R3, R8 ;                                             /* 0x0000000800037308 */
+FDEC_CHAIN         /*f160*/                   MUFU.EX2 R3, R3 ;                                             /* 0x0000000300037308 */
+FDEC_CHAIN         /*f2e0*/                   MUFU.EX2 R3, R8 ;                                             /* 0x0000000800037308 */
+✓ App completed. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-2sWkjbSVtdI6jfzSHQbrsR

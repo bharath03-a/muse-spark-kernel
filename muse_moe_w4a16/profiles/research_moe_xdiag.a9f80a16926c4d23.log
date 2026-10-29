@@ -1,0 +1,10 @@
+v56 prepare 54s before tuning
+XD M32 seed21 experts 11 units 528 (4.00/SM) replay 122.6 us | setup 2.6 | consumer end p0 90.4 p10 91.9 p50 94.8 p90 101.6 max 105.5 mean 96.0 | combine end 110.3
+XD M32 seed22 experts 16 units 768 (5.82/SM) replay 157.6 us | setup 3.1 | consumer end p0 116.7 p10 118.3 p50 134.1 p90 136.7 max 138.8 mean 131.8 | combine end 143.1
+XD M32 seed23 experts 10 units 480 (3.64/SM) replay 118.5 us | setup 2.6 | consumer end p0 71.9 p10 72.7 p50 89.6 p90 94.5 max 97.3 mean 85.5 | combine end 101.4
+XD M128 seed21 experts 22 units 1056 (8.00/SM) replay 210.7 us | setup 3.8 | consumer end p0 177.2 p10 180.0 p50 186.0 p90 190.2 max 193.3 mean 185.3 | combine end 198.1
+XD M128 seed22 experts 19 units 960 (7.27/SM) replay 199.7 us | setup 3.6 | consumer end p0 160.3 p10 161.3 p50 167.2 p90 179.2 max 181.0 mean 168.8 | combine end 185.6
+XD M128 seed23 experts 25 units 1200 (9.09/SM) replay 242.7 us | setup 4.1 | consumer end p0 203.3 p10 205.1 p50 207.9 p90 211.7 max 224.0 mean 208.9 | combine end 228.4
+XD M256 seed21 experts 19 units 960 (7.27/SM) replay 214.0 us | setup 4.4 | consumer end p0 171.0 p10 173.6 p50 177.7 p90 192.3 max 197.6 mean 180.8 | combine end 203.3
+XD M256 seed22 experts 25 units 1248 (9.45/SM) replay 254.0 us | setup 4.6 | consumer end p0 212.5 p10 213.2 p50 219.6 p90 229.9 max 231.9 mean 221.3 | combine end 238.1
+XD M256 seed23 experts 24 units 1200 (9.09/SM) replay 256.4 us | setup 4.6 | consumer end p0 212.5 p10 214.6 p50 218.6 p90 224.5 max 233.7 mean 219.3 | combine end 240.9

@@ -1,0 +1,274 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 80, in make_ir
+    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 44:12:
+    NUM_SPLITS: tl.constexpr,
+    BLOCK_N: tl.constexpr,
+    HEAD_DIM: tl.constexpr,
+):
+    pid = tl.program_id(0)
+    split_id = pid % NUM_SPLITS
+    pid_bk = pid // NUM_SPLITS
+    kv_h = pid_bk % num_kv_heads
+    b = pid_bk // num_kv_heads
+
+    seq_len = tl.load(cache_seqlens_ptr + b)
+    chunk = triton.cdiv(seq_len, NUM_SPLITS)
+            ^
+Did you forget to add @triton.jit ? (`_semantic` argument must be provided outside of JIT functions.)
+Traceback (most recent call last):
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 1160, in __call__
+    res = self.fn(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/__init__.py", line 70, in cdiv
+    return (x + y - 1) // y
+            ~~^~~
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 41, in wrapper
+    raise ValueError("Did you forget to add @triton.jit ? "
+ValueError: Did you forget to add @triton.jit ? (`_semantic` argument must be provided outside of JIT functions.)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-em9mu8cx/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-em9mu8cx/run/submission.py", line 552, in kernel_fn
+    _gqa_decode_stage1_kernel[grid1](
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 374, in <lambda>
+    return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 757, in run
+    kernel = self._do_compile(key, signature, device, constexprs, options, attrs, warmup)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 902, in _do_compile
+    kernel = self.compile(src, target=target, options=options.__dict__)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 80, in make_ir
+    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 44:12:
+    NUM_SPLITS: tl.constexpr,
+    BLOCK_N: tl.constexpr,
+    HEAD_DIM: tl.constexpr,
+):
+    pid = tl.program_id(0)
+    split_id = pid % NUM_SPLITS
+    pid_bk = pid // NUM_SPLITS
+    kv_h = pid_bk % num_kv_heads
+    b = pid_bk // num_kv_heads
+
+    seq_len = tl.load(cache_seqlens_ptr + b)
+    chunk = triton.cdiv(seq_len, NUM_SPLITS)
+            ^
+Did you forget to add @triton.jit ? (`_semantic` argument must be provided outside of JIT functions.)
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-em9mu8cx/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-em9mu8cx/run/submission.py", line 638, in kernel_fn
+    o = rms_norm_gate(out.reshape(tokens, hq * d).to(torch.bfloat16), gate, None, head_dim=d, eps=1e-5, has_norm=True)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: shape '[16, 1024]' is invalid for input of size 2048
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-em9mu8cx/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-em9mu8cx/run/submission.py", line 638, in kernel_fn
+    o = rms_norm_gate(out.reshape(tokens, hq * d).to(torch.bfloat16), gate, None, head_dim=d, eps=1e-5, has_norm=True)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: shape '[32, 1024]' is invalid for input of size 4096
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-em9mu8cx/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-em9mu8cx/run/submission.py", line 638, in kernel_fn
+    o = rms_norm_gate(out.reshape(tokens, hq * d).to(torch.bfloat16), gate, None, head_dim=d, eps=1e-5, has_norm=True)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: shape '[8, 1024]' is invalid for input of size 1024
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-em9mu8cx/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-em9mu8cx/run/submission.py", line 638, in kernel_fn
+    o = rms_norm_gate(out.reshape(tokens, hq * d).to(torch.bfloat16), gate, None, head_dim=d, eps=1e-5, has_norm=True)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: shape '[24, 1024]' is invalid for input of size 3072
+Traceback (most recent call last):
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 1160, in __call__
+    res = self.fn(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/__init__.py", line 70, in cdiv
+    return (x + y - 1) // y
+            ~~^~~
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 41, in wrapper
+    raise ValueError("Did you forget to add @triton.jit ? "
+ValueError: Did you forget to add @triton.jit ? (`_semantic` argument must be provided outside of JIT functions.)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-em9mu8cx/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-em9mu8cx/run/submission.py", line 552, in kernel_fn
+    _gqa_decode_stage1_kernel[grid1](
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 374, in <lambda>
+    return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 757, in run
+    kernel = self._do_compile(key, signature, device, constexprs, options, attrs, warmup)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 902, in _do_compile
+    kernel = self.compile(src, target=target, options=options.__dict__)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 80, in make_ir
+    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 44:12:
+    NUM_SPLITS: tl.constexpr,
+    BLOCK_N: tl.constexpr,
+    HEAD_DIM: tl.constexpr,
+):
+    pid = tl.program_id(0)
+    split_id = pid % NUM_SPLITS
+    pid_bk = pid // NUM_SPLITS
+    kv_h = pid_bk % num_kv_heads
+    b = pid_bk // num_kv_heads
+
+    seq_len = tl.load(cache_seqlens_ptr + b)
+    chunk = triton.cdiv(seq_len, NUM_SPLITS)
+            ^
+Did you forget to add @triton.jit ? (`_semantic` argument must be provided outside of JIT functions.)
+Traceback (most recent call last):
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 1160, in __call__
+    res = self.fn(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/__init__.py", line 70, in cdiv
+    return (x + y - 1) // y
+            ~~^~~
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 41, in wrapper
+    raise ValueError("Did you forget to add @triton.jit ? "
+ValueError: Did you forget to add @triton.jit ? (`_semantic` argument must be provided outside of JIT functions.)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-em9mu8cx/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-em9mu8cx/run/submission.py", line 552, in kernel_fn
+    _gqa_decode_stage1_kernel[grid1](
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 374, in <lambda>
+    return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 757, in run
+    kernel = self._do_compile(key, signature, device, constexprs, options, attrs, warmup)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 902, in _do_compile
+    kernel = self.compile(src, target=target, options=options.__dict__)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 80, in make_ir
+    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 44:12:
+    NUM_SPLITS: tl.constexpr,
+    BLOCK_N: tl.constexpr,
+    HEAD_DIM: tl.constexpr,
+):
+    pid = tl.program_id(0)
+    split_id = pid % NUM_SPLITS
+    pid_bk = pid // NUM_SPLITS
+    kv_h = pid_bk % num_kv_heads
+    b = pid_bk // num_kv_heads
+
+    seq_len = tl.load(cache_seqlens_ptr + b)
+    chunk = triton.cdiv(seq_len, NUM_SPLITS)
+            ^
+Did you forget to add @triton.jit ? (`_semantic` argument must be provided outside of JIT functions.)
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-em9mu8cx/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-em9mu8cx/run/submission.py", line 638, in kernel_fn
+    o = rms_norm_gate(out.reshape(tokens, hq * d).to(torch.bfloat16), gate, None, head_dim=d, eps=1e-5, has_norm=True)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: shape '[32, 1024]' is invalid for input of size 4096
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-em9mu8cx/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-em9mu8cx/run/submission.py", line 638, in kernel_fn
+    o = rms_norm_gate(out.reshape(tokens, hq * d).to(torch.bfloat16), gate, None, head_dim=d, eps=1e-5, has_norm=True)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: shape '[16, 8192]' is invalid for input of size 16384
+Traceback (most recent call last):
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 1160, in __call__
+    res = self.fn(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/__init__.py", line 70, in cdiv
+    return (x + y - 1) // y
+            ~~^~~
+  File "/opt/sglang/lib/python3.12/site-packages/triton/language/core.py", line 41, in wrapper
+    raise ValueError("Did you forget to add @triton.jit ? "
+ValueError: Did you forget to add @triton.jit ? (`_semantic` argument must be provided outside of JIT functions.)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-em9mu8cx/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-em9mu8cx/run/submission.py", line 552, in kernel_fn
+    _gqa_decode_stage1_kernel[grid1](
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 374, in <lambda>
+    return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 757, in run
+    kernel = self._do_compile(key, signature, device, constexprs, options, attrs, warmup)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 902, in _do_compile
+    kernel = self.compile(src, target=target, options=options.__dict__)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 307, in compile
+    module = src.make_ir(target, options, codegen_fns, module_map, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 80, in make_ir
+    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+triton.compiler.errors.CompilationError: at 44:12:
+    NUM_SPLITS: tl.constexpr,
+    BLOCK_N: tl.constexpr,
+    HEAD_DIM: tl.constexpr,
+):
+    pid = tl.program_id(0)
+    split_id = pid % NUM_SPLITS
+    pid_bk = pid // NUM_SPLITS
+    kv_h = pid_bk % num_kv_heads
+    b = pid_bk // num_kv_heads
+
+    seq_len = tl.load(cache_seqlens_ptr + b)
+    chunk = triton.cdiv(seq_len, NUM_SPLITS)
+            ^
+Did you forget to add @triton.jit ? (`_semantic` argument must be provided outside of JIT functions.)
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-em9mu8cx/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-em9mu8cx/run/submission.py", line 638, in kernel_fn
+    o = rms_norm_gate(out.reshape(tokens, hq * d).to(torch.bfloat16), gate, None, head_dim=d, eps=1e-5, has_norm=True)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: shape '[16, 8192]' is invalid for input of size 16384

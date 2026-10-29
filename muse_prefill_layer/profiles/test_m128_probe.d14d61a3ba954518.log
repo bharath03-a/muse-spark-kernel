@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-w7cs8qtb/run/worker.py", line 458, in child_main
+    fn(state["data"])
+  File "/tmp/muse_prefill_layer-w7cs8qtb/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_prefill_layer-w7cs8qtb/run/submission.py", line 695, in kernel_fn
+    expert_output = _optimized_experts(normed_expert_in, topk_weights, local_ids, state)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-w7cs8qtb/run/submission.py", line 546, in _optimized_experts
+    _fast_marlin(
+  File "/tmp/muse_prefill_layer-w7cs8qtb/run/submission.py", line 443, in _fast_marlin
+    module.moe_wna16_marlin_gemm(
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+RuntimeError: Failed at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/gemm/marlin_moe/moe_wna16_marlin.cuh:898: unsupported moe_block_size=128

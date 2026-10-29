@@ -1,0 +1,40 @@
+block_size_m=8: SUCCESS!
+block_size_m=16: SUCCESS!
+block_size_m=32: SUCCESS!
+block_size_m=48: SUCCESS!
+block_size_m=64: SUCCESS!
+block_size_m=128: FAILED (Failed at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/gemm/marlin_moe/moe_wna16_marlin.cuh:898: unsupported moe_block_size=128)
+block_size_m=256: FAILED (Failed at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/gemm/marlin_moe/moe_wna16_marlin.cuh:898: unsupported moe_block_size=256)
+block_size_m=512: FAILED (Failed at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/gemm/marlin_moe/moe_wna16_marlin.cuh:898: unsupported moe_block_size=512)
+block_size_m=8: SUCCESS!
+block_size_m=16: SUCCESS!
+block_size_m=32: SUCCESS!
+block_size_m=48: SUCCESS!
+block_size_m=64: SUCCESS!
+block_size_m=128: FAILED (Failed at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/gemm/marlin_moe/moe_wna16_marlin.cuh:898: unsupported moe_block_size=128)
+block_size_m=256: FAILED (Failed at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/gemm/marlin_moe/moe_wna16_marlin.cuh:898: unsupported moe_block_size=256)
+block_size_m=512: FAILED (Failed at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/gemm/marlin_moe/moe_wna16_marlin.cuh:898: unsupported moe_block_size=512)
+block_size_m=8: SUCCESS!
+block_size_m=16: SUCCESS!
+block_size_m=32: SUCCESS!
+block_size_m=48: SUCCESS!
+block_size_m=64: SUCCESS!
+block_size_m=128: FAILED (Failed at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/gemm/marlin_moe/moe_wna16_marlin.cuh:898: unsupported moe_block_size=128)
+block_size_m=256: FAILED (Failed at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/gemm/marlin_moe/moe_wna16_marlin.cuh:898: unsupported moe_block_size=256)
+block_size_m=512: FAILED (Failed at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/gemm/marlin_moe/moe_wna16_marlin.cuh:898: unsupported moe_block_size=512)
+block_size_m=8: SUCCESS!
+block_size_m=16: SUCCESS!
+block_size_m=32: SUCCESS!
+block_size_m=48: SUCCESS!
+block_size_m=64: SUCCESS!
+block_size_m=128: FAILED (Failed at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/gemm/marlin_moe/moe_wna16_marlin.cuh:898: unsupported moe_block_size=128)
+block_size_m=256: FAILED (Failed at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/gemm/marlin_moe/moe_wna16_marlin.cuh:898: unsupported moe_block_size=256)
+block_size_m=512: FAILED (Failed at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/gemm/marlin_moe/moe_wna16_marlin.cuh:898: unsupported moe_block_size=512)
+block_size_m=8: SUCCESS!
+block_size_m=16: SUCCESS!
+block_size_m=32: SUCCESS!
+block_size_m=48: SUCCESS!
+block_size_m=64: SUCCESS!
+block_size_m=128: FAILED (Failed at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/gemm/marlin_moe/moe_wna16_marlin.cuh:898: unsupported moe_block_size=128)
+block_size_m=256: FAILED (Failed at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/gemm/marlin_moe/moe_wna16_marlin.cuh:898: unsupported moe_block_size=256)
+block_size_m=512: FAILED (Failed at /sgl-workspace/sglang-muse-spark/python/sglang/kernels/jit/csrc/gemm/marlin_moe/moe_wna16_marlin.cuh:898: unsupported moe_block_size=512)

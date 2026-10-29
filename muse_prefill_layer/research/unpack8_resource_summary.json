@@ -1,0 +1,66 @@
+{
+  "base": {
+    "_Z5w4g_kILi32ELi1EEv1P14CUtensorMap_st": {
+      "SHF": 33,
+      "LOP3": 65,
+      "IMAD": 509,
+      "HMUL2": 24,
+      "HFMA2": 0,
+      "LDL": 0,
+      "STL": 0,
+      "instructions": 2136
+    },
+    "_Z5w4g_kILi256ELi2EEv1P14CUtensorMap_st": {
+      "SHF": 75,
+      "LOP3": 66,
+      "IMAD": 545,
+      "HMUL2": 24,
+      "HFMA2": 0,
+      "LDL": 0,
+      "STL": 0,
+      "instructions": 3712
+    },
+    "_Z5w4g_kILi128ELi4EEv1P14CUtensorMap_st": {
+      "SHF": 52,
+      "LOP3": 65,
+      "IMAD": 526,
+      "HMUL2": 24,
+      "HFMA2": 0,
+      "LDL": 0,
+      "STL": 0,
+      "instructions": 2808
+    }
+  },
+  "grid": {
+    "_Z5w4g_kILi32ELi1EEv1P14CUtensorMap_st": {
+      "SHF": 37,
+      "LOP3": 59,
+      "IMAD": 499,
+      "HMUL2": 24,
+      "HFMA2": 0,
+      "LDL": 0,
+      "STL": 0,
+      "instructions": 2112
+    },
+    "_Z5w4g_kILi256ELi2EEv1P14CUtensorMap_st": {
+      "SHF": 74,
+      "LOP3": 60,
+      "IMAD": 535,
+      "HMUL2": 24,
+      "HFMA2": 0,
+      "LDL": 0,
+      "STL": 0,
+      "instructions": 3688
+    },
+    "_Z5w4g_kILi128ELi4EEv1P14CUtensorMap_st": {
+      "SHF": 54,
+      "LOP3": 59,
+      "IMAD": 514,
+      "HMUL2": 24,
+      "HFMA2": 0,
+      "LDL": 0,
+      "STL": 0,
+      "instructions": 2792
+    }
+  }
+}

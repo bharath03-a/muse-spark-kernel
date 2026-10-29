@@ -1,0 +1,43 @@
+2026-10-26 10:02:03,864 - INFO - core.py:564 - flashinfer.jit: Building JIT module batch_prefill_with_kv_cache_dtype_q_e4m3_dtype_kv_e4m3_dtype_o_bf16_dtype_idx_i32_head_dim_qk_64_head_dim_vo_64_posenc_0_use_swa_True_use_logits_cap_False_f16qk_False_sm90; this can take several minutes on first use.
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-12j3ipt2/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-12j3ipt2/run/submission.py", line 272, in kernel_fn
+    out = flash_attn_with_kvcache(
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/sgl_kernel/flash_attn.py", line 230, in flash_attn_with_kvcache
+    out, softmax_lse, *rest = torch.ops.sgl_kernel.fwd.default(
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/torch/_ops.py", line 916, in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: out must have shape (total_q, num_heads, head_size_v)
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-12j3ipt2/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-12j3ipt2/run/submission.py", line 272, in kernel_fn
+    out = flash_attn_with_kvcache(
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/sgl_kernel/flash_attn.py", line 230, in flash_attn_with_kvcache
+    out, softmax_lse, *rest = torch.ops.sgl_kernel.fwd.default(
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/torch/_ops.py", line 916, in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: out must have shape (total_q, num_heads, head_size_v)
+Traceback (most recent call last):
+  File "/tmp/muse_attention_decode-12j3ipt2/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_attention_decode-12j3ipt2/run/submission.py", line 272, in kernel_fn
+    out = flash_attn_with_kvcache(
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/sgl_kernel/flash_attn.py", line 230, in flash_attn_with_kvcache
+    out, softmax_lse, *rest = torch.ops.sgl_kernel.fwd.default(
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/torch/_ops.py", line 916, in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: out must have shape (total_q, num_heads, head_size_v)

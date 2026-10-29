@@ -1,0 +1,15 @@
+{
+  "random_length_vectors": 2000,
+  "batches": [
+    16,
+    32
+  ],
+  "seq_bounds": [
+    74000,
+    85999
+  ],
+  "grid": 132,
+  "no_uncovered_or_duplicate_key_intervals": true,
+  "max_request_splits_fit_allocated_stride": true,
+  "no_GPU_used": true
+}

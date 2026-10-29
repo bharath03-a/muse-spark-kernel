@@ -1,0 +1,205 @@
+pressed_tensors/schemes/compressed_tensors_w8a8_int8_moe.py
+/sgl-workspace/sglang/python/sglang/srt/layers/quantization/compressed_tensors/schemes/compressed_tensors_wNa16_moe.py
+/sgl-workspace/sglang/python/sglang/srt/layers/quantization/gptq/schemes/gptq_marlin.py
+/sgl-workspace/sglang/python/sglang/srt/layers/quantization/gptq/schemes/gptq_moe.py
+/sgl-workspace/sglang/python/sglang/srt/layers/quantization/modelslim/schemes/modelslim_mxfp8_moe.py
+/sgl-workspace/sglang/python/sglang/srt/layers/quantization/modelslim/schemes/modelslim_w4a4_int4_moe.py
+/sgl-workspace/sglang/python/sglang/srt/layers/quantization/modelslim/schemes/modelslim_w4a4_mxfp4_moe.py
+/sgl-workspace/sglang/python/sglang/srt/layers/quantization/modelslim/schemes/modelslim_w4a8_int8_moe.py
+/sgl-workspace/sglang/python/sglang/srt/layers/quantization/modelslim/schemes/modelslim_w4a8_mxfp4_moe.py
+/sgl-workspace/sglang/python/sglang/srt/layers/quantization/modelslim/schemes/modelslim_w8a8_int8_moe.py
+/sgl-workspace/sglang/python/sglang/srt/layers/quantization/quark/schemes/quark_w4a4_mxfp4_moe.py
+/sgl-workspace/sglang/python/sglang/srt/layers/quantization/quark/schemes/quark_w4a8_mxfp4_moe.py
+/sgl-workspace/sglang/python/sglang/srt/layers/quantization/quark/schemes/quark_w8a8_fp8_moe.py
+/sgl-workspace/sglang/python/sglang/srt/lora/lora_moe_runner_marlin.py
+/sgl-workspace/sglang/python/sglang/srt/lora/lora_moe_runners.py
+/sgl-workspace/sglang/python/sglang/srt/lora/marlin_lora_temp/moe_runner.py
+/sgl-workspace/sglang/python/sglang/srt/lora/trtllm_lora_temp/experimental_sgl_trtllm_moe.py
+/sgl-workspace/sglang/python/sglang/srt/lora/trtllm_lora_temp/moe_overlap.py
+/sgl-workspace/sglang/python/sglang/srt/lora/trtllm_lora_temp/sgl_fp8_moe.py
+/sgl-workspace/sglang/python/sglang/srt/model_executor/model_runner_components/moe_ep_setup.py
+/sgl-workspace/sglang/python/sglang/srt/models/afmoe.py
+/sgl-workspace/sglang/python/sglang/srt/models/bailing_moe.py
+/sgl-workspace/sglang/python/sglang/srt/models/bailing_moe_linear.py
+/sgl-workspace/sglang/python/sglang/srt/models/bailing_moe_nextn.py
+/sgl-workspace/sglang/python/sglang/srt/models/bailing_moe_v3.py
+/sgl-workspace/sglang/python/sglang/srt/models/cohere2_moe.py
+/sgl-workspace/sglang/python/sglang/srt/models/ernie45_moe_vl.py
+/sgl-workspace/sglang/python/sglang/srt/models/exaone_moe.py
+/sgl-workspace/sglang/python/sglang/srt/models/exaone_moe_mtp.py
+/sgl-workspace/sglang/python/sglang/srt/models/glm4_moe.py
+/sgl-workspace/sglang/python/sglang/srt/models/glm4_moe_lite.py
+/sgl-workspace/sglang/python/sglang/srt/models/glm4_moe_lite_nextn.py
+/sgl-workspace/sglang/python/sglang/srt/models/glm4_moe_nextn.py
+/sgl-workspace/sglang/python/sglang/srt/models/glm4v_moe.py
+/sgl-workspace/sglang/python/sglang/srt/models/granitemoe.py
+/sgl-workspace/sglang/python/sglang/srt/models/granitemoehybrid.py
+/sgl-workspace/sglang/python/sglang/srt/models/lfm2_moe.py
+/sgl-workspace/sglang/python/sglang/srt/models/olmoe.py
+/sgl-workspace/sglang/python/sglang/srt/models/phimoe.py
+/sgl-workspace/sglang/python/sglang/srt/models/qwen2_moe.py
+/sgl-workspace/sglang/python/sglang/srt/models/qwen3_moe.py
+/sgl-workspace/sglang/python/sglang/srt/models/qwen3_moe_mtp.py
+/sgl-workspace/sglang/python/sglang/srt/models/qwen3_omni_moe.py
+/sgl-workspace/sglang/python/sglang/srt/models/qwen3_vl_moe.py
+/sgl-workspace/sglang/python/sglang/srt/models/sarvam_moe.py
+/sgl-workspace/sglang/python/sglang/srt/models/sdar_moe.py
+/sgl-workspace/sglang/python/sglang/srt/models/xverse_moe.py
+/sgl-workspace/sglang/python/sglang/srt/models/inkling_common/moe.py
+/sgl-workspace/sglang/python/sglang/test/test_marlin_utils.py
+/sgl-workspace/sglang/test/manual/test_moe_quant_once.py
+/sgl-workspace/sglang/test/manual/test_triton_moe_wna16.py
+/sgl-workspace/sglang/test/manual/ep/test_moe_deepep.py
+/sgl-workspace/sglang/test/manual/ep/test_moe_deepep_eval_accuracy_large.py
+/sgl-workspace/sglang/test/manual/kernels/bench_flux2_token_cat_nvfp4.py
+/sgl-workspace/sglang/test/manual/layers/moe/test_moe_runners_1gpu.py
+/sgl-workspace/sglang/test/manual/layers/moe/test_moe_runners_4gpu.py
+/sgl-workspace/sglang/test/manual/models/test_granite_moe_hybrid.py
+/sgl-workspace/sglang/test/manual/quant/test_cutlass_moe.py
+/sgl-workspace/sglang/test/manual/quant/test_cutlass_w16a16_moe.py
+/sgl-workspace/sglang/test/manual/quant/test_cutlass_w4a8_moe.py
+/sgl-workspace/sglang/test/manual/quant/test_nvfp4_gemm_archived.py
+/sgl-workspace/sglang/test/registered/amd/test_qwen35_moe_softmax_topk.py
+/sgl-workspace/sglang/test/registered/amd/test_smallm_moe_gfx950.py
+/sgl-workspace/sglang/test/registered/amd/accuracy/mi35x/test_qwen3_moe_eval_mi35x.py
+/sgl-workspace/sglang/test/registered/attention/test_glm4_moe_lite_deterministic.py
+/sgl-workspace/sglang/test/registered/backends/test_deepseek_v3_fp4_cutedsl_moe.py
+/sgl-workspace/sglang/test/registered/backends/test_flashinfer_nvfp4_online_moe_backend.py
+/sgl-workspace/sglang/test/registered/backends/test_flashinfer_trtllm_gen_moe_backend.py
+/sgl-workspace/sglang/test/registered/basic_perf/test_moe_throughput.py
+/sgl-workspace/sglang/test/registered/cpu/test_moe.py
+/sgl-workspace/sglang/test/registered/cpu/arm64/test_moe.py
+/sgl-workspace/sglang/test/registered/e2e/lora/test_lora_moe_prefill_cuda_graph.py
+/sgl-workspace/sglang/test/registered/e2e/models/test_deepseek_v4_flash_fp4_megamoe_b200.py
+/sgl-workspace/sglang/test/registered/e2e/models/test_dsa_glm52_nvfp4_dp_mtp.py
+/sgl-workspace/sglang/test/registered/e2e/models/test_dsa_glm52_nvfp4_tp_mtp.py
+/sgl-workspace/sglang/test/registered/e2e/models/test_inkling_small_nvfp4.py
+/sgl-workspace/sglang/test/registered/e2e/models/test_qwen35_9b_nvfp4_kv_cache_sm100.py
+/sgl-workspace/sglang/test/registered/e2e/models_large/test_inkling_nvfp4_nightly.py
+/sgl-workspace/sglang/test/registered/e2e/models_large/test_laguna_nvfp4_nightly.py
+/sgl-workspace/sglang/test/registered/e2e/models_large/test_nvidia_nemotron_3_super_nvfp4.py
+/sgl-workspace/sglang/test/registered/e2e/moe/test_glm53_flash_quark_moe_mi35x.py
+/sgl-workspace/sglang/test/registered/e2e/quantization/test_int4fp8_moe.py
+/sgl-workspace/sglang/test/registered/e2e/quantization/test_llama8b_nvfp4_kv_cache_sm120.py
+/sgl-workspace/sglang/test/registered/e2e/quantization/test_nvfp4_gemm_sm120.py
+/sgl-workspace/sglang/test/registered/gb300/test_glm52_nvfp4.py
+/sgl-workspace/sglang/test/registered/gb300/test_kimi_k25_nvfp4_dp.py
+/sgl-workspace/sglang/test/registered/gb300/test_kimi_k25_nvfp4_tp.py
+/sgl-workspace/sglang/test/registered/kernels/benchmark/moe/bench_moe_fused_gate.py
+/sgl-workspace/sglang/test/registered/kernels/benchmark/moe/bench_moe_topk_softmax.py
+/sgl-workspace/sglang/test/registered/kernels/ops/diffusion/test_nvfp4_scaled_mm.py
+/sgl-workspace/sglang/test/registered/kernels/ops/gemm/test_gptq_marlin.py
+/sgl-workspace/sglang/test/registered/kernels/ops/gemm/test_nvfp4_marlin.py
+/sgl-workspace/sglang/test/registered/kernels/ops/moe/test_fp4_moe.py
+/sgl-workspace/sglang/test/registered/kernels/ops/moe/test_marlin_moe.py
+/sgl-workspace/sglang/test/registered/kernels/ops/moe/test_marlin_packed_topk_unpack.py
+/sgl-workspace/sglang/test/registered/kernels/ops/moe/test_mega_moe_pre_dispatch.py
+/sgl-workspace/sglang/test/registered/kernels/ops/moe/test_moe_align_block_size.py
+/sgl-workspace/sglang/test/registered/kernels/ops/moe/test_moe_align_small_numel.py
+/sgl-workspace/sglang/test/registered/kernels/ops/moe/test_moe_front.py
+/sgl-workspace/sglang/test/registered/kernels/ops/moe/test_moe_fused_gate.py
+/sgl-workspace/sglang/test/registered/kernels/ops/moe/test_moe_lora_align_block_size.py
+/sgl-workspace/sglang/test/registered/kernels/ops/moe/test_moe_preprocess.py
+/sgl-workspace/sglang/test/registered/kernels/ops/moe/test_moe_route_radix4.py
+/sgl-workspace/sglang/test/registered/kernels/ops/moe/test_moe_tma_cache.py
+/sgl-workspace/sglang/test/registered/kernels/ops/moe/test_moe_topk_sigmoid.py
+/sgl-workspace/sglang/test/registered/kernels/ops/moe/test_moe_topk_softmax.py
+/sgl-workspace/sglang/test/registered/kernels/ops/moe/test_moe_wna16_marlin.py
+/sgl-workspace/sglang/test/registered/kernels/ops/quantization/test_awq_marlin_moe_repack.py
+/sgl-workspace/sglang/test/registered/kernels/ops/quantization/test_awq_marlin_repack.py
+/sgl-workspace/sglang/test/registered/kernels/ops/quantization/test_gptq_marlin_repack.py
+/sgl-workspace/sglang/test/registered/kernels/ops/quantization/test_nvfp4_native_kv_layout.py
+/sgl-workspace/sglang/test/registered/lora/test_fused_moe_lora_kernel.py
+/sgl-workspace/sglang/test/registered/lora/test_lora_moe_tp_logprob_diff.py
+/sgl-workspace/sglang/test/registered/lora/test_lora_moe_vllm_sgl_logprob_diff.py
+/sgl-workspace/sglang/test/registered/lora/test_moe_lora_info.py
+/sgl-workspace/sglang/test/registered/mlx/models_e2e/test_qwen2_moe_mlx_correctness.py
+/sgl-workspace/sglang/test/registered/mlx/models_e2e/test_qwen3_moe_mlx_correctness.py
+/sgl-workspace/sglang/test/registered/moe/test_cutedsl_moe.py
+/sgl-workspace/sglang/test/registered/moe/test_flashinfer_a2a_cutlass.py
+/sgl-workspace/sglang/test/registered/moe/test_fused_moe.py
+/sgl-workspace/sglang/test/registered/moe/test_glm4_moe_models.py
+/sgl-workspace/sglang/test/registered/moe/test_hpc_ops_moe.py
+/sgl-workspace/sglang/test/registered/moe/test_moe_ep.py
+/sgl-workspace/sglang/test/registered/moe/test_moe_ep_extra.py
+/sgl-workspace/sglang/test/registered/moe/test_torch_compile_moe.py
+/sgl-workspace/sglang/test/registered/moe/test_triton_fused_moe.py
+/sgl-workspace/sglang/test/registered/moe/test_triton_moe_channel_fp8_kernel.py
+/sgl-workspace/sglang/test/registered/npu/basic_function/parallel_strategy/expert_parallelism/test_npu_moe_dense_tp_size.py
+/sgl-workspace/sglang/test/registered/npu/basic_function/parallel_strategy/expert_parallelism/test_npu_moe_runner_backend.py
+/sgl-workspace/sglang/test/registered/npu/basic_function/quant/test_npu_autoround_moe.py
+/sgl-workspace/sglang/test/registered/npu/basic_function/quant/test_npu_gguf_moe.py
+/sgl-workspace/sglang/test/registered/npu/basic_function/quant/test_npu_gptq_moe.py
+/sgl-workspace/sglang/test/registered/npu/basic_function/speculative_inference/test_npu_speculative_moe_a2a_backend.py
+/sgl-workspace/sglang/test/registered/unit/test_mxfp8_moe_runner_backend.py
+/sgl-workspace/sglang/test/registered/unit/configs/test_cohere2_moe_config.py
+/sgl-workspace/sglang/test/registered/unit/eplb/test_megamoe_prefill_recorder.py
+/sgl-workspace/sglang/test/registered/unit/layer_boundary/test_moe_output_reduction.py
+/sgl-workspace/sglang/test/registered/unit/layers/moe/test_aiter_megamoe_rank_sync.py
+/sgl-workspace/sglang/test/registered/unit/layers/moe/test_flashinfer_cutlass_swiglu_params.py
+/sgl-workspace/sglang/test/registered/unit/layers/moe/test_flashinfer_megamoe.py
+/sgl-workspace/sglang/test/registered/unit/layers/moe/test_fused_moe_common_utils.py
+/sgl-workspace/sglang/test/registered/unit/layers/moe/test_fused_moe_native.py
+/sgl-workspace/sglang/test/registered/unit/layers/moe/test_fused_moe_triton_config.py
+/sgl-workspace/sglang/test/registered/unit/layers/moe/test_mega_moe_deepgemm_api.py
+/sgl-workspace/sglang/test/registered/unit/layers/moe/test_moe_runner_extensions.py
+/sgl-workspace/sglang/test/registered/unit/layers/quantization/test_compressed_tensors_wna16_moe_no_linear.py
+/sgl-workspace/sglang/test/registered/unit/layers/quantization/test_compressed_tensors_wna16_moe_reload.py
+/sgl-workspace/sglang/test/registered/unit/layers/quantization/test_fp8_moe_runner_fallback.py
+/sgl-workspace/sglang/test/registered/unit/layers/quantization/test_fp8_moe_runner_ownership.py
+/sgl-workspace/sglang/test/registered/unit/layers/quantization/test_fp8_moe_weight_gating.py
+/sgl-workspace/sglang/test/registered/unit/layers/quantization/test_marlin_utils_fp8.py
+/sgl-workspace/sglang/test/registered/unit/layers/quantization/test_modelopt_nvfp4.py
+/sgl-workspace/sglang/test/registered/unit/layers/quantization/test_modelopt_nvfp4_moe_dispatch.py
+/sgl-workspace/sglang/test/registered/unit/layers/quantization/test_modelopt_nvfp4_moe_scales.py
+/sgl-workspace/sglang/test/registered/unit/layers/quantization/test_mxfp4_sm120_cutlass.py
+/sgl-workspace/sglang/test/registered/unit/layers/quantization/test_mxfp4_sm90_cutlass.py
+/sgl-workspace/sglang/test/registered/unit/layers/quantization/test_nvfp4_embedding.py
+/sgl-workspace/sglang/test/registered/unit/layers/quantization/test_nvfp4_linear_backends.py
+/sgl-workspace/sglang/test/registered/unit/layers/quantization/test_nvfp4_moe_backends.py
+/sgl-workspace/sglang/test/registered/unit/lora/test_experimental_sgl_marlin_multi_prefill.py
+/sgl-workspace/sglang/test/registered/unit/lora/test_experimental_sgl_marlin_policy.py
+/sgl-workspace/sglang/test/registered/unit/lora/test_experimental_sgl_marlin_runtime_unit.py
+/sgl-workspace/sglang/test/registered/unit/lora/test_experimental_sgl_marlin_shared_outer_reduce.py
+/sgl-workspace/sglang/test/registered/unit/lora/test_lora_moe_inplace_unit.py
+/sgl-workspace/sglang/test/registered/unit/models/test_glm_moe_gate_fp32.py
+/sgl-workspace/sglang/test/registered/unit/models/test_glm_nextn_moe_ptpc.py
+/sgl-workspace/sglang/test/registered/unit/models/test_glmmoedsa_correction_bias_fp32.py
+/sgl-workspace/sglang/test/registered/unit/models/test_granitemoe_split_expert_loading.py
+/sgl-workspace/sglang/test/registered/unit/npu/quantization/test_fp4_moe_methods.py
+/sgl-workspace/sglang/test/registered/xpu/test_moe_ld_padding.py
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-0n0szpfs/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-0n0szpfs/run/reference.py", line 583, in collect
+    raise ValueError("expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])")
+ValueError: expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-0n0szpfs/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-0n0szpfs/run/reference.py", line 583, in collect
+    raise ValueError("expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])")
+ValueError: expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-0n0szpfs/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-0n0szpfs/run/reference.py", line 583, in collect
+    raise ValueError("expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])")
+ValueError: expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-0n0szpfs/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-0n0szpfs/run/reference.py", line 583, in collect
+    raise ValueError("expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])")
+ValueError: expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-0n0szpfs/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-0n0szpfs/run/reference.py", line 583, in collect
+    raise ValueError("expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])")
+ValueError: expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])

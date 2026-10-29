@@ -1,0 +1,50 @@
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-978_lowm/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-978_lowm/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_prefill_layer-978_lowm/run/submission.py", line 688, in kernel_fn
+    torch.mm(ffn_input, state["router_hi_t"], out=state["router_hi_buf"][:tokens])
+RuntimeError: Expected out tensor to have dtype c10::BFloat16, but got float instead
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-978_lowm/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-978_lowm/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_prefill_layer-978_lowm/run/submission.py", line 688, in kernel_fn
+    torch.mm(ffn_input, state["router_hi_t"], out=state["router_hi_buf"][:tokens])
+RuntimeError: Expected out tensor to have dtype c10::BFloat16, but got float instead
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-978_lowm/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-978_lowm/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_prefill_layer-978_lowm/run/submission.py", line 688, in kernel_fn
+    torch.mm(ffn_input, state["router_hi_t"], out=state["router_hi_buf"][:tokens])
+RuntimeError: Expected out tensor to have dtype c10::BFloat16, but got float instead
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-978_lowm/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-978_lowm/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_prefill_layer-978_lowm/run/submission.py", line 688, in kernel_fn
+    torch.mm(ffn_input, state["router_hi_t"], out=state["router_hi_buf"][:tokens])
+RuntimeError: Expected out tensor to have dtype c10::BFloat16, but got float instead
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-978_lowm/run/worker.py", line 484, in child_main
+    out = kernel()(state.get("data"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-978_lowm/run/worker.py", line 415, in <lambda>
+    return functools.partial(lambda k, p, d: k(d, p), fn, state["prep"])
+                                             ^^^^^^^
+  File "/tmp/muse_prefill_layer-978_lowm/run/submission.py", line 688, in kernel_fn
+    torch.mm(ffn_input, state["router_hi_t"], out=state["router_hi_buf"][:tokens])
+RuntimeError: Expected out tensor to have dtype c10::BFloat16, but got float instead

@@ -1,0 +1,48 @@
+{
+  "source_job": "a6986c85974540a5",
+  "caveat": "GPU profile totals, approximate critical-path model; not measured gains and not a scoring forecast",
+  "loads": {
+    "decode 1": {
+      "weighted_total_us": 5666.0,
+      "weighted_target_fdec_us": 0.0
+    },
+    "decode 16": {
+      "weighted_total_us": 11599.6,
+      "weighted_target_fdec_us": 1803.2
+    },
+    "decode 32": {
+      "weighted_total_us": 15827.400000000001,
+      "weighted_target_fdec_us": 3299.2
+    },
+    "verify 1": {
+      "weighted_total_us": 8751.2,
+      "weighted_target_fdec_us": 0.0
+    },
+    "verify 16": {
+      "weighted_total_us": 20941.0,
+      "weighted_target_fdec_us": 0.0
+    },
+    "verify 32": {
+      "weighted_total_us": 26281.199999999997,
+      "weighted_target_fdec_us": 0.0
+    }
+  },
+  "scenarios": [
+    {
+      "fdec_latency_reduction": 0.2,
+      "idealized_whole_speedup": 1.0124380470068712
+    },
+    {
+      "fdec_latency_reduction": 0.25,
+      "idealized_whole_speedup": 1.0156474663188928
+    },
+    {
+      "fdec_latency_reduction": 0.5,
+      "idealized_whole_speedup": 1.0323418306829064
+    },
+    {
+      "fdec_latency_reduction": 1.0,
+      "idealized_whole_speedup": 1.0694231160888101
+    }
+  ]
+}

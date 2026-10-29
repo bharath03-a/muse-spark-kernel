@@ -1,0 +1,252 @@
+✓ Initialized. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-rpKsNUO304B3LSlhaviXoE
+✓ Created objects.
+├── ✓ Uploaded 
+│   /var/folders/dt/nf7j33w51gj7cv6bx6633tm40000gn/T/muse_router_cpu_vqslebnk/mo
+│   dal_app.py
+├── ✓ Uploaded 
+│   /var/folders/dt/nf7j33w51gj7cv6bx6633tm40000gn/T/muse_router_cpu_vqslebnk
+├── ✓ Created Function env.
+├── ✓ Created Function correct.
+├── ✓ Created Function bench.
+├── ✓ Created Function micro.
+├── ✓ Created Function session.
+├── ✓ Created Function compile_only.
+└── ✓ Created Function inspect.
+
+######## compile_only: router_cluster_compile_only
+/root/proj/bench/router_cluster_compile_only.py:18:68: error: 'tt.expand_dims' op found conflicting encodings for value:
+  #ttg.slice<{dim = 0, parent = #ttg.blocked<{sizePerThread = [1, 1, 2], threadsPerWarp = [1, 8, 4], warpsPerCTA = [1, 4, 1], order = [2, 1, 0], CGALayout = [[0, 0, 1]]}>}>
+and
+  #ttg.slice<{dim = 1, parent = #ttg.blocked<{sizePerThread = [1, 1, 2], threadsPerWarp = [1, 8, 4], warpsPerCTA = [1, 4, 1], order = [2, 1, 0], CGALayout = [[1, 0, 0]]}>}>
+        offs = sf[:, None, None] * (R*T) + rr[None, :, None] * T + tt[None, None, :]
+                                                                   ^
+#blocked = #ttg.blocked<{sizePerThread = [1, 1, 2], threadsPerWarp = [1, 8, 4], warpsPerCTA = [1, 4, 1], order = [2, 1, 0], CGALayout = [[1, 0, 0]]}>
+#blocked1 = #ttg.blocked<{sizePerThread = [1, 1, 2], threadsPerWarp = [1, 8, 4], warpsPerCTA = [1, 4, 1], order = [2, 1, 0], CGALayout = [[0, 0, 1]]}>
+#shared = #ttg.swizzled_shared<{vec = 1, perPhase = 1, maxPhase = 1, order = [2, 1, 0], CGALayout = [[0, 0, 1]]}>
+#smem = #ttg.shared_memory
+module attributes {"ttg.num-ctas" = 2 : i32, "ttg.num-warps" = 4 : i32, ttg.target = "cuda:90", "ttg.threads-per-warp" = 32 : i32} {
+  tt.func public @reduce_partials(%arg0: !tt.ptr<f32>, %arg1: !tt.ptr<f32>) attributes {noinline = false} {
+    %0 = tt.make_range {end = 2 : i32, start = 0 : i32} : tensor<2xi32, #gluon.auto_encoding>
+    %1 = tt.make_range {end = 32 : i32, start = 0 : i32} : tensor<32xi32, #gluon.auto_encoding>
+    %2 = tt.make_range {end = 64 : i32, start = 0 : i32} : tensor<64xi32, #gluon.auto_encoding>
+    %3 = tt.expand_dims %0 {axis = 1 : i32} : tensor<2xi32, #gluon.auto_encoding> -> tensor<2x1xi32, #gluon.auto_encoding>
+    %4 = tt.expand_dims %3 {axis = 2 : i32} : tensor<2x1xi32, #gluon.auto_encoding> -> tensor<2x1x1xi32, #gluon.auto_encoding>
+    %c2048_i32 = arith.constant 2048 : i32
+    %c2048_i32_0 = arith.constant 2048 : i32
+    %cst = arith.constant dense<2048> : tensor<2x1x1xi32, #gluon.auto_encoding>
+    %5 = arith.extsi %4 : tensor<2x1x1xi32, #gluon.auto_encoding> to tensor<2x1x1xi64, #gluon.auto_encoding>
+    %6 = arith.extsi %cst : tensor<2x1x1xi32, #gluon.auto_encoding> to tensor<2x1x1xi64, #gluon.auto_encoding>
+    %7 = arith.muli %5, %6 : tensor<2x1x1xi64, #gluon.auto_encoding>
+    %c2147483647_i64 = arith.constant 2147483647 : i64
+    %c-2147483648_i64 = arith.constant -2147483648 : i64
+    %cst_1 = arith.constant dense<2147483647> : tensor<2x1x1xi64, #gluon.auto_encoding>
+    %8 = arith.cmpi sle, %7, %cst_1 : tensor<2x1x1xi64, #gluon.auto_encoding>
+    %cst_2 = arith.constant dense<-2147483648> : tensor<2x1x1xi64, #gluon.auto_encoding>
+    %9 = arith.cmpi sge, %7, %cst_2 : tensor<2x1x1xi64, #gluon.auto_encoding>
+    %10 = arith.andi %8, %9 : tensor<2x1x1xi1, #gluon.auto_encoding>
+    %11 = arith.muli %4, %cst : tensor<2x1x1xi32, #gluon.auto_encoding>
+    %12 = tt.expand_dims %1 {axis = 0 : i32} : tensor<32xi32, #gluon.auto_encoding> -> tensor<1x32xi32, #gluon.auto_encoding>
+    %13 = tt.expand_dims %12 {axis = 2 : i32} : tensor<1x32xi32, #gluon.auto_encoding> -> tensor<1x32x1xi32, #gluon.auto_encoding>
+    %c64_i32 = arith.constant 64 : i32
+    %c64_i32_3 = arith.constant 64 : i32
+    %cst_4 = arith.constant dense<64> : tensor<1x32x1xi32, #gluon.auto_encoding>
+    %14 = arith.extsi %13 : tensor<1x32x1xi32, #gluon.auto_encoding> to tensor<1x32x1xi64, #gluon.auto_encoding>
+    %15 = arith.extsi %cst_4 : tensor<1x32x1xi32, #gluon.auto_encoding> to tensor<1x32x1xi64, #gluon.auto_encoding>
+    %16 = arith.muli %14, %15 : tensor<1x32x1xi64, #gluon.auto_encoding>
+    %c2147483647_i64_5 = arith.constant 2147483647 : i64
+    %c-2147483648_i64_6 = arith.constant -2147483648 : i64
+    %cst_7 = arith.constant dense<2147483647> : tensor<1x32x1xi64, #gluon.auto_encoding>
+    %17 = arith.cmpi sle, %16, %cst_7 : tensor<1x32x1xi64, #gluon.auto_encoding>
+    %cst_8 = arith.constant dense<-2147483648> : tensor<1x32x1xi64, #gluon.auto_encoding>
+    %18 = arith.cmpi sge, %16, %cst_8 : tensor<1x32x1xi64, #gluon.auto_encoding>
+    %19 = arith.andi %17, %18 : tensor<1x32x1xi1, #gluon.auto_encoding>
+    %20 = arith.muli %13, %cst_4 : tensor<1x32x1xi32, #gluon.auto_encoding>
+    %21 = tt.broadcast %11 : tensor<2x1x1xi32, #gluon.auto_encoding> -> tensor<2x32x1xi32, #gluon.auto_encoding>
+    %22 = tt.broadcast %20 : tensor<1x32x1xi32, #gluon.auto_encoding> -> tensor<2x32x1xi32, #gluon.auto_encoding>
+    %23 = arith.extsi %21 : tensor<2x32x1xi32, #gluon.auto_encoding> to tensor<2x32x1xi64, #gluon.auto_encoding>
+    %24 = arith.extsi %22 : tensor<2x32x1xi32, #gluon.auto_encoding> to tensor<2x32x1xi64, #gluon.auto_encoding>
+    %25 = arith.addi %23, %24 : tensor<2x32x1xi64, #gluon.auto_encoding>
+    %c2147483647_i64_9 = arith.constant 2147483647 : i64
+    %c-2147483648_i64_10 = arith.constant -2147483648 : i64
+    %cst_11 = arith.constant dense<2147483647> : tensor<2x32x1xi64, #gluon.auto_encoding>
+    %26 = arith.cmpi sle, %25, %cst_11 : tensor<2x32x1xi64, #gluon.auto_encoding>
+    %cst_12 = arith.constant dense<-2147483648> : tensor<2x32x1xi64, #gluon.auto_encoding>
+    %27 = arith.cmpi sge, %25, %cst_12 : tensor<2x32x1xi64, #gluon.auto_encoding>
+    %28 = arith.andi %26, %27 : tensor<2x32x1xi1, #gluon.auto_encoding>
+    %29 = arith.addi %21, %22 : tensor<2x32x1xi32, #gluon.auto_encoding>
+    %30 = tt.expand_dims %2 {axis = 0 : i32} : tensor<64xi32, #gluon.auto_encoding> -> tensor<1x64xi32, #gluon.auto_encoding>
+    %31 = tt.expand_dims %30 {axis = 1 : i32} : tensor<1x64xi32, #gluon.auto_encoding> -> tensor<1x1x64xi32, #gluon.auto_encoding>
+    %32 = tt.broadcast %29 : tensor<2x32x1xi32, #gluon.auto_encoding> -> tensor<2x32x64xi32, #gluon.auto_encoding>
+    %33 = tt.broadcast %31 : tensor<1x1x64xi32, #gluon.auto_encoding> -> tensor<2x32x64xi32, #gluon.auto_encoding>
+    %34 = arith.extsi %32 : tensor<2x32x64xi32, #gluon.auto_encoding> to tensor<2x32x64xi64, #gluon.auto_encoding>
+    %35 = arith.extsi %33 : tensor<2x32x64xi32, #gluon.auto_encoding> to tensor<2x32x64xi64, #gluon.auto_encoding>
+    %36 = arith.addi %34, %35 : tensor<2x32x64xi64, #gluon.auto_encoding>
+    %c2147483647_i64_13 = arith.constant 2147483647 : i64
+    %c-2147483648_i64_14 = arith.constant -2147483648 : i64
+    %cst_15 = arith.constant dense<2147483647> : tensor<2x32x64xi64, #gluon.auto_encoding>
+    %37 = arith.cmpi sle, %36, %cst_15 : tensor<2x32x64xi64, #gluon.auto_encoding>
+    %cst_16 = arith.constant dense<-2147483648> : tensor<2x32x64xi64, #gluon.auto_encoding>
+    %38 = arith.cmpi sge, %36, %cst_16 : tensor<2x32x64xi64, #gluon.auto_encoding>
+    %39 = arith.andi %37, %38 : tensor<2x32x64xi1, #gluon.auto_encoding>
+    %40 = arith.addi %32, %33 : tensor<2x32x64xi32, #gluon.auto_encoding>
+    %41 = gluon.set_auto_layout %40 : tensor<2x32x64xi32, #gluon.auto_encoding> -> tensor<2x32x64xi32, #blocked>
+    %42 = tt.get_program_id x : i32
+    %c4096_i32 = arith.constant 4096 : i32
+    %c4096_i32_17 = arith.constant 4096 : i32
+    %43 = arith.extsi %42 : i32 to i64
+    %44 = arith.extsi %c4096_i32_17 : i32 to i64
+    %45 = arith.muli %43, %44 : i64
+    %c2147483647_i64_18 = arith.constant 2147483647 : i64
+    %c-2147483648_i64_19 = arith.constant -2147483648 : i64
+    %46 = arith.cmpi sle, %45, %c2147483647_i64_18 : i64
+    %47 = arith.cmpi sge, %45, %c-2147483648_i64_19 : i64
+    %48 = arith.andi %46, %47 : i1
+    %49 = arith.muli %42, %c4096_i32_17 : i32
+    %50 = tt.addptr %arg0, %49 : !tt.ptr<f32>, i32
+    %51 = tt.splat %50 : !tt.ptr<f32> -> tensor<2x32x64x!tt.ptr<f32>, #blocked>
+    %52 = tt.addptr %51, %41 : tensor<2x32x64x!tt.ptr<f32>, #blocked>, tensor<2x32x64xi32, #blocked>
+    %53 = tt.load %52 : tensor<2x32x64x!tt.ptr<f32>, #blocked>
+    %54 = ttg.local_alloc : () -> !ttg.memdesc<2x32x64xf32, #shared, #smem, mutable>
+    ttg.local_store %53, %54 : tensor<2x32x64xf32, #blocked> -> !ttg.memdesc<2x32x64xf32, #shared, #smem, mutable>
+    ttng.cluster_barrier
+    %55 = ttg.local_load %54 : !ttg.memdesc<2x32x64xf32, #shared, #smem, mutable> -> tensor<2x32x64xf32, #blocked1>
+    ttng.cluster_barrier
+    %56 = tt.call @"triton.language.standard.sum__fp32S2_32_64SLB1_1_2_1_8_4_1_4_1_2_1_0_0~0~1BL_c0_cFalse_cNone"(%55) : (tensor<2x32x64xf32, #blocked1>) -> tensor<32x64xf32, #ttg.slice<{dim = 0, parent = #blocked1}>>
+    %57 = ttg.convert_layout %56 : tensor<32x64xf32, #ttg.slice<{dim = 0, parent = #blocked1}>> -> tensor<32x64xf32, #ttg.slice<{dim = 0, parent = #blocked1}>>
+    %58 = tt.expand_dims %1 {axis = 1 : i32} : tensor<32xi32, #gluon.auto_encoding> -> tensor<32x1xi32, #gluon.auto_encoding>
+    %c64_i32_20 = arith.constant 64 : i32
+    %c64_i32_21 = arith.constant 64 : i32
+    %cst_22 = arith.constant dense<64> : tensor<32x1xi32, #gluon.auto_encoding>
+    %59 = arith.extsi %58 : tensor<32x1xi32, #gluon.auto_encoding> to tensor<32x1xi64, #gluon.auto_encoding>
+    %60 = arith.extsi %cst_22 : tensor<32x1xi32, #gluon.auto_encoding> to tensor<32x1xi64, #gluon.auto_encoding>
+    %61 = arith.muli %59, %60 : tensor<32x1xi64, #gluon.auto_encoding>
+    %c2147483647_i64_23 = arith.constant 2147483647 : i64
+    %c-2147483648_i64_24 = arith.constant -2147483648 : i64
+    %cst_25 = arith.constant dense<2147483647> : tensor<32x1xi64, #gluon.auto_encoding>
+    %62 = arith.cmpi sle, %61, %cst_25 : tensor<32x1xi64, #gluon.auto_encoding>
+    %cst_26 = arith.constant dense<-2147483648> : tensor<32x1xi64, #gluon.auto_encoding>
+    %63 = arith.cmpi sge, %61, %cst_26 : tensor<32x1xi64, #gluon.auto_encoding>
+    %64 = arith.andi %62, %63 : tensor<32x1xi1, #gluon.auto_encoding>
+    %65 = arith.muli %58, %cst_22 : tensor<32x1xi32, #gluon.auto_encoding>
+    %66 = tt.expand_dims %2 {axis = 0 : i32} : tensor<64xi32, #gluon.auto_encoding> -> tensor<1x64xi32, #gluon.auto_encoding>
+    %67 = tt.broadcast %65 : tensor<32x1xi32, #gluon.auto_encoding> -> tensor<32x64xi32, #gluon.auto_encoding>
+    %68 = tt.broadcast %66 : tensor<1x64xi32, #gluon.auto_encoding> -> tensor<32x64xi32, #gluon.auto_encoding>
+    %69 = arith.extsi %67 : tensor<32x64xi32, #gluon.auto_encoding> to tensor<32x64xi64, #gluon.auto_encoding>
+    %70 = arith.extsi %68 : tensor<32x64xi32, #gluon.auto_encoding> to tensor<32x64xi64, #gluon.auto_encoding>
+    %71 = arith.addi %69, %70 : tensor<32x64xi64, #gluon.auto_encoding>
+    %c2147483647_i64_27 = arith.constant 2147483647 : i64
+    %c-2147483648_i64_28 = arith.constant -2147483648 : i64
+    %cst_29 = arith.constant dense<2147483647> : tensor<32x64xi64, #gluon.auto_encoding>
+    %72 = arith.cmpi sle, %71, %cst_29 : tensor<32x64xi64, #gluon.auto_encoding>
+    %cst_30 = arith.constant dense<-2147483648> : tensor<32x64xi64, #gluon.auto_encoding>
+    %73 = arith.cmpi sge, %71, %cst_30 : tensor<32x64xi64, #gluon.auto_encoding>
+    %74 = arith.andi %72, %73 : tensor<32x64xi1, #gluon.auto_encoding>
+    %75 = arith.addi %67, %68 : tensor<32x64xi32, #gluon.auto_encoding>
+    %76 = gluon.set_auto_layout %75 : tensor<32x64xi32, #gluon.auto_encoding> -> tensor<32x64xi32, #ttg.slice<{dim = 0, parent = #blocked1}>>
+    %77 = tt.get_program_id x : i32
+    %c2048_i32_31 = arith.constant 2048 : i32
+    %c2048_i32_32 = arith.constant 2048 : i32
+    %78 = arith.extsi %77 : i32 to i64
+    %79 = arith.extsi %c2048_i32_32 : i32 to i64
+    %80 = arith.muli %78, %79 : i64
+    %c2147483647_i64_33 = arith.constant 2147483647 : i64
+    %c-2147483648_i64_34 = arith.constant -2147483648 : i64
+    %81 = arith.cmpi sle, %80, %c2147483647_i64_33 : i64
+    %82 = arith.cmpi sge, %80, %c-2147483648_i64_34 : i64
+    %83 = arith.andi %81, %82 : i1
+    %84 = arith.muli %77, %c2048_i32_32 : i32
+    %85 = tt.addptr %arg1, %84 : !tt.ptr<f32>, i32
+    %86 = tt.splat %85 : !tt.ptr<f32> -> tensor<32x64x!tt.ptr<f32>, #ttg.slice<{dim = 0, parent = #blocked1}>>
+    %87 = tt.addptr %86, %76 : tensor<32x64x!tt.ptr<f32>, #ttg.slice<{dim = 0, parent = #blocked1}>>, tensor<32x64xi32, #ttg.slice<{dim = 0, parent = #blocked1}>>
+    tt.store %87, %57 : tensor<32x64x!tt.ptr<f32>, #ttg.slice<{dim = 0, parent = #blocked1}>>
+    tt.return
+  }
+  tt.func private @"triton.language.standard.sum__fp32S2_32_64SLB1_1_2_1_8_4_1_4_1_2_1_0_0~0~1BL_c0_cFalse_cNone"(%arg0: tensor<2x32x64xf32, #blocked1>) -> tensor<32x64xf32, #ttg.slice<{dim = 0, parent = #blocked1}>> attributes {noinline = false} {
+    %0 = "tt.reduce"(%arg0) <{axis = 0 : i32}> ({
+    ^bb0(%arg1: f32, %arg2: f32):
+      %2 = tt.call @triton.language.standard._sum_combine__fp32_fp32(%arg1, %arg2) : (f32, f32) -> f32
+      tt.reduce.return %2 : f32
+    }) : (tensor<2x32x64xf32, #blocked1>) -> tensor<32x64xf32, #ttg.slice<{dim = 0, parent = #blocked1}>>
+    tt.return %0 : tensor<32x64xf32, #ttg.slice<{dim = 0, parent = #blocked1}>>
+  ^bb1:  // no predecessors
+    %1 = ub.poison : tensor<32x64xf32, #ttg.slice<{dim = 0, parent = #blocked1}>>
+    tt.return %1 : tensor<32x64xf32, #ttg.slice<{dim = 0, parent = #blocked1}>>
+  }
+  tt.func private @triton.language.standard._sum_combine__fp32_fp32(%arg0: f32, %arg1: f32) -> f32 attributes {noinline = false} {
+    %0 = arith.addf %arg0, %arg1 : f32
+    tt.return %0 : f32
+  ^bb1:  // no predecessors
+    %1 = ub.poison : f32
+    tt.return %1 : f32
+  }
+}
+
+{-#
+  external_resources: {
+    mlir_reproducer: {
+      pipeline: "builtin.module(gluon-inline, gluon-infer-coalesced-encodings, gluon-resolve-auto-encodings, triton-nvidia-tma-lowering, gluon-canonicalize, sccp, triton-loop-aware-cse, gluon-canonicalize, tritongpu-combine-tensor-select-and-if)",
+      disable_threading: true,
+      verify_each: true
+    }
+  }
+#-}
+<unknown>:0: error: Failures have been detected while processing an MLIR pass pipeline
+<unknown>:0: note: Pipeline failed while executing [`GluonResolveAutoEncodingsPass` on 'builtin.module' operation]: reproducer generated at `std::errs, please share the reproducer above with Triton project.`
+CLUSTER_COMPILE_FAIL False Traceback (most recent call last):
+  File "/root/proj/bench/router_cluster_compile_only.py", line 49, in <module>
+    k=triton.compile(src,target=GPUTarget('cuda',90,32),options={'num_warps':4,'num_ctas':2})
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/compiler/compiler.py", line 327, in compile
+    next_module = compile_ir(module, metadata)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/backends/nvidia/compiler.py", line 604, in <lambda>
+    stages["ttgir"] = lambda src, metadata: self.gluon_to_ttgir(src, metadata, options, capability)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/backends/nvidia/compiler.py", line 363, in gluon_to_ttgir
+    pm.run(mod, 'gluon_to_ttgir')
+RuntimeError: PassManager::run failed
+
+/root/proj/bench/router_cluster_compile_only.py:18:68: error: 'tt.expand_dims' op found conflicting encodings for value:
+  #ttg.slice<{dim = 0, parent = #ttg.blocked<{sizePerThread = [1, 1, 2], threadsPerWarp = [1, 8, 4], warpsPerCTA = [1, 4, 1], order = [2, 1, 0], CGALayout = [[0, 0, 1]]}>}>
+and
+  #ttg.slice<{dim = 1, parent = #ttg.blocked<{sizePerThread = [1, 1, 2], threadsPerWarp = [1, 8, 4], warpsPerCTA = [1, 4, 1], order = [2, 1, 0], CGALayout = [[1, 0, 0]]}>}>
+        offs = sf[:, None, None] * (R*T) + rr[None, :, None] * T + tt[None, None, :]
+                                                                   ^
+#blocked = #ttg.blocked<{sizePerThread = [1, 1, 2], threadsPerWarp = [1, 8, 4], warpsPerCTA = [1, 4, 1], order = [2, 1, 0], CGALayout = [[1, 0, 0]]}>
+#blocked1 = #ttg.blocked<{sizePerThread = [1, 1, 2], threadsPerWarp = [1, 8, 4], warpsPerCTA = [1, 4, 1], order = [2, 1, 0], CGALayout = [[0, 0, 1]]}>
+#shared = #ttg.swizzled_shared<{vec = 1, perPhase = 1, maxPhase = 1, order = [2, 1, 0], CGALayout = [[0, 0, 1]]}>
+#shared1 = #ttg.swizzled_shared<{vec = 1, perPhase = 1, maxPhase = 1, order = [0], CGALayout = [[1]]}>
+#smem = #ttg.shared_memory
+module attributes {"ttg.num-ctas" = 2 : i32, "ttg.num-warps" = 4 : i32, ttg.target = "cuda:90", "ttg.threads-per-warp" = 32 : i32} {
+  tt.func public @reduce_partials(%arg0: !tt.ptr<f32>, %arg1: !tt.ptr<f32>) attributes {noinline = false} {
+    %0 = tt.make_range {end = 2 : i32, start = 0 : i32} : tensor<2xi32, #gluon.auto_encoding>
+    %1 = tt.make_range {end = 32 : i32, start = 0 : i32} : tensor<32xi32, #gluon.auto_encoding>
+    %2 = tt.make_range {end = 64 : i32, start = 0 : i32} : tensor<64xi32, #gluon.auto_encoding>
+    %3 = tt.expand_dims %0 {axis = 1 : i32} : tensor<2xi32, #gluon.auto_encoding> -> tensor<2x1xi32, #gluon.auto_encoding>
+    %4 = tt.expand_dims %3 {axis = 2 : i32} : tensor<2x1xi32, #gluon.auto_encoding> -> tensor<2x1x1xi32, #gluon.auto_encoding>
+    %c2048_i32 = arith.constant 2048 : i32
+    %c2048_i32_0 = arith.constant 2048 : i32
+    %cst = arith.constant dense<2048> : tensor<2x1x1xi32, #gluon.auto_encoding>
+    %5 = arith.extsi %4 : tensor<2x1x1xi32, #gluon.auto_encoding> to tensor<2x1x1xi64, #gluon.auto_encoding>
+    %6 = arith.extsi %cst : tensor<2x1x1xi32, #gluon.auto_encoding> to tensor<2x1x1xi64, #gluon.auto_encoding>
+    %7 = arith.muli %5, %6 : tensor<2x1x1xi64, #gluon.auto_encoding>
+    %c2147483647_i64 = arith.constant 2147483647 : i64
+    %c-2147483648_i64 = arith.constant -2147483648 : i64
+    %cst_1 = arith.constant dense<2147483647> : tensor<2x1x1xi64, #gluon.auto_encoding>
+    %8 = arith.cmpi sle, %7, %cst_1 : tensor<2x1x1xi64, #gluon.auto_encoding>
+    %cst_2 = arith.constant dense<-2147483648> : tensor<2x1x1xi64, #gluon.auto_encoding>
+    %9 = arith.cmpi sge, %7, %cst_2 : tensor<2x1x1xi64, #gluon.auto_encoding>
+    %10 = arith.andi %8, %9 : tensor<2x1x1xi1, #gluon.auto_encoding>
+    %11 = arith.muli %4, %cst : tensor<2x1x1xi32, #gluon.auto_encoding>
+    %12 = tt.expand_dims %1 {axis = 0 : i32} : tensor<32xi32, #gluon.auto_encoding> -> tensor<1x32xi32, #gluon.auto_encoding>
+    %13 = tt.expand_dims %12 {axis = 2 : i32} : tensor<1x32xi32, #gluon.auto_encoding> -> tensor<1x32x1xi32, #gluon.auto_encoding>
+    %c64_i32 = arith.constant 64 : i32
+    %c64_i32_3 = arith.constant 64 : i32
+    %cst_4 = arith.constant dense<64> : tensor<1x32x1xi32, #gluon.auto_encoding>
+    %14 = arith.extsi %13 : tensor<1x32x1xi32, #gluon.auto_encoding> to tensor<1x32x1xi64, #gluon.auto_encoding>
+    %15 = arith.extsi %cst_4 : tensor<1x32x1xi32, #gluon.auto_encoding> to tensor<1x32x1xi64, #gluon.auto_encoding>
+Stopping app - local entrypoint completed.
+compile_only total 19s
+    %16 = arith.muli %14, %15 : tensor<1x32x1xi64, #✓ App completed. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-rpKsNUO304B3LSlhaviXoE

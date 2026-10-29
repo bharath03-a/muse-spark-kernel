@@ -1,0 +1,102 @@
+=== PROBING FLASHINFER NVFP4 RUNNERS ===
+
+--- CutlassNvfp4Config ---
+type: <class 'type'>
+class doc: CUTLASS NVFP4 backend for SM100 / SM110 / SM12x.
+
+Packed precomputed routing with all flat CUTLASS activation semantics and
+``do_finalize=True``. Expert
+parallelism and shared experts are not supported. Both ``hidden_size``
+and ``intermediate_size`` must be divisible by 16 (the NVFP4 scale-vector
+si
+methods: ['prepare_weights', 'supported']
+  supported sig: (arch: 'int') -> 'bool'
+  prepare_weights sig: (w1_bf16, w2_bf16, *, num_local_experts: 'int', hidden_size: 'int', intermediate_size: 'int', activation: 'Optional[ActivationConfig]' = None, device=None)
+
+--- CutlassNvfp4Runner ---
+type: <class 'abc.ABCMeta'>
+class doc: Unified adapter for CUTLASS NVFP4 fused MoE.
+
+Weights stay packed uint8 in the ``MoEWeightPack`` view. At launch they are
+viewed as ``int64``, matching the flat ``cutlass_fused_moe`` NVFP4 ABI; the
+inner ``MoERunner`` selects the NVFP4 kernel from that dtype. Activations
+remain BF16 and are quantize
+methods: ['_abc_impl', '_assert_expert_parallelism_supported', '_assert_shared_experts_supported', '_build', '_cache_key_extras', '_check_activation_parameters', '_check_support', '_ensure_workspace', '_expected_num_inputs', '_input_sf', '_num_top_tactics_per_stage', '_pack_activation_scale_inputs', '_pack_weight_inputs', '_prepare_tuning_inputs', '_quant_scales', '_require_built', '_required_weight_keys', '_resolve_activation_params', '_supported_archs', '_use_deepseek_fp8_block_scale', '_use_mxfp8_act_scaling', '_use_packed_weights', '_use_w4_group_scaling', '_use_wfp4afp8_humming', '_validate_activation_scale', '_validate_input_count', '_validate_weight_storage', '_weight_dtype', '_x_dtype', 'backend_key', 'build', 'check_support', 'forward', 'get_cache_key_extras', 'get_valid_tactics', 'launch_kwargs_for', 'launch_state_for', 'pack_inputs', 'precompile_tactics', 'supported_activation_classes', 'supported_activation_classes_by_quant', 'supported_output_formats', 'supported_quant_variants', 'supported_routing_modes', 'supports_expert_parallelism', 'supports_fused_shared_experts', 'supports_quant', 'tuning_config_for']
+  forward sig: (self, inputs: 'List[torch.Tensor]', tactic: 'Any' = -1, do_preparation: 'bool' = False, **kwargs: 'Any') -> 'torch.Tensor'
+
+--- cute_dsl_fused_moe_nvfp4 ---
+type: <class 'function'>
+callable sig: (x: torch.Tensor, x_sf: Optional[torch.Tensor], token_selected_experts: torch.Tensor, token_final_scales: torch.Tensor, w1_weight: torch.Tensor, w1_weight_sf: torch.Tensor, w1_alpha: torch.Tensor, fc2_input_scale: Optional[torch.Tensor], w2_weight: torch.Tensor, w2_weight_sf: torch.Tensor, w2_alpha: torch.Tensor, num_experts: int, top_k: int, num_local_experts: Optional[int] = None, local_expert_offset: int = 0, output_dtype: torch.dtype = torch.bfloat16, use_fused_finalize: bool = True, moe_output: Optional[torch.Tensor] = None, aux_stream: Optional[torch.cuda.streams.Stream] = None, enable_pdl: bool = True, activation_type: int = 3, swiglu_alpha: float = 1.0, swiglu_beta: float = 0.0, swiglu_limit: float = 3.4028234663852886e+38, situ_beta: Optional[float] = None, situ_linear_beta: Optional[float] = None, *, quant_mode: str = 'w4a4', per_token_scale: Optional[torch.Tensor] = None) -> torch.Tensor
+doc: Run a fused MoE forward pass using the CuTe-DSL NVFP4 kernels.
+
+Warning
+-------
+This API will be deprecated in the future, please use
+:func:`cute_dsl_fused_moe` with ``quant_mode="w4a4"`` instead.
+
+See :func:`cute_dsl_fused_moe` for the full parameter documentation; this
+function forwards every argu
+
+--- CuteDslMoEWrapper ---
+type: <class 'type'>
+class doc: Wrapper class for CuteDSL MoE with CUDA graph and auto-tuning support.
+
+With `use_cuda_graph=True`, the wrapper creates persistent CUDA stream
+and event resources outside graph capture, enabling async-memset / GEMM1
+overlap during capture and replay. Auto-tuning is supported via the `tactic`
+paramet
+methods: ['_forward_with_tactic', 'get_valid_tactics', 'run']
+  run sig: (self, x: torch.Tensor, x_sf: Optional[torch.Tensor], token_selected_experts: torch.Tensor, token_final_scales: torch.Tensor, w1_weight: torch.Tensor, w1_weight_sf: torch.Tensor, w1_alpha: torch.Tensor, fc2_input_scale: Optional[torch.Tensor], w2_weight: torch.Tensor, w2_weight_sf: torch.Tensor, w2_alpha: torch.Tensor, tactic: Optional[Tuple] = None, *, per_token_scale: Optional[torch.Tensor] = None) -> torch.Tensor
+
+--- CutlassHummingConfig ---
+type: <class 'type'>
+class doc: CUTLASS Humming MXFP4-weight x FP8-activation backend for SM90.
+
+Activations stay BF16; weights use Humming pre-MMA E8M0 fusion plus the
+SM90 mixed-input interleave. Packed precomputed routing with all flat
+CUTLASS activation semantics and
+``do_finalize=True``.
+methods: ['prepare_weights', 'supported']
+  supported sig: (arch: 'int') -> 'bool'
+  prepare_weights sig: (w1_bf16, w2_bf16, *, num_local_experts: 'int', hidden_size: 'int', intermediate_size: 'int', activation: 'Optional[ActivationConfig]' = None, device=None)
+
+--- CutlassHummingRunner ---
+type: <class 'abc.ABCMeta'>
+class doc: Unified adapter for CUTLASS Humming MXFP4 x FP8 fused MoE.
+methods: ['_abc_impl', '_assert_expert_parallelism_supported', '_assert_shared_experts_supported', '_build', '_cache_key_extras', '_check_activation_parameters', '_check_support', '_ensure_workspace', '_expected_num_inputs', '_input_sf', '_num_top_tactics_per_stage', '_pack_activation_scale_inputs', '_pack_weight_inputs', '_prepare_tuning_inputs', '_quant_scales', '_require_built', '_required_weight_keys', '_resolve_activation_params', '_supported_archs', '_use_deepseek_fp8_block_scale', '_use_mxfp8_act_scaling', '_use_packed_weights', '_use_w4_group_scaling', '_use_wfp4afp8_humming', '_validate_activation_scale', '_validate_input_count', '_validate_weight_storage', '_weight_dtype', '_x_dtype', 'backend_key', 'build', 'check_support', 'forward', 'get_cache_key_extras', 'get_valid_tactics', 'launch_kwargs_for', 'launch_state_for', 'pack_inputs', 'precompile_tactics', 'supported_activation_classes', 'supported_activation_classes_by_quant', 'supported_output_formats', 'supported_quant_variants', 'supported_routing_modes', 'supports_expert_parallelism', 'supports_fused_shared_experts', 'supports_quant', 'tuning_config_for']
+  forward sig: (self, inputs: 'List[torch.Tensor]', tactic: 'Any' = -1, do_preparation: 'bool' = False, **kwargs: 'Any') -> 'torch.Tensor'
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-rsmup88r/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-rsmup88r/run/reference.py", line 583, in collect
+    raise ValueError("expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])")
+ValueError: expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-rsmup88r/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-rsmup88r/run/reference.py", line 583, in collect
+    raise ValueError("expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])")
+ValueError: expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-rsmup88r/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-rsmup88r/run/reference.py", line 583, in collect
+    raise ValueError("expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])")
+ValueError: expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-rsmup88r/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-rsmup88r/run/reference.py", line 583, in collect
+    raise ValueError("expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])")
+ValueError: expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-rsmup88r/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-rsmup88r/run/reference.py", line 583, in collect
+    raise ValueError("expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])")
+ValueError: expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])

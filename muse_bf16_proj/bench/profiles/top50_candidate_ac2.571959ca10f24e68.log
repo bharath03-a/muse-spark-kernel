@@ -1,0 +1,129 @@
+zip build 40.2s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 137
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 121
+qkv zip variant id 39 disabled: ValueError: accuracy at m=1
+qkv zip m=1 id 110: 14.46 us (base id 121: 14.53)
+qkv zip m=1 id 31: 15.17 us (base id 121: 14.53)
+qkv zip m=1 id 44: 15.10 us (base id 121: 14.53)
+qkv zip m=1 id 25: 15.33 us (base id 121: 14.53)
+qkv zip m=8 id 110: 14.46 us (base id 121: 14.53)
+qkv zip m=8 id 31: 15.55 us (base id 121: 14.53)
+qkv zip m=8 id 44: 15.49 us (base id 121: 14.53)
+qkv zip m=8 id 25: 15.62 us (base id 121: 14.53)
+qkv zip picked m=1 id 121, m=2-8 id 121
+zip prepare 40.5s
+r9 build 37.5s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.22 id3=18.90 -> id3
+r9 prepare 37.5s picks={('qkv_gate', 128): 3}
+r15 lt build 18.7s cublasLt 130101
+r15 qkv_gate m=128 cands=20 (raw us) cp10=18.78 c14=19.94 c12=19.94 c3=20.16 best=a66t80s35k1r0z0c7 -> cp10
+r15 qkv_gate m=256 cands=15 (raw us) cp10=23.14 c9=22.46 c0=23.23 c4=24.38 best=a66t134s35k1r0z0c9 -> lt
+r15 o m=128 cands=8 (raw us) cp10=11.01 c0=11.20 c4=11.49 c1=11.49 best=a66t18s35k1r0z0c5 -> cp10
+r15 o m=256 cands=8 (raw us) cp10=12.83 c0=13.12 c5=13.31 c1=13.18 best=a66t20s35k1r0z0c3 -> cp10
+r15 pooler m=128 cands=15 (raw us) cp10=25.28 c10=24.93 c8=25.86 c11=27.17 best=a66t134s35k1r0z0c7 -> lt
+r15 pooler m=256 cands=12 (raw us) cp10=30.24 c8=30.24 c3=31.74 c10=32.10 best=a66t183s35k1r0z0c9 -> cp10
+r15 unpooler m=128 cands=12 (raw us) cp10=24.51 c4=24.61 c2=24.42 c8=24.64 best=a66t135s35k1r0z0c4 -> cp10
+r15 unpooler m=256 cands=8 (raw us) cp10=27.71 c0=28.19 c2=30.14 c1=30.69 best=a66t20s35k1r0z0c3 -> cp10
+r15 prepare 19.2s total 141.6s picks=qkv_gate256,pooler128
+slice m2: old 9.57 new 8.86
+slice m4: old 11.39 new 8.93
+slice m8: old 9.57 new 8.99
+slice mma path enabled m 2-8
+physical o m128: {'current': 11.136000044643879, 'transpose': 10.912000201642513} selected=False
+physical o m256: {'current': 12.927999719977379, 'transpose': 12.927999719977379} selected=False
+physical confirm unpooler m128: {'current': 24.320000782608986, 'transpose': 22.752000018954277}
+physical unpooler m128: {'current': 24.191999807953835, 'transpose': 22.752000018954277} selected=True
+physical unpooler m256: {'current': 28.031999245285988, 'transpose': 27.744000777602196} selected=False
+physical qkv_gate m128: {'current': 19.039999693632126, 'transpose': 21.344000473618507} selected=False
+physical qkv_gate m256: {'current': 22.08000048995018, 'transpose': 24.032000452280045} selected=False
+physical pooler m128: {'current': 24.800000712275505, 'transpose': 26.399999856948853} selected=False
+physical pooler m256: {'current': 30.112000182271004, 'transpose': 33.56799855828285} selected=False
+physical picks: [('unpooler', 128)]
+async pack pooler: bits=12.568237 raw=4399/32768
+async compile pooler/W: regs=104 spills=0 shared=49248
+async correctness passed pooler/W
+async compile pooler/WX: regs=128 spills=0 shared=98400
+async correctness passed pooler/WX
+async controls pooler m32: {'W': 97.59999811649323, 'WX': 24.512000381946564} chosen=WX
+async pooler m32 first={'current': 22.112000733613968, 'async': 24.224000051617622} confirm=None selected=False
+async pack unpooler: bits=12.407715 raw=3084/32768
+async compile unpooler/W: regs=104 spills=0 shared=49248
+async correctness passed unpooler/W
+async compile unpooler/WX: regs=128 spills=0 shared=98400
+async correctness passed unpooler/WX
+async controls unpooler m32: {'W': 55.71199953556061, 'WX': 20.38400061428547} chosen=WX
+async unpooler m32 first={'current': 21.727999672293663, 'async': 20.255999639630318} confirm={'current': 21.888000890612602, 'async': 20.287999883294106} selected=True
+async prepare elapsed=178.95s selected={'unpooler': True}
+ac2 start at 178.9s
+ac2 pack pooler: bits=12.5682 raw=4399/32768
+ac2 compile pooler m32 rw2_s2_d3: regs=136 spills=0 shared=147648
+Traceback (most recent call last):
+  File "/tmp/muse_bf16_proj-zop5pze3/run/submission.py", line 3739, in _ac2_try_shape
+    torch.cuda.synchronize()
+  File "/opt/sglang/lib/python3.12/site-packages/torch/cuda/__init__.py", line 1281, in synchronize
+    return torch._C._cuda_synchronize()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.AcceleratorError: CUDA error: an illegal memory access was encountered
+Search for `cudaErrorIllegalAddress' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+The CUDA driver logged these messages, which may provide useful details:
+Returning 700 (CUDA_ERROR_ILLEGAL_ADDRESS) from cuCtxSynchronize_v2
+
+
+
+ac2 rejected pooler m32 rw1_s2_d3: AcceleratorError: CUDA error: an illegal memory access was encountered
+Search for `cudaErrorIllegalAddress' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+The CUDA driver logged these messages, which may provide useful details:
+Returning 700 (CUDA_ERROR_ILLEGAL_ADDRESS) from cuCtxSynchronize_v2
+
+
+Traceback (most recent call last):
+  File "/tmp/muse_bf16_proj-zop5pze3/run/worker.py", line 423, in child_main
+    send(_setup_op(msg, module, state, sync, perf))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_bf16_proj-zop5pze3/run/worker.py", line 322, in _setup_op
+    state["prep"] = prepare(weights)
+                    ^^^^^^^^^^^^^^^^
+  File "/tmp/muse_bf16_proj-zop5pze3/run/submission.py", line 3796, in prepare
+    cfg = _ac2_try_shape(state, layer, m, started, gen, flush)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_bf16_proj-zop5pze3/run/submission.py", line 3755, in _ac2_try_shape
+    graphs['current'] = _r15_graph(lambda: _ac2_base_kernel(data, state))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_bf16_proj-zop5pze3/run/submission.py", line 2882, in _r15_graph
+    fn()
+  File "/tmp/muse_bf16_proj-zop5pze3/run/submission.py", line 3755, in <lambda>
+    graphs['current'] = _r15_graph(lambda: _ac2_base_kernel(data, state))
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_bf16_proj-zop5pze3/run/submission.py", line 3545, in kernel_fn
+    return _ac_base_kernel(data,state)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_bf16_proj-zop5pze3/run/submission.py", line 2630, in kernel_fn
+    _gluon_launch(x, out, state, key, gtile)
+  File "/tmp/muse_bf16_proj-zop5pze3/run/submission.py", line 1274, in _gluon_launch
+    _gluon_gemv[(n // t.block_n, t.split)](wd, xd, out, state["ws"], state["cnt"], m, N=n, K=k,
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 374, in <lambda>
+    return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/runtime/jit.py", line 779, in run
+    kernel.run(grid_0, grid_1, grid_2, stream, kernel.function, kernel.packed_metadata, launch_metadata,
+  File "/opt/sglang/lib/python3.12/site-packages/triton/backends/nvidia/driver.py", line 331, in __call__
+    self.launch(gridX, gridY, gridZ, stream, function, self.launch_cooperative_grid, self.launch_pdl,
+  File "/opt/sglang/lib/python3.12/site-packages/triton/backends/driver.py", line 37, in inner
+    wrapped = make_tensordesc_args(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/triton/backends/nvidia/driver.py", line 253, in make_tensordesc_arg
+    cu_tensor_map = triton.runtime.driver.active.utils.fill_tma_descriptor_tiled(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Triton Error [CUDA]: Failed to create tensor map descriptor: an illegal memory access was encountered
+elemType=9 rank=2 global_address=0xa15eb800000 elemSize=2 swizzle=3 padding=0
+shape=[8192, 4096]
+strides=[16384]
+blockSize=[64, 64] elementStrides=[1, 1] fill=0
+

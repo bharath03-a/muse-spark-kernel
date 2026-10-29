@@ -1,0 +1,67 @@
+zip build 39.1s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 137
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 121
+qkv zip variant id 39 disabled: ValueError: accuracy at m=1
+qkv zip m=1 id 110: 14.53 us (base id 121: 14.53)
+qkv zip m=1 id 31: 15.14 us (base id 121: 14.53)
+qkv zip m=1 id 44: 15.14 us (base id 121: 14.53)
+qkv zip m=1 id 25: 15.33 us (base id 121: 14.53)
+qkv zip m=8 id 110: 14.59 us (base id 121: 14.66)
+qkv zip m=8 id 31: 15.20 us (base id 121: 14.66)
+qkv zip m=8 id 44: 15.46 us (base id 121: 14.66)
+qkv zip m=8 id 25: 15.58 us (base id 121: 14.66)
+qkv zip picked m=1 id 121, m=2-8 id 121
+zip prepare 39.8s
+r9 build 37.2s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.48 id3=18.69 -> id3
+r9 prepare 37.2s picks={('qkv_gate', 128): 3}
+r15 lt build 18.7s cublasLt 130101
+r15 qkv_gate m=128 cands=20 (raw us) cp10=18.88 c14=20.00 c12=19.84 c15=20.06 best=a66t92s35k1r0z0c7 -> cp10
+r15 qkv_gate m=256 cands=15 (raw us) cp10=23.23 c9=22.11 c10=23.33 c0=23.46 best=a66t134s35k1r0z0c9 -> lt
+r15 o m=128 cands=8 (raw us) cp10=10.91 c0=11.23 c1=11.52 c4=11.42 best=a66t18s35k1r0z0c5 -> cp10
+r15 o m=256 cands=8 (raw us) cp10=12.64 c0=12.83 c1=13.02 c4=13.57 best=a66t20s35k1r0z0c3 -> cp10
+r15 pooler m=128 cands=15 (raw us) cp10=25.28 c10=24.70 c8=25.60 c9=24.96 best=a66t134s35k1r0z0c7 -> lt
+r15 pooler m=256 cands=12 (raw us) cp10=30.43 c8=30.46 c3=32.10 c10=32.54 best=a66t183s35k1r0z0c9 -> cp10
+r15 unpooler m=128 cands=12 (raw us) cp10=23.62 c0=23.81 c4=24.26 c10=24.35 best=a66t18s35k1r0z0c5 -> cp10
+r15 unpooler m=256 cands=8 (raw us) cp10=27.81 c0=28.10 c2=30.30 c1=30.69 best=a66t20s35k1r0z0c3 -> cp10
+r15 prepare 19.2s total 139.7s picks=qkv_gate256,pooler128
+slice m2: old 9.66 new 9.06
+slice m4: old 11.58 new 9.12
+slice m8: old 9.76 new 9.28
+slice mma path enabled m 2-8
+physical o m128: {'current': 11.04000024497509, 'transpose': 11.136000044643879} selected=False
+physical o m256: {'current': 12.799999676644802, 'transpose': 12.864000163972378} selected=False
+physical confirm unpooler m128: {'current': 23.93599972128868, 'transpose': 22.655999287962914}
+physical unpooler m128: {'current': 23.871999233961105, 'transpose': 22.624000906944275} selected=True
+physical unpooler m256: {'current': 28.16000021994114, 'transpose': 28.00000086426735} selected=False
+physical qkv_gate m128: {'current': 18.81599985063076, 'transpose': 21.023999899625778} selected=False
+physical qkv_gate m256: {'current': 22.016000002622604, 'transpose': 24.320000782608986} selected=False
+physical pooler m128: {'current': 24.73600022494793, 'transpose': 26.815999299287796} selected=False
+physical pooler m256: {'current': 30.751999467611313, 'transpose': 33.88800099492073} selected=False
+physical picks: [('unpooler', 128)]
+async pack pooler: bits=12.561279 raw=4342/32768
+async compile pooler/W: regs=104 spills=0 shared=49248
+async correctness passed pooler/W
+async compile pooler/WX: regs=128 spills=0 shared=98400
+async correctness passed pooler/WX
+async controls pooler m32: {'W': 96.73599898815155, 'WX': 24.639999493956566} chosen=WX
+async pooler m32 first={'current': 22.655999287962914, 'async': 24.447999894618988} confirm=None selected=False
+async pack unpooler: bits=12.413696 raw=3133/32768
+async compile unpooler/W: regs=104 spills=0 shared=49248
+async correctness passed unpooler/W
+async compile unpooler/WX: regs=128 spills=0 shared=98400
+async correctness passed unpooler/WX
+async controls unpooler m32: {'W': 56.60799890756607, 'WX': 20.320000126957893} chosen=WX
+async unpooler m32 first={'current': 21.63200080394745, 'async': 20.160000771284103} confirm={'current': 21.60000056028366, 'async': 20.22399939596653} selected=True
+async prepare elapsed=178.33s selected={'unpooler': True}
+CWM pack pooler bits=12.561279 raw=4342/32768
+CWM GLOBAL pooler compile regs=128 spills=0 shared=196800
+CWM GLOBAL correctness passed
+CWM META pooler compile regs=158 spills=0 shared=197824
+CWM META correctness passed
+CWM pooler m32 controls: {'GLOBAL': 22.272000089287758, 'META': 21.536000072956085}
+CWM pooler m32 first={'current': 22.39999920129776, 'META': 21.536000072956085} confirm={'current': 22.495999932289124, 'META': 21.503999829292297} selected=True
+CWM prepare elapsed=178.95s selected=True

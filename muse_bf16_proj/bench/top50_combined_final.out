@@ -1,0 +1,52 @@
+✓ Initialized. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-UoCJvmPltf2z5uDKRRTWQY
+✓ Created objects.
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/mo
+│   dal_app.py
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj
+├── ✓ Created Function env.
+├── ✓ Created Function correct.
+├── ✓ Created Function bench.
+├── ✓ Created Function micro.
+├── ✓ Created Function session.
+├── ✓ Created Function compile_only.
+└── ✓ Created Function inspect.
+START top50_qkv_mma
+CHECK m=16 torch_cublas normal rel=0.00167 rowmax=0.00172
+CHECK m=16 BN32_BK128_D4 normal rel=0.00167 rowmax=0.00172
+CHECK m=16 BN32_BK256_D4 normal rel=0.00167 rowmax=0.00172
+CHECK m=16 torch_cublas outliers rel=0.00166 rowmax=0.0017
+CHECK m=16 BN32_BK128_D4 outliers rel=0.00166 rowmax=0.0017
+CHECK m=16 BN32_BK256_D4 outliers rel=0.00166 rowmax=0.0017
+CHECK m=16 torch_cublas onehot rel=0 rowmax=0
+CHECK m=16 BN32_BK128_D4 onehot rel=0 rowmax=0
+CHECK m=16 BN32_BK256_D4 onehot rel=0 rowmax=0
+RAW_COLD_EVENT_US m=16 {'torch_cublas': 21.328, 'BN32_BK128_D4': 28.112, 'BN32_BK256_D4': 24.352}
+CHECK m=32 torch_cublas normal rel=0.00166 rowmax=0.0017
+CHECK m=32 BN32_BK128_D4 normal rel=0.00166 rowmax=0.0017
+CHECK m=32 BN32_BK256_D4 normal rel=0.00166 rowmax=0.0017
+CHECK m=32 torch_cublas outliers rel=0.00166 rowmax=0.00171
+CHECK m=32 BN32_BK128_D4 outliers rel=0.00166 rowmax=0.00171
+CHECK m=32 BN32_BK256_D4 outliers rel=0.00166 rowmax=0.00171
+CHECK m=32 torch_cublas onehot rel=0 rowmax=0
+CHECK m=32 BN32_BK128_D4 onehot rel=0 rowmax=0
+CHECK m=32 BN32_BK256_D4 onehot rel=0 rowmax=0
+RAW_COLD_EVENT_US m=32 {'torch_cublas': 21.248, 'BN32_BK128_D4': 29.04, 'BN32_BK256_D4': 26.048}
+QKV probe total seconds 2.0
+FINISHED top50_qkv_mma elapsed 5.104331512
+START top50_large_pipeline
+BT64 BN64 BK64 D4 grid132 continueFalse correct 0.0016632962268487061 probe 0.0 regs 60 smem 65568
+BT64 BN64 BK64 D4 grid132 continueTrue correct 0.0016632962268487061 probe 0.0 regs 60 smem 65568
+BT64 BN64 BK64 D4 grid512 continueFalse correct 0.0016632962268487061 probe 0.0 regs 58 smem 65568
+RESULT BT64 BN64 BK64 D4 grid132 continueFalse raw_us 29.072 minus4_us 25.072
+RESULT BT64 BN64 BK64 D4 grid132 continueTrue raw_us 26.528 minus4_us 22.528
+RESULT BT64 BN64 BK64 D4 grid512 continueFalse raw_us 19.856 minus4_us 15.856
+RESULT torch_cublas raw_us 14.0 minus4_us 10.0
+FINISHED top50_large_pipeline elapsed 5.781916642
+Stopping app - local entrypoint completed.
+✓ App completed. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-UoCJvmPltf2z5uDKRRTWQY
+
+[gpu_q] top50 top50_combined: 21s, rc=0; budget used 1674/1800s

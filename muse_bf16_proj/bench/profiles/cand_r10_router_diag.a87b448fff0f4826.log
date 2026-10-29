@@ -1,0 +1,12 @@
+router split-K enabled m=128 rel 2.51e-06 probe 2.70e-06 13.12 vs 11.84 us
+router split-K enabled m=256 rel 2.51e-06 probe 2.95e-06 16.10 vs 14.59 us
+zip build 37.5s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 27
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 31
+zip prepare 37.7s
+r9 build 37.5s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.54 id3=18.67 -> id3
+r9 prepare 37.5s picks={('qkv_gate', 128): 3}

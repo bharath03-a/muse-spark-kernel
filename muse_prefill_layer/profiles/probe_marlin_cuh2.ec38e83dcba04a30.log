@@ -1,0 +1,36 @@
+=== READING moe_wna16_marlin.cuh lines 350-700 ===
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-e9_gdgbk/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-e9_gdgbk/run/reference.py", line 583, in collect
+    raise ValueError("expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])")
+ValueError: expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-e9_gdgbk/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-e9_gdgbk/run/reference.py", line 583, in collect
+    raise ValueError("expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])")
+ValueError: expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-e9_gdgbk/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-e9_gdgbk/run/reference.py", line 583, in collect
+    raise ValueError("expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])")
+ValueError: expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-e9_gdgbk/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-e9_gdgbk/run/reference.py", line 583, in collect
+    raise ValueError("expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])")
+ValueError: expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])
+Traceback (most recent call last):
+  File "/tmp/muse_prefill_layer-e9_gdgbk/run/worker.py", line 562, in child_main
+    out = reference.collect(state.get("data"), out)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/muse_prefill_layer-e9_gdgbk/run/reference.py", line 583, in collect
+    raise ValueError("expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])")
+ValueError: expected (hidden bfloat16 [T, 8192], stream float32 [T, 8192], topk_ids int32 [T, 8])

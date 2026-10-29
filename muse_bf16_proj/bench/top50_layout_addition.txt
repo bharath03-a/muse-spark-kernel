@@ -1,0 +1,45 @@
+
+# Physical layout control: independent of the fixed-layout cuBLASLt search.
+# Only original-precision weight repacking and synthetic preparation inputs.
+def _physical_layout_prepare(state: dict, started: float) -> None:
+    import time
+    state['physical_layout'] = {}
+    state['physical_wt'] = {}
+    dev = state['pooler'].device
+    gen = torch.Generator(device=dev).manual_seed(104226)
+    flush = torch.empty(64 * 2**20, device=dev, dtype=torch.float32)
+    flush.normal_()
+    for layer in ('o', 'unpooler', 'qkv_gate', 'pooler'):
+        if time.time() - started > 240:
+            print('physical layout prepare budget reached')
+            break
+        w = state[layer]
+        wt = w.T.contiguous()
+        if not torch.equal(wt.T, w):
+            raise RuntimeError('physical weight transpose changed values')
+        state['physical_wt'][layer] = wt
+        for m in (128, 256):
+            if time.time() - started > 240:
+                break
+            def transposed(xx):
+                return torch.mm(xx, wt)
+            why = _r15_valid(transposed, w.double(), m, w.shape[1], gen, 1e-2)
+            if why:
+                print(f'physical {layer} m{m} rejected: {why}')
+                continue
+            x = torch.randn(m, w.shape[1], device=dev, generator=gen).bfloat16()
+            data = {'x': x, 'config': {'m': m, 'n': w.shape[0], 'k': w.shape[1], 'layer': layer}}
+            graphs = {'current': _r15_graph(lambda: kernel_fn(data, state)),
+                      'transpose': _r15_graph(lambda: transposed(x))}
+            med = _r15_time_graphs(graphs, flush, 31)
+            # Repeat a paired round before accepting a small timing difference.
+            margin = max(0.35, med['current'] * 0.025)
+            win = med['transpose'] < med['current'] - margin
+            if win:
+                confirm = _r15_time_graphs(graphs, flush, 31)
+                win = confirm['transpose'] < confirm['current'] - margin
+                print(f'physical confirm {layer} m{m}: {confirm}')
+            print(f'physical {layer} m{m}: {med} selected={win}')
+            if win:
+                state['physical_layout'][(layer, m)] = True
+    print('physical picks:', list(state['physical_layout']))

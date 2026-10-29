@@ -1,0 +1,448 @@
+✓ Initialized. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-JpCAwJF0XTUio0s8JjMuty
+✓ Created objects.
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   code/modal_bf16pv_compile.py
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   code/candidate_openkernels_v75.py
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   code/candidate_openkernels_pvcontrol.py
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   code/candidate_openkernels_fdeccontrol.py
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   code/candidate_openkernels_fdecfast.py
+├── ✓ Uploaded 
+│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   code/candidate_openkernels_bf16pv.py
+├── ✓ Created Function compile.
+├── ✓ Created Function inspect_fa3_baseline.
+├── ✓ Created Function inspect_fa3_binary.
+└── ✓ Created Function resources.
+DIST sglang-kernel 0.4.9
+DIST sgl-deep-gemm 0.2.1.post1+muse.cbe1727
+DIST sglang-router 0.3.2
+DIST sgl-deep-ep 0.1.2.post1
+DIST sglang 0.0.0.dev0
+PKG_INIT import platform
+import sys
+
+from sgl_kernel.version import __version__  # noqa: F401
+
+# On macOS only the Metal extension is shipped; skip CUDA op loading and
+# re-exports so those symbols are not exposed on Apple Silicon.
+if sys.platform == "darwin" and platform.machine() == "arm64":
+    from sgl_kernel.metal import *
+else:
+    import torch
+    from sgl_kernel.debug_utils import maybe_wrap_debug_kernel
+    from sgl_kernel.load_utils import (
+        _load_architecture_specific_ops,
+        _preload_cuda_library,
+    )
+
+    # Initialize the ops library based on current GPU
+    common_ops = _load_architecture_specific_ops()
+
+    # Preload the CUDA library to avoid the issue of libcudart.so.12 not found
+    if torch.version.cuda is not None:
+        _preload_cuda_library()
+
+    from sgl_kernel.allreduce import *
+    from sgl_kernel.attention import merge_state_v2
+    from sgl_kernel.cutlass_moe import (
+        cutlass_w4a8_moe_mm,
+        get_cutlass_w4a8_moe_mm_data,
+    )
+    from sgl_kernel.elementwise import (
+        concat_mla_absorb_q,
+        concat_mla_k,
+        copy_to_gpu_no_ce,
+        dsv4_fused_k_norm_rope_flashmla,
+        dsv4_fused_q_indexer_rope_hadamard_quant,
+        dsv4_fused_q_norm_rope,
+        fused_add_rmsnorm,
+        gelu_and_mul,
+        gelu_tanh_and_mul,
+        gemma_fused_add_rmsnorm,
+        gemma_rmsnorm,
+        rmsnorm,
+        rotary_embedding,
+        silu_and_mul,
+    )
+    from sgl_kernel.expert_specialization import (
+        es_fp8_blockwise_scaled_grouped_mm,
+        es_sm100_mxfp8_blockscaled_grouped_mm,
+        es_sm100_mxfp8_blockscaled_grouped_quant,
+    )
+    from sgl_kernel.gemm import (
+        fp8_scaled_mm,
+        int8_scaled_mm,
+        sgl_per_token_group_quant_8bit,
+        sgl_per_token_group_quant_fp8,
+        sgl_per_token_group_quant_int8,
+        sgl_per_token_quant_fp8,
+        shuffle_rows,
+    )
+    from sgl_kernel.grammar import apply_token_bitmask_inplace_cuda
+    from sgl_kernel.infllm_v2 import (
+        infllmv2_attn_stage1,
+        max_pooling_1d_varlen,
+    )
+    from sgl_kernel.kvcacheio import (
+        copy_all_layer_kv_cache_cpu,
+        transfer_kv_all_layer,
+        transfer_kv_all_layer_mla,
+        transfer_kv_per_layer,
+        transfer_kv_per_layer_mla,
+    )
+    from sgl_kernel.mamba import (
+        causal_conv1d_fn_cpu,
+        causal_conv1d_fwd,
+        causal_conv1d_update,
+        causal_conv1d_update_cpu,
+        chunk_gated_delta_rule_cpu,
+    )
+    from sgl_kernel.memory import weak_ref_tensor
+    from sgl_kernel.moe import (
+        apply_shuffle_mul_sum,
+        fp8_blockwise_scaled_grouped_mm,
+        fused_qk_norm_rope,
+        moe_align_block_size,
+        moe_sum,
+        moe_sum_reduce,
+        prepare_moe_input,
+        topk_sigmoid,
+        topk_softmax,
+    )
+    from sgl_kernel.quantization import (
+        ggml_dequantize,
+        ggml_moe_a8,
+        ggml_moe_a8_vec,
+        ggml_moe_get_block_size,
+        ggml_mul_mat_a8,
+        ggml_mul_mat_vec_a8,
+    )
+    from sgl_kernel.sampling import (
+        top_k_renorm_prob,
+        top_p_renorm_prob,
+    )
+    from sgl_kernel.speculative import (
+        assign_draft_cache_locs_contiguous_cpu,
+        assign_extend_cache_locs_cpu,
+        assign_req_to_token_pool_cpu,
+        build_draft_decode_metadata_cpu,
+        build_tree_kernel_efficient_cpu,
+        fill_accept_out_cache_loc_cpu,
+        fill_bonus_tokens_cpu,
+        rotate_input_ids_cpu,
+        verify_tree_greedy_cpu,
+    )
+
+    # CUDA and ROCm route these through sglang.kernels.ops.speculative (JIT).
+    if torch.version.cuda is None:
+        from sgl_kernel.speculative import (
+            build_tree_kernel_efficient,
+            reconstruct_indices_from_tree_mask,
+            segment_packbits,
+            tree_speculative_sampling_target_only,
+            verify_tree_greedy,
+        )
+
+    from sgl_kernel.top_k import (
+        fast_topk,
+        fast_topk_transform_fused,
+        fast_topk_transform_ragged_fused,
+        fast_topk_v2,
+    )
+    from sgl_kernel.version import __version__
+
+    if torch.version.hip is not None:
+        from sgl_kernel.elementwise import gelu_quick
+        from sgl_kernel.top_k import deepseek_v4_topk_transform_512
+
+    if hasattr(torch.version, "musa") and torch.version.musa is not None:
+        from sgl_kernel.musa import (
+            min_p_sampling_from_probs,
+            musa_batched_rotary_embedding_contiguous,
+            musa_fused_gemv,
+            musa_fused_moe_gemv,
+            musa_fused_mul_add,
+            musa_rotary_embedding_contiguous,
+            top_k_top_p_sampling_from_probs,
+        )
+
+    _DEBUG_EXPORT_NAMES = [
+        "apply_shuffle_mul_sum",
+        "apply_token_bitmask_inplace_cuda",
+        "build_tree_kernel_efficient",
+        "causal_conv1d_fwd",
+        "causal_conv1d_update",
+        "concat_mla_absorb_q",
+        "concat_mla_k",
+        "copy_to_gpu_no_ce",
+        "dsv4_fused_k_norm_rope_flashmla",
+        "dsv4_fused_q_indexer_rope_hadamard_quant",
+        "dsv4_fused_q_norm_rope",
+        "es_fp8_blockwise_scaled_grouped_mm",
+        "es_sm100_mxfp8_blockscaled_grouped_mm",
+        "es_sm100_mxfp8_blockscaled_grouped_quant",
+        "fast_topk",
+        "fast_topk_transform_fused",
+        "fast_topk_transform_ragged_fused",
+        "fast_topk_v2",
+        "fp8_blockwise_scaled_grouped_mm",
+        "fp8_scaled_mm",
+        "fused_add_rmsnorm",
+        "fused_qk_norm_rope",
+        "gelu_and_mul",
+        "gelu_tanh_and_mul",
+        "gemma_fused_add_rmsnorm",
+        "gemma_rmsnorm",
+        "int8_scaled_mm",
+        "merge_state_v2",
+        "moe_align_block_size",
+        "moe_sum",
+        "moe_sum_reduce",
+        "prepare_moe_input",
+        "reconstruct_indices_from_tree_mask",
+        "rmsnorm",
+        "rotary_embedding",
+        "segment_packbits",
+        "sgl_per_token_group_quant_8bit",
+        "sgl_per_token_group_quant_fp8",
+        "sgl_per_token_group_quant_int8",
+        "sgl_per_token_quant_fp8",
+        "shuffle_rows",
+        "silu_and_mul",
+        "top_k_renorm_prob",
+        "top_p_renorm_prob",
+        "topk_sigmoid",
+        "topk_softmax",
+        "transfer_kv_all_layer",
+        "transfer_kv_all_layer_mla",
+        "transfer_kv_per_layer",
+        "transfer_kv_per_layer_mla",
+        "tree_speculative_sampling_target_only",
+        "verify_tree_greedy",
+        "weak_ref_tensor",
+    ]
+
+    if torch.version.hip is not None:
+        _DEBUG_EXPORT_NAMES.append("gelu_quick")
+        _DEBUG_EXPORT_NAMES.append("deepseek_v4_topk_transform_512")
+
+    for _name in _DEBUG_EXPORT_NAMES:
+        if _name in globals():
+            globals()[_name] = maybe_wrap_debug_kernel(
+                globals()[_name], f"sgl_kernel.{_name}"
+            )
+
+    del _name
+    del _DEBUG_EXPORT_NAMES
+
+    def create_greenctx_stream_by_value(*args, **kwargs):
+        from sgl_kernel.spatial import create_greenctx_stream_by_value as _impl
+
+        return _impl(*args, **kwargs)
+
+    def get_sm_available(*args, **kwargs):
+        from sgl_kernel.spatial import get_sm_available as _impl
+
+        return _impl(*args, **kwargs)
+
+FLASH_BINARY /opt/sglang/lib/python3.12/site-packages/sgl_kernel/flash_ops.abi3.so 1122619328
+FP8_64_FUNCTION_COUNT 900
+DEMANGLED_SAMPLE void cutlass::device_kernel<flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, false, false, false, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, false, true, false, true>, flash::StaticPersistentTileScheduler<false> > > >(flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, false, false, false, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, false, true, false, true>, flash::StaticPersistentTileScheduler<false> > >::Params)
+DEMANGLED_SAMPLE void cutlass::device_kernel<flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, false, false, true, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<64, 96, 128, 128, false, true, true, false, true, true> > > >(flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, false, false, true, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<64, 96, 128, 128, false, true, true, false, true, true> > >::Params)
+DEMANGLED_SAMPLE void cutlass::device_kernel<flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, false, false, true, false, true, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<64, 96, 128, 128, false, true, true, false, true, true> > > >(flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, false, false, true, false, true, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<64, 96, 128, 128, false, true, true, false, true, true> > >::Params)
+DEMANGLED_SAMPLE void cutlass::device_kernel<flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, true, false, false, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, false, true, false, true>, flash::DynamicPersistentTileScheduler<128, 128, false, true, true> > > >(flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, true, false, false, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, false, true, false, true>, flash::DynamicPersistentTileScheduler<128, 128, false, true, true> > >::Params)
+DEMANGLED_SAMPLE void cutlass::device_kernel<flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, true, false, true, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<64, 96, 128, 128, false, true, true, true, false, true> > > >(flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, true, false, true, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<64, 96, 128, 128, false, true, true, true, false, true> > >::Params)
+DEMANGLED_SAMPLE void cutlass::device_kernel<flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, true, false, true, false, true, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<64, 96, 128, 128, false, true, true, true, false, true> > > >(flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, true, false, true, false, true, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<64, 96, 128, 128, false, true, true, true, false, true> > >::Params)
+DEMANGLED_SAMPLE void cutlass::device_kernel<flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, true, false, false, false, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, false, true, false, true>, flash::DynamicPersistentTileScheduler<128, 128, false, true, true> > > >(flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, true, false, false, false, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, false, true, false, true>, flash::DynamicPersistentTileScheduler<128, 128, false, true, true> > >::Params)
+DEMANGLED_SAMPLE void cutlass::device_kernel<flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, true, false, false, true, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<64, 96, 128, 128, false, true, true, true, true, true> > > >(flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, true, false, false, true, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<64, 96, 128, 128, false, true, true, true, true, true> > >::Params)
+DEMANGLED_SAMPLE void cutlass::device_kernel<flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, true, false, false, true, false, true, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<64, 96, 128, 128, false, true, true, true, true, true> > > >(flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, true, false, false, true, false, true, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<64, 96, 128, 128, false, true, true, true, true, true> > >::Params)
+DEMANGLED_SAMPLE void cutlass::device_kernel<flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, false, false, false, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, false, true, false, true>, flash::StaticPersistentTileScheduler<false> > > >(flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, false, false, false, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, false, true, false, true>, flash::StaticPersistentTileScheduler<false> > >::Params)
+DEMANGLED_SAMPLE void cutlass::device_kernel<flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, false, false, true, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<64, 96, 128, 128, false, true, true, false, true, true> > > >(flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, false, false, true, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<64, 96, 128, 128, false, true, true, false, true, true> > >::Params)
+DEMANGLED_SAMPLE void cutlass::device_kernel<flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, false, false, true, false, true, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<64, 96, 128, 128, false, true, true, false, true, true> > > >(flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<96>, cute::C<128> >, 128, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, false, false, true, false, true, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<128>, cute::C<96> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<64, 96, 128, 128, false, true, true, false, true, true> > >::Params)
+HEAD64_SPECIALIZATIONS 540
+HEAD64_SAMPLE void cutlass::device_kernel<flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<192>, cute::C<160>, cute::C<64> >, 64, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, false, false, false, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<192>, cute::C<64>, cute::C<160> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 384, false, true, false, true>, flash::StaticPersistentTileScheduler<false> > > >(flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<192>, cute::C<160>, cute::C<64> >, 64, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, false, false, false, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<192>, cute::C<64>, cute::C<160> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 384, false, true, false, true>, flash::StaticPersistentTileScheduler<false> > >::Params)
+HEAD64_SAMPLE void cutlass::device_kernel<flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<128>, cute::C<64> >, 64, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, false, false, false, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<64>, cute::C<128> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, false, true, false, true>, flash::StaticPersistentTileScheduler<false> > > >(flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<64>, cute::C<128>, cute::C<64> >, 64, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, false, false, false, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<64>, cute::C<64>, cute::C<128> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 128, false, true, false, true>, flash::StaticPersistentTileScheduler<false> > >::Params)
+HEAD64_SAMPLE void cutlass::device_kernel<flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<192>, cute::C<160>, cute::C<64> >, 64, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, false, false, true, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<192>, cute::C<64>, cute::C<160> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 384, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<192, 160, 384, 128, false, true, true, false, true, true> > > >(flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<192>, cute::C<160>, cute::C<64> >, 64, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, false, false, true, false, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<192>, cute::C<64>, cute::C<160> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 384, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<192, 160, 384, 128, false, true, true, false, true, true> > >::Params)
+HEAD64_SAMPLE void cutlass::device_kernel<flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<192>, cute::C<160>, cute::C<64> >, 64, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, false, false, true, false, true, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<192>, cute::C<64>, cute::C<160> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 384, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<192, 160, 384, 128, false, true, true, false, true, true> > > >(flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<192>, cute::C<160>, cute::C<64> >, 64, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, false, false, true, false, true, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<192>, cute::C<64>, cute::C<160> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 384, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<192, 160, 384, 128, false, true, true, false, true, true> > >::Params)
+PAGED_CAUSAL_VARLEN_MATCHES 48
+SELECTED_SYMBOL _ZN7cutlass13device_kernelIN5flash20enable_sm90_or_laterINS1_16FlashAttnFwdSm90INS1_25CollectiveMainloopFwdSm90ILi2EN4cute5tupleIJNS5_1CILi1EEES8_S8_EEENS6_IJNS7_ILi192EEENS7_ILi160EEENS7_ILi64EEEEEELi64ENS_12float_e4m3_tEfNS_4arch4Sm90ELb0ELb1ELb0ELb1ELb1ELb0ELb0ELb0ELb1ELb1ELb1ELb0ELb0ENS_10bfloat16_tELb0ELi1EEENS1_21CollectiveEpilogueFwdINS6_IJSA_SC_SB_EEES9_SH_SG_Li384ELb1ELb1ELb0ELb1EEENS1_36VarlenDynamicPersistentTileSchedulerILi192ELi160ELi384ELi128ELb0ELb1ELb1ELb1ELb0ELb1EEEEEEEEEvNT_6ParamsE DEMANGLER void cutlass::device_kernel<flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<192>, cute::C<160>, cute::C<64> >, 64, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, true, false, true, true, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<192>, cute::C<64>, cute::C<160> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 384, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<192, 160, 384, 128, false, true, true, true, false, true> > > >(flash::enable_sm90_or_later<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<192>, cute::C<160>, cute::C<64> >, 64, cutlass::float_e4m3_t, float, cutlass::arch::Sm90, false, true, false, true, true, false, false, false, true, true, true, false, false, cutlass::bfloat16_t, false, 1>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<192>, cute::C<64>, cute::C<160> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 384, true, true, false, true>, flash::VarlenDynamicPersistentTileScheduler<192, 160, 384, 128, false, true, true, true, false, true> > >::Params)
+SASS_RC 0 SASS_BYTES 1749412
+SASS_MATH 7115         /*2130*/                   QGMMA.64x160x32.F32.E4M3.E4M3 R24, gdesc[UR8], RZ, !UPT ;                  /* 0x02600000081879f3 */
+SASS_MATH 7135         /*21d0*/                   QGMMA.64x160x32.F32.E4M3.E4M3 R24, gdesc[UR12], R24, gsb0 ;                /* 0x026000000c1879f3 */
+SASS_MATH 8275         /*4570*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R152, R20, R13, RZ ;               /* 0x0000000d1498723e */
+SASS_MATH 8279         /*4590*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R152, R25, R4, R152 ;              /* 0x000000041998723e */
+SASS_MATH 8311         /*4690*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R154, R24, R17, RZ ;               /* 0x00000011189a723e */
+SASS_MATH 8315         /*46b0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R154, R22, R15, R154 ;             /* 0x0000000f169a723e */
+SASS_MATH 8331         /*4730*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R148, R28, R21, RZ ;               /* 0x000000151c94723e */
+SASS_MATH 8335         /*4750*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R148, R26, R19, R148 ;             /* 0x000000131a94723e */
+SASS_MATH 8351         /*47d0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R150, R32, R29, RZ ;               /* 0x0000001d2096723e */
+SASS_MATH 8353         /*47e0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R150, R30, R23, R150 ;             /* 0x000000171e96723e */
+SASS_MATH 8369         /*4860*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R144, R37, R36, RZ ;               /* 0x000000242590723e */
+SASS_MATH 8373         /*4880*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R144, R34, R33, R144 ;             /* 0x000000212290723e */
+SASS_MATH 8391         /*4910*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R146, R45, R40, RZ ;               /* 0x000000282d92723e */
+SASS_MATH 8395         /*4930*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R146, R41, R38, R146 ;             /* 0x000000262992723e */
+SASS_MATH 8469         /*4b80*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R140, R61, R16, RZ ;               /* 0x000000103d8c723e */
+SASS_MATH 8493         /*4c40*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R58, R58, R5, RZ ;                 /* 0x000000053a3a723e */
+SASS_MATH 8513         /*4ce0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R153, R27, R44, R58 ;              /* 0x0000002c1b99723e */
+SASS_MATH 8535         /*4d90*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R35, R62, R35, RZ ;                /* 0x000000233e23723e */
+SASS_MATH 8543         /*4dd0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R155, R60, R31, R35 ;              /* 0x0000001f3c9b723e */
+SASS_MATH 8563         /*4e70*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R43, R66, R43, RZ ;                /* 0x0000002b422b723e */
+SASS_MATH 8565         /*4e80*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R149, R64, R39, R43 ;              /* 0x000000274095723e */
+SASS_MATH 8591         /*4f50*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R51, R70, R51, RZ ;                /* 0x000000334633723e */
+SASS_MATH 8595         /*4f70*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R151, R68, R47, R51 ;              /* 0x0000002f4497723e */
+SASS_MATH 8621         /*5040*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R59, R74, R59, RZ ;                /* 0x0000003b4a3b723e */
+SASS_MATH 8623         /*5050*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R145, R72, R55, R59 ;              /* 0x000000374891723e */
+SASS_MATH 8643         /*50f0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R140, R57.reuse, R18, R140 ;       /* 0x00000012398c723e */
+SASS_MATH 8651         /*5130*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R67, R78, R67, RZ ;                /* 0x000000434e43723e */
+SASS_MATH 8653         /*5140*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R147, R76, R63, R67 ;              /* 0x0000003f4c93723e */
+SASS_MATH 8675         /*51f0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R19, R69, R48, RZ ;                /* 0x000000304513723e */
+SASS_MATH 8681         /*5220*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R20, R20, R75, RZ ;                /* 0x0000004b1414723e */
+SASS_MATH 8683         /*5230*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R141, R80, R71, R20 ;              /* 0x00000047508d723e */
+SASS_MATH 8689         /*5260*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R142, R65, R42, R19 ;              /* 0x0000002a418e723e */
+SASS_MATH 8715         /*5330*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R18, R77, R52, RZ ;                /* 0x000000344d12723e */
+SASS_MATH 8719         /*5350*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R17, R24.reuse, R17, RZ ;          /* 0x000000111811723e */
+SASS_MATH 8723         /*5370*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R143, R4, R13, R17 ;               /* 0x0000000d048f723e */
+SASS_MATH 8729         /*53a0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R136, R73, R50, R18 ;              /* 0x000000324988723e */
+SASS_MATH 8755         /*5470*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R5, R85, R56, RZ ;                 /* 0x000000385505723e */
+SASS_MATH 8761         /*54a0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R94, R95, R94, RZ ;                /* 0x0000005e5f5e723e */
+SASS_MATH 8763         /*54b0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R137, R22, R15, R94 ;              /* 0x0000000f1689723e */
+SASS_MATH 8775         /*5510*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R138, R81, R54, R5 ;               /* 0x00000036518a723e */
+SASS_MATH 8791         /*5590*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R5, R46, R53, RZ ;                 /* 0x000000352e05723e */
+SASS_MATH 8795         /*55b0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R139, R16, R49, R5 ;               /* 0x00000031108b723e */
+SASS_MATH 8933         /*5a00*/                   QGMMA.64x160x32.F32.E4M3.E4M3 R24, gdesc[UR8], RZ, !UPT ;                  /* 0x02600000081879f3 */
+SASS_MATH 8941         /*5a40*/                   QGMMA.64x160x32.F32.E4M3.E4M3 R24, gdesc[UR12], R24, gsb0 ;                /* 0x026000000c1879f3 */
+SASS_MATH 8977         /*5b60*/                   QGMMA.64x64x32.F32.E4M3.E4M3 R104, R152, gdesc[UR12], R104 ;               /* 0x00e0000c98687df3 */
+SASS_MATH 8991         /*5bd0*/                   QGMMA.64x64x32.F32.E4M3.E4M3 R104, R148, gdesc[UR12], R104 ;               /* 0x00e0000c94687df3 */
+SASS_MATH 8997         /*5c00*/                   QGMMA.64x64x32.F32.E4M3.E4M3 R104, R144, gdesc[UR12], R104 ;               /* 0x00e0000c90687df3 */
+SASS_MATH 9005         /*5c40*/                   QGMMA.64x64x32.F32.E4M3.E4M3 R104, R140, gdesc[UR12], R104 ;               /* 0x00e0000c8c687df3 */
+SASS_MATH 9015         /*5c90*/                   QGMMA.64x64x32.F32.E4M3.E4M3 R104, R136, gdesc[UR12], R104, gsb0 ;         /* 0x00e0000c88687df3 */
+SASS_MATH 10155         /*8030*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R152, R21, R16, RZ ;               /* 0x000000101598723e */
+SASS_MATH 10159         /*8050*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R152, R19, R14, R152 ;             /* 0x0000000e1398723e */
+SASS_MATH 10261         /*8380*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R154, R25, R22, RZ ;               /* 0x00000016199a723e */
+SASS_MATH 10263         /*8390*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R154, R23, R20, R154 ;             /* 0x00000014179a723e */
+SASS_MATH 10279         /*8410*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R148, R33, R28, RZ ;               /* 0x0000001c2194723e */
+SASS_MATH 10281         /*8420*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R148, R29, R24, R148 ;             /* 0x000000181d94723e */
+SASS_MATH 10289         /*8460*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R150, R41, R36, RZ ;               /* 0x000000242996723e */
+SASS_MATH 10295         /*8490*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R150, R37, R32, R150 ;             /* 0x000000202596723e */
+SASS_MATH 10357         /*8680*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R144, R49, R44, RZ ;               /* 0x0000002c3190723e */
+SASS_MATH 10385         /*8760*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R144, R45, R40, R144 ;             /* 0x000000282d90723e */
+SASS_MATH 10429         /*88c0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R27, R27, R26, RZ ;                /* 0x0000001a1b1b723e */
+SASS_MATH 10437         /*8900*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R153, R12, R101, R27 ;             /* 0x000000650c99723e */
+SASS_MATH 10467         /*89f0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R34, R35, R34, RZ ;                /* 0x000000222322723e */
+SASS_MATH 10469         /*8a00*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R155, R31, R30, R34 ;              /* 0x0000001e1f9b723e */
+SASS_MATH 10509         /*8b40*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R42, R43, R42, RZ ;                /* 0x0000002a2b2a723e */
+SASS_MATH 10523         /*8bb0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R149, R39, R38, R42 ;              /* 0x000000262795723e */
+SASS_MATH 10543         /*8c50*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R50, R51, R50, RZ ;                /* 0x000000323332723e */
+SASS_MATH 10545         /*8c60*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R151, R47, R46, R50 ;              /* 0x0000002e2f97723e */
+SASS_MATH 10569         /*8d20*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R58, R59, R58, RZ ;                /* 0x0000003a3b3a723e */
+SASS_MATH 10571         /*8d30*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R145, R55, R54, R58 ;              /* 0x000000363791723e */
+SASS_MATH 10575         /*8d50*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R146, R57, R52, RZ ;               /* 0x000000343992723e */
+SASS_MATH 10587         /*8db0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R146, R53, R48, R146 ;             /* 0x000000303592723e */
+Stopping app - local entrypoint completed.
+SASS_MATH 10595         /*8df0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R140, R69, R60, RZ ;               /* 0x0000003c458c723e */
+SASS_MATH 10597         /*8e00*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R140, R17, R56, R140 ;             /* 0x00000038118c723e */
+SASS_MATH 10627         /*8ef0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R142, R77, R64, RZ ;               /* 0x000000404d8e723e */
+SASS_MATH 10637         /*8f40*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R142, R73, R18, R142 ;             /* 0x00000012498e723e */
+SASS_MATH 10649         /*8fa0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R67, R16, R67, RZ ;                /* 0x000000431043723e */
+SASS_MATH 10653         /*8fc0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R141, R70, R63, R67 ;              /* 0x0000003f468d723e */
+SASS_MATH 10659         /*8ff0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R25, R4, R5, RZ ;                  /* 0x000000050419723e */
+SASS_MATH 10661         /*9000*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R147, R66, R13, R25 ;              /* 0x0000000d4293723e */
+SASS_MATH 10677         /*9080*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R26, R85, R72, RZ ;                /* 0x00000048551a723e */
+MMA_COUNT 204
+SASS_TYPE_COUNT QGMMA 28
+SASS_TYPE QGMMA         /*2130*/                   QGMMA.64x160x32.F32.E4M3.E4M3 R24, gdesc[UR8], RZ, !UPT ;                  /* 0x02600000081879f3 */
+SASS_TYPE QGMMA         /*21d0*/                   QGMMA.64x160x32.F32.E4M3.E4M3 R24, gdesc[UR12], R24, gsb0 ;                /* 0x026000000c1879f3 */
+SASS_TYPE QGMMA         /*5a00*/                   QGMMA.64x160x32.F32.E4M3.E4M3 R24, gdesc[UR8], RZ, !UPT ;                  /* 0x02600000081879f3 */
+SASS_TYPE QGMMA         /*5a40*/                   QGMMA.64x160x32.F32.E4M3.E4M3 R24, gdesc[UR12], R24, gsb0 ;                /* 0x026000000c1879f3 */
+SASS_TYPE QGMMA         /*5b60*/                   QGMMA.64x64x32.F32.E4M3.E4M3 R104, R152, gdesc[UR12], R104 ;               /* 0x00e0000c98687df3 */
+SASS_TYPE QGMMA         /*5bd0*/                   QGMMA.64x64x32.F32.E4M3.E4M3 R104, R148, gdesc[UR12], R104 ;               /* 0x00e0000c94687df3 */
+SASS_TYPE QGMMA         /*5c00*/                   QGMMA.64x64x32.F32.E4M3.E4M3 R104, R144, gdesc[UR12], R104 ;               /* 0x00e0000c90687df3 */
+SASS_TYPE QGMMA         /*5c40*/                   QGMMA.64x64x32.F32.E4M3.E4M3 R104, R140, gdesc[UR12], R104 ;               /* 0x00e0000c8c687df3 */
+SASS_TYPE QGMMA         /*5c90*/                   QGMMA.64x64x32.F32.E4M3.E4M3 R104, R136, gdesc[UR12], R104, gsb0 ;         /* 0x00e0000c88687df3 */
+SASS_TYPE QGMMA         /*96b0*/                   QGMMA.64x160x32.F32.E4M3.E4M3 R24, gdesc[UR8], RZ, !UPT ;                  /* 0x02600000081879f3 */
+SASS_TYPE QGMMA         /*96d0*/                   QGMMA.64x160x32.F32.E4M3.E4M3 R24, gdesc[UR12], R24, gsb0 ;                /* 0x026000000c1879f3 */
+SASS_TYPE QGMMA         /*9800*/                   QGMMA.64x64x32.F32.E4M3.E4M3 R104, R152, gdesc[UR12], R104 ;               /* 0x00e0000c98687df3 */
+SASS_TYPE QGMMA         /*9840*/                   QGMMA.64x64x32.F32.E4M3.E4M3 R104, R148, gdesc[UR12], R104 ;               /* 0x00e0000c94687df3 */
+SASS_TYPE QGMMA         /*9870*/                   QGMMA.64x64x32.F32.E4M3.E4M3 R104, R144, gdesc[UR12], R104 ;               /* 0x00e0000c90687df3 */
+SASS_TYPE QGMMA         /*98b0*/                   QGMMA.64x64x32.F32.E4M3.E4M3 R104, R140, gdesc[UR12], R104 ;               /* 0x00e0000c8c687df3 */
+SASS_TYPE QGMMA         /*98e0*/                   QGMMA.64x64x32.F32.E4M3.E4M3 R104, R136, gdesc[UR12], R104, gsb0 ;         /* 0x00e0000c88687df3 */
+SASS_TYPE QGMMA         /*b4e0*/                   QGMMA.64x160x32.F32.E4M3.E4M3 R24, gdesc[UR8], RZ, !UPT ;                  /* 0x02600000081879f3 */
+SASS_TYPE QGMMA         /*b520*/                   QGMMA.64x160x32.F32.E4M3.E4M3 R24, gdesc[UR12], R24, gsb0 ;                /* 0x026000000c1879f3 */
+SASS_TYPE QGMMA         /*b630*/                   QGMMA.64x64x32.F32.E4M3.E4M3 R104, R152, gdesc[UR12], R104 ;               /* 0x00e0000c98687df3 */
+SASS_TYPE QGMMA         /*b690*/                   QGMMA.64x64x32.F32.E4M3.E4M3 R104, R148, gdesc[UR12], R104 ;               /* 0x00e0000c94687df3 */
+SASS_TYPE QGMMA         /*b6c0*/                   QGMMA.64x64x32.F32.E4M3.E4M3 R104, R144, gdesc[UR12], R104 ;               /* 0x00e0000c90687df3 */
+SASS_TYPE QGMMA         /*b700*/                   QGMMA.64x64x32.F32.E4M3.E4M3 R104, R140, gdesc[UR12], R104 ;               /* 0x00e0000c8c687df3 */
+SASS_TYPE QGMMA         /*b750*/                   QGMMA.64x64x32.F32.E4M3.E4M3 R104, R136, gdesc[UR12], R104, gsb0 ;         /* 0x00e0000c88687df3 */
+SASS_TYPE QGMMA         /*f030*/                   QGMMA.64x64x32.F32.E4M3.E4M3 R104, R152, gdesc[UR8], R104 ;                /* 0x00e0000898687df3 */
+SASS_TYPE_COUNT HGMMA 0
+SASS_TYPE_COUNT E4M3.F32 160
+SASS_TYPE E4M3.F32         /*4570*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R152, R20, R13, RZ ;               /* 0x0000000d1498723e */
+SASS_TYPE E4M3.F32         /*4590*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R152, R25, R4, R152 ;              /* 0x000000041998723e */
+SASS_TYPE E4M3.F32         /*4690*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R154, R24, R17, RZ ;               /* 0x00000011189a723e */
+SASS_TYPE E4M3.F32         /*46b0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R154, R22, R15, R154 ;             /* 0x0000000f169a723e */
+SASS_TYPE E4M3.F32         /*4730*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R148, R28, R21, RZ ;               /* 0x000000151c94723e */
+SASS_TYPE E4M3.F32         /*4750*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R148, R26, R19, R148 ;             /* 0x000000131a94723e */
+SASS_TYPE E4M3.F32         /*47d0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R150, R32, R29, RZ ;               /* 0x0000001d2096723e */
+SASS_TYPE E4M3.F32         /*47e0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R150, R30, R23, R150 ;             /* 0x000000171e96723e */
+SASS_TYPE E4M3.F32         /*4860*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R144, R37, R36, RZ ;               /* 0x000000242590723e */
+SASS_TYPE E4M3.F32         /*4880*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R144, R34, R33, R144 ;             /* 0x000000212290723e */
+SASS_TYPE E4M3.F32         /*4910*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R146, R45, R40, RZ ;               /* 0x000000282d92723e */
+SASS_TYPE E4M3.F32         /*4930*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R146, R41, R38, R146 ;             /* 0x000000262992723e */
+SASS_TYPE E4M3.F32         /*4b80*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R140, R61, R16, RZ ;               /* 0x000000103d8c723e */
+SASS_TYPE E4M3.F32         /*4c40*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R58, R58, R5, RZ ;                 /* 0x000000053a3a723e */
+SASS_TYPE E4M3.F32         /*4ce0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R153, R27, R44, R58 ;              /* 0x0000002c1b99723e */
+SASS_TYPE E4M3.F32         /*4d90*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R35, R62, R35, RZ ;                /* 0x000000233e23723e */
+SASS_TYPE E4M3.F32         /*4dd0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R155, R60, R31, R35 ;              /* 0x0000001f3c9b723e */
+SASS_TYPE E4M3.F32         /*4e70*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R43, R66, R43, RZ ;                /* 0x0000002b422b723e */
+SASS_TYPE E4M3.F32         /*4e80*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R149, R64, R39, R43 ;              /* 0x000000274095723e */
+SASS_TYPE E4M3.F32         /*4f50*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R51, R70, R51, RZ ;                /* 0x000000334633723e */
+SASS_TYPE E4M3.F32         /*4f70*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R151, R68, R47, R51 ;              /* 0x0000002f4497723e */
+SASS_TYPE E4M3.F32         /*5040*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R59, R74, R59, RZ ;                /* 0x0000003b4a3b723e */
+SASS_TYPE E4M3.F32         /*5050*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R145, R72, R55, R59 ;              /* 0x000000374891723e */
+SASS_TYPE E4M3.F32         /*50f0*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R140, R57.reuse, R18, R140 ;       /* 0x00000012398c723e */
+SASS_TYPE_COUNT F16.F32 16
+SASS_TYPE F16.F32         /*f890*/                   F2FP.BF16.F32.PACK_AB R134, R134, R17 ;                                    /* 0x000000118686723e */
+SASS_TYPE F16.F32         /*f8c0*/                   F2FP.BF16.F32.PACK_AB R135, R135, R16 ;                                    /* 0x000000108787723e */
+SASS_TYPE F16.F32         /*f8e0*/                   F2FP.BF16.F32.PACK_AB R19, R132, R19 ;                                     /* 0x000000138413723e */
+SASS_TYPE F16.F32         /*f900*/                   F2FP.BF16.F32.PACK_AB R18, R133, R18 ;                                     /* 0x000000128512723e */
+SASS_TYPE F16.F32         /*f910*/                   F2FP.BF16.F32.PACK_AB R25, R118, R25 ;                                     /* 0x000000197619723e */
+SASS_TYPE F16.F32         /*f940*/                   F2FP.BF16.F32.PACK_AB R24, R119, R24 ;                                     /* 0x000000187718723e */
+SASS_TYPE F16.F32         /*f950*/                   F2FP.BF16.F32.PACK_AB R23, R124, R23 ;                                     /* 0x000000177c17723e */
+SASS_TYPE F16.F32         /*f960*/                   F2FP.BF16.F32.PACK_AB R21, R126, R21 ;                                     /* 0x000000157e15723e */
+SASS_TYPE F16.F32         /*f970*/                   F2FP.BF16.F32.PACK_AB R22, R125, R22 ;                                     /* 0x000000167d16723e */
+SASS_TYPE F16.F32         /*f980*/                   F2FP.BF16.F32.PACK_AB R20, R127, R20 ;                                     /* 0x000000147f14723e */
+SASS_TYPE F16.F32         /*f990*/                   F2FP.BF16.F32.PACK_AB R33, R108, R33 ;                                     /* 0x000000216c21723e */
+SASS_TYPE F16.F32         /*f9c0*/                   F2FP.BF16.F32.PACK_AB R31, R110, R31 ;                                     /* 0x0000001f6e1f723e */
+SASS_TYPE F16.F32         /*f9d0*/                   F2FP.BF16.F32.PACK_AB R32, R109, R32 ;                                     /* 0x000000206d20723e */
+SASS_TYPE F16.F32         /*f9e0*/                   F2FP.BF16.F32.PACK_AB R30, R111, R30 ;                                     /* 0x0000001e6f1e723e */
+SASS_TYPE F16.F32         /*f9f0*/                   F2FP.BF16.F32.PACK_AB R27, R116, R27 ;                                     /* 0x0000001b741b723e */
+SASS_TYPE F16.F32         /*fa00*/                   F2FP.BF16.F32.PACK_AB R26, R117, R26 ;                                     /* 0x0000001a751a723e */
+SASS_TYPE_COUNT BF16.F32 16
+SASS_TYPE BF16.F32         /*f890*/                   F2FP.BF16.F32.PACK_AB R134, R134, R17 ;                                    /* 0x000000118686723e */
+SASS_TYPE BF16.F32         /*f8c0*/                   F2FP.BF16.F32.PACK_AB R135, R135, R16 ;                                    /* 0x000000108787723e */
+SASS_TYPE BF16.F32         /*f8e0*/                   F2FP.BF16.F32.PACK_AB R19, R132, R19 ;                                     /* 0x000000138413723e */
+SASS_TYPE BF16.F32         /*f900*/                   F2FP.BF16.F32.PACK_AB R18, R133, R18 ;                                     /* 0x000000128512723e */
+SASS_TYPE BF16.F32         /*f910*/                   F2FP.BF16.F32.PACK_AB R25, R118, R25 ;                                     /* 0x000000197619723e */
+SASS_TYPE BF16.F32         /*f940*/                   F2FP.BF16.F32.PACK_AB R24, R119, R24 ;                                     /* 0x000000187718723e */
+SASS_TYPE BF16.F32         /*f950*/                   F2FP.BF16.F32.PACK_AB R23, R124, R23 ;                                     /* 0x000000177c17723e */
+SASS_TYPE BF16.F32         /*f960*/                   F2FP.BF16.F32.PACK_AB R21, R126, R21 ;                                     /* 0x000000157e15723e */
+SASS_TYPE BF16.F32         /*f970*/                   F2FP.BF16.F32.PACK_AB R22, R125, R22 ;                                     /* 0x000000167d16723e */
+SASS_TYPE BF16.F32         /*f980*/                   F2FP.BF16.F32.PACK_AB R20, R127, R20 ;                                     /* 0x000000147f14723e */
+SASS_TYPE BF16.F32         /*f990*/                   F2FP.BF16.F32.PACK_AB R33, R108, R33 ;                                     /* 0x000000216c21723e */
+SASS_TYPE BF16.F32         /*f9c0*/                   F2FP.BF16.F32.PACK_AB R31, R110, R31 ;                                     /* 0x0000001f6e1f723e */
+SASS_TYPE BF16.F32         /*f9d0*/                   F2FP.BF16.F32.PACK_AB R32, R109, R32 ;                                     /* 0x000000206d20723e */
+SASS_TYPE BF16.F32         /*f9e0*/                   F2FP.BF16.F32.PACK_AB R30, R111, R30 ;                                     /* 0x0000001e6f1e723e */
+SASS_TYPE BF16.F32         /*f9f0*/                   F2FP.BF16.F32.PACK_AB R27, R116, R27 ;                                     /* 0x0000001b741b723e */
+SASS_TYPE BF16.F32         /*fa00*/                   F2FP.BF16.F32.PACK_AB R26, R117, R26 ;                                     /* 0x0000001a751a723e */
+✓ App completed. View run at 
+https://modal.com/apps/bharathvelamala1929/main/ap-JpCAwJF0XTUio0s8JjMuty

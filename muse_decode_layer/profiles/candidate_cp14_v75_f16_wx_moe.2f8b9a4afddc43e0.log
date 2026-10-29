@@ -1,0 +1,37 @@
+zip build 40.2s
+zip path enabled: pooler m 1-8 id 25
+zip path enabled: pooler m 9-16 id 137
+zip path enabled: unpooler m 9-16 id 28
+zip path enabled: qkv_gate m 1-8 id 121
+qkv zip variant id 39 disabled: ValueError: accuracy at m=1
+qkv zip m=1 id 110: 14.43 us (base id 121: 14.37)
+qkv zip m=1 id 31: 15.10 us (base id 121: 14.37)
+qkv zip m=1 id 44: 15.07 us (base id 121: 14.37)
+qkv zip m=1 id 25: 15.23 us (base id 121: 14.37)
+qkv zip m=8 id 110: 14.59 us (base id 121: 14.46)
+qkv zip m=8 id 31: 15.39 us (base id 121: 14.46)
+qkv zip m=8 id 44: 15.33 us (base id 121: 14.46)
+qkv zip m=8 id 25: 15.33 us (base id 121: 14.46)
+qkv zip picked m=1 id 121, m=2-8 id 121
+zip prepare 40.4s
+r9 build 38.0s
+r9 max clusters: id3(1, 128, 3, 8)=39
+r9 bench qkv_gate m=128 (raw us, ~4 graph overhead): cp8=20.45 id3=19.01 -> id3
+r9 prepare 38.0s picks={('qkv_gate', 128): 3}
+r15 lt build 19.2s cublasLt 130101
+r15 qkv_gate m=128 cands=20 (raw us) cp10=19.17 c2=20.16 c14=20.00 c12=19.90 best=a66t92s35k1r0z0c7 -> cp10
+r15 qkv_gate m=256 cands=15 (raw us) cp10=23.10 c9=22.21 c0=23.30 c10=23.87 best=a66t134s35k1r0z0c9 -> lt
+r15 o m=128 cands=8 (raw us) cp10=11.10 c0=11.17 c2=11.46 c4=11.55 best=a66t18s35k1r0z0c5 -> cp10
+r15 o m=256 cands=8 (raw us) cp10=12.83 c0=13.22 c5=13.86 c4=13.82 best=a66t20s35k1r0z0c3 -> cp10
+r15 pooler m=128 cands=15 (raw us) cp10=26.53 c9=25.06 c10=25.02 c8=25.06 best=a66t134s35k1r0z0c7 -> lt
+r15 pooler m=256 cands=12 (raw us) cp10=30.34 c8=30.40 c3=32.13 c10=32.58 best=a66t183s35k1r0z0c9 -> cp10
+r15 unpooler m=128 cands=12 (raw us) cp10=23.04 c0=23.10 c2=23.52 c8=24.00 best=a66t18s35k1r0z0c5 -> cp10
+r15 unpooler m=256 cands=8 (raw us) cp10=27.84 c0=28.06 c3=30.27 c2=30.14 best=a66t20s35k1r0z0c3 -> cp10
+r15 prepare 19.7s total 140.8s picks=qkv_gate256,pooler128
+slice m2: old 9.57 new 8.99
+slice m4: old 11.46 new 8.99
+slice m8: old 9.57 new 9.06
+slice mma path enabled m 2-8
+cp14 whole-layer prepare seconds: 221.6
+v48 prepare 40s before tuning
+strict combo prepare seconds 261.19938758999706
