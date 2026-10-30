@@ -20,3 +20,13 @@ Build the real kernel (split-KV tuned per batch, GQA KV reuse, PDL, cheaper comb
 ## Task B — MoE expert kernel (owns `muse_moe_w4a16/`)
 
 State: MoE 6,827 µs scored (strict v56, #263, cutoff ~5,759). `muse_moe_w4a16/research_moe_xg2.py` (check 061e24b8ef934b9d) at 6,756 µs is within CI — push its mechanism further or combine levers until clearly beyond noise. No param sweeps; new mechanisms (expert-grouped persistent scheduling, weight-load pipelining, gate/up + activation fusion). `moe_x` is ~60% of whole-decode verify-b16: post verified wins under a "FOR WHOLE-DECODE" heading in `TAKEOVER.md`.
+
+## Task C — BF16 dense projections (owns `muse_bf16_proj/`)
+
+State: canonical `muse_bf16_proj/submission.py` (cp17) at 1.433×, #385. Live #50 cutoff 1.570× (~3,077 µs), #10 1.597×. Smallest gap of the four boards that count toward overall rank (prefill does not count).
+Read first: `muse_bf16_proj/bench/TOP50_CAMPAIGN.md`, `bench/EXPERT_PANEL.md`, `bench/FINDINGS.md`, `ANALYSIS.md`, and the latest `profiles/submission.<job>.txt`.
+Closed lines — do not reopen without a materially different mechanism: compressed-weight ac2 m16/m32 family (best case ~1.50×), adaptive direct / intra-CTA split, epilogue-only fix.
+Leads:
+1. Router: public hint that the router (different precision rule from BF16 projections) dominates observed cost. Re-read its correctness rules, measure its share of weighted load cost from the official profile, and build a faster precision-preserving router path.
+2. Large M: the m256 load scores only ~1.15×. Candidates: tile-shaped split-K GEMM for qkv at m256; register-A WGMMA for pooler/unpooler at m128.
+Any shape-based dispatch must stay valid on all test shapes. Use the official per-case weighted results to justify each change.
