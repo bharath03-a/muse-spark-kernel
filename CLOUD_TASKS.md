@@ -30,3 +30,14 @@ Leads:
 1. Router: public hint that the router (different precision rule from BF16 projections) dominates observed cost. Re-read its correctness rules, measure its share of weighted load cost from the official profile, and build a faster precision-preserving router path.
 2. Large M: the m256 load scores only ~1.15×. Candidates: tile-shaped split-K GEMM for qkv at m256; register-A WGMMA for pooler/unpooler at m128.
 Any shape-based dispatch must stay valid on all test shapes. Use the official per-case weighted results to justify each change.
+
+## Task D — Whole decoder layer (owns `muse_decode_layer/`; Task A is now attention-only)
+
+Priority board. State: scored 12,484 µs, 1.809×, #401 (job 5ab92e7e91d64475), default `muse_decode_layer/submission.py` = `candidate_v35_wxpin32.py` (upstream v35 + M32 MoE route pinned to `wx -DNCW=16 -DWXG2 -DUDESC`). Live #50 ≈ 2.240×, #10 ≈ 2.345× → need ~24% less time. Check live: `okc leaderboard muse_decode_layer --json`.
+Known profile: `moe_x` expert kernel ≈ 60% of verify-b16; batch-1 decode/verify close to upstream; old-path vs v35 per-shape picking worth ≤0.5% (done, don't redo).
+Leads, biggest first:
+1. Upstream first: `git ls-remote https://github.com/lee101/openkernels` and diff its newest whole-decoder/MoE/attention versions against e6b48c8. Port anything newer and faster.
+2. Integrate sibling wins as they land: Task A attention (scored 1.977× standalone), Task B MoE, Task C projections — read TAKEOVER.md "FOR WHOLE-DECODE" and git log.
+3. Layer-level fusion the standalone boards can't capture: router launched on a second stream overlapping the attention tail; residual-add + RMSNorm fused into attn-out / unpooler epilogues; PDL / programmatic launch chaining across the whole layer; one persistent residual workspace; zero host syncs.
+4. b16/b32 verify: MoE dominates — specialized grouped expert schedule for the decoder's real routing distribution.
+Validate with full-layer `okc check`; a component gain does not prove an end-to-end gain.
