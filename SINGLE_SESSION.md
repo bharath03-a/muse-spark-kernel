@@ -25,6 +25,14 @@ Earlier sessions scored these, but their code may not be in `main`:
 3. **MoE** (~19% gap): expert-grouped persistent schedule, weight-load pipelining, gate/up+activation fusion. Wins feed decode.
 4. **Attention** (~35% gap): split-KV per batch for full-context b16/b32, GQA KV reuse, cheaper combine. Wins feed decode.
 
+## Team structure — you are the lead
+Spawn parallel subagents (Agent tool), one per board: `bf16`, `decode`, `moe`, `attention`. Keep at most 4 alive; credits are shared and limited.
+- Each subagent gets: its board's folder, the state row above, its leads, the AGENTS.md rules, and this file's workflow rules. It owns only its folder.
+- **Innovate, don't sweep.** Each subagent must first propose 3 materially different mechanisms with an expected gain and why (profile evidence, roofline math, upstream diff), then build the most promising one. No parameter sweeps of closed lines.
+- **Lead owns OKC quota and git.** Subagents ask the lead before any `okc check`/`submit`; the lead dedupes, budgets ~5 checks per board per round, and is the only one who commits/pushes.
+- Each round: collect results → kill dead lines → forward every component win (bf16/moe/attention) to the `decode` subagent for integration → respawn with sharper briefs. Spawn a fresh subagent when one stalls twice on the same mechanism.
+- Optional reviewer subagent before each scored submit: verify correctness rules and noise margin.
+
 ## Workflow
 - Submit scored only on correctness + gain ≥1% beyond noise. Back up old default as `submission_before_*.py`, record in `VERIFIED_CANDIDATES.json`, log in `TAKEOVER.md`.
 - After every scored submission: commit and push to `main` (or `claude/all-boards` if main is refused).
