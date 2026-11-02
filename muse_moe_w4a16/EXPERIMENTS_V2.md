@@ -15,3 +15,4 @@ ideas informed by vjeux/okc-2026, alygg77 (Apache-2.0)
 - candidate_alygg.py (copy-then-modify now allowed): re-copied, header intact; benchmark check pending: /private/tmp/claude-501/chk_alygg.json. Not yet promoted.
 - candidate_v2_pdl.py = alygg + PDL=True (kernel already has griddepcontrol wait/launch_dependents). check running, out /private/tmp/claude-501/chk_v2pdl.json. base 478c0e9ca2214849 = 5,676 us.
 - candidate_v2_ns4.py = v2_pdl + WGS_NS 3->4, WGS_NX 3->2 (smem 144+64=208KB vs 204KB; barrier idx parametrized). Rationale: v16/v32 verify at 1.7-1.9x SOL, weight-bound; deeper weight ring = more bytes in flight. Expect up to ~3-5% on v16/v32 if latency-bound. Check out: /private/tmp/claude-501/chk_v2ns4.json
+- v2_ns4 check 9496923fcafb436f: FAILED at runtime (CUDA invalid argument at first generate_input; likely dynamic smem NS4*36KB+NX2*32KB+sizeof(Smem) > 227KB limit). Not submitted. v2_pdl ae3cab0c2a884aec 5,682 us (no gain).
