@@ -1,0 +1,7 @@
+# EXPERIMENTS_V2 (decode_layer)
+- 2026-11-01 upstream port: /tmp/up newest decode_layer = v35 (scored 1.7883, moe v56 + attn v81 + bf16 v22); ours already 1.826-1.861 on same stack + later work. Nothing to port. verdict: no gain.
+- Breakdown (job 531792a3, 12390us): weighted by case, verify b16/b32 = ~49% of time; moe_x 216-240us = 59%/40% of b32 sliding/full verify; full-layer b32 attnp 228us (38%); nvjet dense ~90us; resid x2 21us (2x BW floor); xgather 7, rmsg 7, route 6.
+- Sibling MoE board still on v56 (candidates v59-v64, 6.73-6.93ms, no step change) -> no integrable win yet. Need ~13% on moe_x for #300; glue-only fixes (resid ~-8us, xgather/rmsg/route fusion ~-10us at b32) total <3%, below 1%-per-submit bar individually.
+- Pending: d10a67c165ac488f (scored, queued). Quota left: 5 scored, 10 checks.
+- 2026-11-01 v2 attempt: c8015a8e not found by okc status (no breakdown). alygg (13.9k lines) already fuses b1/b2 boundaries, fused FP32 router+pooler, PDL; remaining glue (resid/xgather/rmsg) <3% and un-measurable without a GPU. No candidate_v2_* built, 0 checks used. Need the c8015a8e per-kernel profile to target moe/attn/gv kernels.
+- c8015a8e9fb941e6 breakdown (alygg 10,262): moe_fused = 62-93us decode b16/b32 (48-54%), 160-203us verify b16/b32 (41-65%); attn b32 full 171us decode / 183us verify (37-52%); nvjet dense verify b16/32 ~70-90us; glue (graft_row_boundary 9-14us, route 3us) ~4-5%. #50 needs -400us (~4%): only a moe_fused/attn kernel win moves it; glue-only ~1-2%. No v2 candidate/checks run (no GPU kernel dev path in this env).
