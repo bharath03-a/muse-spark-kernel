@@ -32,3 +32,8 @@ Reading: cutoffs are tightly clustered → hundreds of teams share a common know
 All agents stopped (judge queue stalled ~2h). Pending checks on judge: bf16 b0e37a8e/817484ad, attention 88ddfe93/4c25b44c, decode c8015a8e/c3e00e6a, moe 478c0e9c/b0cea1e7. Results: `okc status <id>`.
 Done today: attention scored 51e80b11 1,886 µs (1.997×, #514). MoE 8943fb06 6,858, decode d10a67c1 12,567 (not better). bf16 Triton m128/m256 probe 385a845d: NO-GO.
 Resume: one Sonnet agent per board — read public-file baseline result; if better, promote with attribution + submit; then improve per CHECKLIST.md.
+
+## 2026-11-02 ~07:00 UTC
+Overall #295→#300 (others moved). Round of tweaks on vjeux/alygg bases all no-go (attn plan optimal; moe ns4 crash, PDL flat; bf16 router ext worse).
+Found keell0renz/muse-open-kernel-challenge (Apache-2.0, judge: decode 2.25, moe 2.39, attn ~2.64, bf16 1.57; LESSONS.md has ~460 experiments). Copied as */candidate_keel.py with attribution + NOTICE_keell0renz; scored: attn a7ab30813ae34de3, moe 958bd92a752e4369, decode df0ab3f05b064876, bf16 e9283643e06e4677. Promote winners to submission.py when scored.
+Next: read /tmp/scout/k/repo/LESSONS.md before any new experiment (avoid their dead ends).
