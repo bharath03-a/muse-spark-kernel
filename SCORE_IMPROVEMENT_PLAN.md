@@ -240,3 +240,12 @@ All versions are correct; rel-L2 is about 2.5e-3 against the 1.5% limit. The cre
 
 ### Decision
 Score attempt stopped. Live submissions are unchanged (decoder 2.2556x). No submits made.
+
+## Outcome — November 2–3 (component swaps and exploration)
+- **Own components in the decoder** (`muse_decode_layer/candidate_ownproj_v1..v3.py`):
+  - v1: our unpooler slice at T=8; a tie.
+  - v2: v1 plus our 12-bit qkv at T=1 with PDL; decode-1 is 1.3% faster.
+  - v3: v2 plus our fused O-projection at T=1; a tie.
+  - v3 was submitted at 2.2506x; the board kept the earlier 2.2556x. About 5% of decoder time is now ours.
+- **Dropped:** public code (keell0renz's 4.15x was "judgemaxxed" by the author's own statement; nothing newer has been published); full attention (95% of the gather ceiling, +0.9% ceiling); the MoE T=8 wsi build (`candidate_moe_v1`, −0.5%); the MoE CTA-weighted stream-K (`candidate_moe_v2`, −0.4 to −4.2%); work-stealing (infeasible); the knob hill-climb (+0.08% stacked; see `muse_decode_layer/HILLCLIMB_LOG.md`).
+- **Judge:** the judge reuses the earlier result for byte-identical resubmits. Noise is about ±0.5% paired and ±1.5% on a single run.
