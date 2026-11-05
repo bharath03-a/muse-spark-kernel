@@ -231,3 +231,120 @@ candidate_wl_v2.py (wl_v1 + MOE_TINY2_MAX_M 8->4, so M=8 uses the MID build; 999
 - candidate_pdl256_v1 = dw_v1 + PDL_MAX_T 128->256. T128 control (no change): 0.9974-1.0017.
   T256 sliding: 1.0050/1.0034 (real, ~-1.3us verify32 sliding); T256 full: 0.9999/0.9998 flat. ~+0.05% geomean stacked.
 - dw_v1 scored submit dee0c23944964b83: 2.238x, 10.11 ms; board keeps live 2.2556x.
+
+## inn round (lower precision only) -- 2026-11-04, NO-GO, no candidate built, 0 checks
+Scope narrowed by coordinator to FP8 activations / FP8 wgmma (glue and mask ideas belong to other agents).
+- FP8 activations into projections/MoE: every T <= 256 load is weight-bandwidth bound. Activations are 16-512 KB vs ~140 MB of 12-bit
+  projection weights plus 24 MB per active FP4 expert, so halving activation bytes saves <0.3%. No gain.
+- FP8 wgmma for verify MoE (T=128/256): the bottleneck is FP4 dequant integer work (ncu: integer-bound, 151-188 regs), not MMA rate.
+  NVFP4 has a per-16-K E4M3 scale and FP8 wgmma has K=32, so the scale cannot be applied on the accumulator. It has to be folded
+  into the weight, and e2m1*e4m3 is not exact in e4m3, so the result is lossy. sm_90 also has no hardware e2m1->e4m3 cvt, so the
+  LUT cost stays the same. Ceiling: T128/256 MoE is ~2 of 6 loads, maybe 10-15% of their time => <=2% geomean even with a
+  perfect kernel. A new FP8 MoE GEMM cannot be built and validated in 2 h with no Modal (the only GPU is okc check).
+- Router BF16 hi-only (drop the lo stream): saves 4 MB per step, ~1 us/layer, <=0.7% geomean, below the +-1.5% judge noise. It needs sk2f
+  and wide-kernel CUDA edits, and near-tie top-8 flips risk failing the experts check.
+- Lossy 12->8/10-bit projection weights: the only lower-precision idea with gain above noise (~4-8%). It quantizes the model's BF16
+  weights, which is model modification (judgemaxx risk). It also has e4m3 error ~3.6% vs the ~1.5% rel-L2 limit and routing flips. Rejected.
+Verdict: no lower-precision idea clears noise within the time box and rules. Checks used: 0.
+
+## Attention structure audit (mask_v*) on wl_v1 -- 2026-11-04, NO-GO, no candidate built
+Checked each idea against the credited attn_kernel (OKC attention, wl_v1):
+- Sliding window block skip: already in. Splits cover only [max(0, seq+1-window), seq+L); tiles off the window/causal edge skip the mask (lo_all/hi_all).
+- Verify multi-query KV reuse: already in. One CTA holds L*16 = 128 rows per KV pair; verify32 full 191.6 us vs decode32 full 169.3 us (+13% for 8x queries).
+- Paged gather: page indices prefetched in 16-byte windows (pidx), with speculative page-table width for B=1; full attn is at ~95% of gather ceiling.
+- Gate + rmsnorm fusion: already in every finalize path (rmsnorm * sigmoid(gate) via hardware tanh); no separate gate kernel in profiles.
+- Lighter rescale: already lazy (offset moves only when a score exceeds it by 2^8).
+Headroom: sliding attn is 5.4-15.3 us (5-7% of each sliding load), latency-bound; a 10% cut there is ~0.3% geomean, under check noise (+-1.5%).
+Checks used: 0. Modal: 0.
+
+## Glue algebra/op-merge audit on wl_v1 (f56a40daa3f84287 profile) -- 2026-11-04, NO-GO, no candidate built
+Glue kernels per load: T1/T8 glue_cluster_boundary + _gle_route/_sl_tile_route + _sl_cluster_finish; T16 glue_cluster_boundary x2 (6.4+3.2 us,
+PDL-overlapped: times include predecessor wait); T32 _graft_row_boundary_pre x2 (8.7-9.9 us); T128/T256 _graft_row_boundary x2 (8.8-10.4 / 13.6 us).
+- Row boundary bytes/row (HIDDEN 8192): bf16 branch + f32 stream in, f32 next + bf16 out = 12 B/elem. T256: 25 MB per call in 6.8 us = 3.7 TB/s
+  (L2-assisted); T128: 12.6 MB in 4.4-5.2 us = 2.4-2.9 TB/s. Already at the bandwidth floor; math is not on the critical path.
+- Folding post/pre norm weights, alpha/beta into GEMM weights: these vectors are preloaded before griddepcontrol.wait (cluster + _pre kernels),
+  so folding removes zero bytes from the post-wait path. Gain 0.
+- s2/next stream is a layer output; s1 (f32 [T,8192]) could be recomputed in boundary 2 from stream+branch1 instead of written/read:
+  net -4 MB of 50 MB at T256 (~1 us of 482 us) plus an extra reduction. < 0.1% geomean.
+- Route (2.0-3.6 us) is one launch, latency-bound; top-k/softmax already fused with pre-expert norm. Combine is inside moe_fused (MoE scope).
+- No redundant casts/copies found in _graft_after_attention (router fp32 copy only at T<=8, consumed by fp32 pooler/router).
+Ceiling of the whole glue scope without removing launches (= boundary fusion, NO-GO) is < 0.3% geomean, below +-1.5% judge noise.
+Checks used: 0. Modal: 0.
+- candidate_re16_v1 (pdl256 stack + ROUTE_EARLY at T16): T16 sliding 1.0011/1.0011, untouched 0.9969-1.0023. Tiny real win, stacked.
+- BF16 restore: candidate_restore_v1 (comment-only) scored e1d9a38d 1.569x; board #423 -> #217.
+
+## last round (router hi-only + verify32 knobs) on wl_v1 -- 2026-11-04, 3 checks, 0 Modal
+- candidate_last_v1 = wl_v1 + fused T<=8 router (gle_pr) streams BF16 hi only (FP32 x, FP32 acc; 4 MB less/step); 999,956 B.
+  check 9dc299859e674558: 2.270x (CI 2.236-2.304), 9.965 ms, 13/13 (expert selection OK). decode1 sl 66.1 (wl_v1 67.0/69.3),
+  decode1 full 73.6 (73.1/74.9), verify1 sl 112.7 (106.3/104.3, noisy), verify1 full 113.2 (115.1/117.6). Router gain within noise;
+  decode32 full 275.5 vs 294.7/300.3 is unrelated noise (path untouched).
+- candidate_last_v2 = last_v1 + PDL_MAX_T 128->256. check 0671ff624368403a: 2.260x (2.226-2.294), 10.01 ms, 13/13.
+  verify32 sl 308.6 / full 474.8 (wl_v1 312.4/305.8, 477.4/481.8): flat within noise.
+- candidate_last_v3 = last_v2 + _TUNED7 (32,8,False,1) nc=4. check 8e632ac563004b08: 2.240x, 13/13. verify32 sl 314.6 / full 479.9: no gain.
+Verdict: last_v1 2.270x nominally > live 2.2556x but CI overlaps; single-check gain is noise-level. No submit (not asked).
+
+## 2026-11-04 att_v1/v2 (_TUNED7 decode q1 sliding splits)
+- att_v1: B32 sl n14, B16 sl n12. att_v2: B32 sl n16, B16 sl n10. vs last_v1 9dc29985 (2.270x; d16sl 122.0, d32sl 143.9).
+- v1: d16sl 123.0 (+1.0), d32sl 143.9 (0). v2: d16sl 127.8 (+5.8), d32sl 148.4 (+4.5). No gain; keep n12 / default. Untouched d32 full drifted +13-23 us (noise).
+- jobs: att_v1 83340f2348a4424d 2.273x (9953.5 us); att_v2 70db6aae83104419 (10.12 ms).
+
+## proj round (PCX/GLE_RC/EARLY on last_v1) -- 2026-11-04, 2 checks, 0 Modal, NO-GO
+- candidate_proj_v1 = last_v1 + PCX o@T128 P3, qkv@T128 P1, o@T32 P3. check 538f65602c444c5b: 2.252x (2.218-2.286), 13/13.
+  verify16 (T128) sl/full 243.6/328.7 vs base 245.5/329.2; decode32 sl/full 146.9/292.1 vs 143.9/275.5 (noise). Flat.
+- candidate_proj_v2 = last_v1 + PCX o@T128 P4, qkv@T16 P1, GLE_RC {1:32}, EARLY T in (16,32). check 99340bf808344241: 2.246x (2.213-2.280), 13/13.
+  decode16 sl 126.7 vs 122.0 (worse), decode1 67.5/73.9 vs 66.1/73.6 (flat). Reject.
+Verdict: both below base 2.270x (9dc299859e674558), within noise. Projection config space exhausted.
+
+## T>8 router hi-only + T8 MID on last_v1 -- 2026-11-04, 2 checks, 0 Modal
+- candidate_last_v4 = last_v1 + fused pooler+router (sk2f, T16/T32) streams only the BF16 hi tiles (WBYR 2048->1024/warp,
+  lo MMA dropped; hi-only stream sliced from the hi|lo router stream). 999,747 B. check 8050c3db5d8f41b6: 2.260x (2.227-2.294), 13/13.
+  Fused kernel 17.7/17.1 (T16), 20.5/21.0 (T32) vs last_v1 18.4/17.4, 21.8/20.4 and 18.3/17.7, 20.8/20.4: ~-0.4 us/load, within noise.
+- No other T>8 lo/hi reads on scored loads: standalone sk2/wide/gemm router routes only in tune/fallback; pr hi|lo cat only at T128/256 (unscored).
+- candidate_last_v5 = last_v4 + MOE_TINY2_MAX_M 4 (T8 MID build). 999,780 B. check 3ac50dd3403141ca: 2.268x (2.234-2.302), 9.973 ms, 13/13.
+  verify1 sl 99.0 / full 101.6 (v4 105.8/114.0, last_v1 112.7/113.2): real T8 win; T16/32 loads flat/noisy.
+Verdict: last_v5 is ~ last_v1 (2.270x) overall within CI; best verify1. No submit (not asked).
+
+## moed round (TINY/TINY2 builds, decode T=1 / verify T=8) on last_v1 -- 2026-11-04, 3 checks, 0 Modal
+- moed_v1 (TINY_MAX_M 0: M<=8 on TINY2). fe17f74ddd0d45d3: 2.235x. decode1 65.3/74.6 (base 66.1/73.6), verify1 109.4/117.6. Flat.
+- moed_v2 (TINY WSBLK1+FINPF1; TINY2 NACC2). 5e98e53c0a054c10: 2.259x. decode1 67.0/73.5, verify1 101.0/107.6 (base 112.7/113.2, prior 104-117).
+- moed_v3 (TINY NACC2; TINY2 NACC2). 6d202b5104494c4f: 2.249x. decode1 67.0/74.0, verify1 103.0/109.1.
+Verdict: TINY2 NACC2 maybe -3..5% on verify1 (2 checks agree) but within run-to-run spread; overall flat vs 2.270x base. No nsm grid knob tried (grid=nsm hard-passed; >nsm risks coop hang).
+
+## brain round (per-load roofline on last_v5 3ac50dd3) -- 2026-11-04, 2 checks, 0 Modal, NO-GO
+Model (4.0 TB/s): qkv 37.7 MB=9.4us, o 16.8 MB=4.2us, pooler+router(hi) 71 MB=17.8us, KV full 20.5 MB/seq (B32: 164us), 1 local expert 28 MB=7us.
+At roofline: oq qkv 9.6, sk2_gle 17.2, full attn B32 170 (decode) / 187 (verify), MoE T256 200 (~32 experts 906 MB).
+Largest gaps: moe_fused decode1 29.7 sl / 22.0 fl vs ~7us ideal (~15-23us, x46 sliding); moe dec32 sl 74 + router/glue (sl dec32 146 vs sol 84.5, -62us).
+T16/T32 MoE knobs already NO-GO; untested lever was the M=1 build choice.
+- brain_v1 = last_v5 + MOE_TINY_MAX_M 4->0 (M=1 -> TINY2). check 8d6c54a3fe854630: 2.248x (2.214-2.281), 10.06 ms, 13/13. dec1 67.0/73.1 (v5 67.6/74.1), moe 29.7/29.1: flat.
+- brain_v2 = + TINY2_MAX_M 0 (M<=8 -> MID). check 690f93c4450b4f58: 2.234x (2.200-2.267), 13/13. moe dec1 sl 22.9 (-6.8) but fl 28.9 (+6.9); verify1 104.3/116.6 (v5 99.0/101.6): worse.
+Verdict: decode1 MoE time is routing-dependent (expert count), not build-dependent. Keep last_v5.
+
+## disp round (moe_fused per-T build choice) on last_v5 -- 2026-11-04, 3 checks, 0 Modal, NO-GO
+- Map: T1 TINY (already), T8 MID, T16 MID, T32 B4FIN, T128/T256 main. vs 3ac50dd3403141ca (2.268x).
+- candidate_disp_v1 = MID_MAX_M 32 (T32 -> MID). aa2fce0d4dbd49e9: 2.237x. decode32 sl 160.2 (+13.8), full 312.3 (+17.4). Worse.
+- candidate_disp_v2 = MID_MAX_M 8, B4FIN at 8<M<=32 (T16 -> B4). 9ebb124b1c834408: 2.253x. decode16 sl 122.6 (-2.4), full 205.2 (+0.7). Flat.
+- candidate_disp_v3 = B4FIN widened to M<=128. 7da02b66fc1d4a87: setup fail, "B4FIN build is for M <= 32" (hard kernel limit).
+Verdict: current per-T dispatch already optimal among existing builds; keep last_v5.
+
+## v8 round (M=8 MID variant + B1 q8 attention) on last_v5 -- 2026-11-04, 2 checks, 0 Modal, NO-GO
+- candidate_v8_v1 = last_v5 + own M=8 MID build (key "mid8", WSBLK 3->2) + _TUNED7 (1,8,False,1) n252 nc8 coop1. 999,598 B.
+  check a84f87a95ea34dc3: 2.253x (2.220-2.287), 13/13. verify1 sl/full 106.9/113.2 vs base 3ac50dd3 99.0/101.6 (worse); decode1 66.8/73.3 (flat).
+- candidate_v8_v2 = last_v5 + own M=8 MID build with -DOKC_NS=4 (WSBLK 3 kept), no attention change. 999,499 B.
+  check f551d0ad12764461: 2.230x (2.196-2.263), 13/13. verify1 109.1/115.7 (worse); decode1 68.3/73.8 (flat).
+Verdict: both below base; base's 99/102 verify1 may be partly lucky. Third check skipped (1 check/day left). Keep last_v5.
+
+## mid_v1 (MID moe at T128/T256) -- 2026-11-04, 1 check, 0 Modal
+- MID capped at M<=16 by DF sentinel rows (INTER_SENT_ROWS 128 = M*8). candidate_mid_v1 = last_v5 + non-DF MID ("@moe_helper0") for M in {128,256}, DF sentinel refilled after each launch. 999,957 B.
+- check bbe0c99f236945c6: 1.943x, 13/13. verify16 sl/full 339.1/425.0 (base 3ac50dd3 243.7/329.4); verify32 547.5/712.3 (312.0/487.8). Large regression: SPLIT re-streams weights per <=SK_T job + refill. Dead; keep main at T128/T256.
+
+## stack_v1 (2026-11-04)
+- candidate_stack_v1 = last_v5 + disp_v2 (T16 -> B4FIN, MOE_MID_MAX_M 8) + MID NACC 2 (TINY2 NACC 2 dead: TINY catches M<=4 first). 999,832 B.
+- check e922ebc01da84d38: 2.245x (2.212-2.279), 10.07 ms, 13/13. vs 3ac50dd3403141ca 2.268x -> no-go.
+- Per-load us (v5 -> stack): verify1 sl 99.0->104.4, full 101.6->109.4 (MID NACC2 hurts T8); decode16 sl 125.0->129.3, full 204.5->208.0 (B4FIN at T16 hurts). Others differ only by noise (same code path).
+- Modal paired A/B (stack_v.json in scratchpad, wl_sweep on last_v5, ts 8,16) was blocked by permission; not run.
+
+## xf wave 2026-11-04 late (base candidate_xf_wsblk3, MOE_MID WSBLK=3)
+- xf check a17949472d134dc0: 2.268x, 9974.9us, 13/13 -> submitted 4f006c820954441e: 2.258x, 10.02ms. Board entry now xf.
+- Wave1 checks (13/13 all, none submitted): xa GLE32 2.244, xb GLE8 2.236, xc SLCL8 2.237, xd q8s12 2.238, xe d16s12 2.232, xg GATHB4 2.215, xh PDL_N3 2.255.
+- Wave2 checks (13/13 all, none submitted): y1 WSBLK4 2.234, y2 WS+GLE32 2.249, y3 PCXpool32 2.253, y4 PCXun32 2.241, y5 q8s8 2.229, y6 FINPF0 2.246, y7 NACC8 2.257; xs WSBLK3+PDL3 2.236.
+- Wave3 Modal pairs vs xf (no okc left): z1 PCXrouter32P6 mixed 0.9965-1.0041; z2 GLE_RC24 prepare-fail (arange pow2); z3 SLtile parts2 mostly <1; z4 ns264 mixed; z5 PCXo32P6 mixed; z6 SLroute8 mixed. No submit.
