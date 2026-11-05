@@ -1,5 +1,5 @@
 okc run 3e54097dbc934eba on muse_decode_layer
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/candidate_pack_gqa.py
+submission  <repo>/muse_decode_layer/candidate_pack_gqa.py
 status      ok
 passed      true
 speedup     1.2468500618991738

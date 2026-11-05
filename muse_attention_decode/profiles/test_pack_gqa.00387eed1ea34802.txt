@@ -1,5 +1,5 @@
 okc run 00387eed1ea34802 on muse_attention_decode
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_decode/test_pack_gqa.py
+submission  <repo>/muse_attention_decode/test_pack_gqa.py
 status      ok
 passed      true
 speedup     1.1243971636832457

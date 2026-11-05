@@ -1,15 +1,15 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-uVa9aO0F17EtOr1fO6Ai04
+https://modal.com/apps/<workspace>/main/ap-uVa9aO0F17EtOr1fO6Ai04
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/re
+│   <repo>/muse_moe_w4a16/re
 │   search/modal_whole_routes.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/research_harness
+│   <repo>/research_harness
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer
+│   <repo>/muse_decode_layer
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16
+│   <repo>/muse_moe_w4a16
 ├── ✓ Created Function compile_frontend.
 └── ✓ Created Function compare_actual_routes.
 zip build 0.8s
@@ -70,4 +70,4 @@ ACTUAL_PAIRED {"baseline_us": 315.5039995908737, "candidate_us": 279.42399680614
 ACTUAL_REPORT /cache/moe_probe_reports/1793166977828940423_whole_routes.json
 Stopping app - local entrypoint completed.
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-uVa9aO0F17EtOr1fO6Ai04
+https://modal.com/apps/<workspace>/main/ap-uVa9aO0F17EtOr1fO6Ai04

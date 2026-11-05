@@ -1,26 +1,26 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-ApdExlLDgwo1XSrD7Oxhel
+https://modal.com/apps/<workspace>/main/ap-ApdExlLDgwo1XSrD7Oxhel
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/modal_v75_precision.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/checks.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/reference.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_v75_f16pv.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_v75.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_attention.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/research_harness
+│   <repo>/research_harness
 └── ✓ Created Function validate.
 V75_PREBUILT ['current', 'conservative', 'research']
 V75_NATIVE_DISPATCH {"variant": "current", "flags": 262212, "var": -2, "fp8_pv": false}
@@ -215,4 +215,4 @@ V75_TARGET_CHECK {"seed": 19391, "batch": 32, "dist": "edges", "kv_scale": 0.015
 V75_TARGET_DIFF {"seed": 19391, "batch": 32, "dist": "edges", "kv_scale": 0.015625, "fp8_vs_f16_l2": 0.013502269983291626, "worst_head_l2": 0.05979298800230026, "dtype": "torch.bfloat16"}
 V75_TARGET_DONE
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-ApdExlLDgwo1XSrD7Oxhel
+https://modal.com/apps/<workspace>/main/ap-ApdExlLDgwo1XSrD7Oxhel

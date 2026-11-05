@@ -1,5 +1,5 @@
 okc run 2bf4a75085d34a6d on muse_prefill_layer
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_layer/test_tuned_prefill.py
+submission  <repo>/muse_prefill_layer/test_tuned_prefill.py
 status      ok
 passed      true
 speedup     0.9974900192579095

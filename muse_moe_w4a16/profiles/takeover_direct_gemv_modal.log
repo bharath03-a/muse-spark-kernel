@@ -1,11 +1,11 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-hlY7d6GsoQPWCstpRI9cJA
+https://modal.com/apps/<workspace>/main/ap-hlY7d6GsoQPWCstpRI9cJA
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/mo
+│   <repo>/muse_moe_w4a16/mo
 │   dal_probe.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16
+│   <repo>/muse_moe_w4a16
 └── ✓ Created Function probe.
 seed 7 check (True, 'relative L2 error 5.462e-03 (worst row 5.462e-03)')
 two_GEMV_graph_us 439.61599469184875 includes graph overhead
@@ -15,4 +15,4 @@ seed 27 check (True, 'relative L2 error 5.393e-03 (worst row 5.393e-03)')
 two_GEMV_graph_us 570.3359842300415 includes graph overhead
 Stopping app - local entrypoint completed.
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-hlY7d6GsoQPWCstpRI9cJA
+https://modal.com/apps/<workspace>/main/ap-hlY7d6GsoQPWCstpRI9cJA

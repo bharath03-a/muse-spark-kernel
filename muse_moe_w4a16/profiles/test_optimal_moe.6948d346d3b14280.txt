@@ -1,5 +1,5 @@
 okc run 6948d346d3b14280 on muse_moe_w4a16
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/test_optimal_moe.py
+submission  <repo>/muse_moe_w4a16/test_optimal_moe.py
 status      ok
 passed      true
 speedup     1.2153054737595765

@@ -845,7 +845,7 @@
       "report": "kernel                                                           GPU time  share  calls\nvoid sglang::device::marlin_moe::Marlin\u003c__nv_bfloat16, 56...   10490.0 µs  42.1%      2\nvoid cutlass::device_kernel\u003cflash::enable_sm90_or_later\u003cf...    8347.3 µs  33.5%      1\nnvjet_sm90_tst_192x192_64x3_2x1_v_bz_coopB_NNN                  2572.4 µs  10.3%      3\nnvjet_sm90_tst_320x128_64x3_1x2_h_bz_coopB_NNT                  1482.3 µs   6.0%      1\nvoid sglang::muse_spark_norm_residual_kernel\u003c8192l, 512, ...     410.2 µs   1.6%      1\nvoid sglang::muse_spark_norm_residual_kernel\u003c8192l, 512, ...     406.7 µs   1.6%      1\nnvjet_sm90_tss_128x256_64x4_2x1_v_bz_coopA_NNN                   310.5 µs   1.2%      2\nvoid sglang::act_and_mul_kernel\u003c__nv_bfloat16, (sglang::A...     283.0 µs   1.1%      1\n_fused_prepare_kv_kernel                                         179.1 µs   0.7%      1\n_post_expert_norm_weighted_sum_kernel                            116.4 µs   0.5%      1\n_fast_pre_expert_norm_kernel                                     107.2 µs   0.4%      1\nvoid count_and_sort_expert_tokens_kernel\u003cint\u003e(int const*,...      88.7 µs   0.4%      1\n... 10 more\ntotal                                                          24893.5 µs\nGPU busy (kernels overlap: PDL or streams)                     24580.9 µs\nan overlapping kernel's time includes any wait for the one before it, so the rows add up to more"
     }
   ],
-  "submission": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_layer/submission.py",
+  "submission": "<repo>/muse_prefill_layer/submission.py",
   "summary": {
     "error": null,
     "passed": true,

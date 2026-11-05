@@ -1,5 +1,5 @@
 okc run cda0b9bfe9eb49d5 on muse_decode_layer
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/test_no_sched.py
+submission  <repo>/muse_decode_layer/test_no_sched.py
 status      ok
 passed      true
 speedup     1.1927639852060758

@@ -1,23 +1,23 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-zogrEVqv1EGK7lR9QAMcbA
+https://modal.com/apps/<workspace>/main/ap-zogrEVqv1EGK7lR9QAMcbA
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/modal_bf16pv_compile.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_v75.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_fdeccontrol.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_fdecfast.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_pvcontrol.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_bf16pv.py
 ├── ✓ Created Function compile.
 ├── ✓ Created Function inspect_fa3_binary.
@@ -442,4 +442,4 @@ SASS_TYPE BF16.F32         /*9800*/                   F2FP.BF16.F32.PACK_AB R23,
 SASS_TYPE BF16.F32         /*9810*/                   F2FP.BF16.F32.PACK_AB R49, R49, R50 ;                                     /* 0x000000323131723e */
 SASS_TYPE BF16.F32         /*9820*/                   F2FP.BF16.F32.PACK_AB R25, R25, R26 ;                                     /* 0x0000001a1919723e */
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-zogrEVqv1EGK7lR9QAMcbA
+https://modal.com/apps/<workspace>/main/ap-zogrEVqv1EGK7lR9QAMcbA

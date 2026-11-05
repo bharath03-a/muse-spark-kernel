@@ -1,5 +1,5 @@
 okc run 82ccf4fc000948b6 on muse_attention_decode
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_decode/probe_gather_ceiling.py
+submission  <repo>/muse_attention_decode/probe_gather_ceiling.py
 status      ok
 passed      true
 speedup     1.9388539918232701

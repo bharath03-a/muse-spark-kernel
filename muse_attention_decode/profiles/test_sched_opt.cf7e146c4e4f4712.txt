@@ -1,5 +1,5 @@
 okc run cf7e146c4e4f4712 on muse_attention_decode
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_decode/test_sched_opt.py
+submission  <repo>/muse_attention_decode/test_sched_opt.py
 status      ok
 passed      true
 speedup     1.1230428413594562

@@ -1,52 +1,52 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-j2SX4OI317jM7p6OHprnkf
+https://modal.com/apps/<workspace>/main/ap-j2SX4OI317jM7p6OHprnkf
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/modal_research_co
+│   <repo>/modal_research_co
 │   mpile.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_laye
+│   <repo>/muse_prefill_laye
 │   r/research_prefill_w13_fused.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/research_harness
+│   <repo>/research_harness
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_laye
+│   <repo>/muse_prefill_laye
 │   r/candidate_openkernels_prefill_bf16_gate.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_laye
+│   <repo>/muse_prefill_laye
 │   r/research_prefill_full_bf16.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/re
+│   <repo>/muse_moe_w4a16/re
 │   search_moe_full_bf16_gk.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/re
+│   <repo>/muse_moe_w4a16/re
 │   search_moe_full_bf16.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_attention_interior.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/re
+│   <repo>/muse_moe_w4a16/re
 │   search_g1_strict_backend.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/nv
+│   <repo>/muse_moe_w4a16/nv
 │   fp4.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/re
+│   <repo>/muse_moe_w4a16/re
 │   ference.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/submission.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/reference.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/checks.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/ca
+│   <repo>/muse_moe_w4a16/ca
 │   ndidate_openkernels_moe.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_attention.py
 ├── ✓ Created Function compile_sources.
 ├── ✓ Created Function probe_attention.
@@ -70,4 +70,4 @@ W13_FUSED_CHECK 16384 1 (True, 'relative L2 error 8.034e-12 (worst row 2.443e-10
 W13_PAIRED_JSON {"seed": 8209, "rows": 16384, "wide": 1, "baseline_us": 1754.9600005149841, "candidate_us": 1734.0319752693176, "paired_candidate_us": 1733.5824342440326, "speedup": 1.012331439133596, "speedup_ci95": [0.9971464675465921, 1.0275164107205998], "decision": "inconclusive", "replay_overhead_us": 0.0, "samples": [{"order": ["baseline", "candidate"], "baseline_us": 1729.151964187622, "candidate_us": 1688.9280080795288}, {"order": ["candidate", "baseline"], "candidate_us": 1688.0320310592651, "baseline_us": 1729.9200296401978}, {"order": ["baseline", "candidate"], "baseline_us": 1727.3600101470947, "candidate_us": 1687.2320175170898}, {"order": ["candidate", "baseline"], "candidate_us": 1683.1680536270142, "baseline_us": 1731.3920259475708}, {"order": ["baseline", "candidate"], "baseline_us": 1729.151964187622, "candidate_us": 1687.4239444732666}, {"order": ["candidate", "baseline"], "candidate_us": 1689.2160177230835, "baseline_us": 1726.4000177383423}, {"order": ["baseline", "candidate"], "baseline_us": 1732.1280241012573, "candidate_us": 1686.1120462417603}, {"order": ["candidate", "baseline"], "candidate_us": 1687.2960329055786, "baseline_us": 1734.5279455184937}, {"order": ["baseline", "candidate"], "baseline_us": 1742.9440021514893, "candidate_us": 1709.663987159729}, {"order": ["candidate", "baseline"], "candidate_us": 1708.9600563049316, "baseline_us": 1742.303967475891}, {"order": ["baseline", "candidate"], "baseline_us": 1741.6640520095825, "candidate_us": 1709.887981414795}, {"order": ["candidate", "baseline"], "candidate_us": 1708.191990852356, "baseline_us": 1757.8879594802856}, {"order": ["baseline", "candidate"], "baseline_us": 1756.8000555038452, "candidate_us": 1740.8640384674072}, {"order": ["candidate", "baseline"], "candidate_us": 1734.2400550842285, "baseline_us": 1753.3440589904785}, {"order": ["baseline", "candidate"], "baseline_us": 1759.6479654312134, "candidate_us": 1741.152048110962}, {"order": ["candidate", "baseline"], "candidate_us": 1738.592028617859, "baseline_us": 1756.6399574279785}, {"order": ["baseline", "candidate"], "baseline_us": 1754.0160417556763, "candidate_us": 1740.5439615249634}, {"order": ["candidate", "baseline"], "candidate_us": 1737.023949623108, "baseline_us": 1757.696032524109}, {"order": ["baseline", "candidate"], "baseline_us": 1754.7520399093628, "candidate_us": 1744.8960542678833}, {"order": ["candidate", "baseline"], "candidate_us": 1740.447998046875, "baseline_us": 1756.5759420394897}, {"order": ["baseline", "candidate"], "baseline_us": 1754.9760341644287, "candidate_us": 1736.191987991333}, {"order": ["candidate", "baseline"], "candidate_us": 1741.4400577545166, "baseline_us": 1755.9360265731812}, {"order": ["baseline", "candidate"], "baseline_us": 1756.160020828247, "candidate_us": 1735.1679801940918}, {"order": ["candidate", "baseline"], "candidate_us": 1731.071949005127, "baseline_us": 1755.6480169296265}, {"order": ["baseline", "candidate"], "baseline_us": 1751.744031906128, "candidate_us": 1739.6160364151}, {"order": ["candidate", "baseline"], "candidate_us": 1731.4239740371704, "baseline_us": 1757.5360536575317}, {"order": ["baseline", "candidate"], "baseline_us": 1755.2319765090942, "candidate_us": 1733.855962753296}, {"order": ["candidate", "baseline"], "candidate_us": 1733.1199645996094, "baseline_us": 1754.080057144165}, {"order": ["baseline", "candidate"], "baseline_us": 1759.4879865646362, "candidate_us": 1734.2079877853394}, {"order": ["candidate", "baseline"], "candidate_us": 1731.1680316925049, "baseline_us": 1755.1360130310059}, {"order": ["baseline", "candidate"], "baseline_us": 1756.4480304718018, "candidate_us": 1738.752007484436}, {"order": ["candidate", "baseline"], "candidate_us": 1737.5359535217285, "baseline_us": 1756.8000555038452}, {"order": ["baseline", "candidate"], "baseline_us": 1756.8000555038452, "candidate_us": 1735.8720302581787}, {"order": ["candidate", "baseline"], "candidate_us": 1732.640027999878, "baseline_us": 1754.2719841003418}, {"order": ["baseline", "candidate"], "baseline_us": 1754.9439668655396, "candidate_us": 1734.6880435943604}, {"order": ["candidate", "baseline"], "candidate_us": 1736.5119457244873, "baseline_us": 1755.5840015411377}, {"order": ["baseline", "candidate"], "baseline_us": 1756.4480304718018, "candidate_us": 1735.2639436721802}, {"order": ["candidate", "baseline"], "candidate_us": 1732.7359914779663, "baseline_us": 1754.5280456542969}, {"order": ["baseline", "candidate"], "baseline_us": 1754.7839879989624, "candidate_us": 1731.3599586486816}, {"order": ["candidate", "baseline"], "candidate_us": 1734.7840070724487, "baseline_us": 1759.1999769210815}], "environment": {"gpu": "NVIDIA H200", "capability": [9, 0], "total_memory": 150101688320, "torch": "2.14.1+cu130", "cuda": "13.0"}}
 Stopping app - local entrypoint completed.
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-j2SX4OI317jM7p6OHprnkf
+https://modal.com/apps/<workspace>/main/ap-j2SX4OI317jM7p6OHprnkf

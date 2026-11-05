@@ -10,12 +10,12 @@
   "id": "b1391aaca54b4ba9",
   "mode": "check",
   "output": {
-    "log": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/bench/profiles/top50_candidate_token_warpgroups.b1391aaca54b4ba9.log"
+    "log": "<repo>/muse_bf16_proj/bench/profiles/top50_candidate_token_warpgroups.b1391aaca54b4ba9.log"
   },
   "payload_ref": "muse_bf16_proj/5c6642c2d16c67fd345686b833a679275f1a4f09f3a54dfb993b3b6b446179d4.py",
   "profile": {
-    "json": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/bench/profiles/top50_candidate_token_warpgroups.b1391aaca54b4ba9.json",
-    "text": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/bench/profiles/top50_candidate_token_warpgroups.b1391aaca54b4ba9.txt"
+    "json": "<repo>/muse_bf16_proj/bench/profiles/top50_candidate_token_warpgroups.b1391aaca54b4ba9.json",
+    "text": "<repo>/muse_bf16_proj/bench/profiles/top50_candidate_token_warpgroups.b1391aaca54b4ba9.txt"
   },
   "result": {
     "baseline_us": 4830.8,

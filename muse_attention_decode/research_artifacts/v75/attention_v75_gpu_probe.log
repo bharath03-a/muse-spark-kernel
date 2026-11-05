@@ -1,26 +1,26 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-uYNRRMsas0UsutYZZ4ujnA
+https://modal.com/apps/<workspace>/main/ap-uYNRRMsas0UsutYZZ4ujnA
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/modal_v75_probe.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/checks.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/reference.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_v75.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_v75_f16pv.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_attention.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/research_harness
+│   <repo>/research_harness
 └── ✓ Created Function probe.
 V75_PREBUILT ['current', 'conservative']
 V75_CHECK {"seed": 1471, "index": 0, "variant": "current", "passed": true, "message": "relative L2 error 2.306e-03 (worst row 2.306e-03) [bound 0.138: 2.5 x the reference's 0.049 with FP8 E4M3 queries + 0.015]"}
@@ -154,4 +154,4 @@ V75_STRESS {"q_len": 8, "replays": 200, "variants": ["current", "conservative"],
 V75_DONE
 Stopping app - local entrypoint completed.
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-uYNRRMsas0UsutYZZ4ujnA
+https://modal.com/apps/<workspace>/main/ap-uYNRRMsas0UsutYZZ4ujnA

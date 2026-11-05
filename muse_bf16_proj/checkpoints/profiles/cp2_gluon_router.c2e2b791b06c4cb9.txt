@@ -1,5 +1,5 @@
 okc run c2e2b791b06c4cb9 on muse_bf16_proj
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/checkpoints/cp2_gluon_router.py
+submission  <repo>/muse_bf16_proj/checkpoints/cp2_gluon_router.py
 status      ok
 passed      true
 speedup     1.261473071930085

@@ -41,7 +41,7 @@ Whole decoder SOFT changes attention-key distribution; agentic changes context l
 
 A future GPU-side route-dependent dispatch could use the existing routing histogram, but must include its cost, preserve full routing, avoid host item synchronization, and account for unequal CTA paths/barriers. Prefer proving a shape-only region first.
 
-Run https://modal.com/apps/bharathvelamala1929/main/ap-ELPiJ6icjAIMpjDs3butTo ; local log `/tmp/moe_wx52_gpu.log`; raw samples/environment in `profiles/research_wx52_gpu.json`.
+Run https://modal.com/apps/<workspace>/main/ap-ELPiJ6icjAIMpjDs3butTo ; local log `/tmp/moe_wx52_gpu.log`; raw samples/environment in `profiles/research_wx52_gpu.json`.
 
 SOURCE_SHA256 baseline b8d304a841189a8e382f6a8af402b1bdbdbbcb43167c9a70578aa66172912a9f
 SOURCE_SHA256 research_moe_latest_wx_strict fee01dd845016a961c9edad8166edb3ce381b7806680777540213da90c07343e

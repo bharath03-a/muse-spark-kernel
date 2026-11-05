@@ -1,11 +1,11 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-HMMv61Kjk5KLPAOyqaehGI
+https://modal.com/apps/<workspace>/main/ap-HMMv61Kjk5KLPAOyqaehGI
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/mo
+│   <repo>/muse_bf16_proj/mo
 │   dal_app.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj
+│   <repo>/muse_bf16_proj
 ├── ✓ Created Function env.
 ├── ✓ Created Function correct.
 ├── ✓ Created Function bench.
@@ -36,6 +36,6 @@ ROUTER_RAW_COLD_US m256 {'stacked512_mm_sum': 17.296, 'two256_mm_sum': 24.672, '
 router_stack total 1.70s
 Stopping app - local entrypoint completed.
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-HMMv61Kjk5KLPAOyqaehGI
+https://modal.com/apps/<workspace>/main/ap-HMMv61Kjk5KLPAOyqaehGI
 
 [gpu_q] top50 top50_router_stack: 49s, rc=0; budget used 1723/1800s

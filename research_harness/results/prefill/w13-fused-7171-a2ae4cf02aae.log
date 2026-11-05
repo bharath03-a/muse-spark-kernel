@@ -1,52 +1,52 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-FPqMvOLOhTyualQuKRaZjq
+https://modal.com/apps/<workspace>/main/ap-FPqMvOLOhTyualQuKRaZjq
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/modal_research_co
+│   <repo>/modal_research_co
 │   mpile.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_laye
+│   <repo>/muse_prefill_laye
 │   r/research_prefill_full_bf16.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_laye
+│   <repo>/muse_prefill_laye
 │   r/candidate_openkernels_prefill_bf16_gate.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/re
+│   <repo>/muse_moe_w4a16/re
 │   search_moe_full_bf16_gk.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_laye
+│   <repo>/muse_prefill_laye
 │   r/research_prefill_w13_fused.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/research_harness
+│   <repo>/research_harness
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/re
+│   <repo>/muse_moe_w4a16/re
 │   search_g1_strict_backend.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_attention_interior.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/re
+│   <repo>/muse_moe_w4a16/re
 │   search_moe_full_bf16.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/nv
+│   <repo>/muse_moe_w4a16/nv
 │   fp4.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/re
+│   <repo>/muse_moe_w4a16/re
 │   ference.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/submission.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/checks.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/reference.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/ca
+│   <repo>/muse_moe_w4a16/ca
 │   ndidate_openkernels_moe.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_attention.py
 ├── ✓ Created Function compile_sources.
 ├── ✓ Created Function probe_attention.

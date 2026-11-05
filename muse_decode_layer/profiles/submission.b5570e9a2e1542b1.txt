@@ -1,5 +1,5 @@
 okc run b5570e9a2e1542b1 on muse_decode_layer
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/submission.py
+submission  <repo>/muse_decode_layer/submission.py
 status      ok
 passed      true
 speedup     1.2016648076393737

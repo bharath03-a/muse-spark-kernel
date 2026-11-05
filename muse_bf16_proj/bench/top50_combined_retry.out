@@ -1,11 +1,11 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-rGSZMzdigebh6xvclZ9HJw
+https://modal.com/apps/<workspace>/main/ap-rGSZMzdigebh6xvclZ9HJw
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/mo
+│   <repo>/muse_bf16_proj/mo
 │   dal_app.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj
+│   <repo>/muse_bf16_proj
 ├── ✓ Created Function env.
 ├── ✓ Created Function correct.
 ├── ✓ Created Function bench.
@@ -68,6 +68,6 @@ RESULT torch_cublas raw_us 13.776 minus4_us 9.776
 FINISHED top50_large_pipeline elapsed 4.042550879
 Stopping app - local entrypoint completed.
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-rGSZMzdigebh6xvclZ9HJw
+https://modal.com/apps/<workspace>/main/ap-rGSZMzdigebh6xvclZ9HJw
 
 [gpu_q] top50 top50_combined: 74s, rc=0; budget used 1653/1800s

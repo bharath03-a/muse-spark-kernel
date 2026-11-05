@@ -5,7 +5,7 @@
       "id": "w13-fused-mixed-skewed",
       "hypothesis": "Fused W13 epilogue remains finite and correct on mixed mode2 and skewed uneven expert counts",
       "command": [
-        "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/.venv/bin/modal",
+        "<repo>/muse_bf16_proj/.venv/bin/modal",
         "run",
         "modal_research_compile.py::probe_w13_fused",
         "--seed",

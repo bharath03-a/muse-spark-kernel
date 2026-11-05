@@ -1,23 +1,23 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-2sWkjbSVtdI6jfzSHQbrsR
+https://modal.com/apps/<workspace>/main/ap-2sWkjbSVtdI6jfzSHQbrsR
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/modal_bf16pv_compile.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_v75.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_fdeccontrol.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_pvcontrol.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_fdecfast.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_bf16pv.py
 ├── ✓ Created Function inspect_fa3_baseline.
 ├── ✓ Created Function compile.
@@ -132,4 +132,4 @@ FDEC_CHAIN         /*efd0*/                   MUFU.EX2 R3, R8 ;                 
 FDEC_CHAIN         /*f160*/                   MUFU.EX2 R3, R3 ;                                             /* 0x0000000300037308 */
 FDEC_CHAIN         /*f2e0*/                   MUFU.EX2 R3, R8 ;                                             /* 0x0000000800037308 */
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-2sWkjbSVtdI6jfzSHQbrsR
+https://modal.com/apps/<workspace>/main/ap-2sWkjbSVtdI6jfzSHQbrsR

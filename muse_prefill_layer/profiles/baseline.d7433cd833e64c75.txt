@@ -1,5 +1,5 @@
 okc run d7433cd833e64c75 on muse_prefill_layer
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_layer/baseline.py
+submission  <repo>/muse_prefill_layer/baseline.py
 status      ok
 passed      true
 speedup     1.0005183807326972

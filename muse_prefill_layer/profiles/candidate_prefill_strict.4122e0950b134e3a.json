@@ -845,7 +845,7 @@
       "report": "kernel                                                           GPU time  share  calls\nvoid cutlass::device_kernel\u003cflash::enable_sm90_or_later\u003cf...    7610.8 µs  43.0%      1\nvoid w4g_k\u003c256, 2\u003e(P, CUtensorMap_st)                           4049.0 µs  22.9%      2\nnvjet_sm90_tst_256x128_64x4_1x2_h_bz_coopA_TNT                  1352.9 µs   7.6%      1\nnvjet_sm90_tst_168x128_64x5_1x2_h_bz_TNN                        1311.5 µs   7.4%      1\nnvjet_sm90_tst_192x192_64x4_2x1_v_bz_coopB_TNN                   766.9 µs   4.3%      1\nvoid resb\u003c256, 2\u003e(__nv_bfloat16 const*, float const*, __n...     574.8 µs   3.2%      1\nvoid w4g_k\u003c128, 4\u003e(P, CUtensorMap_st)                            484.2 µs   2.7%      2\nnvjet_sm90_tst_128x160_64x5_2x1_v_bz_NNT                         331.8 µs   1.9%      1\nvoid resa\u003c512, 2\u003e(__nv_bfloat16 const*, float const*, flo...     274.5 µs   1.6%      1\nnvjet_sm90_tss_256x128_64x4_1x2_h_bz_coopA_NNT                   261.9 µs   1.5%      1\nswiglu2(__nv_bfloat16 const*, int const*, __nv_bfloat16*)        188.8 µs   1.1%      1\ncomb(__nv_bfloat16 const*, int const*, int const*, float ...     143.9 µs   0.8%      1\n... 10 more\ntotal                                                          17704.2 µs"
     }
   ],
-  "submission": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_layer/candidate_prefill_strict.py",
+  "submission": "<repo>/muse_prefill_layer/candidate_prefill_strict.py",
   "summary": {
     "error": null,
     "passed": true,

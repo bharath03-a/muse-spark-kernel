@@ -1,5 +1,5 @@
 okc run 7a50c7bf7ca043e0 on muse_attention_decode
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_decode/candidate_openkernels_v75.py
+submission  <repo>/muse_attention_decode/candidate_openkernels_v75.py
 status      ok
 passed      true
 speedup     1.9714174054997717

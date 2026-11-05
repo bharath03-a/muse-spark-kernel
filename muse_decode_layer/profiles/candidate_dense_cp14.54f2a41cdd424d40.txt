@@ -1,5 +1,5 @@
 okc run 54f2a41cdd424d40 on muse_decode_layer
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/candidate_dense_cp14.py
+submission  <repo>/muse_decode_layer/candidate_dense_cp14.py
 status      ok
 passed      true
 speedup     1.3093944903578927

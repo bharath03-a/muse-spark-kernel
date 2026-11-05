@@ -1,5 +1,5 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-xgcDPpXUtUdl4eLslka1NE
+https://modal.com/apps/<workspace>/main/ap-xgcDPpXUtUdl4eLslka1NE
 ✓ Created objects.
 ├── ✓ Uploaded 
 │   /var/folders/dt/nf7j33w51gj7cv6bx6633tm40000gn/T/muse_router_cpu_upgtnvxd/mo
@@ -151,4 +151,4 @@ triton.compiler.errors.CompilationError: at 33:8:
 compile_only total 19s
 Stopping app - local entrypoint completed.
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-xgcDPpXUtUdl4eLslka1NE
+https://modal.com/apps/<workspace>/main/ap-xgcDPpXUtUdl4eLslka1NE

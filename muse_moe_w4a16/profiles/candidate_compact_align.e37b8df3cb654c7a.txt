@@ -1,5 +1,5 @@
 okc run e37b8df3cb654c7a on muse_moe_w4a16
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/candidate_compact_align.py
+submission  <repo>/muse_moe_w4a16/candidate_compact_align.py
 status      ok
 passed      true
 speedup     1.2427489530107552

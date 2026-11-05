@@ -2831,7 +2831,7 @@
       "report": "kernel                                                           GPU time  share  calls\nvoid sglang::device::marlin_moe::Marlin\u003c__nv_bfloat16, 56...     388.2 µs  94.4%      2\nvoid sglang::act_and_mul_kernel\u003c__nv_bfloat16, (sglang::A...       5.6 µs   1.4%      1\n_post_expert_norm_weighted_sum_kernel                              5.6 µs   1.4%      1\nvoid at::native::index_elementwise_kernel\u003c128, 4, at::nat...       3.4 µs   0.8%      1\nvoid at::native::unrolled_elementwise_kernel\u003cat::native::...       3.1 µs   0.7%      1\nvoid moe_align_block_size_kernel\u003cint\u003e(int const*, int*, i...       2.9 µs   0.7%      1\nvoid count_and_sort_expert_tokens_kernel\u003cint\u003e(int const*,...       2.4 µs   0.6%      1\ntotal                                                            411.1 µs"
     }
   ],
-  "submission": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/test_optimal_moe.py",
+  "submission": "<repo>/muse_moe_w4a16/test_optimal_moe.py",
   "summary": {
     "error": null,
     "passed": true,

@@ -845,7 +845,7 @@
       "report": "kernel                                                           GPU time  share  calls\nvoid sglang::device::marlin_moe::Marlin\u003c__nv_bfloat16, 56...   11697.2 µs  45.3%      2\nvoid cutlass::device_kernel\u003cflash::enable_sm90_or_later\u003cf...    8175.2 µs  31.7%      1\nnvjet_sm90_tst_192x192_64x3_2x1_v_bz_coopB_NNN                  2566.5 µs   9.9%      3\nnvjet_sm90_tst_320x128_64x3_1x2_h_bz_coopB_NNT                  1388.6 µs   5.4%      1\nvoid sglang::muse_spark_norm_residual_kernel\u003c8192l, 512, ...     398.2 µs   1.5%      1\nvoid sglang::muse_spark_norm_residual_kernel\u003c8192l, 512, ...     396.6 µs   1.5%      1\nnvjet_sm90_tss_128x256_64x4_2x1_v_bz_coopA_NNN                   311.3 µs   1.2%      2\nvoid sglang::act_and_mul_kernel\u003c__nv_bfloat16, (sglang::A...     291.8 µs   1.1%      1\n_fused_prepare_kv_kernel                                         178.6 µs   0.7%      1\n_post_expert_norm_weighted_sum_kernel                            123.7 µs   0.5%      1\n_fast_pre_expert_norm_kernel                                      98.8 µs   0.4%      1\nvoid count_and_sort_expert_tokens_kernel\u003cint\u003e(int const*,...      87.6 µs   0.3%      1\n... 11 more\ntotal                                                          25807.6 µs"
     }
   ],
-  "submission": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_layer/test_prefill_opt_v2.py",
+  "submission": "<repo>/muse_prefill_layer/test_prefill_opt_v2.py",
   "summary": {
     "error": null,
     "passed": true,

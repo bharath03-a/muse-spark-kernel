@@ -2831,7 +2831,7 @@
       "report": "kernel                                                           GPU time  share  calls\nmoe_x(P)                                                         211.1 µs  94.9%      1\nxgather(__nv_bfloat16 const*, int const*, int, int, unsig...      11.3 µs   5.1%      1\ntotal                                                            222.4 µs"
     }
   ],
-  "submission": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/research_moe_v56_strict.py",
+  "submission": "<repo>/muse_moe_w4a16/research_moe_v56_strict.py",
   "summary": {
     "error": null,
     "passed": true,

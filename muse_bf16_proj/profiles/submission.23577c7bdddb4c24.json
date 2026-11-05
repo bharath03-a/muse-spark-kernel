@@ -9335,7 +9335,7 @@
       "report": "kernel                                                           GPU time  share  calls\nsm80_xmma_gemm_f32f32_f32f32_f32_tn_n_tilesize64x64x8_sta...      32.1 µs  72.9%      1\nvoid at::native::unrolled_elementwise_kernel\u003cat::native::...       6.0 µs  13.7%      1\nsm80_xmma_gemm_f32f32_f32f32_f32_tn_n_tilesize64x64x8_sta...       5.9 µs  13.4%      1\ntotal                                                             44.1 µs"
     }
   ],
-  "submission": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/submission.py",
+  "submission": "<repo>/muse_bf16_proj/submission.py",
   "summary": {
     "error": null,
     "passed": true,

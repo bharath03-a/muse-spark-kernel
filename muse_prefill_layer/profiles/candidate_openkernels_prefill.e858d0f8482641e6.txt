@@ -1,5 +1,5 @@
 okc run e858d0f8482641e6 on muse_prefill_layer
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_layer/candidate_openkernels_prefill.py
+submission  <repo>/muse_prefill_layer/candidate_openkernels_prefill.py
 status      ok
 passed      true
 speedup     1.3857075873302926

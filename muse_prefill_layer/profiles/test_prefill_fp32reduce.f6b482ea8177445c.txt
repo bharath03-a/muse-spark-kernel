@@ -1,5 +1,5 @@
 okc run f6b482ea8177445c on muse_prefill_layer
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_layer/test_prefill_fp32reduce.py
+submission  <repo>/muse_prefill_layer/test_prefill_fp32reduce.py
 status      ok
 passed      true
 speedup     0.9922152751342915

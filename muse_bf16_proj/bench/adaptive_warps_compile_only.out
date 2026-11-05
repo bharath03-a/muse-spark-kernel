@@ -1,5 +1,5 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-ZmyW5bNzAh9JQ98Z2cIo8w
+https://modal.com/apps/<workspace>/main/ap-ZmyW5bNzAh9JQ98Z2cIo8w
 ✓ Created objects.
 ├── ✓ Uploaded 
 │   /var/folders/dt/nf7j33w51gj7cv6bx6633tm40000gn/T/muse_cpu_cw_wqqr7an6/modal_
@@ -3302,4 +3302,4 @@ $L__tmp3:
 compile_only total 9s
 Stopping app - local entrypoint completed.
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-ZmyW5bNzAh9JQ98Z2cIo8w
+https://modal.com/apps/<workspace>/main/ap-ZmyW5bNzAh9JQ98Z2cIo8w

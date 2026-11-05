@@ -1,5 +1,5 @@
 okc run 5a552622d52f4677 on muse_prefill_layer
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_layer/test_prefill_m32.py
+submission  <repo>/muse_prefill_layer/test_prefill_m32.py
 status      ok
 passed      true
 speedup     0.978312748427227

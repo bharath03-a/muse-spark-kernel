@@ -3853,7 +3853,7 @@
       "report": "kernel                                                           GPU time  share  calls\nvoid attnp\u003c2, 131396\u003e(A, WF)                                     248.9 µs 100.0%      1\ntotal                                                            248.9 µs"
     }
   ],
-  "submission": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_decode/candidate_openkernels_v75_f16pv.py",
+  "submission": "<repo>/muse_attention_decode/candidate_openkernels_v75_f16pv.py",
   "summary": {
     "error": null,
     "passed": true,

@@ -1,20 +1,20 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-8Y1gbn70Y5V4m8fUeLG2Lw
+https://modal.com/apps/<workspace>/main/ap-8Y1gbn70Y5V4m8fUeLG2Lw
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_laye
+│   <repo>/muse_prefill_laye
 │   r/research/modal_grid_constant_cpu.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_laye
+│   <repo>/muse_prefill_laye
 │   r/nvfp4.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_laye
+│   <repo>/muse_prefill_laye
 │   r/candidate_prefill_w13_mixed.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_laye
+│   <repo>/muse_prefill_laye
 │   r/candidate_prefill_grid_constant.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/research_harness
+│   <repo>/research_harness
 ├── ✓ Created Function compare.
 └── ✓ Created Function probe.
 GRID_CHECK 8181 1001 False 0 finite_bitidentical
@@ -56,4 +56,4 @@ GRID_PAIRED {"seed": 8183, "rows": 16385, "skew": true, "mode": 1, "baseline_us"
 GRID_GPU_SECONDS 3.4627018460000016
 Stopping app - local entrypoint completed.
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-8Y1gbn70Y5V4m8fUeLG2Lw
+https://modal.com/apps/<workspace>/main/ap-8Y1gbn70Y5V4m8fUeLG2Lw

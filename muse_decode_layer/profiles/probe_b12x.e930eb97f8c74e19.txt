@@ -1,5 +1,5 @@
 okc run e930eb97f8c74e19 on muse_decode_layer
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/probe_b12x.py
+submission  <repo>/muse_decode_layer/probe_b12x.py
 status      ok
 passed      true
 speedup     0.998211833714659

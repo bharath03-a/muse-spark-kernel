@@ -9335,7 +9335,7 @@
       "report": "kernel                                                           GPU time  share  calls\n_router_big                                                       10.0 µs 100.0%      1\ntotal                                                             10.0 µs"
     }
   ],
-  "submission": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/submission.py",
+  "submission": "<repo>/muse_bf16_proj/submission.py",
   "summary": {
     "error": null,
     "passed": true,

@@ -1,20 +1,20 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-CBnWP6Egf5fBcrKkVCRlp8
+https://modal.com/apps/<workspace>/main/ap-CBnWP6Egf5fBcrKkVCRlp8
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_laye
+│   <repo>/muse_prefill_laye
 │   r/research/modal_pf32_probe.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_laye
+│   <repo>/muse_prefill_laye
 │   r/nvfp4.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_laye
+│   <repo>/muse_prefill_laye
 │   r/candidate_prefill_w13_mixed.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_laye
+│   <repo>/muse_prefill_laye
 │   r/candidate_prefill_pf32_strict.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/research_harness
+│   <repo>/research_harness
 └── ✓ Created Function probe.
 PF32_PACK_BITIDENTICAL 8281
 PF32_CHECK {"seed": 8281, "actual": 1363, "capacity": 6024, "skew": false, "mode": 0, "pdl": false, "finite": true, "bitidentical": true, "relative_l2": 0.0, "reference_l2": 0.00022671176702715456}
@@ -58,4 +58,4 @@ PF32_PAIRED {"seed": 8283, "actual": 29317, "capacity": 131072, "skew": true, "m
 PF32_GPU_SECONDS 6.985870222000003
 Stopping app - local entrypoint completed.
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-CBnWP6Egf5fBcrKkVCRlp8
+https://modal.com/apps/<workspace>/main/ap-CBnWP6Egf5fBcrKkVCRlp8

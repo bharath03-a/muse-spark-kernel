@@ -1,26 +1,26 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-XUiM1hWnH1wp2NULoMdEsa
+https://modal.com/apps/<workspace>/main/ap-XUiM1hWnH1wp2NULoMdEsa
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/modal_bf16pv_probe.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/checks.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/reference.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_bf16pv.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_pvcontrol.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_attention.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/research_harness
+│   <repo>/research_harness
 └── ✓ Created Function probe.
 PREBUILT_LOADED ['current', 'control', 'bf16pv']
 BF16PV_CHECK {"seed": 1471, "case": "flat", "variant": "current", "passed": true, "message": "relative L2 error 6.676e-05 (worst row 2.326e-04) [bound 0.030: 2.5 x the reference's 0.000 with FP8 E4M3 queries + 0.015]"}
@@ -80,4 +80,4 @@ BF16PV_PAIRED {"batch": 32, "layer": "sliding", "baseline": "control", "candidat
 BF16PV_DONE
 Runner terminated.
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-XUiM1hWnH1wp2NULoMdEsa
+https://modal.com/apps/<workspace>/main/ap-XUiM1hWnH1wp2NULoMdEsa

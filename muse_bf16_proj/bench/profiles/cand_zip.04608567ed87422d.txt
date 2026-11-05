@@ -1,5 +1,5 @@
 okc run 04608567ed87422d on muse_bf16_proj
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/bench/cand_zip.py
+submission  <repo>/muse_bf16_proj/bench/cand_zip.py
 status      ok
 passed      true
 speedup     1.3780433545667647

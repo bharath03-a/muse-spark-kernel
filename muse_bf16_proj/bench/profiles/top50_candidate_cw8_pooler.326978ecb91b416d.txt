@@ -1,5 +1,5 @@
 okc run 326978ecb91b416d on muse_bf16_proj
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/bench/top50_candidate_cw8_pooler.py
+submission  <repo>/muse_bf16_proj/bench/top50_candidate_cw8_pooler.py
 status      ok
 passed      true
 speedup     1.4286875836368582

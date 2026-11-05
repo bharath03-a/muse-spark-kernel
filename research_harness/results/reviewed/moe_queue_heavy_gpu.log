@@ -1,24 +1,24 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-EoQwvLiYii6qZ2qhV15NYn
+https://modal.com/apps/<workspace>/main/ap-EoQwvLiYii6qZ2qhV15NYn
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/re
+│   <repo>/muse_moe_w4a16/re
 │   search/modal_queue_research.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/research_harness
+│   <repo>/research_harness
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16
+│   <repo>/muse_moe_w4a16
 ├── ✓ Created Function compile_and_inspect.
 ├── ✓ Created Function compare_queue.
 └── ✓ Created Function compile_heavy.
 [modal-client] 2026-10-27T12:48:18-0700 Loop attempt for _run_app.<locals>.heartbeat failed
 Traceback (most recent call last):
-  File "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/_utils/async_utils.py", line 590, in loop_coro
+  File "<repo>/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/_utils/async_utils.py", line 590, in loop_coro
     await asyncio.wait_for(async_f(), timeout=timeout)
-  File "/Users/bharathvelamala/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/tasks.py", line 489, in wait_for
+  File "~/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/tasks.py", line 489, in wait_for
     return fut.result()
            ^^^^^^^^^^^^
-  File "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/runner.py", line 66, in _heartbeat
+  File "<repo>/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/runner.py", line 66, in _heartbeat
     await client._stub.AppHeartbeat(request, retry=Retry(attempt_timeout=HEARTBEAT_TIMEOUT))
 modal.exception.ConflictError: App state is APP_STATE_STOPPED
 SOURCE_SHA256 baseline bea9abbe6dbcb2d6b17982c9b5588e4dcd3e14c4cba3ac82b669f37475eff453
@@ -108,62 +108,62 @@ Greatest relative difference: 0.0277099609375 at index (11, 3929) (up to 0.01 al
 Stopping app - local client disconnected. Use `modal run --detach` to keep apps running even if your local client disconnects.
 [modal-client] 2026-10-27T12:56:24-0700 Loop attempt for _run_app.<locals>.heartbeat failed
 Traceback (most recent call last):
-  File "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/_utils/async_utils.py", line 590, in loop_coro
+  File "<repo>/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/_utils/async_utils.py", line 590, in loop_coro
     await asyncio.wait_for(async_f(), timeout=timeout)
-  File "/Users/bharathvelamala/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/tasks.py", line 489, in wait_for
+  File "~/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/tasks.py", line 489, in wait_for
     return fut.result()
            ^^^^^^^^^^^^
-  File "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/runner.py", line 66, in _heartbeat
+  File "<repo>/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/runner.py", line 66, in _heartbeat
     await client._stub.AppHeartbeat(request, retry=Retry(attempt_timeout=HEARTBEAT_TIMEOUT))
 modal.exception.ConflictError: App state is APP_STATE_STOPPED
 [modal-client] 2026-10-27T13:18:30-0700 Loop attempt for _run_app.<locals>.heartbeat failed
 Traceback (most recent call last):
-  File "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/_utils/async_utils.py", line 590, in loop_coro
+  File "<repo>/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/_utils/async_utils.py", line 590, in loop_coro
     await asyncio.wait_for(async_f(), timeout=timeout)
-  File "/Users/bharathvelamala/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/tasks.py", line 489, in wait_for
+  File "~/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/tasks.py", line 489, in wait_for
     return fut.result()
            ^^^^^^^^^^^^
-  File "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/runner.py", line 66, in _heartbeat
+  File "<repo>/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/runner.py", line 66, in _heartbeat
     await client._stub.AppHeartbeat(request, retry=Retry(attempt_timeout=HEARTBEAT_TIMEOUT))
 modal.exception.ConflictError: App state is APP_STATE_STOPPED
 [modal-client] 2026-10-27T13:18:46-0700 Loop attempt for _run_app.<locals>.heartbeat failed
 Traceback (most recent call last):
-  File "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/_utils/async_utils.py", line 590, in loop_coro
+  File "<repo>/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/_utils/async_utils.py", line 590, in loop_coro
     await asyncio.wait_for(async_f(), timeout=timeout)
-  File "/Users/bharathvelamala/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/tasks.py", line 489, in wait_for
+  File "~/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/tasks.py", line 489, in wait_for
     return fut.result()
            ^^^^^^^^^^^^
-  File "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/runner.py", line 66, in _heartbeat
+  File "<repo>/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/runner.py", line 66, in _heartbeat
     await client._stub.AppHeartbeat(request, retry=Retry(attempt_timeout=HEARTBEAT_TIMEOUT))
 modal.exception.ConflictError: App state is APP_STATE_STOPPED
 [modal-client] 2026-10-27T13:19:01-0700 Loop attempt for _run_app.<locals>.heartbeat failed
 Traceback (most recent call last):
-  File "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/_utils/async_utils.py", line 590, in loop_coro
+  File "<repo>/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/_utils/async_utils.py", line 590, in loop_coro
     await asyncio.wait_for(async_f(), timeout=timeout)
-  File "/Users/bharathvelamala/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/tasks.py", line 489, in wait_for
+  File "~/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/tasks.py", line 489, in wait_for
     return fut.result()
            ^^^^^^^^^^^^
-  File "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/runner.py", line 66, in _heartbeat
+  File "<repo>/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/runner.py", line 66, in _heartbeat
     await client._stub.AppHeartbeat(request, retry=Retry(attempt_timeout=HEARTBEAT_TIMEOUT))
 modal.exception.ConflictError: App state is APP_STATE_STOPPED
 [modal-client] 2026-10-27T13:19:16-0700 Loop attempt for _run_app.<locals>.heartbeat failed
 Traceback (most recent call last):
-  File "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/_utils/async_utils.py", line 590, in loop_coro
+  File "<repo>/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/_utils/async_utils.py", line 590, in loop_coro
     await asyncio.wait_for(async_f(), timeout=timeout)
-  File "/Users/bharathvelamala/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/tasks.py", line 489, in wait_for
+  File "~/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/tasks.py", line 489, in wait_for
     return fut.result()
            ^^^^^^^^^^^^
-  File "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/runner.py", line 66, in _heartbeat
+  File "<repo>/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/runner.py", line 66, in _heartbeat
     await client._stub.AppHeartbeat(request, retry=Retry(attempt_timeout=HEARTBEAT_TIMEOUT))
 modal.exception.ConflictError: App state is APP_STATE_STOPPED
 [modal-client] 2026-10-27T13:19:31-0700 Loop attempt for _run_app.<locals>.heartbeat failed
 Traceback (most recent call last):
-  File "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/_utils/async_utils.py", line 590, in loop_coro
+  File "<repo>/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/_utils/async_utils.py", line 590, in loop_coro
     await asyncio.wait_for(async_f(), timeout=timeout)
-  File "/Users/bharathvelamala/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/tasks.py", line 489, in wait_for
+  File "~/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/tasks.py", line 489, in wait_for
     return fut.result()
            ^^^^^^^^^^^^
-  File "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/runner.py", line 66, in _heartbeat
+  File "<repo>/muse_bf16_proj/.venv/lib/python3.11/site-packages/modal/runner.py", line 66, in _heartbeat
     await client._stub.AppHeartbeat(request, retry=Retry(attempt_timeout=HEARTBEAT_TIMEOUT))
 modal.exception.ConflictError: App state is APP_STATE_STOPPED
 ╭─ Error ──────────────────────────────────────────────────────────────────────╮

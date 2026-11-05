@@ -9335,7 +9335,7 @@
       "report": "kernel                                                           GPU time  share  calls\nvoid tma_wgmma_router_bn32\u003c128, 128, 4, 4\u003e(CUtensorMap_st...       9.1 µs 100.0%      1\ntotal                                                              9.1 µs"
     }
   ],
-  "submission": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/bench/cand_r14_qz.py",
+  "submission": "<repo>/muse_bf16_proj/bench/cand_r14_qz.py",
   "summary": {
     "error": null,
     "passed": true,

@@ -1,5 +1,5 @@
 okc run 989c13b23ddf41fe on muse_bf16_proj
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/checkpoints/cp12_r16_os_unchecked.py
+submission  <repo>/muse_bf16_proj/checkpoints/cp12_r16_os_unchecked.py
 status      ok
 passed      true
 speedup     1.4087237537429218

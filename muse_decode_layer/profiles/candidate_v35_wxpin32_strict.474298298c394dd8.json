@@ -2241,7 +2241,7 @@
       "report": "kernel                                                           GPU time  share  calls\nmoe_x(P)                                                         239.3 µs  39.5%      1\nvoid attnp\u003c2, 537002308\u003e(A, WF)                                  229.0 µs  37.8%      1\nnvjet_sm90_tst_128x128_64x6_2x1_v_bz_TNT                          33.9 µs   5.6%      2\nnvjet_sm90_tst_64x128_64x8_1x1_v_bz_NNT                           28.9 µs   4.8%      1\nresid(__nv_bfloat16 const*, int, float const*, float cons...      21.7 µs   3.6%      2\nnvjet_sm90_tst_72x64_64x12_1x1_v_bz_TNN                           20.3 µs   3.3%      1\nxgather(__nv_bfloat16 const*, int const*, int, int, unsig...       9.0 µs   1.5%      1\nnvjet_sm90_tss_64x64_64x13_1x1_v_bz_splitK_NNN                     7.1 µs   1.2%      1\nrmsg(__nv_bfloat16 const*, float const*, __nv_bfloat16*)           7.1 µs   1.2%      1\nroute(float const*, float const*, int const*, int, int*, ...       5.6 µs   0.9%      1\nvoid cublasLt::splitKreduce_kernel\u003c32, 16, int, float, fl...       2.1 µs   0.3%      1\nvoid at::native::elementwise_kernel\u003c128, 2, at::native::g...       1.9 µs   0.3%      1\ntotal                                                            605.9 µs"
     }
   ],
-  "submission": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/candidate_v35_wxpin32_strict.py",
+  "submission": "<repo>/muse_decode_layer/candidate_v35_wxpin32_strict.py",
   "summary": {
     "error": null,
     "passed": true,

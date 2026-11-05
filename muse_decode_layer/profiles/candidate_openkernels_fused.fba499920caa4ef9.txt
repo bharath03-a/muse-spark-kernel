@@ -1,5 +1,5 @@
 okc run fba499920caa4ef9 on muse_decode_layer
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/candidate_openkernels_fused.py
+submission  <repo>/muse_decode_layer/candidate_openkernels_fused.py
 status      ok
 passed      true
 speedup     1.6081480906649244

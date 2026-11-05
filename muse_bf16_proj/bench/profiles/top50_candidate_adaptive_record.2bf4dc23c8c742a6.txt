@@ -1,5 +1,5 @@
 okc run 2bf4dc23c8c742a6 on muse_bf16_proj
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/bench/top50_candidate_adaptive_record.py
+submission  <repo>/muse_bf16_proj/bench/top50_candidate_adaptive_record.py
 status      ok
 passed      true
 speedup     1.4388835202938937

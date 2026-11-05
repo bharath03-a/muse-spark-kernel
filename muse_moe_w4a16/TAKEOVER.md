@@ -73,7 +73,7 @@ starts would need a separate prepare change.
 ## Modal outcome
 
 H200 direct-kernel probe completed successfully at
-https://modal.com/apps/bharathvelamala1929/main/ap-hlY7d6GsoQPWCstpRI9cJA .
+https://modal.com/apps/<workspace>/main/ap-hlY7d6GsoQPWCstpRI9cJA .
 Three input seeds 7/17/27 passed FP32 reference checking with relative L2
 0.5462%, 0.5613%, 0.5393%. Two GEMVs alone took 439.62 / 309.66 / 570.34 us
 in cold-L2 CUDA graph replay (includes graph replay overhead). This is far
@@ -109,7 +109,7 @@ and routes at bs1,32,256, checking every result before graph timing. First
 build failed because SGLang DEFAULT_INCLUDE omits its csrc directory; an
 explicit include path derived from the installed jit_utils module fixes
 header resolution. A second bounded 300s run is pending at
-https://modal.com/apps/bharathvelamala1929/main/ap-HaecHcm64GEbRGUVmSMifv
+https://modal.com/apps/<workspace>/main/ap-HaecHcm64GEbRGUVmSMifv
 (log `/tmp/moe_modal_tiles_v2.log`). No performance claim is made yet.
 
 

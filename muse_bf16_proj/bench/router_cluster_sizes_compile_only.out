@@ -1,5 +1,5 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-dyfD5jBxMD0OebIAJunoDe
+https://modal.com/apps/<workspace>/main/ap-dyfD5jBxMD0OebIAJunoDe
 ✓ Created objects.
 ├── ✓ Uploaded 
 │   /var/folders/dt/nf7j33w51gj7cv6bx6633tm40000gn/T/muse_router_sizes_cpu_q9f2r
@@ -3362,4 +3362,4 @@ $L__info_string0:
 compile_only total 4s
 Stopping app - local entrypoint completed.
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-dyfD5jBxMD0OebIAJunoDe
+https://modal.com/apps/<workspace>/main/ap-dyfD5jBxMD0OebIAJunoDe

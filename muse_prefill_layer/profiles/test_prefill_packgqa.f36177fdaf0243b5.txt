@@ -1,5 +1,5 @@
 okc run f36177fdaf0243b5 on muse_prefill_layer
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_layer/test_prefill_packgqa.py
+submission  <repo>/muse_prefill_layer/test_prefill_packgqa.py
 status      ok
 passed      true
 speedup     0.9994450849154238

@@ -2831,7 +2831,7 @@
       "report": "kernel                                                           GPU time  share  calls\nmoe_kernel(P)                                                    320.0 µs 100.0%      1\ntotal                                                            320.0 µs"
     }
   ],
-  "submission": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/research_moe_grid_constant.py",
+  "submission": "<repo>/muse_moe_w4a16/research_moe_grid_constant.py",
   "summary": {
     "error": null,
     "passed": true,

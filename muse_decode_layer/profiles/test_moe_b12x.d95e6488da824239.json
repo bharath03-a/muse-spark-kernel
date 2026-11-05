@@ -2241,7 +2241,7 @@
       "report": "kernel                                                           GPU time  share  calls\nvoid sglang::device::marlin_moe::Marlin\u003c__nv_bfloat16, 56...     570.9 µs  49.3%      2\nvoid cutlass::device_kernel\u003cflash::enable_sm90_or_later\u003cf...     380.1 µs  32.8%      1\nnvjet_sm90_tss_64x32_64x16_1x2_h_bz_splitK_NNT                    44.5 µs   3.8%      2\nnvjet_sm90_tst_128x128_64x6_2x1_v_bz_TNT                          33.9 µs   2.9%      2\nnvjet_sm90_tst_128x64_64x8_1x2_h_bz_TNT                           33.3 µs   2.9%      1\nnvjet_sm90_tst_96x64_64x10_2x4_h_bz_TNN                           22.6 µs   1.9%      1\nvoid sglang::muse_spark_norm_residual_kernel\u003c8192l, 512, ...       8.5 µs   0.7%      1\nvoid sglang::muse_spark_norm_residual_kernel\u003c8192l, 512, ...       7.2 µs   0.6%      1\nvoid at::native::(anonymous namespace)::vectorized_layer_...       5.9 µs   0.5%      1\nvoid sglang::act_and_mul_kernel\u003c__nv_bfloat16, (sglang::A...       5.8 µs   0.5%      1\n_post_expert_norm_weighted_sum_kernel                              5.4 µs   0.5%      1\nvoid cublasLt::splitKreduce_kernel\u003c32, 16, int, float, fl...       3.7 µs   0.3%      2\n... 15 more\ntotal                                                           1157.6 µs\nGPU busy (kernels overlap: PDL or streams)                      1122.6 µs\nan overlapping kernel's time includes any wait for the one before it, so the rows add up to more"
     }
   ],
-  "submission": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/test_moe_b12x.py",
+  "submission": "<repo>/muse_decode_layer/test_moe_b12x.py",
   "summary": {
     "error": null,
     "passed": true,

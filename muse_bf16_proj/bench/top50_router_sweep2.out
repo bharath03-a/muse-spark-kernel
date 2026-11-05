@@ -1,11 +1,11 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-XrVXRR5LdVPICBsIdD58YP
+https://modal.com/apps/<workspace>/main/ap-XrVXRR5LdVPICBsIdD58YP
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/mo
+│   <repo>/muse_bf16_proj/mo
 │   dal_app.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj
+│   <repo>/muse_bf16_proj
 ├── ✓ Created Function env.
 ├── ✓ Created Function correct.
 ├── ✓ Created Function bench.
@@ -18,6 +18,6 @@ DISTRIBUTED 256 config (128, 64, 32, 64) rel 2.519131731273765e-06 raw_us {'dist
 DISTRIBUTED 256 config (64, 64, 16, 64) rel 2.6891022889459546e-06 raw_us {'distributed': 15.424, 'cp14': 14.88}
 Stopping app - local entrypoint completed.
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-XrVXRR5LdVPICBsIdD58YP
+https://modal.com/apps/<workspace>/main/ap-XrVXRR5LdVPICBsIdD58YP
 
 [gpu_q] top50 top50_router_sweep2: 20s, rc=0; budget used 1783/1800s

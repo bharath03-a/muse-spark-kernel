@@ -1,6 +1,6 @@
 {
   "state": "done",
-  "source": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/bench/top50_candidate_cw8_pooler.py",
+  "source": "<repo>/muse_bf16_proj/bench/top50_candidate_cw8_pooler.py",
   "sha256": "dad17a60f386060cce3f66b7a34d36705aba1abc6269441d799ac521503ccf6d",
   "timestamp_utc": "2026-10-28T22:55:37.348825+00:00",
   "modal_gpu_jobs": 0,

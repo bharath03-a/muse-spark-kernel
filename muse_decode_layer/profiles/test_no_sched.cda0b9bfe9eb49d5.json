@@ -2241,7 +2241,7 @@
       "report": "kernel                                                           GPU time  share  calls\nvoid sglang::device::marlin_moe::Marlin\u003c__nv_bfloat16, 56...     462.8 µs  46.1%      2\nvoid cutlass::device_kernel\u003cflash::enable_sm90_or_later\u003cf...     372.1 µs  37.1%      1\n_big_gemm                                                         38.8 µs   3.9%      1\nnvjet_sm90_tst_128x128_64x6_2x1_v_bz_TNT                          34.4 µs   3.4%      2\nnvjet_sm90_tst_96x64_64x10_2x4_h_bz_TNN                           22.7 µs   2.3%      1\nvoid tma_wgmma_router_bn32\u003c128, 128, 4, 4\u003e(CUtensorMap_st...      11.3 µs   1.1%      1\nvoid sglang::muse_spark_norm_residual_kernel\u003c8192l, 512, ...       8.7 µs   0.9%      1\nvoid sglang::muse_spark_norm_residual_kernel\u003c8192l, 512, ...       8.2 µs   0.8%      1\nvoid sglang::act_and_mul_kernel\u003c__nv_bfloat16, (sglang::A...       5.9 µs   0.6%      1\n_post_expert_norm_weighted_sum_kernel                              5.1 µs   0.5%      1\nvoid sglang::muse_spark::routing_kernel\u003csglang::muse_spar...       4.2 µs   0.4%      1\nvoid cutlass::device_kernel\u003cflash::FlashAttnFwdCombine\u003ccu...       4.2 µs   0.4%      1\n... 10 more\ntotal                                                           1003.7 µs\nGPU busy (kernels overlap: PDL or streams)                       987.7 µs\nan overlapping kernel's time includes any wait for the one before it, so the rows add up to more"
     }
   ],
-  "submission": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/test_no_sched.py",
+  "submission": "<repo>/muse_decode_layer/test_no_sched.py",
   "summary": {
     "error": null,
     "passed": true,

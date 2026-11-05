@@ -1,5 +1,5 @@
 okc run 1563d4b6f5b24f7a on muse_bf16_proj
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/checkpoints/cp1_router_gemv_cuda_bigpooler.py
+submission  <repo>/muse_bf16_proj/checkpoints/cp1_router_gemv_cuda_bigpooler.py
 status      ok
 passed      true
 speedup     1.242333442587489

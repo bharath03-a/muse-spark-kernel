@@ -1,5 +1,5 @@
 okc run 64fbf62ba8734b4a on muse_moe_w4a16
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/test_moe_triton_m32.py
+submission  <repo>/muse_moe_w4a16/test_moe_triton_m32.py
 status      ok
 passed      true
 speedup     0.23557858205310622

@@ -1,5 +1,5 @@
 okc run ed17640374504f58 on muse_decode_layer
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/test_decode_wgmma.py
+submission  <repo>/muse_decode_layer/test_decode_wgmma.py
 status      ok
 passed      true
 speedup     1.185301996769454

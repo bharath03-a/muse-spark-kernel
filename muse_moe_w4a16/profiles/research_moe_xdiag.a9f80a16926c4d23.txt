@@ -1,5 +1,5 @@
 okc run a9f80a16926c4d23 on muse_moe_w4a16
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/research_moe_xdiag.py
+submission  <repo>/muse_moe_w4a16/research_moe_xdiag.py
 status      ok
 passed      true
 speedup     1.9701753175507983

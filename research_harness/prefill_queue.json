@@ -5,7 +5,7 @@
       "id": "prefill-strict-ring",
       "hypothesis": "Strict BF16 down-rounding remains correct across varied per-expert scales and skewed routing",
       "command": [
-        "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/.venv/bin/modal",
+        "<repo>/muse_bf16_proj/.venv/bin/modal",
         "run",
         "modal_research_compile.py::probe_prefill_ring"
       ],
@@ -30,7 +30,7 @@
       "id": "w13-fused-7171",
       "hypothesis": "Lossless paired W13 row layout fuses BF16 SwiGLU epilogue and removes intermediate global memory traffic",
       "command": [
-        "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/.venv/bin/modal",
+        "<repo>/muse_bf16_proj/.venv/bin/modal",
         "run",
         "modal_research_compile.py::probe_w13_fused",
         "--seed",
@@ -57,7 +57,7 @@
       "id": "w13-fused-8209",
       "hypothesis": "Lossless paired W13 row layout fuses BF16 SwiGLU epilogue and removes intermediate global memory traffic",
       "command": [
-        "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/.venv/bin/modal",
+        "<repo>/muse_bf16_proj/.venv/bin/modal",
         "run",
         "modal_research_compile.py::probe_w13_fused",
         "--seed",
@@ -84,7 +84,7 @@
       "id": "w13-fused-9319",
       "hypothesis": "Lossless paired W13 row layout fuses BF16 SwiGLU epilogue and removes intermediate global memory traffic",
       "command": [
-        "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/.venv/bin/modal",
+        "<repo>/muse_bf16_proj/.venv/bin/modal",
         "run",
         "modal_research_compile.py::probe_w13_fused",
         "--seed",

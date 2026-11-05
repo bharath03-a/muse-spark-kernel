@@ -1,5 +1,5 @@
 okc run a6986c85974540a5 on muse_decode_layer
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/candidate_cp14_v75_f16_v56moe.py
+submission  <repo>/muse_decode_layer/candidate_cp14_v75_f16_v56moe.py
 status      ok
 passed      true
 speedup     1.779097312747739

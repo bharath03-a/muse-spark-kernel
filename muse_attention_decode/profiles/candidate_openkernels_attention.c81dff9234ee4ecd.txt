@@ -1,5 +1,5 @@
 okc run c81dff9234ee4ecd on muse_attention_decode
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_decode/candidate_openkernels_attention.py
+submission  <repo>/muse_attention_decode/candidate_openkernels_attention.py
 status      ok
 passed      true
 speedup     1.8559851868428945

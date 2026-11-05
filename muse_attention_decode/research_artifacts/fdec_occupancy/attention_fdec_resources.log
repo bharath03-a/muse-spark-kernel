@@ -1,20 +1,20 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-7vgJyyA8YJxTrv6LqDJpLa
+https://modal.com/apps/<workspace>/main/ap-7vgJyyA8YJxTrv6LqDJpLa
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/modal_bf16pv_compile.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_fdeccontrol.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_fdecfast.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_pvcontrol.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_bf16pv.py
 ├── ✓ Created Function compile.
 └── ✓ Created Function resources.
@@ -78,4 +78,4 @@ Resource usage:
   REG:96 STACK:0 SHARED:1024 LOCAL:0 CONSTANT[0]:660 TEXTURE:0 SURFACE:0 SAMPLER:0
  Function _Z5comb21APK13__nv_bfloat16PS0_f:
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-7vgJyyA8YJxTrv6LqDJpLa
+https://modal.com/apps/<workspace>/main/ap-7vgJyyA8YJxTrv6LqDJpLa

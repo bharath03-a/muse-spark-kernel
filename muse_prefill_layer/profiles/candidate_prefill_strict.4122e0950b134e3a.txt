@@ -1,5 +1,5 @@
 okc run 4122e0950b134e3a on muse_prefill_layer
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_layer/candidate_prefill_strict.py
+submission  <repo>/muse_prefill_layer/candidate_prefill_strict.py
 status      ok
 passed      true
 speedup     1.3962482778972996

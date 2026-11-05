@@ -1,5 +1,5 @@
 okc run dc389a40f61d4701 on muse_bf16_proj
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/bench/top50_candidate_ac2e.py
+submission  <repo>/muse_bf16_proj/bench/top50_candidate_ac2e.py
 status      ok
 passed      true
 speedup     1.425434583737218

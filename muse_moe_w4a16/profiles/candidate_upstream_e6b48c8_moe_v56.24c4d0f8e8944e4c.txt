@@ -1,5 +1,5 @@
 okc run 24c4d0f8e8944e4c on muse_moe_w4a16
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/candidate_upstream_e6b48c8_moe_v56.py
+submission  <repo>/muse_moe_w4a16/candidate_upstream_e6b48c8_moe_v56.py
 status      ok
 passed      true
 speedup     1.975049964946548

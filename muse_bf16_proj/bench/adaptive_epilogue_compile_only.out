@@ -1,11 +1,11 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-acwo77fx1HlfxoOfpOe48U
+https://modal.com/apps/<workspace>/main/ap-acwo77fx1HlfxoOfpOe48U
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/mo
+│   <repo>/muse_bf16_proj/mo
 │   dal_app.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj
+│   <repo>/muse_bf16_proj
 ├── ✓ Created Function env.
 ├── ✓ Created Function correct.
 ├── ✓ Created Function bench.
@@ -2864,4 +2864,4 @@ PTX_END
 compile_only total 9s
 Stopping app - local entrypoint completed.
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-acwo77fx1HlfxoOfpOe48U
+https://modal.com/apps/<workspace>/main/ap-acwo77fx1HlfxoOfpOe48U

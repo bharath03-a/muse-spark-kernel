@@ -1,5 +1,5 @@
 okc run cecfa932f4db40f6 on muse_bf16_proj
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/bench/top50_candidate_ac2c.py
+submission  <repo>/muse_bf16_proj/bench/top50_candidate_ac2c.py
 status      ok
 passed      true
 speedup     1.4361376715848664

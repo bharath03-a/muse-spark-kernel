@@ -1,5 +1,5 @@
 okc run d95e6488da824239 on muse_decode_layer
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/test_moe_b12x.py
+submission  <repo>/muse_decode_layer/test_moe_b12x.py
 status      ok
 passed      true
 speedup     1.0003629904936437

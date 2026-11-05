@@ -1,5 +1,5 @@
 okc run 040dff8ea6fd48e8 on muse_bf16_proj
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/checkpoints/cp9_qkv128_cluster_check1.404.py
+submission  <repo>/muse_bf16_proj/checkpoints/cp9_qkv128_cluster_check1.404.py
 status      ok
 passed      true
 speedup     1.3861279560440174

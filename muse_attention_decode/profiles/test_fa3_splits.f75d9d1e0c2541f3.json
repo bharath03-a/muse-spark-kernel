@@ -3845,7 +3845,7 @@
       "report": "kernel                                                           GPU time  share  calls\nvoid cutlass::device_kernel\u003cflash::enable_sm90_or_later\u003cf...     712.5 µs  98.8%      1\n_fused_prepare_kv_kernel                                           4.2 µs   0.6%      1\nvoid cutlass::device_kernel\u003cflash::FlashAttnFwdCombine\u003ccu...       2.6 µs   0.4%      1\nvoid sglang::norm_gate_kernel\u003c__nv_bfloat16, 64l, 16, 4, ...       2.0 µs   0.3%      1\ntotal                                                            721.2 µs"
     }
   ],
-  "submission": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_decode/test_fa3_splits.py",
+  "submission": "<repo>/muse_attention_decode/test_fa3_splits.py",
   "summary": {
     "error": null,
     "passed": true,

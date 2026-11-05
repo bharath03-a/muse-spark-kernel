@@ -1,26 +1,26 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-f4WtdksH2DOtPGEWZkb6R2
+https://modal.com/apps/<workspace>/main/ap-f4WtdksH2DOtPGEWZkb6R2
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/modal_v81_minimal_probe.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/checks.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/reference.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_v81_minimal.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_v75.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_v75_f16pv.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/research_harness
+│   <repo>/research_harness
 └── ✓ Created Function probe.
 V75_PREBUILT ['current', 'conservative', 'research']
 V81_CHECK {"seed": 1471, "variant": "current", "flags": 0, "fp8_pv": false, "config": {"batch": 2, "ctx": 80000, "heads": "tp8", "layer": "sliding", "q_len": 8, "page": 1, "dist": "soft", "kv_scale": 1.0, "spread": "fixed"}, "passed": true, "message": "relative L2 error 6.860e-02 (worst row 8.751e-02) [bound 0.150: 2.5 x the reference's 0.069 with FP8 E4M3 queries + 0.015]"}
@@ -232,4 +232,4 @@ V81_STRESS {"batch": 32, "replays": 200, "kv_scale": 0.015625, "fresh_qkv_and_ca
 V81_DONE
 Stopping app - local entrypoint completed.
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-f4WtdksH2DOtPGEWZkb6R2
+https://modal.com/apps/<workspace>/main/ap-f4WtdksH2DOtPGEWZkb6R2

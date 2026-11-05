@@ -1,26 +1,26 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-HY2FvjIQNqmQ6VSI6lyGHs
+https://modal.com/apps/<workspace>/main/ap-HY2FvjIQNqmQ6VSI6lyGHs
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/modal_fdecfast_probe.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/checks.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_fdecfast.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_fdeccontrol.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/reference.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_de
+│   <repo>/muse_attention_de
 │   code/candidate_openkernels_attention.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/research_harness
+│   <repo>/research_harness
 └── ✓ Created Function probe.
 PREBUILT_LOADED ['current', 'control', 'fdecfast']
 FDECFAST_CHECK {"seed": 1471, "case": "overflow", "variant": "current", "passed": true, "message": "relative L2 error 0.000e+00 (worst row 0.000e+00) [bound 0.030: 2.5 x the reference's 0.000 with FP8 E4M3 queries + 0.015]"}
@@ -93,4 +93,4 @@ FDECFAST_DONE
 Stopping app - local entrypoint completed.
 Runner terminated.
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-HY2FvjIQNqmQ6VSI6lyGHs
+https://modal.com/apps/<workspace>/main/ap-HY2FvjIQNqmQ6VSI6lyGHs

@@ -1,5 +1,5 @@
 okc run 34c12e1cb0864be2 on muse_bf16_proj
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/bench/cand_zip128_v4.py
+submission  <repo>/muse_bf16_proj/bench/cand_zip128_v4.py
 status      ok
 passed      true
 speedup     1.2869977399913222

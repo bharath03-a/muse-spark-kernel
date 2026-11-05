@@ -1,5 +1,5 @@
 okc run 4c0dae1cb8414e20 on muse_attention_decode
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_decode/test_sliding.py
+submission  <repo>/muse_attention_decode/test_sliding.py
 status      ok
 passed      true
 speedup     0.5566824832737458

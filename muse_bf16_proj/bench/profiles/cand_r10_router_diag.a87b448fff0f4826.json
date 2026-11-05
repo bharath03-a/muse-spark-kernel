@@ -9335,7 +9335,7 @@
       "report": "kernel                                                           GPU time  share  calls\nvoid router_sk\u003c256\u003e(CUtensorMap_st, CUtensorMap_st, CUten...      10.4 µs 100.0%      1\ntotal                                                             10.4 µs"
     }
   ],
-  "submission": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/bench/cand_r10_router_diag.py",
+  "submission": "<repo>/muse_bf16_proj/bench/cand_r10_router_diag.py",
   "summary": {
     "error": null,
     "passed": true,

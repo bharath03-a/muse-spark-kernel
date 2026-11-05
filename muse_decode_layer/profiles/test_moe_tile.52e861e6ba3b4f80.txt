@@ -1,5 +1,5 @@
 okc run 52e861e6ba3b4f80 on muse_decode_layer
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/test_moe_tile.py
+submission  <repo>/muse_decode_layer/test_moe_tile.py
 status      ok
 passed      true
 speedup     1.153492513881445

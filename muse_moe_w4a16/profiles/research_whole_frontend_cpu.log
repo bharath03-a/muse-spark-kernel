@@ -1,15 +1,15 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-nVzf4MtLmajJlyGpp0lwQR
+https://modal.com/apps/<workspace>/main/ap-nVzf4MtLmajJlyGpp0lwQR
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/re
+│   <repo>/muse_moe_w4a16/re
 │   search/modal_whole_routes.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/research_harness
+│   <repo>/research_harness
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer
+│   <repo>/muse_decode_layer
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16
+│   <repo>/muse_moe_w4a16
 ├── ✓ Created Function compile_frontend.
 └── ✓ Created Function compare_actual_routes.
 W1028 05:51:41.208000 2 torch/utils/cpp_extension.py:183] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
@@ -26,4 +26,4 @@ FRONTEND_CACHE_READY OKA__ext /cache/torch_ext/attn_v60_8/attn_v60_8.so 39.27067
 FRONTEND_CACHE_DONE 6e9384e363de3a56e9944ab101f82e2f0cba86b3396d488f205557ccc9cb3dae 104.1652768
 Stopping app - local entrypoint completed.
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-nVzf4MtLmajJlyGpp0lwQR
+https://modal.com/apps/<workspace>/main/ap-nVzf4MtLmajJlyGpp0lwQR

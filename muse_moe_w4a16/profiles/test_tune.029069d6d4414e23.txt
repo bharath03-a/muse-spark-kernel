@@ -1,5 +1,5 @@
 okc run 029069d6d4414e23 on muse_moe_w4a16
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/test_tune.py
+submission  <repo>/muse_moe_w4a16/test_tune.py
 status      ok
 passed      true
 speedup     1.138750674808977

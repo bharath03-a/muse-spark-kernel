@@ -1,5 +1,5 @@
 okc run 6ac81aac4d8f4e58 on muse_bf16_proj
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/submission.py
+submission  <repo>/muse_bf16_proj/submission.py
 status      ok
 passed      true
 speedup     1.3302565219742561

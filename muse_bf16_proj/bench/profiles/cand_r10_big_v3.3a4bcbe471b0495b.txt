@@ -1,5 +1,5 @@
 okc run 3a4bcbe471b0495b on muse_bf16_proj
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/bench/cand_r10_big_v3.py
+submission  <repo>/muse_bf16_proj/bench/cand_r10_big_v3.py
 status      ok
 passed      true
 speedup     1.4070539972466296

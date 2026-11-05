@@ -1,5 +1,5 @@
 okc run 4c0de63f84ed44f2 on muse_bf16_proj
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/checkpoints/cp6_zip1_check1.338_69bc87ca.py
+submission  <repo>/muse_bf16_proj/checkpoints/cp6_zip1_check1.338_69bc87ca.py
 status      ok
 passed      true
 speedup     1.3294471275279494

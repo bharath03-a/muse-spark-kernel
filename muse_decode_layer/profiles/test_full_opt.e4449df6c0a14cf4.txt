@@ -1,5 +1,5 @@
 okc run e4449df6c0a14cf4 on muse_decode_layer
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/test_full_opt.py
+submission  <repo>/muse_decode_layer/test_full_opt.py
 status      ok
 passed      true
 speedup     1.1773871297845766

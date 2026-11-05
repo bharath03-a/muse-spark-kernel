@@ -1,5 +1,5 @@
 okc run 91e2025666e54aec on muse_moe_w4a16
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/research_moe_grid_constant.py
+submission  <repo>/muse_moe_w4a16/research_moe_grid_constant.py
 status      ok
 passed      true
 speedup     1.752032544736371

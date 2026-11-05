@@ -2241,7 +2241,7 @@
       "report": "kernel                                                           GPU time  share  calls\nvoid sglang::device::marlin_moe::Marlin\u003c__nv_bfloat16, 56...     455.5 µs  43.1%      2\nvoid cutlass::device_kernel\u003cflash::enable_sm90_or_later\u003cf...     378.8 µs  35.9%      1\nvoid tma_wgmma_kernel\u003c128, 64, 6, 1, 2\u003e(CUtensorMap_st, C...     151.0 µs  14.3%      4\nvoid tma_wgmma_router_bn32\u003c128, 128, 4, 4\u003e(CUtensorMap_st...       9.8 µs   0.9%      1\nvoid sglang::muse_spark_norm_residual_kernel\u003c8192l, 512, ...       8.3 µs   0.8%      1\nvoid sglang::muse_spark_norm_residual_kernel\u003c8192l, 512, ...       8.3 µs   0.8%      1\n_post_expert_norm_weighted_sum_kernel                              6.6 µs   0.6%      1\nvoid sglang::act_and_mul_kernel\u003c__nv_bfloat16, (sglang::A...       6.0 µs   0.6%      1\n_fused_prepare_kv_kernel                                           4.3 µs   0.4%      1\nvoid cutlass::device_kernel\u003cflash::FlashAttnFwdCombine\u003ccu...       4.2 µs   0.4%      1\nvoid flash::prepare_varlen_num_blocks_kernel\u003c2, true\u003e(int...       3.9 µs   0.4%      1\nvoid sglang::muse_spark::routing_kernel\u003csglang::muse_spar...       3.1 µs   0.3%      1\n... 9 more\ntotal                                                           1056.0 µs"
     }
   ],
-  "submission": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/test_decode_opt_v3.py",
+  "submission": "<repo>/muse_decode_layer/test_decode_opt_v3.py",
   "summary": {
     "error": null,
     "passed": true,

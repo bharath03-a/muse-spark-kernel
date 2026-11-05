@@ -10,12 +10,12 @@
   "id": "2bf4dc23c8c742a6",
   "mode": "check",
   "output": {
-    "log": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/bench/profiles/top50_candidate_adaptive_record.2bf4dc23c8c742a6.log"
+    "log": "<repo>/muse_bf16_proj/bench/profiles/top50_candidate_adaptive_record.2bf4dc23c8c742a6.log"
   },
   "payload_ref": "muse_bf16_proj/d2638a82e1b265b1f22a0fa371e447eac52dea93c26171df5d3657478eed256d.py",
   "profile": {
-    "json": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/bench/profiles/top50_candidate_adaptive_record.2bf4dc23c8c742a6.json",
-    "text": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/bench/profiles/top50_candidate_adaptive_record.2bf4dc23c8c742a6.txt"
+    "json": "<repo>/muse_bf16_proj/bench/profiles/top50_candidate_adaptive_record.2bf4dc23c8c742a6.json",
+    "text": "<repo>/muse_bf16_proj/bench/profiles/top50_candidate_adaptive_record.2bf4dc23c8c742a6.txt"
   },
   "result": {
     "baseline_us": 4830.8,

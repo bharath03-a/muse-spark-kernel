@@ -1,5 +1,5 @@
 okc run 03960c2e352c40e3 on muse_bf16_proj
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/bench/top50_candidate.py
+submission  <repo>/muse_bf16_proj/bench/top50_candidate.py
 status      ok
 passed      true
 speedup     1.426996395025546

@@ -1,14 +1,14 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-OSp3tPrKiIoVId6CvXo6Fm
+https://modal.com/apps/<workspace>/main/ap-OSp3tPrKiIoVId6CvXo6Fm
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_laye
+│   <repo>/muse_prefill_laye
 │   r/research/modal_w4_phase_profile.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_laye
+│   <repo>/muse_prefill_laye
 │   r/nvfp4.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_prefill_laye
+│   <repo>/muse_prefill_laye
 │   r/candidate_prefill_w13_mixed.py
 ├── ✓ Created Function compile_profile.
 └── ✓ Created Function phase_profile.
@@ -52,4 +52,4 @@ PHASE {"rows": 16384, "skew": true, "mode": 2, "records": [{"kind": "big", "cons
 PROFILE_GPU_SECONDS 1.3789604890000007
 Runner terminated.
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-OSp3tPrKiIoVId6CvXo6Fm
+https://modal.com/apps/<workspace>/main/ap-OSp3tPrKiIoVId6CvXo6Fm

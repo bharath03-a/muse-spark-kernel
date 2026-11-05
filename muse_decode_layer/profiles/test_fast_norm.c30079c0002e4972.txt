@@ -1,5 +1,5 @@
 okc run c30079c0002e4972 on muse_decode_layer
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/test_fast_norm.py
+submission  <repo>/muse_decode_layer/test_fast_norm.py
 status      ok
 passed      true
 speedup     1.1015365046877272

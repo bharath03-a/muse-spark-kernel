@@ -1,5 +1,5 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-c0K82UrvZU72iOejAjcFJl
+https://modal.com/apps/<workspace>/main/ap-c0K82UrvZU72iOejAjcFJl
 ✓ Created objects.
 ├── ✓ Uploaded 
 │   /var/folders/dt/nf7j33w51gj7cv6bx6633tm40000gn/T/muse_router_cpu_4nlisc29/mo
@@ -95,4 +95,4 @@ expected expand_dims input layout to be sliced in axis 1 but got 0
 compile_only total 3s
 Stopping app - local entrypoint completed.
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-c0K82UrvZU72iOejAjcFJl
+https://modal.com/apps/<workspace>/main/ap-c0K82UrvZU72iOejAjcFJl

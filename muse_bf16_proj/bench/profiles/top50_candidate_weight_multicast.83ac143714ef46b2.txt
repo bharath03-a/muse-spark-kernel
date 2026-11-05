@@ -1,5 +1,5 @@
 okc run 83ac143714ef46b2 on muse_bf16_proj
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/bench/top50_candidate_weight_multicast.py
+submission  <repo>/muse_bf16_proj/bench/top50_candidate_weight_multicast.py
 status      ok
 passed      true
 speedup     1.4259083458930746

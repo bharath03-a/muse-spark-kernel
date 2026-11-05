@@ -3853,7 +3853,7 @@
       "report": "kernel                                                           GPU time  share  calls\nvoid attnp\u003c2, 131396\u003e(A, WF)                                     243.7 µs 100.0%      1\ntotal                                                            243.7 µs"
     }
   ],
-  "submission": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_decode/probe_fdec_sweep_fixed.py",
+  "submission": "<repo>/muse_attention_decode/probe_fdec_sweep_fixed.py",
   "summary": {
     "error": null,
     "passed": true,

@@ -1,13 +1,13 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-Umd07AnN4cw6wHh32aqjZ5
+https://modal.com/apps/<workspace>/main/ap-Umd07AnN4cw6wHh32aqjZ5
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/re
+│   <repo>/muse_moe_w4a16/re
 │   search/modal_queue_research.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/research_harness
+│   <repo>/research_harness
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16
+│   <repo>/muse_moe_w4a16
 ├── ✓ Created Function compile_and_inspect.
 └── ✓ Created Function compare_queue.
 W1027 15:11:08.188000 2 torch/utils/cpp_extension.py:183] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
@@ -45,4 +45,4 @@ SASS_COUNT research_moe_queue_atomic ring LDL 106
 SASS_COUNT research_moe_queue_atomic ring STL 17
 Stopping app - local entrypoint completed.
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-Umd07AnN4cw6wHh32aqjZ5
+https://modal.com/apps/<workspace>/main/ap-Umd07AnN4cw6wHh32aqjZ5

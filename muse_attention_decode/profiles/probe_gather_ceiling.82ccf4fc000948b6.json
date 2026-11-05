@@ -3845,7 +3845,7 @@
       "report": "kernel                                                           GPU time  share  calls\nvoid attnp\u003c2, 131396\u003e(A, WF)                                     242.5 µs 100.0%      1\ntotal                                                            242.5 µs"
     }
   ],
-  "submission": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_decode/probe_gather_ceiling.py",
+  "submission": "<repo>/muse_attention_decode/probe_gather_ceiling.py",
   "summary": {
     "error": null,
     "passed": true,

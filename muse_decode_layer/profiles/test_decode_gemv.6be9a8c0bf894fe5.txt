@@ -1,5 +1,5 @@
 okc run 6be9a8c0bf894fe5 on muse_decode_layer
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/test_decode_gemv.py
+submission  <repo>/muse_decode_layer/test_decode_gemv.py
 status      ok
 passed      true
 speedup     1.1067899512377148

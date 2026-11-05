@@ -2241,7 +2241,7 @@
       "report": "kernel                                                           GPU time  share  calls\nvoid sglang::device::marlin_moe::Marlin\u003c__nv_bfloat16, 56...     416.6 µs  51.6%      2\nvoid attnp\u003c2, 131396\u003e(A, WF)                                     248.1 µs  30.7%      1\nnvjet_sm90_tst_128x128_64x6_2x1_v_bz_TNT                          34.1 µs   4.2%      2\n_big_gemm                                                         30.1 µs   3.7%      1\nnvjet_sm90_tst_96x64_64x10_2x4_h_bz_TNN                           23.5 µs   2.9%      1\nvoid tma_wgmma_router_bn32\u003c128, 128, 4, 4\u003e(CUtensorMap_st...       9.5 µs   1.2%      1\nvoid sglang::muse_spark_norm_residual_kernel\u003c8192l, 512, ...       8.7 µs   1.1%      1\nvoid sglang::muse_spark_norm_residual_kernel\u003c8192l, 512, ...       7.6 µs   0.9%      1\n_post_expert_norm_weighted_sum_kernel                              6.3 µs   0.8%      1\nvoid sglang::act_and_mul_kernel\u003c__nv_bfloat16, (sglang::A...       5.7 µs   0.7%      1\nvoid sglang::muse_spark::routing_kernel\u003csglang::muse_spar...       3.0 µs   0.4%      1\nvoid moe_align_block_size_kernel\u003cint\u003e(int const*, int*, i...       2.9 µs   0.4%      1\n... 7 more\ntotal                                                            806.8 µs"
     }
   ],
-  "submission": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/candidate_openkernels_attention.py",
+  "submission": "<repo>/muse_decode_layer/candidate_openkernels_attention.py",
   "summary": {
     "error": null,
     "passed": true,

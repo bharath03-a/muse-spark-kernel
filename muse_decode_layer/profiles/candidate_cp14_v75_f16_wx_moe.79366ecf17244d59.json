@@ -2241,7 +2241,7 @@
       "report": "kernel                                                           GPU time  share  calls\nmoe_x(P)                                                         273.2 µs  41.9%      1\nvoid attnp\u003c2, 131396\u003e(A, WF)                                     248.0 µs  38.0%      1\nnvjet_sm90_tst_128x128_64x6_2x1_v_bz_TNT                          33.7 µs   5.2%      2\ncp14__big_gemm                                                    30.8 µs   4.7%      1\nnvjet_sm90_tst_80x64_64x11_2x4_h_bz_TNN                           21.9 µs   3.3%      1\nvoid tma_wgmma_router_bn32\u003c128, 128, 4, 4\u003e(CUtensorMap_st...       9.4 µs   1.4%      1\nxgather(__nv_bfloat16 const*, int const*, int, int, unsig...       8.5 µs   1.3%      1\nvoid sglang::muse_spark_norm_residual_kernel\u003c8192l, 512, ...       8.3 µs   1.3%      1\nvoid sglang::muse_spark_norm_residual_kernel\u003c8192l, 512, ...       7.3 µs   1.1%      1\nvoid sglang::muse_spark::routing_kernel\u003csglang::muse_spar...       3.2 µs   0.5%      1\n_fast_pre_expert_norm_kernel                                       2.4 µs   0.4%      1\nvoid at::native::elementwise_kernel\u003c128, 2, at::native::g...       1.6 µs   0.2%      1\n... 4 more\ntotal                                                            652.6 µs"
     }
   ],
-  "submission": "/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_decode_layer/candidate_cp14_v75_f16_wx_moe.py",
+  "submission": "<repo>/muse_decode_layer/candidate_cp14_v75_f16_wx_moe.py",
   "summary": {
     "error": null,
     "passed": true,

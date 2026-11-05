@@ -1,13 +1,13 @@
 ✓ Initialized. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-oAIddndQNHmzOHkQspALit
+https://modal.com/apps/<workspace>/main/ap-oAIddndQNHmzOHkQspALit
 ✓ Created objects.
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16/re
+│   <repo>/muse_moe_w4a16/re
 │   search/modal_queue_research.py
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/research_harness
+│   <repo>/research_harness
 ├── ✓ Uploaded 
-│   /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16
+│   <repo>/muse_moe_w4a16
 ├── ✓ Created Function compile_and_inspect.
 ├── ✓ Created Function compare_queue.
 ├── ✓ Created Function compile_heavy.
@@ -41,4 +41,4 @@ WX52_SASS_COUNT HGMMA 256
 WX52_SASS_COUNT WARPGROUP 68
 Stopping app - local entrypoint completed.
 ✓ App completed. View run at 
-https://modal.com/apps/bharathvelamala1929/main/ap-oAIddndQNHmzOHkQspALit
+https://modal.com/apps/<workspace>/main/ap-oAIddndQNHmzOHkQspALit

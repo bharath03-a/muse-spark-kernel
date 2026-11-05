@@ -1,5 +1,5 @@
 okc run 0653d51aad4c4281 on muse_attention_decode
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_decode/probe_fdec_sweep_fixed.py
+submission  <repo>/muse_attention_decode/probe_fdec_sweep_fixed.py
 status      ok
 passed      true
 speedup     1.941910958584348

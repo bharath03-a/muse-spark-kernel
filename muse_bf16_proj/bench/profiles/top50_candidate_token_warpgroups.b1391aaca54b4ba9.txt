@@ -1,5 +1,5 @@
 okc run b1391aaca54b4ba9 on muse_bf16_proj
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/bench/top50_candidate_token_warpgroups.py
+submission  <repo>/muse_bf16_proj/bench/top50_candidate_token_warpgroups.py
 status      ok
 passed      true
 speedup     1.4199566288692618

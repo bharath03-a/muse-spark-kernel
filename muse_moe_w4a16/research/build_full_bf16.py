@@ -1,6 +1,6 @@
 import ast
 from pathlib import Path
-r=Path('/Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_moe_w4a16')
+r=Path('<repo>/muse_moe_w4a16')
 s=(r/'candidate_openkernels_moe_bf16.py').read_text()
 def value(text,name):
  t=ast.parse(text)

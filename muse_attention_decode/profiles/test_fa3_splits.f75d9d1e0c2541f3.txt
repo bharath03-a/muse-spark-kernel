@@ -1,5 +1,5 @@
 okc run f75d9d1e0c2541f3 on muse_attention_decode
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_attention_decode/test_fa3_splits.py
+submission  <repo>/muse_attention_decode/test_fa3_splits.py
 status      ok
 passed      true
 speedup     0.522459201162946

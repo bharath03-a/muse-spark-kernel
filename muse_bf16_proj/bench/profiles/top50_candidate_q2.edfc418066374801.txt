@@ -1,5 +1,5 @@
 okc run edfc418066374801 on muse_bf16_proj
-submission  /Users/bharathvelamala/Documents/hackathon/MuseSparkKernel/muse_bf16_proj/bench/top50_candidate_q2.py
+submission  <repo>/muse_bf16_proj/bench/top50_candidate_q2.py
 status      ok
 passed      true
 speedup     1.418064967325354
