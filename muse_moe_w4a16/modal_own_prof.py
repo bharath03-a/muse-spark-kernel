@@ -4,7 +4,7 @@ import modal
 
 PROJECT_DIR = Path(__file__).parent
 REMOTE_DIR = "/root/own"
-FILES = ["reference.py", "checks.py", "nvfp4.py", "own_moe_v3.py", "own_moe_v4.py"]
+FILES = ["reference.py", "checks.py", "nvfp4.py", "own_moe_v3.py", "own_moe_v4.py", "own_moe_v5.py"]
 
 image = (
     modal.Image.from_registry("lmsysorg/sglang:dev-muse-spark-open")
