@@ -175,3 +175,59 @@ So the 0.3% gate is at the noise floor; rows below are raw (not null-corrected).
 Null-corrected stack: T1 +0.05%, T8 -0.08%, T16 +0.25%, T32 +0.42%, T128 -0.15%, T256 0.0% -> geomean ~+0.08%.
 Verdict: below the 0.5% gate. No candidate_hc_v1.py built, no okc check. Runtime knob space of v3 is flat.
 GPU: 3 containers, ~4.5 min measured + ~3 min prepare/startup (~0.13 H200-h).
+
+## candidate_hc_v1.py (coordinator-approved build)
+Per-T code changes (999,936 B): PCX o P3 @T16, PCX qkv P1 @T32, ROUTE_EARLY @T32 only (EARLY=T==32), GLE_RC {1:16}, SL_CLUSTER T1 nw4. W0_L8 skipped.
+Modal pair_run vs v3, reps 120, L-weighted (seed731/1949): T1 1.0044/0.9928, T8 0.9957/0.9958 (no T8 change: noise), T16 1.0067/1.0023,
+T32 1.0030/1.0040, T128 1.0010/1.0022, T256 1.0014/1.0000; geomean +0.08%. 13 canonical + 48 graph checks passed.
+okc check a6cd29524212426c: 2.259x (CI 2.225-2.293), 10.01 ms, 13/13 passed. v3 check e8c43c677ed04470 was 2.2506x; live 2.2556x -> within noise.
+
+## Gap/overlap audit of hc_v1 (a6cd29524212426c profile) -- 2026-11-03, NO-GO, no candidate built
+Wall (event median) vs kernel-sum/GPU-busy per load:
+- decode T1/T16/T32 and verify T1: wall < busy (PDL overlap already absorbs launch gaps; nothing idle to reclaim).
+- verify T16 sliding/full: wall-sum = +2.3/+3.7 us (~1%); verify T32 sliding/full: +7.6/+17.2 us (2.5%/3.7%).
+  Gaps sit at nvjet (cuBLAS) GEMM edges, which cannot carry griddepcontrol; closing them needs the projection-GEMM swap (NO-GO).
+- Concurrency: chain is strictly serial (attn -> o_proj -> route -> moe_fused w/ shared expert fused). Route needs post-attn hidden; no
+  independent branch left for a second stream. _graft_route is 2.8-3.5 us max.
+Ceiling: closing ALL verify-T16/T32 gaps = ~+0.64% weighted geomean; realistic <0.3% (< +-0.5% check noise).
+Weakest loads: sliding decode T32 1.76x, sliding decode T16 2.05x; both ~52% moe_fused (MoE NO-GO area). No byte-headroom work needed.
+Checks used: 0. Modal: 0.
+
+## Workload sweep: moe_fused + sliding attn per-T knobs at decode T16/T32 (base hc_v1) -- 2026-11-03, NO-GO
+Harness: scratchpad wl_sweep.py (hc_sweep + per-T moe ext swap via state["ma_ext"] + nsm patch), cold-L2 paired vs hc_v1, reps 30, seed 731.
+Ratio = base/cand; null 0.994-1.002. All builds compiled (33, 197 s).
+- T16 MID (moe_helper0df): WSBLK1/3/4, WSBL0/1, FINPF0, CPF1, NACC2/8, L2H0, TDYN1, NS2/4, WSNR2, UWARP1 -> 0.984-1.004 (best wsblk3 1.004/1.001, cpf1 1.003/1.000).
+  NW16 FAILS ref check. T16->b4 build 0.949/0.967. Persistent grid nsm 128/120/112/96/66: -1%..-26%.
+- T32 b4 (WGS+B4FIN): WGSGS1, WGSNX2/4, GATHB4/16, WGSPR0, WGSREORD0, NS2/4, L2H0, MFIN0, B4L1, WGSDFIN0/3, B4FIN off -> 0.979-1.004
+  (best gathb4 1.004). T32->MID build 0.920.
+- Sliding attn _TUNED7 B16 n_splits 8/12/24/32, nc2, coop; B32 n 4/6/12/16, nc2, coop -> 0.972-1.000 except B32 n12 1.0065 (single seed).
+Pass 2 (reps 120, 2 seeds) did not run (Modal function stopped at start). Every pass-1 winner <= +0.65% on one layer, i.e. < 0.3% weighted geomean.
+Verdict: knob space at T16/T32 is flat; no candidate_wl_v1.py built. Checks used: 0. Modal: ~0.13 H200-h.
+candidate_wl_v1.py (hc_v1 + _TUNED7 B32 q1 sliding n_splits 12, MID WSBLK 3, b4 GATHB 4; 999,828 B, one history comment trimmed):
+okc check 8a7749d9b3374694: 2.243x (CI 2.210-2.277), 10.08 ms, 13/13. vs hc_v1 a6cd29524212426c 2.259x / 10.01 ms.
+Per load vs hc_v1: dec32 sliding 148.2 -> 143.5 us (-4.7), dec16 sliding 123.2 -> 122.1, dec32 full 298.5 -> 294.7; verify
+loads +2..+7 us (untouched paths: noise). Re-checks wl/hc/wl/wl deduped (jobs 281f8586, c98fd22f, e3ac315b, 6617d7ec). NO-GO.
+
+## dw round 2026-11-04 (Modal whole-pair, hc_v1 base, 60 reps x 2 seeds, canonical+graph checks pass)
+- candidate_dw_v1 = hc_v1 + _TUNED7 (32,1,True,1) n_splits=12 (isolated from wl_v1; wl scored-submit f56a40da = 2.228x confirmed dead).
+  T32 sliding ratio 1.0067/1.0069 (both seeds); untouched T32 full 1.0000/0.9995, T16 full 0.9997/1.0001. Real ~-0.9us on dec32 sliding, ~+0.07% geomean.
+- candidate_dw_v2 (+ (16,1,True,1) n_splits=8): T16 sliding 0.9952/0.9922 -> REJECTED.
+- candidate_dw_v3 (ns16 @32): T32 sliding 0.9710/0.9809 -> REJECTED. ns12 is the peak.
+- dw_v1 trimmed to 999,983 B for the 1,000,000 B limit; okc check pending.
+- dw_v1 okc check ec7c9d7faa0542c2: 2.241x (CI 2.208-2.275), 10.09 ms, 13/13. Below live 2.2556x; judge draw noise dominates the Modal win. NOT submitted.
+- candidate_gle8_v1 (dw_v1 + GLE_T[8]=True, GLE_RC[8]=2): Modal pair run fails RuntimeError 'gle_pr: shapes' (same as 2026-11-02 ours_v1). GLE fused pooler/router hardwired to T=1. REJECTED, no fix attempted.
+
+## Verify-load sweep (T8/T128/T256) on wl_v1 -- 2026-11-04, NO-GO
+Harness wl_sweep.py (+ tiny2 base), variants scratchpad wl_vv.json (50: _TUNED7 verify q8 sliding/full n_splits/nc/coop, tiny2 T8
+WSBLK/CPF/NACC/NS/L2H + mid build at T8, main-build NS/L2H/WGSNX/GATHB/MFIN/WGSGS/WGSPR/NACC at T128/256, nsm 128/120/112), reps 30, seed 731.
+Function hit the 2400 s timeout after T8 + T128 sliding (T128 full, T256 never measured); B4FIN at M=128 errors (as designed).
+Null T8 sliding 1.0071. Best: t8_mid (MID build at M=8) 1.0116 full / 1.0107 sliding (99.8 -> 98.7 us, ~+0.4% null-corrected);
+t8_WSBLK3 1.010 sliding / 1.003 full. All T128 sliding knobs 0.995-1.003. Nothing >= 1% beyond the null: no wl_v2, no check.
+Modal: ~0.67 H200-h (timeout overran the 0.2 cap).
+candidate_wl_v2.py (wl_v1 + MOE_TINY2_MAX_M 8->4, so M=8 uses the MID build; 999,861 B): okc check 71e588151fe944ad 2.233x
+(CI 2.200-2.267), 10.13 ms, 13/13. verify1 sliding 108.2 us, full 111.8 us. Below live 2.2556x: NO-GO.
+
+## pdl256 2026-11-04 (Modal whole-pair vs dw_v1, 60 reps x 2 seeds)
+- candidate_pdl256_v1 = dw_v1 + PDL_MAX_T 128->256. T128 control (no change): 0.9974-1.0017.
+  T256 sliding: 1.0050/1.0034 (real, ~-1.3us verify32 sliding); T256 full: 0.9999/0.9998 flat. ~+0.05% geomean stacked.
+- dw_v1 scored submit dee0c23944964b83: 2.238x, 10.11 ms; board keeps live 2.2556x.
